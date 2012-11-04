@@ -1,6 +1,7 @@
 /**
 * Version: 0.2.5
 *
+* http://yootil.pixeldepth.net
 * http://pixeldepth.net
 * http://sz-ex.com
 * http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
