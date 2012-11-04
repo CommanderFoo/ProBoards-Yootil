@@ -1,6 +1,9 @@
 /**
+* Version: 0.2.4
+*
 * http://pixeldepth.net
-* Ver: 0.2.4 17:25 GMT 03/11/2012
+* http://sz-ex.com
+* http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
 */
 
 /**
@@ -9,6 +12,9 @@
 * 	yootil contains helpful methods to help plugin developers develop quicker.
 *
 * 	There are various methods, some are just wrappers around ProBoards API.
+*
+*
+*	Project - https://code.google.com/p/yootil/
 *
 *	Source - http://pixeldepth.net/proboards/yootil/yootil.src.js
 *
@@ -406,7 +412,7 @@ yootil.ajax = (function(){
 			}
 			
 			return yootil;
-		},
+		}/*,
 		
 		hijack: function(data_type, url, callback){
 			if(data_type && url && typeof callback == "function"){
@@ -423,7 +429,7 @@ yootil.ajax = (function(){
 
 				$.ajaxPrefilter(data_type, prefilter_callback);
 			}
-		}
+		}*/
 	
 	};
     
