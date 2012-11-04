@@ -1,5 +1,5 @@
 /**
-* Version: 0.2.4
+* Version: 0.2.5
 *
 * http://pixeldepth.net
 * http://sz-ex.com
@@ -14,23 +14,18 @@
 * 	There are various methods, some are just wrappers around ProBoards API.
 *
 *
-*	Project - https://code.google.com/p/yootil/
+*	Project - https://github.com/pixelDepth/Yootil
 *
-*	Source - http://pixeldepth.net/proboards/yootil/yootil.src.js
+*	Current Release - http://yootil.pixeldepth.net/yootil.src.js
 *
-*	Compressed - http://pixeldepth.net/proboards/yootil/yootil.min.js
+*	Compressed - http://yootil.pixeldepth.net/yootil.min.js
+*
+*	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
 */
 
 yootil = (function(){
 
 	return {
-
-		/**
-		* Property: version
-		*	*string* Current version of yootil
-		*/
-		
-		version: "0.1",
 		
 		/**
 		* Method: html_encode
