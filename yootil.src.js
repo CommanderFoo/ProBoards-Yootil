@@ -22,6 +22,8 @@
 *	Compressed - http://yootil.pixeldepth.net/yootil.min.js
 *
 *	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
+*
+*	Topic - http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
 */
 
 yootil = (function(){
