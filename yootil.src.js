@@ -1,5 +1,5 @@
 /**
-* Version: 0.2.5
+* Version: 0.3.0
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -348,7 +348,7 @@ yootil.create = (function(){
 			
 			html += "<div class=\"container\">";
 			html += $("<div class=\"title-bar\">" + title + "</div>").css(title_styles).wrap("<span/>").parent().html();
-			html += $("<div class=\"content\">" + content + "</div>").css(content_styles).wrap("<span/>").parent().html();
+			html += $("<div class=\"content pad-all\">" + content + "</div>").css(content_styles).wrap("<span/>").parent().html();
 			html += "</div>";
 			
 			if(typeof jquery_obj == "undefined" || jquery_obj){
@@ -356,8 +356,41 @@ yootil.create = (function(){
 			} else {
 				return $(html).css(container_styles).wrap("<span/>").parent().html();
 			}
-		}
+		},
+		
+		/**
+		* Function: page
+		*	Quickly create a blank page that matches a certain URL.
+		*
+		* Parameters:
+		*	locate - *string* / *object* This will get matched against the location.href value, can be a string or RegExp object.
+		*	document_title - *string* Add onto the current document title.
+		*	hide_content - *boolean* By default the children of #content gets hidden, you can override this
+		*
+		* Returns:
+		*	*object* yootil.create
+		*
+		* Examples:
+		*	yootil.create.page("shop", "Shop");
+		*
+		*	yootil.create.page("shop", "Shop").container("The Shop", "Welcome to the Shop").appendTo("#content");
+		*/
+	
+		page: function(locate, document_title, hide_content){
+			var reg = (locate.constructor == RegExp)? locate : new RegExp("\/" + locate, "i");
+			
+			if(locate && location.href.match(reg)){
+				if(typeof document_title != "undefined" && document_title.length){
+					document.title += " - " + document_title;
+				}
 				
+				if(typeof hide_content == "undefined" || hide_content){
+					$("#content[role=main]").children().hide();
+				}
+			}
+			
+			return yootil.create;
+		}
 	};
 
 })();
