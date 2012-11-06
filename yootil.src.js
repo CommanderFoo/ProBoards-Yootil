@@ -410,24 +410,7 @@ yootil.ajax = (function(){
 			}
 			
 			return yootil;
-		}/*,
-		
-		hijack: function(data_type, url, callback){
-			if(data_type && url && typeof callback == "function"){
-				var prefilter_callback = function(options, original_options, jq_xhr){
-					if(options.url.match(url)){
-						var original_success = original_options.sucess || options.success;
-			
-						original_options.success = options.success = function(event, xhr, opts){
-							callback(event, xhr, opts);
-							//original_success(event, xhr, opts);
-						};
-					}
-				}
-
-				$.ajaxPrefilter(data_type, prefilter_callback);
-			}
-		}*/
+		}
 	
 	};
     
