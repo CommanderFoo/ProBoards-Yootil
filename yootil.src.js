@@ -1,5 +1,5 @@
 /**
-* Version: 0.3.0
+* Version: 0.4.0
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -17,9 +17,9 @@
 *
 *	Project - https://github.com/pixelDepth/Yootil
 *
-*	Current Release - http://yootil.pixeldepth.net/yootil.src.js
-*
 *	Compressed - http://yootil.pixeldepth.net/yootil.min.js
+*
+*	Experimental - http://yootil.pixeldepth.net/yootil.src.js
 *
 *	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
 *
@@ -208,6 +208,7 @@ yootil.key = (function(){
 		*
 		* Examples:
 		*	yootil.key.value("mykey");
+		*
 		*	yootil.key.value("mykey", null, true); // Parses JSON
 		*/
 		
@@ -263,6 +264,7 @@ yootil.key = (function(){
 		*
 		* Examples:
 		*	yootil.key.set("mykey", "apples");
+		*
 		*	yootil.key.set("mykey", "apples", null, true); // Save as JSON
 		*/
 		
@@ -294,8 +296,7 @@ yootil.key = (function(){
 
 yootil.create = (function(){
 
-	return {
-		
+	return {		
 
 		/**
 		* Method: container
@@ -422,6 +423,7 @@ yootil.ajax = (function(){
 		*
 		* Examples:
 		* 	yootil.ajax.bind("complete", $("form:first"), function(){ alert("AJAX completed"); });
+		*
 		* 	yootil.ajax.bind("complete", $("form:first"), function(){ alert("AJAX completed"); }, "/plugin/key/set/");
 		*/
 		
@@ -458,14 +460,14 @@ yootil.ajax = (function(){
 *	get used that often by plugins.
 *
 *
-* Ideally we would use HTML 5 Audio, however there is a cross domain policy.
-* We can set access on the audio files, specifically Access-Control-Allow-Origin.
-* See http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea
-* for more information about Access-Control.
+* 	Ideally we would use HTML 5 Audio, however there is a cross domain policy.
+* 	We can set access on the audio files, specifically Access-Control-Allow-Origin.
+* 	See http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea
+* 	for more information about Access-Control.
 *
 *
-* But if other people use it, they would be forced to have a host that allowed
-* them to set the origin (htaccess).  Too much trouble for now.
+* 	But if other people use it, they would be forced to have a host that allowed
+* 	them to set the origin (htaccess).  Too much trouble for now.
 */
 
 yootil.sound = (function(){
@@ -515,6 +517,164 @@ yootil.sound = (function(){
 			
 		}
 			
+	};
+	
+})();
+
+/**
+* Namespace: yootil.user
+*	Contains useful methods relating to the user currently viewing the page
+*/
+
+yootil.user = (function(){
+
+	return {
+
+		/**
+		* Property: data
+		*	*object* Holds a reference to the ProBoards user object
+		*/
+		
+		data:  {},
+				
+		/**
+		* Method: has_data
+		*	This checks to see if the ProBoards data object exists and has a user object, we cache it as well.
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		has_data: function(){
+			if(this.data && typeof this.data.id != "undefined"){
+				return true;
+			} else {
+				if(typeof proboards != "undefined"){
+					var data = proboards.data;
+					
+					if(typeof data != "undefined" && typeof data == "function"){
+						var user_data = proboards.data("user");
+						
+						if(typeof user_data != "undefined"){
+							this.data = user_data;
+							
+							return true;
+						}
+					}
+				}
+			}
+			
+			return false;
+		},
+
+		/**
+		* Function: logged_in
+		*	Checks to see if the user is logged in, if so, returns true.
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		logged_in: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_logged_in != "undefined" && this.data.is_logged_in){
+					return true;
+				}
+			}
+			
+			return false;
+		},
+		
+		/**
+		* Function: id
+		*	Gets the current users ID
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		id: function(){
+			if(this.has_data()){
+				if(typeof this.data.id != "undefined"){
+					return this.data.id;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: is_staff
+		*	Checks to see if the current user is staff
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		is_staff: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_staff != "undefined" && this.data.is_staff){
+					return true;
+				}
+			}
+			
+			return false;
+		},
+		
+		/**
+		* Function: name
+		*	Gets the users name
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		name: function(){
+			if(this.has_data()){
+				if(typeof this.data.name != "undefined"){
+					return this.data.name;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: theme
+		*	Gets the users theme ID
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		theme: function(){
+			if(this.has_data()){
+				if(typeof this.data.theme_id != "undefined"){
+					return this.data.theme_id;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: url
+		*	Gets the users path URL to their profile
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		url: function(){
+			if(this.has_data()){
+				if(typeof this.data.url != "undefined"){
+					return this.data.url;
+				}
+			}
+			
+			return "";
+		}
+		
 	};
 	
 })();
