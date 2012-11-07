@@ -9,7 +9,7 @@ yootil.locationcheck = (function(){
 
     return {
 
-        // Keep these sorted alphabetically. Just helps our sanity
+        // Please keep these sorted alphabetically. Just helps our sanity
 
         /**
         * Method: __is_page
@@ -42,6 +42,18 @@ yootil.locationcheck = (function(){
         },
 
         /**
+        * Method: bookmarks
+        *   Are we currently viewing the bookmarks listing?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+        bookmarks: function(){
+            return this.__is_page('bookmarks');
+        },
+
+        /**
         * Method: calendar
         *   Are we currently viewing the main calendar page?
         *
@@ -50,7 +62,20 @@ yootil.locationcheck = (function(){
         */
 
         calendar: function(){
-            return this.__is_page('calendar');
+            // calendar == this month, calendar_month == this or any depending on query string
+            return this.__is_page('calendar') || this.__is_page('calendar_month');
+        },
+
+        /**
+        * Method: calendar_day
+        *   Are we viewing a day of calendar events?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        calendar_day: function(){
+            return this.__is_page('calendar_day');
         },
 
         /**
@@ -125,7 +150,7 @@ yootil.locationcheck = (function(){
         */
         
         posting_quote: function(){
-            return this.__is_page('quotes_posts');
+            return this.__is_page('quote_posts');
         },
 
         /**
@@ -153,6 +178,210 @@ yootil.locationcheck = (function(){
         },
 
         /**
+        * Method: profile_activity
+        *   Are we viewing the activity profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_activity: function(){
+            return this.__is_page('show_user_activity');
+        },
+
+        /**
+        * Method: profile_following
+        *   Are we viewing the following profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_following: function(){
+            return this.__is_page('show_user_following');
+        },
+
+        /**
+        * Method: profile_friends
+        *   Are we viewing the friends profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_friends: function(){
+            return this.__is_page('show_user_friends');
+        },
+
+        /**
+        * Method: profile_gift
+        *   Are we viewing the gifts profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_gift: function(){
+            return this.__is_page('show_user_gift');
+        },
+
+        /**
+        * Method: profile_groups
+        *   Are we viewing the groups profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_groups: function(){
+            return this.__is_page('show_user_groups');
+        },
+
+        /**
+        * Method: profile_home
+        *   Are we viewing a main profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_home: function(){
+            return this.__is_page('user');
+        },
+
+        /**
+        * Method: profile_edit_admin
+        *   Are we editing the admin controls page for the user?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_admin: function(){
+            return this.__is_page('edit_user_admin');
+        },
+
+        /**
+        * Method: profile_edit_avatar
+        *   Are we editing the user's avatar?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_avatar: function(){
+            return this.__is_page('edit_user_avatar');
+        },
+
+        /**
+        * Method: profile_edit_badges
+        *   Are we editing the user's badges?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_badges: function(){
+            return this.__is_page('edit_user_badges');
+        },
+
+        /**
+        * Method: profile_edit_notifications
+        *   Are we editing the user's notifications?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_notifications: function(){
+            return this.__is_page('edit_user_notifications');
+        },
+
+        /**
+        * Method: profile_edit_personal
+        *   Are we editing the user's personal settings?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_personal: function(){
+            return this.__is_page('edit_user_personal');
+        },
+
+        /**
+        * Method: profile_edit_privacy
+        *   Are we editing the user's privacy settings?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_privacy: function(){
+            return this.__is_page('edit_user_privacy');
+        },
+
+        /**
+        * Method: profile_edit_settings
+        *   Are we editing the user's general settings?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_settings: function(){
+            return this.__is_page('edit_user_settings');
+        },
+
+        /**
+        * Method: profile_edit_social
+        *   Are we editing the user's social settings?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_edit_social: function(){
+            return this.__is_page('edit_user_social');
+        },
+
+        /**
+        * Method: profile_notifications
+        *   Are we viewing the notifications profile page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        profile_notificationss: function(){
+            return this.__is_page('show_user_notifications');
+        },
+
+        /**
+        * Method: recent_posts
+        *   Are we currently viewing the recent posts page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        recent_posts: function(){
+            return this.__is_page('all_recent_posts');
+        },
+
+        /**
+        * Method: recent_threads
+        *   Are we currently viewing the recent threads page?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        recent_threads: function(){
+            return this.__is_page('recent_threads');
+        },
+
+        /**
         * Method: search
         *   Are we currently trying to search?
         *
@@ -162,6 +391,18 @@ yootil.locationcheck = (function(){
 
         search: function(){
             return this.__is_page('search');
+        },
+
+        /**
+        * Method: search_results
+        *   Are we viewing results of a search?
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+        search_results: function(){
+            return this.__is_page('search_results');
         },
 
         /**
