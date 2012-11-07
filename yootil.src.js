@@ -1,5 +1,5 @@
 /**
-* Version: 0.4.0
+* Version: 0.5.0
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
