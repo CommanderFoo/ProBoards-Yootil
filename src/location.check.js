@@ -1,11 +1,9 @@
 /**
-* Namespace: yootil.locationcheck
-*   Used to find out where we are on ProBoards
-*
-*   Later on we can expand this to have a URL generating section
+* Namespace: yootil.location.check
+*   Used to determine where we are currently
 */
 
-yootil.locationcheck = (function(){
+yootil.location.check = (function(){
 
     return {
 
