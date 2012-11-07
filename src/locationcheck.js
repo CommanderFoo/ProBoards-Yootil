@@ -353,7 +353,7 @@ yootil.locationcheck = (function(){
         *   *boolean*
         */
 
-        profile_notificationss: function(){
+        profile_notifications: function(){
             return this.__is_page('show_user_notifications');
         },
 

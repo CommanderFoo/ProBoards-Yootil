@@ -1,3 +1,11 @@
+/**
+* Version: 0.4.0
+*
+* http://yootil.pixeldepth.net
+* http://pixeldepth.net
+* http://sz-ex.com
+* http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
+*/
 
 /**
 * Namespace: yootil
@@ -1026,7 +1034,7 @@ yootil.locationcheck = (function(){
         *   *boolean*
         */
 
-        profile_notificationss: function(){
+        profile_notifications: function(){
             return this.__is_page('show_user_notifications');
         },
 
@@ -1093,6 +1101,4 @@ yootil.locationcheck = (function(){
             
     };
  })();
-
-
 
