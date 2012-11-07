@@ -1100,7 +1100,6 @@ yootil.location.check = (function(){
     };
  })();
 
-<<<<<<< HEAD
 /**
 * Namespace: yootil.user.action
 *   Used to find out what actions a user has recently performed, in terms of the website usage.
