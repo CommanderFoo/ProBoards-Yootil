@@ -1,3 +1,11 @@
+/**
+* Version: 0.5.0
+*
+* http://yootil.pixeldepth.net
+* http://pixeldepth.net
+* http://sz-ex.com
+* http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
+*/
 
 /**
 * Namespace: yootil
@@ -1024,7 +1032,7 @@ yootil.location.check = (function(){
         *   *boolean*
         */
 
-        profile_notificationss: function(){
+        profile_notifications: function(){
             return this.__is_page('show_user_notifications');
         },
 
@@ -1092,6 +1100,7 @@ yootil.location.check = (function(){
     };
  })();
 
+<<<<<<< HEAD
 /**
 * Namespace: yootil.user.action
 *   Used to find out what actions a user has recently performed, in terms of the website usage.
@@ -1152,4 +1161,3 @@ yootil.user.action = (function(){
             
     };
 })();
-
