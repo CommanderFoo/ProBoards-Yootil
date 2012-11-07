@@ -680,6 +680,17 @@ yootil.sound = (function(){
 })();
 
 /**
+* Namespace: yootil.location
+*   Used to handle anything regarding URL locations on PB.
+*/
+
+yootil.location = (function(){
+
+    return {};
+
+});
+
+/**
 * Namespace: yootil.location.check
 *   Used to determine where we are currently
 */
