@@ -1,5 +1,5 @@
 /**
-* Version: 0.6.0
+* Version: 0.6.1
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -894,6 +894,42 @@ yootil.location.check = (function(){
             return this.__is_page('new_thread');
         },
 
+        /**
+        * Method: editing_post
+        *   Are we currently trying to edit a post?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+        editing_post: function(){
+            return this.__is_page('edit_post');
+        },
+        
+        /**
+        * Method: editing_thread
+        *   Are we currently trying to edit a thread?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+        editing_thread: function(){
+            return this.__is_page('edit_thread');
+        },
+
+        /**
+        * Method: editing
+        *   Are we currently trying to edit a thread or post?
+        *
+        * Returns:
+        *   *boolean*
+        */
+                
+        editing: function(){
+			return this.editing_thread() || this.editing_post();
+        },
+        
         /**
         * Method: profile_activity
         *   Are we viewing the activity profile page?
