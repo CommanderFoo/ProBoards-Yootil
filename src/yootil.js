@@ -81,7 +81,34 @@ yootil = (function(){
 			delim = (delim)? delim : ",";
 
 			return (str.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + delim) || "0");
+		},
+		
+		/**
+		* Method: is_json
+		*	Checks to see if string passed in is a valid JSON string
+		*
+		* Parameters:
+		*	str - *string* This is the string that is getting checked for valid JSON
+		*	return_obj - *boolean* If true, the string will be parsed and returned back
+		*
+		* Returns:
+		*	*boolean* / *object*
+		*/
+		
+		is_json: function(str, return_obj){
+			try {
+				str = JSON.parse(str);
+			} catch(e){
+				return false;
+			}
+			
+			if(return_obj){
+				return str;
+			}
+			
+			return true;
 		}
+	
 	
 	};
 	
