@@ -128,6 +128,54 @@ yootil.location.check = (function(){
         },
 
         /**
+        * Method: messaging
+        *   Are we currently sending a message?
+        *
+        * Returns:
+        *   *boolean*
+        */
+                
+        messaging: function(){
+			return this.message_new() || this.conversation_new() || this.conversation_create();
+        },
+
+        /**
+        * Method: message_new
+        *   Are we currently replying to a conversation?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+		message_new: function(){
+			return this.__is_page("new_message");
+		},
+		
+		/**
+        * Method: convertation_new
+        *   Are we currently creating a new conversation?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+		conversation_new: function(){
+			return this.__is_page("new_conversation");
+		},
+
+		/**
+        * Method: convertation_create
+        *   Are we currently creating a new conversation?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+		conversation_create: function(){
+			return this.__is_page("create_conversation");
+		},
+				
+        /**
         * Method: posting
         *   Are we currently trying to post/create a thread/quote a post?
         *
