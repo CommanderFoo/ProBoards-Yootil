@@ -448,7 +448,7 @@ yootil.location.check = (function(){
         */
 
         recent_posts: function(){
-            return this.__is_page('all_recent_posts');
+            return (this.__is_page('all_recent_posts') || this.__is_page("recent_posts"));
         },
 
         /**

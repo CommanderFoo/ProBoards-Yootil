@@ -1,5 +1,5 @@
 /**
-* Version: 0.6.2
+* Version: 0.6.3
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -1167,7 +1167,7 @@ yootil.location.check = (function(){
         */
 
         recent_posts: function(){
-            return this.__is_page('all_recent_posts');
+            return (this.__is_page('all_recent_posts') || this.__is_page("recent_posts"));
         },
 
         /**
