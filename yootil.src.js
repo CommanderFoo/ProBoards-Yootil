@@ -1,5 +1,5 @@
 /**
-* Version: 0.6.3
+* Version: 0.7.0
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -1522,6 +1522,166 @@ yootil.form = (function(){
 				
 		message_form: function(){
 			return $("form.form_message_new");
+		}
+	
+	};
+
+})();
+
+/**
+* Namespace: yootil.page
+*	Wrapper around the ProBoards data object "page".
+*/
+
+yootil.page = (function(){
+
+	return {
+	
+		/**
+		* Method: __get_data
+		*	This is an internal method
+		*
+		* Parameters:
+		*	key - *string* The key on the page object to check and get
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		__get_data: function(key){
+			if(proboards && proboards.dataHash && proboards.dataHash.page && typeof proboards.dataHash.page[key] != "undefined"){
+				return proboards.dataHash.page[key];
+			}
+			
+			return "";
+		}
+	
+	};
+
+})();
+
+/**
+* Namespace: yootil.page.category
+*	Various methods to help get category information
+*/
+
+yootil.page.category = (function(){
+
+	return {
+	
+		/**
+		* Method: __get_data
+		*	This is an internal method
+		*
+		* Parameters:
+		*	key - *string* The key on the category object to check and get
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		__get_data: function(key){
+			var cat_obj = yootil.page.__get_data("category");
+			
+			if(cat_obj && typeof cat_obj == "object" && cat_obj[key] != "undefined"){
+				return cat_obj[key];
+			}
+			
+			return "";
+		},
+
+		/**
+		* Method: id
+		*	Gets the category ID
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		id: function(){
+			return this.__get_data("id");
+		},
+
+		/**
+		* Method: name
+		*	Gets the category name
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		name: function(){
+			return this.__get_data("name");
+		}
+	
+	};
+
+})();
+
+/**
+* Namespace: yootil.page.board
+*	Various methods to help get board information
+*/
+
+yootil.page.board = (function(){
+
+	return {
+	
+		/**
+		* Method: __get_data
+		*	This is an internal method
+		*
+		* Parameters:
+		*	key - *string* The key on the board object to check and get
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		__get_data: function(key){
+			var board_obj = yootil.page.__get_data("board");
+			
+			if(board_obj && typeof board_obj == "object" && board_obj[key] != "undefined"){
+				return board_obj[key];
+			}
+			
+			return "";
+		},
+
+		/**
+		* Method: id
+		*	Gets the board ID
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		id: function(){
+			return this.__get_data("id");
+		},
+
+		/**
+		* Method: name
+		*	Gets the board name
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		name: function(){
+			return this.__get_data("name");
+		},
+		
+		/**
+		* Method: url
+		*	Gets the board URL
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		url: function(){
+			return this.__get_data("url");
 		}
 	
 	};
