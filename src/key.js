@@ -185,7 +185,48 @@ yootil.key = (function(){
 			}
 			
 			return this;
+		},
+
+		/**
+		* Method: write
+		* 	Checks permission on key to see if the user can write
+		*
+		* Parameters:
+		* 	key - *string* The key.
+		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
+		*
+		* Returns:
+		*	*boolean*
+		*/
+				
+		write: function(key, user){
+			if(this.exists(key)){				
+				return !!this.pb_key_obj(key).can_write(user);
+			}
+			
+			return false;
+		},
+	
+		/**
+		* Method: read
+		* 	Checks permission on key to see if the user can read
+		*
+		* Parameters:
+		* 	key - *string* The key.
+		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
+		*
+		* Returns:
+		*	*boolean*
+		*/
+			
+		read: function(key, user){
+			if(this.exists(key)){				
+				return !!this.pb_key_obj(key).can_read(user);
+			}
+			
+			return false;
 		}
+		
 	};
 	
 })();
