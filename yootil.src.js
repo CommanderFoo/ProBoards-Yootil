@@ -1,5 +1,5 @@
 /**
-* Version: 0.7.1
+* Version: 0.7.2
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -459,7 +459,34 @@ yootil.create = (function(){
 			}
 			
 			return yootil.create;
+		},
+		
+/**
+		* Function: nav_branch
+		*	Extend the nav tree easily
+		*
+		* Parameters:
+		*	url - *string* URL of the branch.
+		*	text - *boolean* Text of the branch.
+		*
+		* Returns:
+		*	*object* Branch jQuery wrapped
+		*
+		* Examples:
+		*	yootil.create.nav_branch("/shop/", "Shop");
+		*/
+		
+		nav_branch: function(url, text){
+			var branch = $("#nav-tree li:last").clone();
+
+			if(branch && branch.length){
+				branch.find("a").attr("href", url).find("span").html(text);
+				branch.appendTo("#nav-tree");
+			}
+			
+			return branch;
 		}
+		
 	};
 
 })();
