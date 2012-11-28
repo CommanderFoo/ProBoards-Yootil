@@ -152,7 +152,7 @@ yootil.location.check = (function(){
 		},
 		
 		/**
-        * Method: convertation_new
+        * Method: conversation_new
         *   Are we currently creating a new conversation?
         *
         * Returns:
@@ -160,7 +160,7 @@ yootil.location.check = (function(){
         */
         
 		conversation_new: function(){
-			return this.__is_page("new_conversation");
+			return this.__is_page("new_conversation") || this.__is_page("create_conversation");
 		},
 
 		/**
