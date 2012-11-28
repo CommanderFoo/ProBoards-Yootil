@@ -12,6 +12,11 @@ File[5]='sound.js'
 File[6]='location.js'
 File[7]='location.check.js'
 File[8]='user.action.js'
+File[9]='storage.js'
+File[10]='file.js'
+File[11]='page.js'
+File[12]='page.category.js'
+File[13]='page.board.js'
 
 # Clear source
 echo "" > yootil.src.js
