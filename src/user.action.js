@@ -4,7 +4,7 @@
 */
 
 yootil.user.action = (function(){
-    var actionKey = "yootil.user.action.lastAction";
+    var actionKey = "lastaction";
     var current_action = "";
 
     $(function(){

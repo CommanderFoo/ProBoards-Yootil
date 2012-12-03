@@ -21,6 +21,8 @@ yootil = (function(){
 
 	return {
 		
+		host: location.hostname,
+		
 		/**
 		* Method: html_encode
 		*	Makes a value safe for inserting into the DOM.

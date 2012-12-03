@@ -1,5 +1,5 @@
 /**
-* Version: 0.7.3
+* Version: 0.8.0
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -29,6 +29,8 @@
 yootil = (function(){
 
 	return {
+		
+		host: location.hostname,
 		
 		/**
 		* Method: html_encode
@@ -660,9 +662,7 @@ yootil.ajax = (function(){
 	
 		/**
 		* Method: bind
-		* 	When we call .set() on a key, we can't specify a callback for when it's done.  So this method allows
-		* 	us to do just that.  This isn't ideal though, but works for now until we get a callback added in by
-		* 	ProBoards officially.
+		* 	Allows us add a global AJAX event to an element.
 		*
 		* Parameters:
 		* 	event - *string* The ajax event to bind (i.e "complete"), without "ajax" prefix.
@@ -772,6 +772,203 @@ yootil.sound = (function(){
 			
 	};
 	
+})();
+
+/**
+* Namespace: yootil.storage
+*/
+
+yootil.storage = (function(){
+	
+	var window_data = {};
+	var html5 = false;
+	
+	if("sessionStorage" in window && "localStorage" in window){
+		html5 = true;
+	} else {
+		var window_data_string = window.name || "";
+		
+		if(window_data_string && !window_data_string.length){
+			var obj;
+			
+			if(obj = yootil.is_json(window_data_string, true)){
+				window_data = obj;
+			}
+		}
+	}
+	
+	return {	
+		
+		window_data: window_data,
+		
+		html5: html5,
+		
+		set: function(key, value, json, persist){
+			if(key && value){
+				value = (json)? JSON.stringify(value) : value;
+			}
+			
+			if(persist){
+				yootil.storage.persistent.set(key, value);
+			} else {
+				yootil.storage.session.set(key, value);
+			}
+			
+			return this;
+		},
+		
+		get: function(key, json, persist){
+			var value = "";
+			
+			if(key){
+				if(persist){
+					value = yootil.storage.persistent.get(key);
+				} else {
+					value = yootil.storage.session.get(key);
+				}
+				
+				if(json){
+					value = JSON.parse(value);
+				}
+			}
+			
+			return value;
+		},
+		
+		remove: function(key, persist){
+			if(key){
+				if(persist){
+					yootil.storage.persistent.remove(key);
+				} else {
+					yootil.storage.session.remove(key);
+				}
+			}
+			
+			return this;	
+		}
+		
+	};
+
+})();
+
+
+
+
+/**
+* Namespace: yootil.storage.persistent
+*/
+
+yootil.storage.persistent = (function(){
+	
+	var storage_element;
+	
+	if(!yootil.storage.html5){
+		storage_element = $("<link />")[0];
+		
+		if(storage_element && storage_element.addBehavior){
+			$(storage_element).css("behavior", "url(#default#userData)");
+			$("head").append($(storage_element));
+			storage_element.load("yootil");
+		}
+	}
+	
+	return {	
+		
+		set: function(key, value){
+			if(storage_element){
+				storage_element.setAttribute(key, value);
+				storage_element.save();
+			} else {
+				localStorage.setItem(key, value);
+			}
+			
+			return yootil.storage;
+		},
+		
+		get: function(key){
+			var value = "";
+			
+			if(storage_element){
+				value = storage_element.getAttribute(key);
+			} else {
+				value = localStorage.getItem(key);
+			}
+			
+			return value;
+		},
+		
+		remove: function(key){
+			if(storage_element){
+				storage_element.removeAttribute(key);
+			} else {
+				localStorage.removeItem(key);
+			}
+			
+			return yootil.storage;
+		}
+		
+	};
+
+})();
+
+/**
+* Namespace: yootil.storage.session
+*/
+
+yootil.storage.session = (function(){
+	
+	function update_window(){
+		if(yootil.storage.window_data){
+			window.name = JSON.stringify(yootil.storage.window_data);
+		}
+	};
+	
+	return {
+	
+		set: function(key, value){
+			if(yootil.storage.html5){
+				sessionStorage.setItem(key, value);
+			} else {
+				if(!yootil.storage.window_data[yootil.host]){
+					yootil.storage.window_data[yootil.host] = {};
+				}
+				
+				yootil.storage.window_data[yootil.host][key] = value;
+				update_window();
+			}
+			
+			return yootil.storage;
+		},
+
+		get: function(key){
+			var value = "";
+			
+			if(yootil.storage.html5){
+				value = sessionStorage.getItem(key);
+			} else {
+				if(yootil.storage.window_data && yootil.storage.window_data[yootil.host] && yootil.storage.window_data[yootil.host][key]){
+					value = yootil.storage.window_data[yootil.host][key];
+				}
+			}
+			
+			return value;			
+		},
+		
+		remove: function(key){
+			if(yootil.storage.html5){
+				sessionStorage.removeItem(key);
+			} else {
+				if(yootil.storage.window_data && yootil.storage.window_data[yootil.host]){
+					delete yootil.storage.window_data[yootil.host];
+					updte_window();
+				}
+			}
+			
+			return yootil.storage;
+		}
+		
+	};		
+
 })();
 
 /**
@@ -1296,7 +1493,7 @@ yootil.location.check = (function(){
 */
 
 yootil.user.action = (function(){
-    var actionKey = "yootil.user.action.lastAction";
+    var actionKey = "lastaction";
     var current_action = "";
 
     $(function(){
@@ -1415,138 +1612,6 @@ yootil.user.action = (function(){
         }
             
     };
-})();
-
-/**
-* Namespace: yootil.storage
-*	A helpful wrapper for storing data for the session in window.name for the current host.
-*
-*	The data stored will be a json string.
-*
-*	The data is only stored for the session in the current window / tab.  If the user opens
-*	another tab or window, the data is lost.
-*/
-
-yootil.storage = (function(){
-
-	return {
-	
-		/**
-		* Property: win_data
-		*	*object* Holds the current value from window.name as an object.
-		*/
-		
-		win_data: null,
-				
-		/**
-		* Property: host
-		*	*string* The current host.
-		*/
-		
-		host: location.hostname,
-		
-		/**
-		* Method: parse_data
-		*	This is used to check that the data from window.name exists, is valid json, and for this host.
-		*	This only sets win_data once if it's null.
-		*/
-		
-		parse_data: function(){	
-			if(this.win_data === null){
-				var win_data_string = window.name;
-			
-				if(!win_data_string || !win_data_string.length){
-					this.win_data = {};
-				} else {
-					var obj;
-					
-					if(obj = yootil.is_json(win_data_string, true)){
-						this.win_data = obj;
-					} else {
-						this.win_data = {};
-					}
-				}
-			}
-		},
-		
-		/**
-		* Method: set
-		*	Sets a key on the current host object of win_data
-		*
-		* Parameters:
-		*	key - *string*
-		*	value - *string*
-		*
-		* Returns:
-		*	yootil.storage
-		*/
-		
-		set: function(key, value){
-			this.parse_data();
-			
-			if(!this.win_data[this.host]){
-				this.win_data[this.host] = {};
-			}
-			
-			this.win_data[this.host][key] = value;
-			this.update_window();
-			
-			return this;
-		},
-
-		/**
-		* Method: get
-		*	Gets a value from the host object
-		*
-		* Parameters:
-		*	key - *string*
-		*
-		* Returns:
-		*	*string*
-		*/
-				
-		get: function(key){
-			this.parse_data();
-			
-			if(this.win_data && this.win_data[this.host] && this.win_data[this.host][key]){
-				return this.win_data[this.host][key];
-			}
-			
-			return "";			
-		},
-
-		/**
-		* Method: clear
-		*	Clears the host object
-		*
-		* Returns:
-		*	yootil.storage
-		*/
-		
-		clear: function(key){
-			this.parse_data();
-			
-			if(this.win_data && this.win_data[this.host]){
-				delete this.win_data[this.host];
-				this.update_window();
-			}
-			
-			return this;
-		},
-		
-		/**
-		* Method: update_window
-		*	Sets the window.name value
-		*/
-		
-		update_window: function(){
-			if(this.win_data){
-				window.name = JSON.stringify(this.win_data);
-			}
-		}
-	
-	};
-
 })();
 
 /**

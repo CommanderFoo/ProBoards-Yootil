@@ -9,9 +9,7 @@ yootil.ajax = (function(){
 	
 		/**
 		* Method: bind
-		* 	When we call .set() on a key, we can't specify a callback for when it's done.  So this method allows
-		* 	us to do just that.  This isn't ideal though, but works for now until we get a callback added in by
-		* 	ProBoards officially.
+		* 	Allows us add a global AJAX event to an element.
 		*
 		* Parameters:
 		* 	event - *string* The ajax event to bind (i.e "complete"), without "ajax" prefix.
