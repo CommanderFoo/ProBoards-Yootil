@@ -22,7 +22,7 @@ yootil.storage.persistent = (function(){
 			if(storage_element){
 				storage_element.setAttribute(key, value);
 				storage_element.save();
-			} else {
+			} else if(yootil.storage.html5){
 				localStorage.setItem(key, value);
 			}
 			
@@ -34,7 +34,7 @@ yootil.storage.persistent = (function(){
 			
 			if(storage_element){
 				value = storage_element.getAttribute(key);
-			} else {
+			} else if(yootil.storage.html5 && localStorage.length){
 				value = localStorage.getItem(key);
 			}
 			
@@ -44,7 +44,7 @@ yootil.storage.persistent = (function(){
 		remove: function(key){
 			if(storage_element){
 				storage_element.removeAttribute(key);
-			} else {
+			} else if(yootil.storage.html5 && localStorage.length){
 				localStorage.removeItem(key);
 			}
 			

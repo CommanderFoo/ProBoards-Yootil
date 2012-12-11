@@ -74,5 +74,3 @@ yootil.storage = (function(){
 	};
 
 })();
-
-

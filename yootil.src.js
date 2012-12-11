@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.0
+* Version: 0.8.1
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -851,9 +851,6 @@ yootil.storage = (function(){
 
 })();
 
-
-
-
 /**
 * Namespace: yootil.storage.persistent
 */
@@ -878,7 +875,7 @@ yootil.storage.persistent = (function(){
 			if(storage_element){
 				storage_element.setAttribute(key, value);
 				storage_element.save();
-			} else {
+			} else if(yootil.storage.html5){
 				localStorage.setItem(key, value);
 			}
 			
@@ -890,7 +887,7 @@ yootil.storage.persistent = (function(){
 			
 			if(storage_element){
 				value = storage_element.getAttribute(key);
-			} else {
+			} else if(yootil.storage.html5 && localStorage.length){
 				value = localStorage.getItem(key);
 			}
 			
@@ -900,7 +897,7 @@ yootil.storage.persistent = (function(){
 		remove: function(key){
 			if(storage_element){
 				storage_element.removeAttribute(key);
-			} else {
+			} else if(yootil.storage.html5 && localStorage.length){
 				localStorage.removeItem(key);
 			}
 			
@@ -943,25 +940,21 @@ yootil.storage.session = (function(){
 		get: function(key){
 			var value = "";
 			
-			if(yootil.storage.html5){
+			if(yootil.storage.html5 && localStorage.length){
 				value = sessionStorage.getItem(key);
-			} else {
-				if(yootil.storage.window_data && yootil.storage.window_data[yootil.host] && yootil.storage.window_data[yootil.host][key]){
-					value = yootil.storage.window_data[yootil.host][key];
-				}
+			} else if(yootil.storage.window_data && yootil.storage.window_data[yootil.host] && yootil.storage.window_data[yootil.host][key]){
+				value = yootil.storage.window_data[yootil.host][key];
 			}
 			
 			return value;			
 		},
 		
 		remove: function(key){
-			if(yootil.storage.html5){
+			if(yootil.storage.html5 && localStorage.length){
 				sessionStorage.removeItem(key);
-			} else {
-				if(yootil.storage.window_data && yootil.storage.window_data[yootil.host]){
-					delete yootil.storage.window_data[yootil.host];
-					updte_window();
-				}
+			} else if(yootil.storage.window_data && yootil.storage.window_data[yootil.host]){
+				delete yootil.storage.window_data[yootil.host];
+				update_window();
 			}
 			
 			return yootil.storage;
