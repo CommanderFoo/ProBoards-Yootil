@@ -30,7 +30,7 @@ yootil.storage.session = (function(){
 		get: function(key){
 			var value = "";
 			
-			if(yootil.storage.html5 && localStorage.length){
+			if(yootil.storage.html5 && sessionStorage.length){
 				value = sessionStorage.getItem(key);
 			} else if(yootil.storage.window_data && yootil.storage.window_data[yootil.host] && yootil.storage.window_data[yootil.host][key]){
 				value = yootil.storage.window_data[yootil.host][key];
@@ -40,7 +40,7 @@ yootil.storage.session = (function(){
 		},
 		
 		remove: function(key){
-			if(yootil.storage.html5 && localStorage.length){
+			if(yootil.storage.html5 && sessionStorage.length){
 				sessionStorage.removeItem(key);
 			} else if(yootil.storage.window_data && yootil.storage.window_data[yootil.host]){
 				delete yootil.storage.window_data[yootil.host];
