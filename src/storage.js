@@ -7,7 +7,7 @@ yootil.storage = (function(){
 	var window_data = {};
 	var html5 = false;
 	
-	if("sessionStorage" in window && "localStorage" in window){
+	if(Modernizr.sessionstorage && Modernizr.localstorage){
 		html5 = true;
 	} else {
 		var window_data_string = window.name || "";
