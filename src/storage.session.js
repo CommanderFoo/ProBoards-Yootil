@@ -1,5 +1,8 @@
 /**
 * Namespace: yootil.storage.session
+*	Allows you to store a value for the session.
+*
+*	HTML 5 is used if available, otherwise uses window.name
 */
 
 yootil.storage.session = (function(){
@@ -11,7 +14,22 @@ yootil.storage.session = (function(){
 	};
 	
 	return {
-	
+
+		/**
+		* Method: set
+		* 	Allows you to set a key and value.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*	value - *string* The value that will be stored
+		*
+		* Returns:
+		*	yootil.storage.session
+		*
+		* Examples:
+		*	yootil.storage.session.set("mykey", "myvalue");
+		*/
+		
 		set: function(key, value){
 			if(yootil.storage.html5){
 				sessionStorage.setItem(key, value);
@@ -24,9 +42,23 @@ yootil.storage.session = (function(){
 				update_window();
 			}
 			
-			return yootil.storage;
+			return this;
 		},
 
+		/**
+		* Method: get
+		* 	Gets a value from storage in.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*
+		* Returns:
+		*	*string*
+		*
+		* Examples:
+		*	yootil.storage.session.get("mykey");
+		*/
+		
 		get: function(key){
 			var value = "";
 			
@@ -38,7 +70,21 @@ yootil.storage.session = (function(){
 			
 			return value;			
 		},
-		
+
+		/**
+		* Method: remove
+		* 	Removes a key from storage
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*
+		* Returns:
+		*	yootil.storage.session
+		*
+		* Examples:
+		*	yootil.storage.session.remove("mykey");
+		*/
+			
 		remove: function(key){
 			if(yootil.storage.html5 && sessionStorage.length){
 				sessionStorage.removeItem(key);
@@ -47,7 +93,7 @@ yootil.storage.session = (function(){
 				update_window();
 			}
 			
-			return yootil.storage;
+			return this;
 		}
 		
 	};		

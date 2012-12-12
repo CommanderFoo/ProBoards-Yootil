@@ -1,5 +1,6 @@
 /**
 * Namespace: yootil.storage
+* 	Wrappers for session and persistent storage.
 */
 
 yootil.storage = (function(){
@@ -27,6 +28,25 @@ yootil.storage = (function(){
 		
 		html5: html5,
 		
+		/**
+		* Method: set
+		* 	Allows you to set a key and value, along with some other settings.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*	value - *string* The value that will be stored
+		*	json - *boolean* If true, the value will be turned into a JSON string
+		*	persist - *boolean* By default the value is stored for the session, pass true to persist it
+		*
+		* Returns:
+		*	yootil.storage
+		*
+		* Examples:
+		*	yootil.storage.set("mykey", "myvalue", false, true) // Will be persistent
+		*
+		*	yootil.storage.set("mykey", "myvalue") // Will be for the session
+		*/
+		
 		set: function(key, value, json, persist){
 			if(key && value){
 				value = (json)? JSON.stringify(value) : value;
@@ -40,6 +60,26 @@ yootil.storage = (function(){
 			
 			return this;
 		},
+
+		/**
+		* Method: get
+		* 	Gets a value from storage in either session or persistent.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*	json - *boolean* If true, the value will be turned into a JSON string
+		*	persist - *boolean* You can specify not to look in persistent by passing false
+		*
+		* Returns:
+		*	*string*
+		*
+		* Examples:
+		*	yootil.storage.get("mykey") // Will look in session and persistent for key
+		*
+		*	yootil.storage.set("mykey", false, false) // Will look in session only
+		*
+		*	yootil.storage.set("mykey", true) // Will look in persistent only
+		*/
 		
 		get: function(key, json, persist){
 			var value = "";
@@ -51,6 +91,12 @@ yootil.storage = (function(){
 					value = yootil.storage.session.get(key);
 				}
 				
+				// Look in persistent if no 3rd param set
+				
+				if(typeof persist == "undefined" && !value){
+					value = yootil.storage.persistent.get(key);
+				}
+				
 				if(json){
 					value = JSON.parse(value);
 				}
@@ -58,6 +104,25 @@ yootil.storage = (function(){
 			
 			return value;
 		},
+	
+		/**
+		* Method: remove
+		* 	Removes a key from storage
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*	persist - *boolean* You can specify not to look in persistent by passing false or to look by passing true
+		*
+		* Returns:
+		*	yootil.storage
+		*
+		* Examples:
+		*	yootil.storage.remove("mykey") // Will look in session and persistent for key and remove it
+		*
+		*	yootil.storage.remove("mykey", false) // Will look in session only
+		*
+		*	yootil.storage.remove("mykey", true) // Will look in persistent only
+		*/
 		
 		remove: function(key, persist){
 			if(key){
@@ -66,9 +131,15 @@ yootil.storage = (function(){
 				} else {
 					yootil.storage.session.remove(key);
 				}
+				
+				// Look in persistent if no 3rd param set
+				
+				if(typeof persist == "undefined"){
+					yootil.storage.persistent.remove(key);
+				}
 			}
 			
-			return this;	
+			return this;
 		}
 		
 	};

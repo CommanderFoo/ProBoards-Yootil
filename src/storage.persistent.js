@@ -1,5 +1,8 @@
 /**
 * Namespace: yootil.storage.persistent
+*	Allows you to store a value that is peristent even after browser has closed.
+*
+*	IE 7 is supported, and uses userData to handle the storage.
 */
 
 yootil.storage.persistent = (function(){
@@ -16,7 +19,22 @@ yootil.storage.persistent = (function(){
 		}
 	}
 	
-	return {	
+	return {
+		
+		/**
+		* Method: set
+		* 	Allows you to set a key and value.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*	value - *string* The value that will be stored
+		*
+		* Returns:
+		*	yootil.storage.persistent
+		*
+		* Examples:
+		*	yootil.storage.persistent.set("mykey", "myvalue");
+		*/
 		
 		set: function(key, value){
 			if(storage_element){
@@ -26,8 +44,22 @@ yootil.storage.persistent = (function(){
 				localStorage.setItem(key, value);
 			}
 			
-			return yootil.storage;
+			return this;
 		},
+
+		/**
+		* Method: get
+		* 	Gets a value from storage in.
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*
+		* Returns:
+		*	*string*
+		*
+		* Examples:
+		*	yootil.storage.persistent.get("mykey");
+		*/
 		
 		get: function(key){
 			var value = "";
@@ -40,7 +72,21 @@ yootil.storage.persistent = (function(){
 			
 			return value;
 		},
-		
+
+		/**
+		* Method: remove
+		* 	Removes a key from storage
+		*
+		* Parameters:
+		*	key - *string* The key for the storage
+		*
+		* Returns:
+		*	yootil.storage.persistent
+		*
+		* Examples:
+		*	yootil.storage.persistent.remove("mykey");
+		*/
+				
 		remove: function(key){
 			if(storage_element){
 				storage_element.removeAttribute(key);
@@ -48,7 +94,7 @@ yootil.storage.persistent = (function(){
 				localStorage.removeItem(key);
 			}
 			
-			return yootil.storage;
+			return this;
 		}
 		
 	};
