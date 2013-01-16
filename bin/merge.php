@@ -16,7 +16,8 @@ $files = array(
     "form",
     "page",
     "page.category",
-    "page.board"
+    "page.board",
+    "page.thread"
 );
 
 $combined = file_get_contents("txt/copyright.txt");
