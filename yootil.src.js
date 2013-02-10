@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.3
+* Version: 0.8.4
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -698,6 +698,42 @@ yootil.ajax = (function(){
 			}
 			
 			return yootil;
+		},
+		
+		/**
+		* Method: after_search
+		*	Because ProBoards uses AJAX for pagination, and on filtering (i.e members page),
+		*	we need to apply our DOM changes after the content on the page has been updated.
+		*	Currently there is no official callback, however the Live Query plugin is included,
+		*	but not recommended if you are after best performance.
+		*
+		*	Note:  Pages are cached, so you will need to check the DOM for your modified changes,
+		*	otherwise you will see it repeat without checking.
+		*
+		* Parameters:
+		*	func - *function* - The function that will be called after search.
+		*	context - *object* - Context of func
+		*
+		* Returns:
+		*	*object* Yootil
+		*/
+		
+		after_search: function(func, context){
+			var ui_as = $(".ui-autosearch");
+			
+			if(ui_as.length){
+				var fn = ui_as.autosearch("option", "afterSearch");
+
+				ui_as.autosearch("option", "afterSearch", function(){
+					fn.apply(this, arguments);
+					
+					if(context){
+						$.proxy(func, context)();
+					} else {
+						func();
+					}
+				});	
+			}
 		}
 	
 	};
