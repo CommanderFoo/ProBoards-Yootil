@@ -117,7 +117,7 @@ yootil = (function(){
 		*
 		* Parameters:
 		*	str - *string* This is the string that is going to be padded
-		*	len - *integer* The length of the string to be returned
+		*	len - *integer* The length of the string to be returned, defaults to 6
 		*	pad_str - *string* The string to pad with
 		*	pad_pos - *mixed* Position of the padding, can be 1, "RIGHT", for right padding.  Default is left.
 		*
@@ -132,7 +132,7 @@ yootil = (function(){
 		
 		pad: function(str, len, pad_str, pad_pos){
 			var pad_str = (pad_str)? pad_str : "0";
-			var len = (len)? len : 8;
+			var len = (len)? len : 6;
 			var pad_pos = (pad_pos)? pad_pos : 0;
 			
 			while(str.toString().length < len){
@@ -145,7 +145,7 @@ yootil = (function(){
 						
 					default :
 						str = pad_str + str.toString();
-				
+						
 				}
 			}
 			
