@@ -384,6 +384,42 @@ yootil.user = (function(){
 			}
 			
 			return "";
+		},
+		
+		/**
+		* Function: group_ids
+		*	Gets users group ids
+		*
+		* Returns:
+		*	*array*
+		*/
+		
+		group_ids: function(){
+			if(this.has_data()){
+				if(typeof this.data.group_ids != "undefined"){
+					return this.data.group_ids;
+				}
+			}
+			
+			return [];
+		},
+		
+		/**
+		* Function: groups
+		*	Gets users groups
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		groups: function(){
+			if(this.has_data()){
+				if(typeof this.data.groups != "undefined"){
+					return this.data.groups;
+				}
+			}
+			
+			return {};
 		}
 		
 	};
