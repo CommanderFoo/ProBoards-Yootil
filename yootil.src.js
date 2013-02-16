@@ -145,10 +145,9 @@ yootil = (function(){
 			var pad_pos = (pad_pos)? pad_pos : 0;
 			
 			while(str.toString().length < len){
-				switch(pad_pos.toString()){
+				switch(pad_pos.toString().toLowerCase()){
 				
 					case "1" :
-					case "RIGHT" :
 					case "right" :
 						str = str.toString() + pad_str;
 						break;
