@@ -75,7 +75,7 @@ yootil = (function(){
 		*	*string* Formatted string.
 		*
 		* Examples:
-		*	yootilS.number_format(1000); // 1,000
+		*	yootil.number_format(1000); // 1,000
 		*/
 		
 		number_format: function(str, delim){
@@ -109,8 +109,49 @@ yootil = (function(){
 			}
 			
 			return true;
+		},
+		
+		/**
+		* Method: pad
+		*	 Pad a string to a certain length with another string on the left or right side of passed in string.
+		*
+		* Parameters:
+		*	str - *string* This is the string that is going to be padded
+		*	len - *integer* The length of the string to be returned
+		*	pad_str - *string* The string to pad with
+		*	pad_pos - *mixed* Position of the padding, can be 1, "RIGHT", for right padding.  Default is left.
+		*
+		* Returns:
+		*	*string*
+		*
+		* Examples:
+		*	yootil.pad(5, 6, "0"); // 000005
+		*
+		*	yootil.pad(5, 6, "#", "RIGHT"); // 5#####
+		*/
+		
+		pad: function(str, len, pad_str, pad_pos){
+			var pad_str = (pad_str)? pad_str : "0";
+			var len = (len)? len : 8;
+			var pad_pos = (pad_pos)? pad_pos : 0;
+			
+			while(str.toString().length < len){
+				switch(pad_pos.toString()){
+				
+					case "1" :
+					case "RIGHT" :
+					case "right" :
+						str = str.toString() + pad_str;
+						break;
+						
+					default :
+						str = pad_str + str.toString();
+				
+				}
+			}
+			
+			return str;
 		}
-	
 	
 	};
 	

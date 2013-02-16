@@ -150,6 +150,240 @@ yootil.user = (function(){
 			}
 			
 			return "";
+		},
+		
+		/**
+		* Function: avatar
+		*	Gets the users avatar (HTML)
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		avatar: function(){
+			if(this.has_data()){
+				if(typeof this.data.avatar != "undefined"){
+					return this.data.avatar;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: birthday
+		*	Gets the users birthday object
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		birthday: function(){
+			if(this.has_data()){
+				if(typeof this.data.birthday != "undefined"){
+					return this.data.birthday;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: date_format
+		*	Gets the users date format (i.e d/m/y)
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		date_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.date_format != "undefined"){
+					return this.data.date_format;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: friends
+		*	Gets the users friends
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		friends: function(){
+			if(this.has_data()){
+				if(typeof this.data.friends != "undefined"){
+					return this.data.friends;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: has_new_messages
+		*	Checks to see if user has new messages
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		has_new_messages: function(){
+			if(this.has_data()){
+				if(typeof this.data.has_new_messages != "undefined"){
+					return this.data.has_new_messages;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: instant_messengers
+		*	Gets users instant messengers
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		instant_messengers: function(){
+			if(this.has_data()){
+				if(typeof this.data.instant_messengers != "undefined"){
+					return this.data.instant_messengers;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: last_online
+		*	Gets users last online object
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		last_online: function(){
+			if(this.has_data()){
+				if(typeof this.data.last_online != "undefined"){
+					return this.data.last_online;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: posts
+		*	Gets users post count
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		posts: function(){
+			if(this.has_data()){
+				if(typeof this.data.posts != "undefined"){
+					return this.data.posts;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: rank
+		*	Gets users rank
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		rank: function(){
+			if(this.has_data()){
+				if(typeof this.data.rank != "undefined"){
+					return this.data.rank;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: registered_on
+		*	Gets users registered on date
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		registered_on: function(){
+			if(this.has_data()){
+				if(typeof this.data.registered_on != "undefined"){
+					return this.data.registered_on;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: status
+		*	Gets users status
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		status: function(){
+			if(this.has_data()){
+				if(typeof this.data.status != "undefined"){
+					return this.data.status;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: time_format
+		*	Gets users time format
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		time_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.time_format != "undefined"){
+					return this.data.time_format;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: username
+		*	Gets users username
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		username: function(){
+			if(this.has_data()){
+				if(typeof this.data.username != "undefined"){
+					return this.data.username;
+				}
+			}
+			
+			return "";
 		}
 		
 	};

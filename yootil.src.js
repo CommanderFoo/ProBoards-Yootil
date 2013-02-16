@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.4
+* Version: 0.8.5
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -84,7 +84,7 @@ yootil = (function(){
 		*	*string* Formatted string.
 		*
 		* Examples:
-		*	yootilS.number_format(1000); // 1,000
+		*	yootil.number_format(1000); // 1,000
 		*/
 		
 		number_format: function(str, delim){
@@ -118,8 +118,49 @@ yootil = (function(){
 			}
 			
 			return true;
+		},
+		
+		/**
+		* Method: pad
+		*	 Pad a string to a certain length with another string on the left or right side of passed in string.
+		*
+		* Parameters:
+		*	str - *string* This is the string that is going to be padded
+		*	len - *integer* The length of the string to be returned
+		*	pad_str - *string* The string to pad with
+		*	pad_pos - *mixed* Position of the padding, can be 1, "RIGHT", for right padding.  Default is left.
+		*
+		* Returns:
+		*	*string*
+		*
+		* Examples:
+		*	yootil.pad(5, 6, "0"); // 000005
+		*
+		*	yootil.pad(5, 6, "#", "RIGHT"); // 5#####
+		*/
+		
+		pad: function(str, len, pad_str, pad_pos){
+			var pad_str = (pad_str)? pad_str : "0";
+			var len = (len)? len : 8;
+			var pad_pos = (pad_pos)? pad_pos : 0;
+			
+			while(str.toString().length < len){
+				switch(pad_pos.toString()){
+				
+					case "1" :
+					case "RIGHT" :
+					case "right" :
+						str = str.toString() + pad_str;
+						break;
+						
+					default :
+						str = pad_str + str.toString();
+				
+				}
+			}
+			
+			return str;
 		}
-	
 	
 	};
 	
@@ -641,6 +682,240 @@ yootil.user = (function(){
 			if(this.has_data()){
 				if(typeof this.data.url != "undefined"){
 					return this.data.url;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: avatar
+		*	Gets the users avatar (HTML)
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		avatar: function(){
+			if(this.has_data()){
+				if(typeof this.data.avatar != "undefined"){
+					return this.data.avatar;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: birthday
+		*	Gets the users birthday object
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		birthday: function(){
+			if(this.has_data()){
+				if(typeof this.data.birthday != "undefined"){
+					return this.data.birthday;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: date_format
+		*	Gets the users date format (i.e d/m/y)
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		date_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.date_format != "undefined"){
+					return this.data.date_format;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: friends
+		*	Gets the users friends
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		friends: function(){
+			if(this.has_data()){
+				if(typeof this.data.friends != "undefined"){
+					return this.data.friends;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: has_new_messages
+		*	Checks to see if user has new messages
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		has_new_messages: function(){
+			if(this.has_data()){
+				if(typeof this.data.has_new_messages != "undefined"){
+					return this.data.has_new_messages;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: instant_messengers
+		*	Gets users instant messengers
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		instant_messengers: function(){
+			if(this.has_data()){
+				if(typeof this.data.instant_messengers != "undefined"){
+					return this.data.instant_messengers;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: last_online
+		*	Gets users last online object
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		last_online: function(){
+			if(this.has_data()){
+				if(typeof this.data.last_online != "undefined"){
+					return this.data.last_online;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: posts
+		*	Gets users post count
+		*
+		* Returns:
+		*	*integer*
+		*/
+		
+		posts: function(){
+			if(this.has_data()){
+				if(typeof this.data.posts != "undefined"){
+					return this.data.posts;
+				}
+			}
+			
+			return 0;
+		},
+		
+		/**
+		* Function: rank
+		*	Gets users rank
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		rank: function(){
+			if(this.has_data()){
+				if(typeof this.data.rank != "undefined"){
+					return this.data.rank;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: registered_on
+		*	Gets users registered on date
+		*
+		* Returns:
+		*	*object*
+		*/
+		
+		registered_on: function(){
+			if(this.has_data()){
+				if(typeof this.data.registered_on != "undefined"){
+					return this.data.registered_on;
+				}
+			}
+			
+			return {};
+		},
+		
+		/**
+		* Function: status
+		*	Gets users status
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		status: function(){
+			if(this.has_data()){
+				if(typeof this.data.status != "undefined"){
+					return this.data.status;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: time_format
+		*	Gets users time format
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		time_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.time_format != "undefined"){
+					return this.data.time_format;
+				}
+			}
+			
+			return "";
+		},
+		
+		/**
+		* Function: username
+		*	Gets users username
+		*
+		* Returns:
+		*	*string*
+		*/
+		
+		username: function(){
+			if(this.has_data()){
+				if(typeof this.data.username != "undefined"){
+					return this.data.username;
 				}
 			}
 			
