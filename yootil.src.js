@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.6
+* Version: 0.8.7
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -2619,11 +2619,13 @@ yootil.bar = (function(){
 			if(this._bar.find("#yootil-bar a").length > 0){
 				var display = yootil.storage.get("yootil_bar", false);
 				
-				if(display == "1" || display.length == 0){
-					this._bar.find("#yootil-bar").css("display", "inline-block");
-				} else {
-					this._bar.find("> img").attr("src", "/images/button_collapse.png").attr("alt", ">");
-					this._bar.find("#yootil-bar").css("display", "none");
+				if(display){
+					if(display.toString() == "1" || display.toString().length == 0){
+						this._bar.find("#yootil-bar").css("display", "inline-block");
+					} else {
+						this._bar.find("> img").attr("src", "/images/button_collapse.png").attr("alt", ">");
+						this._bar.find("#yootil-bar").css("display", "none");
+					}
 				}
 				
 				this._bar.css("display", "");
@@ -2673,7 +2675,7 @@ yootil.bar = (function(){
 					$(this).attr("src", "/images/button_collapse.png").attr("alt", ">");
 				}
 				
-				yootil.storage.set("yootil_bar", ((yootil_bar.is(":visible"))? 1 : 0), false, true);
+				yootil.storage.set("yootil_bar", ((yootil_bar.is(":visible"))? "1" : "0"), false, true);
 			});
 			
 			$("body").append(plugin_bar);
