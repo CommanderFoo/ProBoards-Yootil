@@ -1055,7 +1055,7 @@ yootil.ajax = (function(){
 *	Allows us to play a sound (doesn't use HTML 5 Audio)
 *
 *
-* 	Didn't want to use a 3rd party library, they are too big for sometihng that won't 
+* 	Didn't want to use a 3rd party library, they are too big for something that won't 
 *	get used that often by plugins.
 *
 *
@@ -1095,7 +1095,7 @@ yootil.sound = (function(){
 						
 			// IE will play a double sound, so need to add bgsound element to the body
 			// first, then set the src.
-			// Chrome doesn't seem to like set the src later, so we just remove and append
+			// Chrome doesn't seem to like seting the src later, so we just remove and append
 			
 			if($.browser.msie){
 				if(!this.audio_obj){
