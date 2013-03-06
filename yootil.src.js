@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.7
+* Version: 0.8.8
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -2601,13 +2601,22 @@ yootil.bar = (function(){
 		*	link - *string* URL for the item
 		*	img - *string* URL for the image
 		*	alt - *string* Alt / title for the image
+		*	func - *function* Pass function to be executed when clicked on
+		*	context - *mixed* Context of the function
 		*/
 		
-		add: function(link, img, alt){
+		add: function(link, img, alt, func, context){
 			if(this.has_bar()){
 				if(link && img){
 					var alt = alt || "";
+					
 					var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
+					
+					if(func && typeof func == "function"){
+						item.click(function(){
+							return $.proxy(func, context)();
+						});
+					}
 					
 					this._bar.find("#yootil-bar").append(item);
 					this.show_bar();
