@@ -97,7 +97,7 @@ yootil.storage = (function(){
 					value = yootil.storage.persistent.get(key);
 				}
 				
-				if(json){
+				if(json && yootil.is_json(value)){
 					value = JSON.parse(value);
 				}
 			}

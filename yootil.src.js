@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.8
+* Version: 0.8.9
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -1219,7 +1219,7 @@ yootil.storage = (function(){
 					value = yootil.storage.persistent.get(key);
 				}
 				
-				if(json){
+				if(json && yootil.is_json(value)){
 					value = JSON.parse(value);
 				}
 			}
