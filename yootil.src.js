@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.9
+* Version: 0.8.10
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -2578,6 +2578,10 @@ yootil.bar = (function(){
 		
 		_bar: null,
 		
+		_items: {},
+		
+		_total_items: 0,
+		
 		has_bar: function(){
 			if(this._bar){
 				return true;
@@ -2601,16 +2605,20 @@ yootil.bar = (function(){
 		*	link - *string* URL for the item
 		*	img - *string* URL for the image
 		*	alt - *string* Alt / title for the image
+		*	id - *string* Pass in a unique ID if you wish to have the option to remove it later
 		*	func - *function* Pass function to be executed when clicked on
 		*	context - *mixed* Context of the function
 		*/
 		
-		add: function(link, img, alt, func, context){
+		add: function(link, img, alt, id, func, context){
 			if(this.has_bar()){
 				if(link && img){
 					var alt = alt || "";
-					
 					var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
+					
+					if(id && id.toString().length){
+						this._items["_" + id.toString()] = item;
+					}
 					
 					if(func && typeof func == "function"){
 						item.click(function(){
@@ -2618,10 +2626,82 @@ yootil.bar = (function(){
 						});
 					}
 					
+					this._total_items ++;
 					this._bar.find("#yootil-bar").append(item);
 					this.show_bar();
 				}
 			}
+		},
+
+		/**
+		* Method: remove
+		*	Use this to remove an item to the Yootil Bar
+		*
+		* Parameters:
+		*	id - *string* The unique ID used when adding the item
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		remove: function(id){
+			if(id && id.toString().length && this._items["_" + id.toString()]){
+				this._items["_" + id.toString()].remove();
+				delete this._items["_" + id.toString()];
+				this._total_items --;
+				
+				if(this._bar.find("#yootil-bar a").length == 0){
+					this._bar.css("display", "none");
+				}
+			}
+		},
+
+		/**
+		* Method: total_items
+		*	Find out how many items are currently sitting in the bar
+		*
+		* Returns:
+		*	*integer"
+		*/
+		
+		total_items: function(){
+			return this._total_items;
+		},
+		
+		/**
+		* Method: get
+		*	Use this to get the jQuery item (a tag)
+		*
+		* Parameters:
+		*	id - *string* The unique ID used when adding the item
+		*
+		* Returns:
+		*	*object* jQuery object is returned that wraps around the a tag
+		*/
+			
+		get: function(id){
+			if(id && id.toString().length && this._items["_" + id.toString()]){
+				return this._items["_" + id.toString()];
+			}
+		},
+
+		/**
+		* Method: has
+		*	Use this to see if an item exists in the bar
+		*
+		* Parameters:
+		*	id - *string* The unique ID used when adding the item
+		*
+		* Returns:
+		*	*boolean*
+		*/
+		
+		has: function(id){
+			if(id && id.toString().length && this._items["_" + id.toString()]){
+				return true;
+			}
+			
+			return false;
 		},
 		
 		show_bar: function(){
