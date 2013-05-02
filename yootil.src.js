@@ -2391,7 +2391,7 @@ yootil.page.board = (function(){
 
 /**
 * Namespace: yootil.page.member
-*	Various methods to help get board information
+*	Various methods to help get member information
 */
 
 yootil.page.member = (function(){
