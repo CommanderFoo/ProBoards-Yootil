@@ -17,6 +17,7 @@ $files = array(
 	"page",
 	"page.category",
 	"page.board",
+	"page.member",
 	"page.thread",
 	"bar"
 );
