@@ -2159,6 +2159,7 @@ yootil.form = (function(){
 			
 			return [];
 		},
+		
 		/**
 		* Method: quick_reply_form
 		*	Checks for any form to do with quick replies, this includes threads and conversations
