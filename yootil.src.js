@@ -1622,7 +1622,7 @@ yootil.location.check = (function(){
         */
                 
         messaging: function(){
-			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote();
+			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote() || this.conversation_new_user();
         },
 
         /**
@@ -1658,11 +1658,11 @@ yootil.location.check = (function(){
         */
         
 		conversation_new: function(){
-			return this.__is_page("new_conversation") || this.__is_page("create_conversation");
+			return this.__is_page("new_conversation") || this.__is_page("create_conversation") || this.__is_page("conversation_new_user");
 		},
 
 		/**
-        * Method: convertation_create
+        * Method: conversation_create
         *   Are we currently creating a new conversation?
         *
         * Returns:
@@ -1671,6 +1671,18 @@ yootil.location.check = (function(){
         
 		conversation_create: function(){
 			return this.__is_page("create_conversation");
+		},
+		
+		/**
+        * Method: conversation_new_user
+        *   Are we currently creating a new conversation (new_user_conversation)?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+		conversation_new_user: function(){
+			return this.__is_page("new_user_conversation");
 		},
 				
         /**
