@@ -2185,6 +2185,22 @@ yootil.form = (function(){
 		},
 		
 		/**
+		* Method: edit_thread_form
+		*	Checks for edit thread form.
+		*
+		* Returns:
+		*	*array* / *jQuery*
+		*/
+		
+		edit_thread_form: function(){
+			if(yootil.location.check.editing_thread()){
+				return $("form.form_thread_edit");
+			}
+			
+			return [];
+		},
+		
+		/**
 		* Method: quick_reply_form
 		*	Checks for any form to do with quick replies, this includes threads and conversations
 		*
