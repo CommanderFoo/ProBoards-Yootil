@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.11
+* Version: 0.8.12
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -2130,7 +2130,7 @@ yootil.form = (function(){
 
 		/**
 		* Method: post_form
-		*	Checks for any form to do with posting on the post page.
+		*	Checks for a form to do with posting on the post page.
 		*
 		* Returns:
 		*	*array* / *jQuery*
@@ -2144,6 +2144,21 @@ yootil.form = (function(){
 			return $("form.form_post_new");
 		},
 
+		/**
+		* Method: edit_post_form
+		*	Checks for a form to do with edit on the post page.
+		*
+		* Returns:
+		*	*array* / *jQuery*
+		*/
+		
+		edit_post_form: function(){
+			if(yootil.location.check.editing_post()){
+				return $("form.form_post_edit");
+			}
+			
+			return [];
+		},
 		/**
 		* Method: quick_reply_form
 		*	Checks for any form to do with quick replies, this includes threads and conversations
