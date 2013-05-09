@@ -136,7 +136,7 @@ yootil.location.check = (function(){
         */
                 
         messaging: function(){
-			return this.message_new() || this.conversation_new() || this.conversation_create();
+			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote();
         },
 
         /**
@@ -149,6 +149,18 @@ yootil.location.check = (function(){
         
 		message_new: function(){
 			return this.__is_page("new_message");
+		},
+		
+        /**
+        * Method: message_quote
+        *   Are we currently replying to a conversation by quoting?
+        *
+        * Returns:
+        *   *boolean*
+        */
+        
+		message_quote: function(){
+			return this.__is_page("quote_messages");
 		},
 		
 		/**
