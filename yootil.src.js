@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.12
+* Version: 0.8.13
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -159,6 +159,32 @@ yootil = (function(){
 			}
 			
 			return str;
+		},
+	
+		/**
+		* Method: outer_html
+		*	Simple method to get the outerHTML of an element.  It will use outerHTML if
+		*	supported, or use jQuery.
+		*
+		* Parameters:
+		*	elem - *object* The element you want the outer HTML to be returned
+		*
+		* Returns:
+		*	*string*
+		*/
+			
+		outer_html: function(elem){
+			if(elem){
+				elem = (elem.length)? elem[0] : elem;
+				
+				if(elem.outerHTML){
+					return elem.outerHTML;
+				} else {
+					return $("<div />").append($(element).clone()).html();
+				}
+			}
+			
+			return null;
 		}
 	
 	};
