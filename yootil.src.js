@@ -180,7 +180,7 @@ yootil = (function(){
 				if(elem.outerHTML){
 					return elem.outerHTML;
 				} else {
-					return $("<div />").append($(element).clone()).html();
+					return $("<div />").append($(elem).clone()).html();
 				}
 			}
 			
