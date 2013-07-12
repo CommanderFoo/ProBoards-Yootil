@@ -38,15 +38,15 @@ yootil = (function(){
 					send: function(headers, callback){
 						xdr = new XDomainRequest();
 						
-						xdr.onload = function(){console.log(1)
+						xdr.onload = function(){
 							callback(200, "success", [this.responseText]);
 						}
 
-						xdr.ontimeout = function(){console.log(2)
+						xdr.ontimeout = function(){
 							callback(500, ["The requested resource timed out."]);
 						}
 
-						xdr.onerror = function(){console.log(3)
+						xdr.onerror = function(){
 							callback(404, "error", ["The requested resource could not be found."]);
 						}
 
