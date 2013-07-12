@@ -19,6 +19,44 @@
 
 yootil = (function(){
 
+	if(!$.support.cors && $.ajaxTransport && window.XDomainRequest){
+		$.ajaxTransport("json", function(options, originalOptions, jqXHR){
+			if(options.crossDomain){
+				var xdr = null;
+			
+				return {
+
+					send: function(headers, callback){
+						xdr = new XDomainRequest();
+						
+						xdr.onload = function(){console.log(1)
+							callback(200, "success", [this.responseText]);
+						}
+
+						xdr.ontimeout = function(){console.log(2)
+							callback(500, ["The requested resource timed out."]);
+						}
+
+						xdr.onerror = function(){console.log(3)
+							callback(404, "error", ["The requested resource could not be found."]);
+						}
+
+						xdr.onprogress = function(){};
+						
+						xdr.open(options.type, options.url);
+						xdr.send(options.data || null);
+					},
+					
+					abort: function(){
+						if(xdr){
+							xdr.abort();
+						}
+					}
+				};
+			}
+		});
+	}
+
 	return {
 		
 		host: location.hostname,
