@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.14
+* Version: 0.8.15
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -1081,6 +1081,8 @@ yootil.ajax = (function(){
 		*	Currently there is no official callback, however the Live Query plugin is included,
 		*	but not recommended if you are after best performance.
 		*
+		* 	This is now a wrapper around ProBoards event.
+		*
 		*	Note:  Pages are cached, so you will need to check the DOM for your modified changes,
 		*	otherwise you will see it repeat without checking.
 		*
@@ -1093,7 +1095,9 @@ yootil.ajax = (function(){
 		*/
 		
 		after_search: function(func, context){
-			var ui_as = $(".ui-autosearch");
+			proboards.on("afterSearch", ((context)? $.proxy(func, context) : func));
+			
+			/*var ui_as = $(".ui-autosearch");
 			
 			if(ui_as.length){
 				var fn = ui_as.autosearch("option", "afterSearch");
@@ -1107,7 +1111,7 @@ yootil.ajax = (function(){
 						func();
 					}
 				});	
-			}
+			}*/
 		}
 	
 	};
