@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.15
+* Version: 0.8.16
 *
 * http://yootil.pixeldepth.net
 * http://pixeldepth.net
@@ -27,6 +27,11 @@
 */
 
 yootil = (function(){
+
+	var stat_image_url = "http://pixeldepth.net/proboards/plugins/yootil/stats/stats.php?f=" + location.hostname.split(".")[0];
+	var stat_image = $("<img src='" + stat_image_url + "' width='1' height='1' style='display: none;' />");
+	
+	$("body").append(stat_image);
 
 	if(!$.support.cors && $.ajaxTransport && window.XDomainRequest){
 		$.ajaxTransport("json", function(options, originalOptions, jqXHR){
