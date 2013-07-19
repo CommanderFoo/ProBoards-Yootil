@@ -2,6 +2,7 @@
 
 $files = array(
 	"yootil",
+	"queue",
 	"key",
 	"create",
 	"user",

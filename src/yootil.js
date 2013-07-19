@@ -61,7 +61,7 @@ yootil = (function(){
 			}
 		});
 	}
-
+	
 	return {
 		
 		host: location.hostname,
