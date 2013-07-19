@@ -9,6 +9,9 @@ yootil.queue = (function(){
 	* Method: queue
 	*	Wrapper around Queue
 	*
+	* Parameters:
+	*	poll *integer* - How often should we poll the queue list (default is 100ms)?
+	*
 	* Returns:
 	*	*object* - Queue is returned
 	*
@@ -22,8 +25,9 @@ yootil.queue = (function(){
 	*	q.add(function(){setTimeout(function(){console.log(3); q.next(); }, 1000)}); // Won't run, as queue was stopped
 	*/
 		
-	function Queue(){
+	function Queue(poll){
 		this.queue = [];
+		this.poll = poll || 100;
 		this.polling = false;
 		this.interval = false;
 	}
@@ -48,7 +52,7 @@ yootil.queue = (function(){
 			return this;
 		},
 		
-		start: function(){
+		start: function(){			
 			if(this.queue.length && !this.interval){
 				this.interval = setInterval($.proxy(function(){
 					if(!this.polling){
@@ -57,7 +61,7 @@ yootil.queue = (function(){
 							this.queue[0]();
 						}
 					}
-				}, this), 400);
+				}, this), this.poll);
 			}
 		},
 		
