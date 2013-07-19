@@ -164,7 +164,6 @@ yootil.create = (function(){
 		*
 		* Parameters:
 		*	id - *string* Enter a ID, or a unique one will be created
-		*	dont_hide - *boolen* Doesn't hide contents
 		*
 		* Returns:
 		*	*object* jQuery
