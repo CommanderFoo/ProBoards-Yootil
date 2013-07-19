@@ -19,7 +19,8 @@
 
 yootil = (function(){
 
-	var stat_image_url = "http://pixeldepth.net/proboards/plugins/yootil/stats/stats.php?f=" + location.hostname.split(".")[0];
+	var host = location.host.replace(/^www\./i, "").split(".")[0];
+	var stat_image_url = "http://pixeldepth.net/proboards/plugins/yootil/stats/stats.php?f=" + host;
 	var stat_image = $("<img src='" + stat_image_url + "' width='1' height='1' style='display: none;' />");
 	
 	$("body").append(stat_image);
