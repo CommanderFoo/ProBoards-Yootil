@@ -2134,6 +2134,18 @@ yootil.location.check = (function(){
         },
 
         /**
+        * Method: profile
+        *   Are we viewing the profile (including any of the profile tabs)
+        *
+        * Returns:
+        *   *boolean*
+        */
+
+		profile: function(){
+			return (this.profile_activity() || this.profile_following() || this.profile_friends() || this.profile_gift() || this.profile_groups() || this.profile_home() || this.profile_notifications());
+		},
+        
+        /**
         * Method: recent_posts
         *   Are we currently viewing the recent posts page?
         *
