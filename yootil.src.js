@@ -683,13 +683,13 @@ yootil.create = (function(){
 			return yootil.create;
 		},
 		
-/**
+		/**
 		* Function: nav_branch
 		*	Extend the nav tree easily
 		*
 		* Parameters:
 		*	url - *string* URL of the branch.
-		*	text - *boolean* Text of the branch.
+		*	text - *string* Text of the branch.
 		*
 		* Returns:
 		*	*object* Branch jQuery wrapped
@@ -707,6 +707,57 @@ yootil.create = (function(){
 			}
 			
 			return branch;
+		},
+
+		/**
+		* Function: profile_tab
+		*	Create a new tab on the profile
+		*
+		* Parameters:
+		*	text - *string* Text of the branch.
+		*	page - *string* URL of the branch.
+		*	active - *boolean* Active page
+		*
+		* Returns:
+		*	*object* Yootil
+		*
+		* Examples:
+		*	yootil.create.profile_tab("Test", "test") // /user/1/test
+		*/
+		
+		profile_tab: function(text, page, active){
+			if(yootil.location.check.profile()){
+				var active_class = (active)? " class='ui-active'" : "";
+				var ul = $("div.show-user div.ui-tabMenu ul");
+				
+				if(ul.length){
+					ul.append($("<li" + active_class + "><a href='/user/" + yootil.page.member.id() + "/" + page + "'>" + text + "</a></li>"));
+				}
+			}
+			
+			return yootil;
+		},
+		
+		/**
+		* Function: profile_content_box
+		*	Creates a profile content box.
+		*
+		* Parameters:
+		*	id - *string* Enter a ID, or a unique one will be created
+		*	dont_hide - *boolen* Doesn't hide contents
+		*
+		* Returns:
+		*	*object* jQuery
+		*
+		* Examples:
+		*	yootil.create.profile_content_box();
+		*/
+		
+		profile_content_box: function(id){
+			var uid = (id || $.unique_id("yootil-"));
+			var box = $("<div />").addClass("content-box center-col").attr("id", uid);
+				
+			return box;
 		}
 		
 	};
