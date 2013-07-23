@@ -19,7 +19,7 @@
 *
 *	Compressed - http://yootil.pixeldepth.net/yootil.min.js
 *
-*	Experimental - http://yootil.pixeldepth.net/yootil.src.js
+*	Dev Version - http://yootil.pixeldepth.net/yootil.dev.js
 *
 *	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
 *

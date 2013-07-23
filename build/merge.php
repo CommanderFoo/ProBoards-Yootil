@@ -8,6 +8,6 @@ foreach($files as $file){
     $combined .= "\n\n" . file_get_contents("../src/" . $file . ".js");
 }
 
-$handle = fopen("../yootil.src.js", "w");
+$handle = fopen("../yootil.dev.js", "w");
 
 fwrite($handle, $combined);
