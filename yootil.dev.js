@@ -2,9 +2,6 @@
 * Version: 0.8.17
 *
 * http://yootil.pixeldepth.net
-* http://pixeldepth.net
-* http://sz-ex.com
-* http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
 */
 
 /**
@@ -19,7 +16,7 @@
 *
 *	Compressed - http://yootil.pixeldepth.net/yootil.min.js
 *
-*	Dev Version - http://yootil.pixeldepth.net/yootil.dev.js
+*	Dev - https://raw.github.com/pixelDepth/Yootil/master/yootil.dev.js
 *
 *	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
 *
