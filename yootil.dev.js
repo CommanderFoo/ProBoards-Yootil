@@ -1,5 +1,5 @@
 /**
-* Version: 0.8.17
+* Version: 1.0.0
 *
 * http://yootil.pixeldepth.net
 */
@@ -24,11 +24,6 @@
 */
 
 yootil = (function(){
-
-	//var stat_image_url = "http://pixeldepth.net/proboards/plugins/yootil/stats/stats.php?f=" + location.host.replace("www.", "");
-	//var stat_image = $("<img src='" + stat_image_url + "' width='1' height='1' style='display: none;' />");
-	
-	//$("body").append(stat_image);
 
 	if(!$.support.cors && $.ajaxTransport && window.XDomainRequest){
 		$.ajaxTransport("json", function(options, originalOptions, jqXHR){
@@ -69,6 +64,10 @@ yootil = (function(){
 	}
 	
 	return {
+
+		VERSION: "1.0.0",
+		
+		settings: {},
 		
 		host: location.hostname,
 		
@@ -225,11 +224,53 @@ yootil = (function(){
 			}
 			
 			return null;
+		},
+		
+		/**
+		* Method: convert_versions
+		*	Simple method to convert version numbers (format being 0.0.0).
+		*
+		* Parameters:
+		*	v1 - *string* Assumed old version
+		*	v2 - *string* Assumed new version
+		*
+		* Returns:
+		*	*array*
+		*
+		* Examples:
+		*	var versions = yootil.convert_versions("0.5.7", "0.8.2"); // [056, 082]
+		*/
+		
+		convert_versions: function(v1, v2){
+			var versions = [];
+			
+			$([v1, v2]).each(function(i, e){
+				var n = (e || "").replace(/\./g, "");
+				
+				while(n.length < 3){
+					n += "0";
+				}
+				
+				versions.push(n);			
+			});
+			
+			return versions;
+		},
+		
+		init: function(){
+			var plugin = proboards.plugin.get("yootil_library");
+			var settings = (plugin && plugin.settings)? plugin.settings : false;
+				
+			if(settings){
+				this.settings = settings;
+			}
+			
+			return this;
 		}
 	
 	};
 	
-})();
+})().init();
 
 /**
 * Namespace: yootil.queue
@@ -753,6 +794,25 @@ yootil.create = (function(){
 			var box = $("<div />").addClass("content-box center-col").attr("id", uid);
 				
 			return box;
+		},
+		
+		/**
+		* Function: bbc_button
+		*	Adds a new BBC button to the end on the reply page.
+		*
+		* Parameters:
+		*	img - *object* The image you wish to add
+		*
+		* Returns:
+		*	*object* Yootil
+		*/
+		
+		bbc_button: function(img){
+			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
+				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append($("<li>").addClass("button").append($(img)));
+			});
+			
+			return yootil;
 		}
 		
 	};
@@ -3143,3 +3203,113 @@ yootil.bar = (function(){
     return bar;
     
 })();
+
+yootil.updater = (function(){
+	
+	return {
+		
+		init: function(){
+			if(yootil.settings){
+				this.check_version();
+			}
+			
+			return this;
+		},
+		
+		check_version: function(){
+			if(yootil.settings.check_for_update && yootil.user.logged_in() && yootil.user.is_staff()){
+				var data = yootil.storage.get("yootil_last_check", true);
+				var first_data = false;
+				
+				if(!data || !data.t){
+					first_data = true;
+					
+					data = {
+						t: (+ new Date()),
+						v: yootil.VERSION
+					};
+				}
+				
+				var DAY = (86400 * 1000);
+				var WEEK = (DAY * 7);
+				var WEEK_2 = (WEEK * 2);
+				var WEEK_3 = (WEEK * 3);
+				var MONTH = (WEEK_2 * 2);
+				
+				var check_ts = 0;
+				
+				switch(parseInt(yootil.settings.how_often)){
+				
+					case 1 :
+					case 2 :
+					case 3 :
+					case 4 :
+					case 5 :
+					case 6 :
+					case 7 :
+						check_ts = (DAY * parseInt(yootil.settings.how_often));
+						break;
+						
+					case 8 :
+						check_ts = WEEK_2;
+						break
+						
+					case 9 :
+						check_ts = WEEK_3;
+						break
+						
+					case 10 :
+						check_ts = MONTH;
+						break
+						
+				}
+				
+				var now = (+ new Date());
+					
+				if((data.t + check_ts) < now){
+					var self = this;
+					
+					$.ajax({
+						url: "http://pixeldepth.net/proboards/plugins/yootil/updates/update_check.php?t=" + (+ new Date),
+						context: this,
+						crossDomain: true,
+						dataType: "json"				
+					}).done(function(latest){
+						data = {
+							t: (+ new Date()),
+							v: latest.v
+						};
+						
+						yootil.storage.set("yootil_last_check", data, true, true);
+					});
+				}
+				
+				var versions = yootil.convert_versions(yootil.VERSION, data.v);
+				
+				if(versions[0] < versions[1]){
+					var msg = "<div class='yootil-notification-content'>";
+					
+					msg += "<p>There is a new <strong>Yootil Library</strong> version available to install / download for this forum.</p>";
+					msg += "<p>This forum currently have version <strong>" + yootil.VERSION + "</strong> installed, the latest version available to install is <strong>" + data.v + "</strong>.</p>";
+					msg += "<p>It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
+					msg += "<p style='margin-top: 8px;'>For more information, please visit the <a href='http://support.proboards.com/thread/429360/'>Yootil Library</a> forum topic on the <a href='http://support.proboards.com'>ProBoards forum</a>.</p>";
+					msg += "<p style='margin-top: 8px;'>This message can be disabled from the Yootil Library settings.</p>";
+					msg += "<p style='margin-top: 8px;'><a href='http://proboards.com/library/plugins/item/90'>ProBoards Plugin Library Link</a> | <a href='http://support.proboards.com/thread/429360/'>ProBoards Yootil Library Forum Link</a></p>";
+					msg += "</div>";
+					
+					var notification = yootil.create.container("Staff Notification: Yootil Library Update Notice", msg).show().addClass("yootil-notification");
+					
+					$(function(){
+						$("div#content").prepend(notification);
+					});
+				}
+				
+				if(first_data){
+					yootil.storage.set("yootil_last_check", data, true, true);
+				}
+			}
+		}
+		
+	};
+
+})().init();

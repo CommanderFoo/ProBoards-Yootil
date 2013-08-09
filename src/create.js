@@ -177,6 +177,25 @@ yootil.create = (function(){
 			var box = $("<div />").addClass("content-box center-col").attr("id", uid);
 				
 			return box;
+		},
+		
+		/**
+		* Function: bbc_button
+		*	Adds a new BBC button to the end on the reply page.
+		*
+		* Parameters:
+		*	img - *object* The image you wish to add
+		*
+		* Returns:
+		*	*object* Yootil
+		*/
+		
+		bbc_button: function(img){
+			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
+				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append($("<li>").addClass("button").append($(img)));
+			});
+			
+			return yootil;
 		}
 		
 	};

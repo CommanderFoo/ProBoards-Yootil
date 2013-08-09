@@ -20,7 +20,8 @@ $files = array(
 	"page.board",
 	"page.member",
 	"page.thread",
-	"bar"
+	"bar",
+	"updater"
 );
 
 ?>

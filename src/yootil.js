@@ -19,11 +19,6 @@
 
 yootil = (function(){
 
-	//var stat_image_url = "http://pixeldepth.net/proboards/plugins/yootil/stats/stats.php?f=" + location.host.replace("www.", "");
-	//var stat_image = $("<img src='" + stat_image_url + "' width='1' height='1' style='display: none;' />");
-	
-	//$("body").append(stat_image);
-
 	if(!$.support.cors && $.ajaxTransport && window.XDomainRequest){
 		$.ajaxTransport("json", function(options, originalOptions, jqXHR){
 			if(options.crossDomain){
@@ -63,6 +58,10 @@ yootil = (function(){
 	}
 	
 	return {
+
+		VERSION: "1.0.0",
+		
+		settings: {},
 		
 		host: location.hostname,
 		
@@ -219,8 +218,50 @@ yootil = (function(){
 			}
 			
 			return null;
+		},
+		
+		/**
+		* Method: convert_versions
+		*	Simple method to convert version numbers (format being 0.0.0).
+		*
+		* Parameters:
+		*	v1 - *string* Assumed old version
+		*	v2 - *string* Assumed new version
+		*
+		* Returns:
+		*	*array*
+		*
+		* Examples:
+		*	var versions = yootil.convert_versions("0.5.7", "0.8.2"); // [056, 082]
+		*/
+		
+		convert_versions: function(v1, v2){
+			var versions = [];
+			
+			$([v1, v2]).each(function(i, e){
+				var n = (e || "").replace(/\./g, "");
+				
+				while(n.length < 3){
+					n += "0";
+				}
+				
+				versions.push(n);			
+			});
+			
+			return versions;
+		},
+		
+		init: function(){
+			var plugin = proboards.plugin.get("yootil_library");
+			var settings = (plugin && plugin.settings)? plugin.settings : false;
+				
+			if(settings){
+				this.settings = settings;
+			}
+			
+			return this;
 		}
 	
 	};
 	
-})();
+})().init();
