@@ -14,6 +14,10 @@ yootil.bar = (function(){
 		_total_items: 0,
 		
 		has_bar: function(){
+			if(!bar.is_enabled()){
+				return false;
+			}
+			
 			if(this._bar){
 				return true;
 			}
@@ -150,12 +154,20 @@ yootil.bar = (function(){
 				
 				this._bar.css("display", "");
 			}
+		},
+		
+		is_enabled: function(){
+			if(yootil.settings && yootil.settings.bar_enabled && yootil.settings.bar_enabled == 0){
+				return false;
+			}
+			
+			return true;
 		}
 	
 	};
 		
-	$(function(){
-		if(!yootil.user.logged_in()){
+	$(function(){		
+		if(!yootil.user.logged_in() || !bar.is_enabled()){
 			return;
 		}
 		

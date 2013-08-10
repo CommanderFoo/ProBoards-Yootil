@@ -1,3 +1,3 @@
 /**
-* http://yootil.pixeldepth.net - Ver: 1.0.0
+* http://yootil.pixeldepth.net - {VER}
 */

@@ -1,5 +1,5 @@
 /**
-* Version: 1.0.0
+* Yootil Library: {VER}
 *
 * http://yootil.pixeldepth.net
 */

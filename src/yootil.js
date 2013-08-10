@@ -59,7 +59,7 @@ yootil = (function(){
 	
 	return {
 
-		VERSION: "1.0.0",
+		VERSION: "{VER}",
 		
 		settings: {},
 		

@@ -83,9 +83,9 @@ yootil.updater = (function(){
 				if(versions[0] < versions[1]){
 					var msg = "<div class='yootil-notification-content'>";
 					
-					msg += "<p>There is a new <strong>Yootil Library</strong> version available to install / download for this forum.</p>";
-					msg += "<p>This forum currently have version <strong>" + yootil.VERSION + "</strong> installed, the latest version available to install is <strong>" + data.v + "</strong>.</p>";
-					msg += "<p>It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
+					msg += "<p>There is a new <strong>Yootil Library</strong> version available to install / download for this forum.  It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
+					//msg += "<p>This forum currently has version <strong>" + yootil.VERSION + "</strong> installed, the latest version available to install is <strong>" + data.v + "</strong>.</p>";
+					//msg += "<p>It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
 					msg += "<p style='margin-top: 8px;'>For more information, please visit the <a href='http://support.proboards.com/thread/429360/'>Yootil Library</a> forum topic on the <a href='http://support.proboards.com'>ProBoards forum</a>.</p>";
 					msg += "<p style='margin-top: 8px;'>This message can be disabled from the Yootil Library settings.</p>";
 					msg += "<p style='margin-top: 8px;'><a href='http://proboards.com/library/plugins/item/38'>ProBoards Plugin Library Link</a> | <a href='http://support.proboards.com/thread/429360/'>ProBoards Yootil Library Forum Link</a></p>";
