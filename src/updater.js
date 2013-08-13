@@ -11,7 +11,7 @@ yootil.updater = (function(){
 		},
 		
 		check_version: function(){
-			if(yootil.settings.check_for_update && yootil.user.logged_in() && yootil.user.is_staff()){
+			if(yootil.settings.check_for_update && yootil.user.logged_in() && yootil.user.is_staff() && yootil.user.id() == 1){
 				var data = yootil.storage.get("yootil_last_check", true);
 				var first_data = false;
 				var self = this;
