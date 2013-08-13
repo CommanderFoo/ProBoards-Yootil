@@ -1,5 +1,5 @@
 /**
-* Yootil Library: 0.9.0
+* Yootil Library: 0.9.1
 *
 * http://yootil.pixeldepth.net
 */
@@ -65,7 +65,7 @@ yootil = (function(){
 	
 	return {
 
-		VERSION: "0.9.0",
+		VERSION: "0.9.1",
 		
 		settings: {},
 		
@@ -3232,6 +3232,7 @@ yootil.updater = (function(){
 			if(yootil.settings.check_for_update && yootil.user.logged_in() && yootil.user.is_staff()){
 				var data = yootil.storage.get("yootil_last_check", true);
 				var first_data = false;
+				var self = this;
 				
 				if(!data || !data.t){
 					first_data = true;
@@ -3287,10 +3288,15 @@ yootil.updater = (function(){
 						crossDomain: true,
 						dataType: "json"				
 					}).done(function(latest){
-						data = {
-							t: (+ new Date()),
-							v: latest.v
-						};
+						data.t = (+ new Date());
+					
+						var versions = yootil.convert_versions(yootil.VERSION, latest.v);
+					
+						if(versions[0] < versions[1]){
+							data.v = latest.v;
+						} else {
+							data.v = yootil.VERSION;
+						}
 						
 						yootil.storage.set("yootil_last_check", data, true, true);
 					});
@@ -3302,8 +3308,7 @@ yootil.updater = (function(){
 					var msg = "<div class='yootil-notification-content'>";
 					
 					msg += "<p>There is a new <strong>Yootil Library</strong> version available to install / download for this forum.  It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
-					//msg += "<p>This forum currently has version <strong>" + yootil.VERSION + "</strong> installed, the latest version available to install is <strong>" + data.v + "</strong>.</p>";
-					//msg += "<p>It is <strong>highly recommended</strong> to update to the latest version of this plugin.</p>";
+					msg += "<p>This forum currently has version <strong>" + yootil.VERSION + "</strong> installed, the latest version available to install is <strong>" + data.v + "</strong>.</p>";
 					msg += "<p style='margin-top: 8px;'>For more information, please visit the <a href='http://support.proboards.com/thread/429360/'>Yootil Library</a> forum topic on the <a href='http://support.proboards.com'>ProBoards forum</a>.</p>";
 					msg += "<p style='margin-top: 8px;'>This message can be disabled from the Yootil Library settings.</p>";
 					msg += "<p style='margin-top: 8px;'><a href='http://proboards.com/library/plugins/item/38'>ProBoards Plugin Library Link</a> | <a href='http://support.proboards.com/thread/429360/'>ProBoards Yootil Library Forum Link</a></p>";
