@@ -1,1 +1,1 @@
-php.exe -f merge.php
+C:\xampp\php\php.exe -f merge.php

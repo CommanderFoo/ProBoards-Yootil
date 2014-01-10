@@ -1,5 +1,5 @@
 /**
-* Yootil Library: 0.9.1
+* Yootil Library: 0.9.2
 *
 * http://yootil.pixeldepth.net
 */
@@ -65,7 +65,7 @@ yootil = (function(){
 	
 	return {
 
-		VERSION: "0.9.1",
+		VERSION: "0.9.2",
 		
 		settings: {},
 		
@@ -1783,6 +1783,9 @@ yootil.location.check = (function(){
 
     return {
 
+    	cached_route: ((proboards.data && proboards.data("route"))? proboards.data("route").name : ""),
+
+
         // Please keep these sorted alphabetically. Just helps our sanity
 
         /**
@@ -1800,7 +1803,7 @@ yootil.location.check = (function(){
         */
 
         __is_page: function(id){
-            return proboards.data && proboards.data('route') && proboards.data('route').name == id;
+            return this.cached_route == id;
         },
 
         /**
@@ -1810,7 +1813,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         board: function(){
             return this.__is_page('board');
         },
@@ -1822,7 +1825,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         bookmarks: function(){
             return this.__is_page('bookmarks');
         },
@@ -1859,7 +1862,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         forum: function(){
             // CURRENT ISSUE: This is "forum" when custom page is homepage...
             // See: http://support.proboards.com/index.cgi?board=openbetafeaturerequests&action=display&thread=429638&page=1
@@ -1910,7 +1913,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-                
+
         messaging: function(){
 			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote() || this.conversation_new_user();
         },
@@ -1922,11 +1925,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
 		message_new: function(){
 			return this.__is_page("new_message");
 		},
-		
+
         /**
         * Method: message_quote
         *   Are we currently replying to a conversation by quoting?
@@ -1934,11 +1937,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
 		message_quote: function(){
 			return this.__is_page("quote_messages");
 		},
-		
+
 		/**
         * Method: conversation_new
         *   Are we currently creating a new conversation?
@@ -1946,7 +1949,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
 		conversation_new: function(){
 			return this.__is_page("new_conversation") || this.__is_page("create_conversation") || this.__is_page("conversation_new_user");
 		},
@@ -1958,11 +1961,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
 		conversation_create: function(){
 			return this.__is_page("create_conversation");
 		},
-		
+
 		/**
         * Method: conversation_new_user
         *   Are we currently creating a new conversation (new_user_conversation)?
@@ -1970,11 +1973,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
 		conversation_new_user: function(){
 			return this.__is_page("new_user_conversation");
 		},
-				
+
         /**
         * Method: posting
         *   Are we currently trying to post/create a thread/quote a post?
@@ -1982,7 +1985,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         posting: function(){
             return this.posting_quote() || this.posting_reply() || this.posting_thread();
         },
@@ -1994,7 +1997,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         posting_quote: function(){
             return this.__is_page('quote_posts');
         },
@@ -2006,7 +2009,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         posting_reply: function(){
             return this.__is_page('new_post');
         },
@@ -2018,7 +2021,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         posting_thread: function(){
             return this.__is_page('new_thread');
         },
@@ -2030,11 +2033,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         editing_post: function(){
             return this.__is_page('edit_post');
         },
-        
+
         /**
         * Method: editing_thread
         *   Are we currently trying to edit a thread?
@@ -2042,7 +2045,7 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         editing_thread: function(){
             return this.__is_page('edit_thread');
         },
@@ -2054,11 +2057,11 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-                
+
         editing: function(){
 			return this.editing_thread() || this.editing_post();
         },
-        
+
         /**
         * Method: profile_activity
         *   Are we viewing the activity profile page?
@@ -2250,7 +2253,7 @@ yootil.location.check = (function(){
 		profile: function(){
 			return (this.profile_activity() || this.profile_following() || this.profile_friends() || this.profile_gift() || this.profile_groups() || this.profile_home() || this.profile_notifications());
 		},
-        
+
         /**
         * Method: recent_posts
         *   Are we currently viewing the recent posts page?
@@ -2306,12 +2309,12 @@ yootil.location.check = (function(){
         * Returns:
         *   *boolean*
         */
-        
+
         thread: function(){
             // View thread
             return this.__is_page('thread');
         }
-            
+
     };
  })();
 

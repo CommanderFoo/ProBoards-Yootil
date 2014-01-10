@@ -1,4 +1,4 @@
-Yootil Library 0.9.1
+Yootil Library 0.9.2
 ====================
 
 Yootil is a utilities library to help speed up development for ProBoards plugin developers.
