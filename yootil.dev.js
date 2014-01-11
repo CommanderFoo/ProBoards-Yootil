@@ -1,5 +1,5 @@
 /**
-* Yootil Library: 0.9.2
+* Yootil Library: 0.9.3
 *
 * http://yootil.pixeldepth.net
 */
@@ -65,7 +65,7 @@ yootil = (function(){
 	
 	return {
 
-		VERSION: "0.9.2",
+		VERSION: "0.9.3",
 		
 		settings: {},
 		
@@ -274,14 +274,14 @@ yootil = (function(){
 
 /**
 * Namespace: yootil.queue
-*	Wrapper around Queue object to handle queuing functions.
+*	Handle queuing functions.
 */
 
 yootil.queue = (function(){
 
 	/**
 	* Method: queue
-	*	Wrapper around Queue
+	*	Handle queuing functions.
 	*
 	* Parameters:
 	*	poll *integer* - How often should we poll the queue list (default is 100ms)?
@@ -290,15 +290,15 @@ yootil.queue = (function(){
 	*	*object* - Queue is returned
 	*
 	* Examples:
-	*	var q = new yootil.queue(); 
-	*	
+	*	var q = new yootil.queue();
+	*
 	*	q.add(function(){setTimeout(function(){console.log(1); q.next(); }, 1000)});
 	*
 	*	q.add(function(){setTimeout(function(){console.log(2); q.stop(); }, 1000)});
 	*
 	*	q.add(function(){setTimeout(function(){console.log(3); q.next(); }, 1000)}); // Won't run, as queue was stopped
 	*/
-		
+
 	function Queue(poll){
 		this.queue = [];
 		this.poll = poll || 100;
@@ -318,15 +318,15 @@ yootil.queue = (function(){
 		* Returns:
 		*	*object* - Queue is returned to allow chaining
 		*/
-		
+
 		add: function(func){
 			this.queue.push(func);
 			this.start();
-			
+
 			return this;
 		},
-		
-		start: function(){			
+
+		start: function(){
 			if(this.queue.length && !this.interval){
 				this.interval = setInterval($.proxy(function(){
 					if(!this.polling){
@@ -338,7 +338,7 @@ yootil.queue = (function(){
 				}, this), this.poll);
 			}
 		},
-		
+
 		/**
 		* Method: next
 		*	Move to the next item in the queue
@@ -346,20 +346,20 @@ yootil.queue = (function(){
 		* Returns:
 		*	*object* - Queue is returned to allow chaining
 		*/
-		
+
 		next: function(){
 			if(this.queue.length){
 				this.queue.shift();
 				this.polling = false;
 			}
-			
+
 			if(!this.queue.length){
 				clearInterval(this.interval);
 			}
-			
+
 			return this;
 		},
-		
+
 		/**
 		* Method: stop
 		*	Stop the queue
@@ -367,17 +367,17 @@ yootil.queue = (function(){
 		* Returns:
 		*	*object* - Queue is returned to allow chaining
 		*/
-		
+
 		stop: function(){
 			this.queue = [];
 			clearInterval(this.interval);
 			this.polling = this.interval = false;
-			
+
 			return this;
 		}
-		
+
 	};
-	
+
 	return Queue;
 
 })();
@@ -3006,32 +3006,32 @@ yootil.page.thread = (function(){
 yootil.bar = (function(){
 
 	var bar = {
-		
+
 		_bar: null,
-		
+
 		_items: {},
-		
+
 		_total_items: 0,
-		
+
 		has_bar: function(){
 			if(!bar.is_enabled()){
 				return false;
 			}
-			
+
 			if(this._bar){
 				return true;
 			}
-			
+
 			var the_bar = $("#yootil-bar-wrapper");
-			
+
 			if(the_bar.length == 1){
 				this._bar = the_bar;
 				return true;
 			}
-			
+
 			return false;
 		},
-		
+
 		/**
 		* Method: add
 		*	Use this to add an item to the Yootil Bar
@@ -3044,28 +3044,32 @@ yootil.bar = (function(){
 		*	func - *function* Pass function to be executed when clicked on
 		*	context - *mixed* Context of the function
 		*/
-		
+
 		add: function(link, img, alt, id, func, context){
-			if(this.has_bar()){
-				if(link && img){
-					var alt = alt || "";
-					var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
-					
-					if(id && id.toString().length){
-						this._items["_" + id.toString()] = item;
+			var self = this;
+
+			$(function(){
+				if(self.has_bar()){
+					if(link && img){
+						var alt = alt || "";
+						var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
+
+						if(id && id.toString().length){
+							self._items["_" + id.toString()] = item;
+						}
+
+						if(func && typeof func == "function"){
+							item.click(function(){
+								return $.proxy(func, context)();
+							});
+						}
+
+						self._total_items ++;
+						self._bar.find("#yootil-bar").append(item);
+						self.show_bar();
 					}
-					
-					if(func && typeof func == "function"){
-						item.click(function(){
-							return $.proxy(func, context)();
-						});
-					}
-					
-					this._total_items ++;
-					this._bar.find("#yootil-bar").append(item);
-					this.show_bar();
 				}
-			}
+			});
 		},
 
 		/**
@@ -3078,13 +3082,13 @@ yootil.bar = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		remove: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
 				this._items["_" + id.toString()].remove();
 				delete this._items["_" + id.toString()];
 				this._total_items --;
-				
+
 				if(this._bar.find("#yootil-bar a").length == 0){
 					this._bar.css("display", "none");
 				}
@@ -3098,11 +3102,11 @@ yootil.bar = (function(){
 		* Returns:
 		*	*integer"
 		*/
-		
+
 		total_items: function(){
 			return this._total_items;
 		},
-		
+
 		/**
 		* Method: get
 		*	Use this to get the jQuery item (a tag)
@@ -3113,7 +3117,7 @@ yootil.bar = (function(){
 		* Returns:
 		*	*object* jQuery object is returned that wraps around the a tag
 		*/
-			
+
 		get: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
 				return this._items["_" + id.toString()];
@@ -3130,19 +3134,19 @@ yootil.bar = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		has: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
 				return true;
 			}
-			
+
 			return false;
 		},
-		
+
 		show_bar: function(){
 			if(this._bar.find("#yootil-bar a").length > 0){
 				var display = yootil.storage.get("yootil_bar", false);
-				
+
 				if(display){
 					if(display.toString() == "1" || display.toString().length == 0){
 						this._bar.find("#yootil-bar").css("display", "inline-block");
@@ -3151,72 +3155,72 @@ yootil.bar = (function(){
 						this._bar.find("#yootil-bar").css("display", "none");
 					}
 				}
-				
+
 				this._bar.css("display", "");
 			}
 		},
-		
+
 		is_enabled: function(){
 			if(yootil.settings && yootil.settings.bar_enabled && yootil.settings.bar_enabled == 0){
 				return false;
 			}
-			
+
 			return true;
 		}
-	
+
 	};
-		
-	$(function(){		
+
+	$(function(){
 		if(!yootil.user.logged_in() || !bar.is_enabled()){
 			return;
 		}
-		
+
 		var pb_bar = $("div#pbn-bar-wrapper");
-		
+
 		if(pb_bar.length == 1){
 			var plugin_bar = pb_bar.clone();
 
 			plugin_bar.attr("id", "yootil-bar-wrapper");
 			plugin_bar.css({
-			
+
 				right: "inherit",
 				left: "0px",
 				display: "none"
-				
+
 			});
-			
+
 			plugin_bar.find("img:first").css("float", "left").attr("src", "/images/button_expand.png").attr("alt", "<");
-			
+
 			plugin_bar.find("div#pbn-bar").css({
-			
+
 				width: "",
 				"float": "left",
 				"border-width": "1px 1px 0px 0px"
-				
+
 			}).attr("id", "yootil-bar").html("");
-			
+
 			plugin_bar.find("> img").click(function(){
 				var yootil_bar = $("#yootil-bar");
-				
+
 				yootil_bar.toggle();
-				
+
 				if(yootil_bar.is(":visible")){
 					yootil_bar.css("display", "inline-block");
 					$(this).attr("src", "/images/button_expand.png").attr("alt", "<");
 				} else {
 					$(this).attr("src", "/images/button_collapse.png").attr("alt", ">");
 				}
-				
+
 				yootil.storage.set("yootil_bar", ((yootil_bar.is(":visible"))? "1" : "0"), false, true);
 			});
-			
+
 			$("body").append(plugin_bar);
 		}
-		
+
 	});
-	
+
     return bar;
-    
+
 })();
 
 yootil.updater = (function(){
