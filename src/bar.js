@@ -47,11 +47,11 @@ yootil.bar = (function(){
 
 		add: function(link, img, alt, id, func, context){
 			var self = this;
+			var alt = alt || "";
 
 			$(function(){
 				if(self.has_bar()){
 					if(link && img){
-						var alt = alt || "";
 						var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
 
 						if(id && id.toString().length){
