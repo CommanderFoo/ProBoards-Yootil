@@ -848,7 +848,7 @@ yootil.user = (function(){
 		*/
 
 		has_data: function(){
-			if(this.data && typeof this.data.id != "undefined"){console.log(1);
+			if(this.data && typeof this.data.id != "undefined"){
 				return true;
 			} else {
 				if(typeof proboards != "undefined"){
