@@ -1,5 +1,5 @@
 /**
-* Yootil Library: 0.9.6
+* Yootil Library: 0.9.7
 *
 * http://yootil.pixeldepth.net
 */
@@ -65,7 +65,7 @@ yootil = (function(){
 
 	return {
 
-		VERSION: "0.9.6",
+		VERSION: "0.9.7",
 
 		settings: {},
 
@@ -3179,29 +3179,41 @@ yootil.bar = (function(){
 			return;
 		}
 
+		var html_built = false;
 		var pb_bar = $("div#pbn-bar-wrapper");
 
+		// If it doesn't exist, manually create it.
+
+		if(!pb_bar.length){
+			html_built = true;
+			pb_bar = $('<div style="position: fixed; right: inherit; bottom: 0px; left: 0px; height: 22px; *height: 23px; display: none; text-align: right; z-index: 20;" id="yootil-bar-wrapper"><img style="display: inline-block; float: left;" alt="<" src="//images.proboards.com/v5/button_expand.png"><div style="display: inline-block; float: left; height: 23px; background-color: #F0F0F0; border-width: 1px 1px 0px 0px; border-style: solid; border-color: #B0B0B0;" id="yootil-bar"></div></div>');
+		}
+
 		if(pb_bar.length == 1){
-			var plugin_bar = pb_bar.clone();
+			if(html_built){
+				plugin_bar = pb_bar;
+			} else {
+				var plugin_bar = pb_bar.clone();
 
-			plugin_bar.attr("id", "yootil-bar-wrapper");
-			plugin_bar.css({
+				plugin_bar.attr("id", "yootil-bar-wrapper");
+				plugin_bar.css({
 
-				right: "inherit",
-				left: "0px",
-				display: "none"
+					right: "inherit",
+					left: "0px",
+					display: "none"
 
-			});
+				});
 
-			plugin_bar.find("img:first").css("float", "left").attr("src", "/images/button_expand.png").attr("alt", "<");
+				plugin_bar.find("img:first").css("float", "left").attr("src", "/images/button_expand.png").attr("alt", "<");
 
-			plugin_bar.find("div#pbn-bar").css({
+				plugin_bar.find("div#pbn-bar").css({
 
-				width: "",
-				"float": "left",
-				"border-width": "1px 1px 0px 0px"
+					width: "",
+					"float": "left",
+					"border-width": "1px 1px 0px 0px"
 
-			}).attr("id", "yootil-bar").html("");
+				}).attr("id", "yootil-bar").html("");
+			}
 
 			plugin_bar.find("> img").click(function(){
 				var yootil_bar = $("#yootil-bar");
