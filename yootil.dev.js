@@ -1,5 +1,5 @@
 /**
-* Yootil Library: 0.9.7
+* Yootil Library: 0.9.8
 *
 * http://yootil.pixeldepth.net
 */
@@ -65,7 +65,7 @@ yootil = (function(){
 
 	return {
 
-		VERSION: "0.9.7",
+		VERSION: "0.9.8",
 
 		settings: {},
 
