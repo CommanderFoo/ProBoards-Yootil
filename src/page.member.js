@@ -6,7 +6,7 @@
 yootil.page.member = (function(){
 
 	return {
-	
+
 		/**
 		* Method: __get_data
 		*	This is an internal method
@@ -17,14 +17,14 @@ yootil.page.member = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		__get_data: function(key){
 			var member_obj = yootil.page.__get_data("member");
-			
+
 			if(member_obj && typeof member_obj == "object" && member_obj[key] != "undefined"){
 				return member_obj[key];
 			}
-			
+
 			return "";
 		},
 
@@ -35,7 +35,7 @@ yootil.page.member = (function(){
 		* Returns:
 		*	*integer*
 		*/
-		
+
 		id: function(){
 			return this.__get_data("id");
 		},
@@ -47,11 +47,11 @@ yootil.page.member = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		name: function(){
 			return this.__get_data("name");
 		},
-		
+
 		/**
 		* Method: url
 		*	Gets the members URL
@@ -59,11 +59,23 @@ yootil.page.member = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		url: function(){
 			return this.__get_data("url");
+		},
+
+		/**
+		* Method: display_group_id
+		*	Gets the members display group id
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		display_group_id: function(){
+			return this.__get_data("display_group_id");
 		}
-	
+
 	};
 
 })();

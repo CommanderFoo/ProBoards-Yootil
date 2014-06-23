@@ -39,7 +39,7 @@ yootil.location.check = (function(){
         */
 
         board: function(){
-            return this.__is_page('board');
+            return this.__is_page('board') || this.__is_page('list_threads');
         },
 
         /**
@@ -64,7 +64,7 @@ yootil.location.check = (function(){
 
         calendar: function(){
             // calendar == this month, calendar_month == this or any depending on query string
-            return this.__is_page('calendar') || this.__is_page('calendar_month');
+            return this.__is_page('calendar') || this.__is_page('calendar_month') || this.__is_page("calendar_list");
         },
 
         /**
@@ -103,7 +103,7 @@ yootil.location.check = (function(){
         */
 
         members: function(){
-            return this.__is_page('members');
+            return this.__is_page('members') || this.__is_page("list_members");
         },
 
         /**
@@ -115,7 +115,7 @@ yootil.location.check = (function(){
         */
 
         message_list: function(){
-            return this.__is_page('conversations');
+            return this.__is_page('conversations') || this.__is_page('conversations_inbox') || this.__is_page("list_conversations");
         },
 
         /**
@@ -127,7 +127,7 @@ yootil.location.check = (function(){
         */
 
         message_thread: function(){
-            return this.__is_page('conversation');
+            return this.__is_page('conversation') || this.__is_page("list_messages");
         },
 
         /**
@@ -463,7 +463,7 @@ yootil.location.check = (function(){
         */
 
         profile_notifications: function(){
-            return this.__is_page('show_user_notifications');
+            return this.__is_page('show_user_notifications') || this.__is_page("show_more_notifications");
         },
 
         /**
@@ -536,7 +536,7 @@ yootil.location.check = (function(){
 
         thread: function(){
             // View thread
-            return this.__is_page('thread');
+            return this.__is_page('thread') || this.__is_page('list_posts');
         }
 
     };

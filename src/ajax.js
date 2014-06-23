@@ -6,7 +6,7 @@
 yootil.ajax = (function(){
 
 	return {
-	
+
 		/**
 		* Method: bind
 		* 	Allows us add a global AJAX event to an element.
@@ -26,15 +26,15 @@ yootil.ajax = (function(){
 		*
 		* 	yootil.ajax.bind("complete", $("form:first"), function(){ alert("AJAX completed"); }, "/plugin/key/set/");
 		*/
-		
+
 		bind: function(event, e, f, url, context){
 			var elem = $(e);
-			
+
 			event = "ajax" + event.substr(0, 1).toUpperCase() + event.substr(1);
-			
+
 			if(elem.length == 1){
-				context = (context)? context : e;					
-			
+				context = (context)? context : e;
+
 				if(event && f && e.length){
 					elem[event](function(event, XMLHttpRequest, options){
 						if(url === true || new RegExp(url, "i").test(options.url)){
@@ -43,10 +43,10 @@ yootil.ajax = (function(){
 					});
 				}
 			}
-			
+
 			return yootil;
 		},
-		
+
 		/**
 		* Method: after_search
 		*	Because ProBoards uses AJAX for pagination, and on filtering (i.e members page),
@@ -66,27 +66,11 @@ yootil.ajax = (function(){
 		* Returns:
 		*	*object* Yootil
 		*/
-		
+
 		after_search: function(func, context){
 			proboards.on("afterSearch", ((context)? $.proxy(func, context) : func));
-			
-			/*var ui_as = $(".ui-autosearch");
-			
-			if(ui_as.length){
-				var fn = ui_as.autosearch("option", "afterSearch");
-
-				ui_as.autosearch("option", "afterSearch", function(){
-					fn.apply(this, arguments);
-					
-					if(context){
-						$.proxy(func, context)();
-					} else {
-						func();
-					}
-				});	
-			}*/
 		}
-	
+
 	};
-    
+
 })();

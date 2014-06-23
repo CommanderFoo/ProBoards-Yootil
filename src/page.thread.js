@@ -6,7 +6,7 @@
 yootil.page.thread = (function(){
 
 	return {
-	
+
 		/**
 		* Method: __get_data
 		*	This is an internal method
@@ -17,27 +17,27 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		__get_data: function(key){
 			var thread_obj = yootil.page.__get_data("thread");
-			
+
 			if(thread_obj && typeof thread_obj == "object" && thread_obj[key] != "undefined"){
 				return thread_obj[key];
 			}
-			
+
 			return "";
 		},
 
 		/**
-		* Method: created_by
-		*	Gets the thread creator
+		* Method: Thread ID
+		*	Gets the thread ID
 		*
 		* Returns:
 		*	*string*
 		*/
-		
+
 		id: function(){
-			return this.__get_data("created_by");
+			return this.__get_data("id");
 		},
 
 		/**
@@ -47,21 +47,9 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
-		id: function(){
-			return this.__get_data("created_on");
-		},
 
-		/**
-		* Method: id
-		*	Gets the thread ID
-		*
-		* Returns:
-		*	*integer*
-		*/
-		
-		id: function(){
-			return this.__get_data("id");
+		created_on: function(){
+			return this.__get_data("created_on");
 		},
 
 		/**
@@ -71,7 +59,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_announcement: function(){
 			return this.__get_data("is_announcement") === "1";
 		},
@@ -83,7 +71,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_bookmarked: function(){
 			return this.__get_data("is_bookmarked") === "1";
 		},
@@ -95,7 +83,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_falling: function(){
 			return this.__get_data("is_falling") === "1";
 		},
@@ -107,7 +95,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_locked: function(){
 			return this.__get_data("is_locked") === "1";
 		},
@@ -119,7 +107,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_new: function(){
 			return this.__get_data("is_new") === "1";
 		},
@@ -131,7 +119,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_poll: function(){
 			return this.__get_data("is_poll") === "1";
 		},
@@ -143,7 +131,7 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-		
+
 		is_sticky: function(){
 			return this.__get_data("is_sticky") === "1";
 		},
@@ -155,11 +143,11 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		subject: function(){
 			return this.__get_data("subject");
 		},
-		
+
 		/**
 		* Method: url
 		*	Gets the thread URL
@@ -167,11 +155,59 @@ yootil.page.thread = (function(){
 		* Returns:
 		*	*string*
 		*/
-		
+
 		url: function(){
 			return this.__get_data("url");
+		},
+
+		/**
+		* Method: board_id
+		*	Gets the board id
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		board_id: function(){
+			return this.__get_data("board_id");
+		},
+
+		/**
+		* Method: created_by
+		*	Gets the member who created this thread
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		created_by: function(){
+			return this.__get_data("created_by");
+		},
+
+		/**
+		* Method: last_post_id
+		*	Gets the last post id
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		last_post_id: function(){
+			return this.__get_data("last_post_id");
+		},
+
+		/**
+		* Method: last_post_time
+		*	Gets the last post time
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		last_post_time: function(){
+			return this.__get_data("last_post_time");
 		}
-	
+
 	};
 
 })();

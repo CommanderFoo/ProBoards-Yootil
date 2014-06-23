@@ -13,13 +13,13 @@ $files = array(
 	"storage.session",
 	"location",
 	"location.check",
-	"user.action",
 	"form",
 	"page",
 	"page.category",
 	"page.board",
 	"page.member",
 	"page.thread",
+	"page.post",
 	"bar",
 	"updater"
 );

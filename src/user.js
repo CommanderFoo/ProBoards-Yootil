@@ -420,6 +420,42 @@ yootil.user = (function(){
 			}
 
 			return {};
+		},
+
+		/**
+		* Function: is_invisible
+		*	Checks if the member is invisible
+		*
+		* Returns:
+		*	*boolean*
+		*/
+
+		is_invisible: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_invisible != "undefined" && this.data.is_invisible){
+					return true;
+				}
+			}
+
+			return false;
+		},
+
+		/**
+		* Function: proboards_plus
+		*	Checks if the member has proboards plus on
+		*
+		* Returns:
+		*	*boolean*
+		*/
+
+		proboards_plus: function(){
+			if(this.has_data()){
+				if(typeof this.data.proboards_plus != "undefined" && this.data.proboards_plus){
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 	};
