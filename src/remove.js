@@ -24,29 +24,30 @@ yootil.remove = (function(){
 		*	yootil.remove.nav_item(["/", "/members"]);
 		*/		
 
-        nav_branch: function (args) {
+		nav_branch: function (args) {
 
-            var array,
-                nav = $('#nav-tree'),
-                removed = [];
+			var array,
+			nav = $('#nav-tree'),
+			removed = [];
 
-            if ( Object.prototype.toString.call(args) !== "[object Array]" )
-                array = new Array(args);
-            else
-                array = args;
+			if ( Object.prototype.toString.call(args) !== "[object Array]" )
+				array = new Array(args);
+			else
+				array = args;
 
-            for ( var i in array ) { 
+			for ( var i in array ) { 
 
-            	var obj = nav.find('[href="' + array[i].toString() + '"]').parentsUntil('#nav-tree').hide();
+				var obj = nav.find('[href="' + array[i].toString() + '"]').parentsUntil('#nav-tree').hide();
 
-         		removed.push(obj);
+			removed.push(obj);
 
-            }       
+			}       
 
-            return removed;
-        },	
+			return removed;
 
-        /**
+		},	
+
+		/**
 		* Function: replace
 		*	Quickly replace items that have been removed.
 		*
