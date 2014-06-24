@@ -1,7 +1,7 @@
 /**
 * Namespace: yootil.remove
 *
-* 	This object will contain useful methods to remove ProBoards objects
+* 	This object contains useful methods to remove ProBoards Elements
 */
 
 yootil.remove = (function(){
@@ -21,6 +21,11 @@ yootil.remove = (function(){
 		*
 		* Parameters:
 		*	Obj - *object* The object to be removed		
+		*   where - *string* Name of function used to remove the object (Example: 'nav_tree')
+		*   selector - *string* Selector used in the "where" function (Example: '[href="/members"]')
+		*
+		* Example:
+		*   yootil.remove.__remove($(''[href="/members"]'), 'nav_branch', '[href="/members"]'))
 		*
 		* Returns:
 		*	*object* yootil.remove
@@ -45,7 +50,9 @@ yootil.remove = (function(){
 
 			} else {
 
-				throw new Error('Yootil Error: Tried to remove a Nav Branch that did not exist.');
+				var err = new Error();
+
+				throw err;
 
 			}
 
@@ -68,7 +75,7 @@ yootil.remove = (function(){
 		*	yootil.remove.nav_item(["Forum", "Members"]);
 		*/		
 
-        nav_item: function (args) {
+        nav_branch: function (args) {
 
             var array
                 _nav = $('#nav-tree');
@@ -82,16 +89,23 @@ yootil.remove = (function(){
 
             	var obj = _nav.find('[href="' + array[i].toString() + '"]').parentsUntil('#nav-tree');
 
-                this.__remove(obj, 'nav_item', '[href="' + array[i].toString() + '"]');
+            	try{
 
+		            this.__remove(obj, 'nav_item', '[href="' + array[i].toString() + '"]');
 
+		        } catch (e) {
+
+		        	var err = new Error('Tried to remove a nav branch that did not exist.');
+		        	err.name = "Yootil Error";
+
+		        	throw err;
+
+		        }
 
             }       
 
             return yootil.remove;
         },	
-
-
 
 	}
 
