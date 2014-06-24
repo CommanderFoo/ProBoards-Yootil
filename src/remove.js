@@ -19,9 +19,9 @@ yootil.remove = (function(){
 		*	*array* Contains all removed objects for easy return
 		*
 		* Examples:
-		*	yootil.remove.nav_item('Forum');
+		*	yootil.remove.nav_item('/');
 		*
-		*	yootil.remove.nav_item(["Forum", "Members"]);
+		*	yootil.remove.nav_item(["/", "/members"]);
 		*/		
 
         nav_branch: function (args) {
@@ -45,6 +45,29 @@ yootil.remove = (function(){
 
             return removed;
         },	
+
+        /**
+		* Function: replace
+		*	Quickly replace items that have been removed.
+		*
+		* Parameters:
+		*	Args - *array* Array containing the ojects to be replaced
+		*		
+		* Returns:
+		*	*object* yootil.remove
+		*
+		* Examples:
+		*	var x = yootil.remove.nav_item(["Forum", "Members"]);
+		*	yootil.remove.replace(x)
+		*/	
+
+		replace: function(arr) {
+			if ( Object.prototype.toString.call(arr) === "[object Array]") {
+				for ( var i in arr ) {
+					arr[i].show();
+				}
+			}
+		}
 
 	}
 
