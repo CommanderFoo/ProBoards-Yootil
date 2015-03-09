@@ -151,7 +151,7 @@ yootil.bar = (function(){
 					if(display.toString() == "1" || display.toString().length == 0){
 						this._bar.find("#yootil-bar").css("display", "inline-block");
 					} else {
-						this._bar.find("> img").attr("src", "/images/button_collapse.png").attr("alt", ">");
+						this._bar.find("> img").attr("src", yootil.images.collapse).attr("alt", ">");
 						this._bar.find("#yootil-bar").css("display", "none");
 					}
 				}
@@ -182,7 +182,7 @@ yootil.bar = (function(){
 
 		if(!pb_bar.length){
 			html_built = true;
-			pb_bar = $('<div style="position: fixed; right: inherit; bottom: 0px; left: 0px; height: 22px; *height: 23px; display: none; text-align: right; z-index: 20;" id="yootil-bar-wrapper"><img style="display: inline-block; float: left;" alt="<" src="//images.proboards.com/v5/button_expand.png"><div style="display: inline-block; float: left; height: 23px; background-color: #F0F0F0; border-width: 1px 1px 0px 0px; border-style: solid; border-color: #B0B0B0;" id="yootil-bar"></div></div>');
+			pb_bar = $('<div style="position: fixed; right: inherit; bottom: 0px; left: 0px; height: 22px; *height: 23px; display: none; text-align: right; z-index: 20;" id="yootil-bar-wrapper"><img style="display: inline-block; float: left;" alt="<" src="' + yootil.images.expand + '"><div style="display: inline-block; float: left; height: 23px; background-color: #F0F0F0; border-width: 1px 1px 0px 0px; border-style: solid; border-color: #B0B0B0;" id="yootil-bar"></div></div>');
 		}
 
 		if(pb_bar.length == 1){
@@ -200,7 +200,7 @@ yootil.bar = (function(){
 
 				});
 
-				plugin_bar.find("img:first").css("float", "left").attr("src", "/images/button_expand.png").attr("alt", "<");
+				plugin_bar.find("img:first").css("float", "left").attr("src", yootil.images.expand).attr("alt", "<");
 
 				plugin_bar.find("div#pbn-bar").css({
 
@@ -218,9 +218,9 @@ yootil.bar = (function(){
 
 				if(yootil_bar.is(":visible")){
 					yootil_bar.css("display", "inline-block");
-					$(this).attr("src", "/images/button_expand.png").attr("alt", "<");
+					$(this).attr("src", yootil.images.expand).attr("alt", "<");
 				} else {
-					$(this).attr("src", "/images/button_collapse.png").attr("alt", ">");
+					$(this).attr("src", yootil.images.collapse).attr("alt", ">");
 				}
 
 				yootil.storage.set("yootil_bar", ((yootil_bar.is(":visible"))? "1" : "0"), false, true);

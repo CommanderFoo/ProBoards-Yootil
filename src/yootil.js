@@ -19,51 +19,17 @@
 
 yootil = (function(){
 
-	if(!$.support.cors && $.ajaxTransport && window.XDomainRequest){
-		$.ajaxTransport("json", function(options, originalOptions, jqXHR){
-			if(options.crossDomain){
-				var xdr = null;
-
-				return {
-
-					send: function(headers, callback){
-						xdr = new XDomainRequest();
-
-						xdr.onload = function(){
-							callback(200, "success", [this.responseText]);
-						}
-
-						xdr.ontimeout = function(){
-							callback(500, ["The requested resource timed out."]);
-						}
-
-						xdr.onerror = function(){
-							callback(404, "error", ["The requested resource could not be found."]);
-						}
-
-						xdr.onprogress = function(){};
-
-						xdr.open(options.type, options.url);
-						xdr.send(options.data || null);
-					},
-
-					abort: function(){
-						if(xdr){
-							xdr.abort();
-						}
-					}
-				};
-			}
-		});
-	}
-
 	return {
 
 		VERSION: "{VER}",
 
 		settings: {},
 
+		images: {},
+
 		host: location.hostname,
+
+		notifications_queue: {},
 
 		/**
 		* Method: html_encode
@@ -223,6 +189,8 @@ yootil = (function(){
 		/**
 		* Method: convert_versions
 		*	Simple method to convert version numbers (format being 0.0.0).
+		*	Note:  Doesn't work with versions such as this: 0.9.10, it will appear
+		*	a smaller number compared to 0.9.3
 		*
 		* Parameters:
 		*	v1 - *string* Assumed old version
@@ -257,10 +225,10 @@ yootil = (function(){
 
 			if(settings){
 				this.settings = settings;
+			}
 
-				if(this.settings.check_for_update){
-					this.settings.check_for_update = (this.settings.check_for_update == 0)? false : true;
-				}
+			if(plugin.images){
+				this.images = plugin.images;
 			}
 
 			return this;
