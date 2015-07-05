@@ -3,11 +3,17 @@
  *
  *  This class handles notifications grouped by the key.
  *
- *  Easily create, remove notifications using an existing key.
+ *  Easily create and remove notifications using an existing key.
  *
  *  IMPORTANT:  Encoding of your message is to be done by you.  You need to keep
  *  security in mind, because this plugin will not encode your message to make it safe.
  */
+
+// @TODO: Store viewed notifications in localStorage.
+// @TODO: Add hooks to forms so that notifications that have been viewed
+// @TODO: can be removed from "data" and localStorage.
+// @TODO: Check there is enough space in the key to add another notification.
+// @TODO: If there is not enough space, remove older notifications to free space up.
 
 yootil.notifications = (function(){
 
@@ -72,29 +78,55 @@ yootil.notifications = (function(){
 		* 	Creates a new notification and saves it to the key
 		*
 		* Parameters:
-		* 	id - *mixed* The id for this message.  If one is not passed, a timestamp is used.
 		* 	message - *string* The message to be saved.  IMPORTANT: It's up to you to secure this.
+		*	id - *mixed* Each message can have an id, this is optional.
 		*
 		* Returns:
 		* 	*object*
 		*
 		* Examples:
-		*	new yootil.notifications("my_key").create(44, "Hello World!");
+		*	new yootil.notifications("my_key").create("Hello World!");
 		*/
 
-		create: function(id, message){
+		create: function(message, id){
 			if(this.plugin){
-				this.data[id || (+ new Date())] = {
+				var ts = (+ new Date());
 
-					t: (+ new Date()),
-					m: message
+				if(id){
+					this.data[ts] = {
 
-				};
+						i: id,
+						m: message
+
+					};
+				} else {
+					id = ts;
+					this.data[ts] = message;
+				}
+
+				// Lets check there is enough space in the key, if there isn't
+				// we start pruning messages regardless if the user has seen
+				// them or not.  It's better this way then the key breaking, or
+				// the user not getting newer messages.
+				// We need to try and keep the last message being set though.
+
+				this.check_key_data(id);
 
 				yootil.key.set(this.key, this.data, yootil.user.id(), true);
 			}
 
 			return this;
+		},
+
+		check_key_data: function(last_id){
+			var current_length = JSON.stringify(this.data);
+			var entries = [];
+
+			for(var key in this.data){
+				entries.push(this.data[key]);
+			}
+
+			// Sort them by id
 		},
 
 		/**
@@ -105,7 +137,7 @@ yootil.notifications = (function(){
 		* 	*object*
 		*
 		* Examples:
-		*	new yootil.notifications("my_key").create(44, "Hello World!").get_all();
+		*	new yootil.notifications("my_key").create("Hello World!").get_all();
 		*/
 
 		get_all: function(){
@@ -127,8 +159,11 @@ yootil.notifications = (function(){
 		*/
 
 		get: function(id){
-			if(this.data[id]){
-				return this.data[id];
+			for(var key in this.data){
+				if(this.data[key].i != null && this.data[key].i == id){
+					return this.data[key];
+					break;
+				}
 			}
 
 			return null;
@@ -167,9 +202,12 @@ yootil.notifications = (function(){
 		*/
 
 		remove: function(id){
-			if(this.data[id]) {
-				delete this.data[id];
-				yootil.key.set(this.key, this.data, yootil.user.id(), true);
+			for(var key in this.data){
+				if(this.data[key].i != null && this.data[key].i == id){
+					delete this.data[key];
+					yootil.key.set(this.key, this.data, yootil.user.id(), true);
+					break;
+				}
 			}
 
 			return this;
@@ -177,24 +215,45 @@ yootil.notifications = (function(){
 
 		show: function(){
 			if(this.data){
-				for(var id in this.data){
+				for(var key in this.data){
+					var the_notification = this.data[key];
+
+					// Need to check if this notification hasn't already been view.
+					// Each notification is stored in localStorage when the user has
+					// seen it.  We then update the key when the user makes a post, or
+					// other actions that stay within the rules of ProBoards when saving to keys.
+
+					// @TODO: Insert call here to check if key is in localStorage
+
+					if(the_notification.i == null){
+						the_notification = {
+
+							i: key,
+							m: the_notification
+
+						};
+					}
+
 					yootil.notifications_queue[this.key].add(
 						$.proxy(
-							function(notification, id){
+							function(notification){
 								var self = this;
 								var notify_html = self.html_tpl.replace("{NOTIFICATION_MESSAGE}", notification.m);
 
-								$(notify_html).attr("id", "yootil-notification-" + id).appendTo($("body")).delay(200).fadeIn("normal", function(){
-									console.log("hi");
+								$(notify_html).attr("id", "yootil-notification-" + notification.i).appendTo($("body")).delay(200).fadeIn("normal", function(){
+
+									// Notification has been shown, so we need to store this in localStorage.
+									// We use the same key in localStorage as we do for the notifications.
+
+									// @TODO: Add call here to store entry in localStorage for this notification
+
 								}).delay(3500).fadeOut("normal", function(){
-									//$(this).remove();
 									yootil.notifications_queue[self.key].next();
 								});
 							},
 
 							this,
-							this.data[id],
-							id
+							the_notification
 						)
 					);
 				}

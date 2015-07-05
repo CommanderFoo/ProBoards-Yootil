@@ -17,7 +17,7 @@ yootil.key = (function(){
 		*	*object* Holds a reference to the ProBoards key object.
 		*/
 		
-		pb_key_obj: proboards.plugin.key,
+		pb_key_obj: pb.plugin.key,
 		
 		/**
 		* Method: exists
@@ -181,7 +181,12 @@ yootil.key = (function(){
 					value = undefined;
 				}
 				
-				this.pb_key_obj(key).set(user, value);
+				this.pb_key_obj(key).set({
+
+					object_id: user,
+					value: value
+
+				});
 			}
 			
 			return this;
