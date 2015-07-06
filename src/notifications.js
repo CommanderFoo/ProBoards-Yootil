@@ -80,6 +80,7 @@ yootil.notifications = (function(){
 		* Parameters:
 		* 	message - *string* The message to be saved.  IMPORTANT: It's up to you to secure this.
 		*	id - *mixed* Each message can have an id, this is optional.
+		*	the_user_id - *integer* User id who is getting the message (default is current user).
 		*
 		* Returns:
 		* 	*object*
@@ -88,8 +89,9 @@ yootil.notifications = (function(){
 		*	new yootil.notifications("my_key").create("Hello World!");
 		*/
 
-		create: function(message, id){
+		create: function(message, id, the_user_id){
 			if(this.plugin){
+				var user_id = the_user_id || yootil.user.id();
 				var ts = (+ new Date());
 
 				if(id){
@@ -104,29 +106,76 @@ yootil.notifications = (function(){
 					this.data[ts] = message;
 				}
 
-				// Lets check there is enough space in the key, if there isn't
-				// we start pruning messages regardless if the user has seen
-				// them or not.  It's better this way then the key breaking, or
-				// the user not getting newer messages.
-				// We need to try and keep the last message being set though.
-
 				this.check_key_data(id);
 
-				yootil.key.set(this.key, this.data, yootil.user.id(), true);
+				yootil.key.set(this.key, this.data, user_id, true);
 			}
 
 			return this;
 		},
 
+		// Lets check there is enough space in the key, if there isn't
+		// we start pruning messages regardless if the user has seen
+		// them or not.  It's better this way then the key breaking, or
+		// the user not getting newer messages.
+
 		check_key_data: function(last_id){
-			var current_length = JSON.stringify(this.data);
-			var entries = [];
+			var current_length = JSON.stringify(this.data).length;
+			var max_len = proboards.data("plugin_max_key_length");
 
-			for(var key in this.data){
-				entries.push(this.data[key]);
+			if(current_length > max_len){
+				var entries = [];
+				for (var key in this.data){
+					entries.push({
+						ts: key,
+						m: (this.data[key].m) ? this.data[key].m : this.data[key],
+						i: (this.data[key].m) ? this.data[key].i : null
+					});
+				}
+
+				// Sort them by timestamp (key)
+
+				entries = entries.sort(function (a, b){
+					return (a.ts > b.ts) ? 1 : 0;
+				});
+
+				if(entries.length){
+
+					// Start by just removing the oldest one to hopefully skip loop checking
+
+					if(this.data[entries[0].ts]){
+						delete this.data[entries[0].ts];
+						entries.shift();
+					}
+
+					// Check length again to try and avoid the loop
+
+					if(JSON.stringify(this.data).length > max_len){
+
+						// Now we need to keep removing entries until we are under the max length
+
+						while(JSON.stringify(this.data).length > max_len){
+
+							// Don't want an infinite loop, so check entries and bail out of loop
+
+							if(!entries.length){
+								break;
+							}
+
+							// Delete from top to bottom
+
+							delete this.data[entries[0].ts];
+							entries.shift();
+						}
+					}
+				}
+
+				// Finally check length of entries, if it's 0, then clear data
+
+				if(!entries.length){
+					this.data = {};
+				}
 			}
-
-			// Sort them by id
 		},
 
 		/**
