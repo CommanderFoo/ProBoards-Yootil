@@ -9,11 +9,7 @@
  *  security in mind, because this plugin will not encode your message to make it safe.
  */
 
-// @TODO: Store viewed notifications in localStorage.
-// @TODO: Add hooks to forms so that notifications that have been viewed
-// @TODO: can be removed from "data" and localStorage.
-// @TODO: Check there is enough space in the key to add another notification.
-// @TODO: If there is not enough space, remove older notifications to free space up.
+// @TODO: Add hooks to forms so that notifications that have been viewed are removed
 
 yootil.notifications = (function(){
 
