@@ -209,13 +209,17 @@ yootil.key = (function(){
 		*	*boolean*
 		*/
 
-		// @TODO: Fix this when ProBoards API has exposed it
-
 		write: function(key, user){
 			if(this.exists(key)){
-				return true; // For now until can_write is exposed, we will just return true
+				if(typeof this.pb_key_obj(key).can_write != "undefined"){
+					return !!this.pb_key_obj(key).can_write(user);
+				} else {
 
-				return !!this.pb_key_obj(key).can_write(user);
+					// ProBoards hasn't exposed it.
+					// Just return true so we don't break plugins
+
+					return true;
+				}
 			}
 			
 			return false;
@@ -233,13 +237,17 @@ yootil.key = (function(){
 		*	*boolean*
 		*/
 
-		// @TODO: Fix this when ProBoards API has exposed it
-
 		read: function(key, user){
 			if(this.exists(key)){
-				return true; // For now until can_read is exposed, we will just return true
+				if(typeof this.pb_key_obj(key).can_read != "undefined"){
+					return !!this.pb_key_obj(key).can_read(user);
+				} else {
 
-				return !!this.pb_key_obj(key).can_read(user);
+					// ProBoards hasn't exposed it.
+					// Just return true so we don't break plugins
+
+					return true;
+				}
 			}
 			
 			return false;
