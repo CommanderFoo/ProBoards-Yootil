@@ -61,7 +61,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_announcement: function(){
-			return this.__get_data("is_announcement") === "1";
+			return this.__get_data("is_announcement") == 1;
 		},
 
 		/**
@@ -73,7 +73,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_bookmarked: function(){
-			return this.__get_data("is_bookmarked") === "1";
+			return this.__get_data("is_bookmarked") == 1;
 		},
 
 		/**
@@ -85,7 +85,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_falling: function(){
-			return this.__get_data("is_falling") === "1";
+			return this.__get_data("is_falling") == 1;
 		},
 
 		/**
@@ -97,7 +97,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_locked: function(){
-			return this.__get_data("is_locked") === "1";
+			return this.__get_data("is_locked") == 1;
 		},
 
 		/**
@@ -109,7 +109,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_new: function(){
-			return this.__get_data("is_new") === "1";
+			return this.__get_data("is_new") == 1;
 		},
 
 		/**
@@ -121,7 +121,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_poll: function(){
-			return this.__get_data("is_poll") === "1";
+			return this.__get_data("is_poll") == 1;
 		},
 
 		/**
@@ -133,7 +133,7 @@ yootil.page.thread = (function(){
 		*/
 
 		is_sticky: function(){
-			return this.__get_data("is_sticky") === "1";
+			return this.__get_data("is_sticky") == 1;
 		},
 
 		/**
@@ -194,6 +194,18 @@ yootil.page.thread = (function(){
 
 		last_post_id: function(){
 			return this.__get_data("last_post_id");
+		},
+
+		/**
+		* Method: first_post_id
+		*	Gets the first post id
+		*
+		* Returns:
+		*	*integer*
+		*/
+
+		first_post_id: function(){
+			return this.__get_data("first_post_id");
 		},
 
 		/**

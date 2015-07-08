@@ -73,7 +73,7 @@ yootil.page.post = (function(){
 		*/
 
 		liked: function(){
-			return this.__get_data("liked") === "1";
+			return this.__get_data("liked") == 1;
 		},
 
 		/**

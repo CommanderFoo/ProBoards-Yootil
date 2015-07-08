@@ -456,6 +456,24 @@ yootil.user = (function(){
 			}
 
 			return false;
+		},
+
+		/**
+		* Function: block_list
+		*	Gets the users block list
+		*
+		* Returns:
+		*	*object*
+		*/
+
+		block_list: function(){
+			if(this.has_data()){
+				if(typeof this.data.block_list != "undefined" && this.data.block_list){
+					return this.data.block_list;
+				}
+			}
+
+			return {};
 		}
 
 	};

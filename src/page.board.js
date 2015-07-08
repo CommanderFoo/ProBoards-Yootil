@@ -85,7 +85,7 @@ yootil.page.board = (function(){
         */
 
 		disable_post_counts: function(){
-			return this.__get_data("disable_post_counts") === "1";
+			return this.__get_data("disable_post_counts") == 1;
 		},
 
         /**
@@ -97,7 +97,7 @@ yootil.page.board = (function(){
         */
 
 		disable_posting: function(){
-			return this.__get_data("disable_posting") === "1";
+			return this.__get_data("disable_posting") == 1;
 		},
 
         /**
@@ -121,7 +121,7 @@ yootil.page.board = (function(){
         */
 
 		hidden: function(){
-			return this.__get_data("hidden") === "1";
+			return this.__get_data("hidden") == 1;
 		},
 
         /**
@@ -145,7 +145,7 @@ yootil.page.board = (function(){
         */
 
 		show_announcements: function(){
-			return this.__get_data("show_announcements") === "1";
+			return this.__get_data("show_announcements") == 1;
 		},
 
         /**
