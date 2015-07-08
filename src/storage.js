@@ -67,18 +67,18 @@ yootil.storage = (function(){
 		*
 		* Parameters:
 		*	key - *string* The key for the storage
-		*	json - *boolean* If true, the value will be turned into a JSON string
+		*	json - *boolean* If true, the value will be JSON parsed
 		*	persist - *boolean* You can specify not to look in persistent by passing false
 		*
 		* Returns:
-		*	*string*
+		*	*string* / *object*
 		*
 		* Examples:
 		*	yootil.storage.get("mykey") // Will look in session and persistent for key
 		*
-		*	yootil.storage.set("mykey", false, false) // Will look in session only
+		*	yootil.storage.get("mykey", false, false) // Will look in session only
 		*
-		*	yootil.storage.set("mykey", true) // Will look in persistent only
+		*	yootil.storage.get("mykey", true, true) // Will look in persistent only
 		*/
 		
 		get: function(key, json, persist){

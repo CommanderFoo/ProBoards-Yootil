@@ -118,8 +118,8 @@ yootil.key = (function(){
 			if(this.exists(key)){
 				if(this.has_value(key, user)){
 					var value = this.pb_key_obj(key).get(user || undefined);
-					
-					if(is_json){
+
+					if(is_json && yootil.is_json(value)){
 						value = JSON.parse(value);
 					}
 					
@@ -159,7 +159,6 @@ yootil.key = (function(){
 		* 	key - *string* The key.
 		* 	value - *string* / *object* Can be a string, or a object that will get .
 		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
-		* 	is_json - *boolean* If true, it will JSON stringify the value.
 		*
 		* Returns:
 		*	*boolean*
@@ -170,17 +169,20 @@ yootil.key = (function(){
 		*	yootil.key.set("mykey", "apples", null, true); // Save as JSON
 		*/
 		
-		set: function(key, value, user, is_json){
+		set: function(key, value, user){
 			if(this.exists(key)){
-				if(is_json){
+
+				// No longer need this as ProBoards handles it
+
+				/*if(is_json){
 					value = JSON.stringify(value);
-				}
-				
+				}*/
+
 				if(typeof user == "undefined" || !user || !user.toString().length){
 					user = value;
 					value = undefined;
 				}
-				
+
 				this.pb_key_obj(key).set({
 
 					object_id: user,
@@ -203,9 +205,13 @@ yootil.key = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-				
+
+		// @TODO: Fix this when ProBoards API has exposed it
+
 		write: function(key, user){
-			if(this.exists(key)){				
+			if(this.exists(key)){
+				return true; // For now until can_write is exposed, we will just return true
+
 				return !!this.pb_key_obj(key).can_write(user);
 			}
 			
@@ -223,9 +229,13 @@ yootil.key = (function(){
 		* Returns:
 		*	*boolean*
 		*/
-			
+
+		// @TODO: Fix this when ProBoards API has exposed it
+
 		read: function(key, user){
-			if(this.exists(key)){				
+			if(this.exists(key)){
+				return true; // For now until can_read is exposed, we will just return true
+
 				return !!this.pb_key_obj(key).can_read(user);
 			}
 			

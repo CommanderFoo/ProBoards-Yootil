@@ -79,8 +79,8 @@ yootil.notifications = (function(){
 		*
 		* Parameters:
 		* 	message - *string* The message to be saved.  IMPORTANT: It's up to you to secure this.
-		*	id - *mixed* Each message can have an id, this is optional.
 		*	the_user_id - *integer* User id who is getting the message (default is current user).
+		*	id - *mixed* Each message can have an id, this is optional.
 		*
 		* Returns:
 		* 	*object*
@@ -89,7 +89,7 @@ yootil.notifications = (function(){
 		*	new yootil.notifications("my_key").create("Hello World!");
 		*/
 
-		create: function(message, id, the_user_id){
+		create: function(message, the_user_id, id){
 			if(this.plugin){
 				var user_id = the_user_id || yootil.user.id();
 				var ts = (+ new Date());
@@ -108,7 +108,7 @@ yootil.notifications = (function(){
 
 				this.check_key_data(id);
 
-				yootil.key.set(this.key, this.data, user_id, true);
+				yootil.key.set(this.key, this.data, user_id);
 			}
 
 			return this;
@@ -272,8 +272,6 @@ yootil.notifications = (function(){
 					// seen it.  We then update the key when the user makes a post, or
 					// other actions that stay within the rules of ProBoards when saving to keys.
 
-					// @TODO: Insert call here to check if key is in localStorage
-
 					if(the_notification.i == null){
 						the_notification = {
 
@@ -281,6 +279,12 @@ yootil.notifications = (function(){
 							m: the_notification
 
 						};
+					}
+
+					// Check if notification is in local storage, if it is, skip the loop
+
+					if(this.is_in_storage(the_notification.i)){
+						continue;
 					}
 
 					yootil.notifications_queue[this.key].add(
@@ -291,11 +295,7 @@ yootil.notifications = (function(){
 
 								$(notify_html).attr("id", "yootil-notification-" + notification.i).appendTo($("body")).delay(200).fadeIn("normal", function(){
 
-									// Notification has been shown, so we need to store this in localStorage.
-									// We use the same key in localStorage as we do for the notifications.
-
-									// @TODO: Add call here to store entry in localStorage for this notification
-
+									self.add_to_storage(notification.i);
 								}).delay(3500).fadeOut("normal", function(){
 									yootil.notifications_queue[self.key].next();
 								});
@@ -309,6 +309,40 @@ yootil.notifications = (function(){
 			}
 
 			return this;
+		},
+
+		add_to_storage: function(id){
+			var local_data = yootil.storage.get(this.key, true, true);
+
+			if(!local_data){
+				local_data = {};
+			}
+
+			if(!local_data[id]){
+				local_data[id] = 1;
+			}
+
+			yootil.storage.set(this.key, local_data, true, true);
+		},
+
+		remove_from_storage: function(id){
+			var local_data = yootil.storage.get(this.key, true, true);
+
+			if(local_data && local_data[id]){
+				delete local_data[id];
+			}
+
+			yootil.storage.set(this.key, local_data, true, true);
+		},
+
+		is_in_storage: function(id){
+			var local_data = yootil.storage.get(this.key, true, true);
+
+			if(local_data && local_data[id]){
+				return true;
+			}
+
+			return false;
 		}
 
 	};
