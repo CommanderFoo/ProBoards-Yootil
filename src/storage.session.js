@@ -1,6 +1,7 @@
 /**
  * @class yootil.storage.session
  * @static
+ * @ignore
  * Allows you to store a value for the session.
  *
  * HTML 5 is used if available, otherwise uses window.name
