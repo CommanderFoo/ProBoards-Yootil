@@ -1,22 +1,20 @@
 /**
-* Namespace: yootil.page.post
-*	Various methods to help get post information
-*/
+ * @class yootil.page.post
+ * @static
+ * Various methods to help get post information.
+ */
 
 yootil.page.post = (function(){
 
 	return {
 
 		/**
-		* Method: __get_data
-		*	This is an internal method
-		*
-		* Parameters:
-		*	key - *string* The key on the board object to check and get
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [String}
+		 * @ignore
+		 */
 
 		__get_data: function(key){
 			var board_obj = yootil.page.__get_data("post");
@@ -29,72 +27,54 @@ yootil.page.post = (function(){
 		},
 
 		/**
-		* Method: created_by
-		*	Gets the user id of who created the post
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the user id of who created the post
+		 * @return {Number}
+		 */
 
 		created_by: function(){
 			return this.__get_data("created_by");
 		},
 
 		/**
-		* Method: created_on
-		*	Gets the timeastamp when the post was created
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the timeastamp when the post was created
+		 * @return {Number}
+		 */
 
 		created_on: function(){
 			return this.__get_data("created_on");
 		},
 
 		/**
-		* Method: id
-		*	Gets the post id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the post id
+		 * @return {Number}
+		 */
 
 		id: function(){
 			return this.__get_data("id");
 		},
 
 		/**
-		* Method: liked
-		*	Checks if the post has been liked
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks if the post has been liked
+		 * @return {boolean}
+		 */
 
 		liked: function(){
 			return this.__get_data("liked") == 1;
 		},
 
 		/**
-		* Method: thread_id
-		*	Gets the thread id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the thread id
+		 * @return {Number}
+		 */
 
 		thread_id: function(){
 			return this.__get_data("thread_id");
 		},
 
 		/**
-		* Method: url
-		*	Gets the post URL
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the post URL
+		 * @return {String}
+		 */
 
 		url: function(){
 			return this.__get_data("url");

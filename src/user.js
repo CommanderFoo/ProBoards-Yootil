@@ -1,26 +1,25 @@
 /**
-* Namespace: yootil.user
-*	Contains useful methods relating to the user currently viewing the page
-*/
+ * @class yootil.user
+ * @static
+ * Contains useful methods relating to the user currently viewing the page, most being wrappers at the moment.
+ */
 
 yootil.user = (function(){
 
 	return {
 
 		/**
-		* Property: data
-		*	*object* Holds a reference to the ProBoards user object
-		*/
+		 * @ignore
+		 * @property {Object} data Holds a reference to the ProBoards user object.
+		 */
 
 		data:  {},
 
 		/**
-		* Method: has_data
-		*	This checks to see if the ProBoards data object exists and has a user object, we cache it as well.
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * This checks to see if the ProBoards data object exists and has a user object, we cache it as well.
+		 * @return {Boolean}
+		 * @ignore
+		 */
 
 		has_data: function(){
 			if(this.data && typeof this.data.id != "undefined"){
@@ -45,12 +44,9 @@ yootil.user = (function(){
 		},
 
 		/**
-		* Function: logged_in
-		*	Checks to see if the user is logged in, if so, returns true.
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks to see if the user is logged in, if so, returns true.
+		 *@return {Boolean}
+		 */
 
 		logged_in: function(){
 			if(this.has_data()){
@@ -58,17 +54,13 @@ yootil.user = (function(){
 					return true;
 				}
 			}
-
 			return false;
 		},
 
 		/**
-		* Function: id
-		*	Gets the current users ID
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the current users ID
+		 *@return {Number}
+		 */
 
 		id: function(){
 			if(this.has_data()){
@@ -76,17 +68,13 @@ yootil.user = (function(){
 					return this.data.id;
 				}
 			}
-
 			return 0;
 		},
 
 		/**
-		* Function: is_staff
-		*	Checks to see if the current user is staff
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks to see if the current user is staff
+		 *@return {Boolean}
+		 */
 
 		is_staff: function(){
 			if(this.has_data()){
@@ -94,17 +82,13 @@ yootil.user = (function(){
 					return true;
 				}
 			}
-
 			return false;
 		},
 
 		/**
-		* Function: name
-		*	Gets the users name
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the users name
+		 *@return {String}
+		 */
 
 		name: function(){
 			if(this.has_data()){
@@ -112,17 +96,13 @@ yootil.user = (function(){
 					return this.data.name;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: theme
-		*	Gets the users theme ID
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the users theme ID
+		 *@return {Number}
+		 */
 
 		theme: function(){
 			if(this.has_data()){
@@ -130,17 +110,13 @@ yootil.user = (function(){
 					return this.data.theme_id;
 				}
 			}
-
 			return 0;
 		},
 
 		/**
-		* Function: url
-		*	Gets the users path URL to their profile
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the users path URL to their profile
+		 *@return {String}
+		 */
 
 		url: function(){
 			if(this.has_data()){
@@ -148,17 +124,13 @@ yootil.user = (function(){
 					return this.data.url;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: avatar
-		*	Gets the users avatar (HTML)
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the users avatar (HTML)
+		 *@return {String}
+		 */
 
 		avatar: function(){
 			if(this.has_data()){
@@ -166,17 +138,13 @@ yootil.user = (function(){
 					return this.data.avatar;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: birthday
-		*	Gets the users birthday object
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets the users birthday object
+		 *@return {Object}
+		 */
 
 		birthday: function(){
 			if(this.has_data()){
@@ -184,17 +152,13 @@ yootil.user = (function(){
 					return this.data.birthday;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: date_format
-		*	Gets the users date format (i.e d/m/y)
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the users date format (i.e d/m/y)
+		 *@return {String}
+		 */
 
 		date_format: function(){
 			if(this.has_data()){
@@ -202,17 +166,13 @@ yootil.user = (function(){
 					return this.data.date_format;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: friends
-		*	Gets the users friends
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets the users friends
+		 *@return {Object}
+		 */
 
 		friends: function(){
 			if(this.has_data()){
@@ -220,17 +180,13 @@ yootil.user = (function(){
 					return this.data.friends;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: has_new_messages
-		*	Checks to see if user has new messages
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks to see if user has new messages
+		 *@return {Boolean}
+		 */
 
 		has_new_messages: function(){
 			if(this.has_data()){
@@ -238,17 +194,13 @@ yootil.user = (function(){
 					return this.data.has_new_messages;
 				}
 			}
-
 			return 0;
 		},
 
 		/**
-		* Function: instant_messengers
-		*	Gets users instant messengers
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets users instant messengers
+		 *@return {Object}
+		 */
 
 		instant_messengers: function(){
 			if(this.has_data()){
@@ -256,17 +208,13 @@ yootil.user = (function(){
 					return this.data.instant_messengers;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: last_online
-		*	Gets users last online object
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets users last online object
+		 *@return {Object}
+		 */
 
 		last_online: function(){
 			if(this.has_data()){
@@ -274,17 +222,13 @@ yootil.user = (function(){
 					return this.data.last_online;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: posts
-		*	Gets users post count
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets users post count
+		 *@return {Number}
+		 */
 
 		posts: function(){
 			if(this.has_data()){
@@ -292,17 +236,13 @@ yootil.user = (function(){
 					return this.data.posts;
 				}
 			}
-
 			return 0;
 		},
 
 		/**
-		* Function: rank
-		*	Gets users rank
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets users rank
+		 *@return {Object}
+		 */
 
 		rank: function(){
 			if(this.has_data()){
@@ -310,17 +250,13 @@ yootil.user = (function(){
 					return this.data.rank;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: registered_on
-		*	Gets users registered on date
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets users registered on date
+		 *@return {Object}
+		 */
 
 		registered_on: function(){
 			if(this.has_data()){
@@ -328,17 +264,13 @@ yootil.user = (function(){
 					return this.data.registered_on;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: status
-		*	Gets users status
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets users status
+		 *@return {String}
+		 */
 
 		status: function(){
 			if(this.has_data()){
@@ -346,17 +278,13 @@ yootil.user = (function(){
 					return this.data.status;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: time_format
-		*	Gets users time format
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets users time format
+		 *@return {String}
+		 */
 
 		time_format: function(){
 			if(this.has_data()){
@@ -364,17 +292,13 @@ yootil.user = (function(){
 					return this.data.time_format;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: username
-		*	Gets users username
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets users username
+		 *@return {String}
+		 */
 
 		username: function(){
 			if(this.has_data()){
@@ -382,17 +306,13 @@ yootil.user = (function(){
 					return this.data.username;
 				}
 			}
-
 			return "";
 		},
 
 		/**
-		* Function: group_ids
-		*	Gets users group ids
-		*
-		* Returns:
-		*	*array*
-		*/
+		 * Gets users group ids
+		 *@return {Array}
+		 */
 
 		group_ids: function(){
 			if(this.has_data()){
@@ -400,17 +320,13 @@ yootil.user = (function(){
 					return this.data.group_ids;
 				}
 			}
-
 			return [];
 		},
 
 		/**
-		* Function: groups
-		*	Gets users groups
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets users groups
+		 *@return {Object}
+		 */
 
 		groups: function(){
 			if(this.has_data()){
@@ -418,17 +334,13 @@ yootil.user = (function(){
 					return this.data.groups;
 				}
 			}
-
 			return {};
 		},
 
 		/**
-		* Function: is_invisible
-		*	Checks if the member is invisible
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks if the member is invisible
+		 *@return {Boolean}
+		 */
 
 		is_invisible: function(){
 			if(this.has_data()){
@@ -436,17 +348,13 @@ yootil.user = (function(){
 					return true;
 				}
 			}
-
 			return false;
 		},
 
 		/**
-		* Function: proboards_plus
-		*	Checks if the member has proboards plus on
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks if the member has proboards plus on
+		 *@return {Boolean}
+		 */
 
 		proboards_plus: function(){
 			if(this.has_data()){
@@ -454,17 +362,13 @@ yootil.user = (function(){
 					return true;
 				}
 			}
-
 			return false;
 		},
 
 		/**
-		* Function: block_list
-		*	Gets the users block list
-		*
-		* Returns:
-		*	*object*
-		*/
+		 * Gets the users block list
+		 *@return {Object}
+		 */
 
 		block_list: function(){
 			if(this.has_data()){
@@ -472,10 +376,8 @@ yootil.user = (function(){
 					return this.data.block_list;
 				}
 			}
-
 			return {};
 		}
-
 	};
 
 })();

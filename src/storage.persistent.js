@@ -1,9 +1,11 @@
 /**
-* Namespace: yootil.storage.persistent
-*	Allows you to store a value that is peristent even after browser has closed.
-*
-*	IE 7 is supported, and uses userData to handle the storage.
-*/
+ * @class yootil.storage.persistent
+ * @static
+ * @ignore
+ * Allows you to store a value that is peristent even after browser has closed.
+ *
+ * IE 7 is supported, and uses userData to handle the storage.
+ */
 
 yootil.storage.persistent = (function(){
 	
@@ -20,21 +22,16 @@ yootil.storage.persistent = (function(){
 	}
 	
 	return {
-		
+
 		/**
-		* Method: set
-		* 	Allows you to set a key and value.
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*	value - *string* The value that will be stored
-		*
-		* Returns:
-		*	yootil.storage.persistent
-		*
-		* Examples:
-		*	yootil.storage.persistent.set("mykey", "myvalue");
-		*/
+		 * Allows you to set a key and value.
+		 *
+		 *     yootil.storage.persistent.set("mykey", "myvalue");
+		 *
+		 * @param {String} key The key for the storage.
+		 * @param {String} value The value that will be stored.
+		 * @chainable
+		 */
 		
 		set: function(key, value){
 			if(storage_element){
@@ -48,18 +45,11 @@ yootil.storage.persistent = (function(){
 		},
 
 		/**
-		* Method: get
-		* 	Gets a value from storage in.
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*
-		* Returns:
-		*	*string*
-		*
-		* Examples:
-		*	yootil.storage.persistent.get("mykey");
-		*/
+		 * Gets a value from storage in.
+		 *
+		 * @param {String} key The key for the storage.
+		 * @return {String}
+		 */
 		
 		get: function(key){
 			var value = "";
@@ -74,18 +64,11 @@ yootil.storage.persistent = (function(){
 		},
 
 		/**
-		* Method: remove
-		* 	Removes a key from storage
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*
-		* Returns:
-		*	yootil.storage.persistent
-		*
-		* Examples:
-		*	yootil.storage.persistent.remove("mykey");
-		*/
+		 * Removes a key from storage
+		 *
+		 * @param {String} key The key for the storage.
+		 * @chainable
+		 */
 				
 		remove: function(key){
 			if(storage_element){

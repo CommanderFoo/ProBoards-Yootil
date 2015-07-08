@@ -1,29 +1,31 @@
 /**
-* Namespace: yootil.queue
-*	Handle queuing functions.
+* @class yootil.queue
+* @constructor
+*
+* Handle queuing functions easily.
+*
+*     var q = new yootil.queue();
+*
+*     q.add(function(){
+*     	console.log("Hello");
+*
+*     	setTimeout("q.next()", 1000);
+*     });
+*
+*     q.add(function(){
+*     	console.log("World");
+*     	q.stop(); // Stop the queue
+*     });
+*
+*     // Won't run as queue was stopped
+*     q.add(function(){
+*     	console.log("!");
+*     });
+*
+* @param {Number} [poll] How often should we poll the queue list (default is 100ms).
 */
 
 yootil.queue = (function(){
-
-	/**
-	* Method: queue
-	*	Handle queuing functions.
-	*
-	* Parameters:
-	*	poll *integer* - How often should we poll the queue list (default is 100ms)?
-	*
-	* Returns:
-	*	*object* - Queue is returned
-	*
-	* Examples:
-	*	var q = new yootil.queue();
-	*
-	*	q.add(function(){setTimeout(function(){console.log(1); q.next(); }, 1000)});
-	*
-	*	q.add(function(){setTimeout(function(){console.log(2); q.stop(); }, 1000)});
-	*
-	*	q.add(function(){setTimeout(function(){console.log(3); q.next(); }, 1000)}); // Won't run, as queue was stopped
-	*/
 
 	function Queue(poll){
 		this.queue = [];
@@ -35,15 +37,13 @@ yootil.queue = (function(){
 	Queue.prototype = {
 
 		/**
-		* Method: add
-		*	Add a function to the queue
-		*
-		* Parameters:
-		*	func - *function* The function to add to the queue
-		*
-		* Returns:
-		*	*object* - Queue is returned to allow chaining
-		*/
+		 * Add a function to the queue.
+		 *
+		 * This will also start polling the queue the first time add is called.
+		 *
+		 * @param {Function} func The function to add to the queue.
+		 * @chainable
+		 */
 
 		add: function(func){
 			this.queue.push(func);
@@ -66,12 +66,9 @@ yootil.queue = (function(){
 		},
 
 		/**
-		* Method: next
-		*	Move to the next item in the queue
-		*
-		* Returns:
-		*	*object* - Queue is returned to allow chaining
-		*/
+		 * Move to the next item in the queue.
+		 * @chainable
+		 */
 
 		next: function(){
 			if(this.queue.length){
@@ -87,12 +84,21 @@ yootil.queue = (function(){
 		},
 
 		/**
-		* Method: stop
-		*	Stop the queue
-		*
-		* Returns:
-		*	*object* - Queue is returned to allow chaining
-		*/
+		 * Pauses the queue.
+		 * @chainable
+		 */
+
+		pause: function(){
+			clearInterval(this.interval);
+			this.polling = this.interval = false;
+
+			return this;
+		},
+
+		/**
+		 * Stop the queue.  This empties the queue.
+		 *@chainable
+		 */
 
 		stop: function(){
 			this.queue = [];

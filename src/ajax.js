@@ -1,31 +1,31 @@
 /**
-* Namespace: yootil.ajax
-*	Useful methods for AJAX
-*/
+ * @class yootil.ajax
+ * @static
+ *	Useful methods for AJAX related stuff, mostly hooking into calls
+ */
 
 yootil.ajax = (function(){
 
 	return {
 
 		/**
-		* Method: bind
-		* 	Allows us add a global AJAX event to an element.
-		*
-		* Parameters:
-		* 	event - *string* The ajax event to bind (i.e "complete"), without "ajax" prefix.
-		* 	e - *object* The element to bind the event too.
-		* 	f - *function* This is the callback function that will get called.
-		* 	url - *string* / *boolean* The AJAX URL ProBoards calls to match against. If bool, match all.
-		* 	context - *object* The context ("this") of the callback function.
-		*
-		* Returns:
-		* 	*object* yootil
-		*
-		* Examples:
-		* 	yootil.ajax.bind("complete", $("form:first"), function(){ alert("AJAX completed"); });
-		*
-		* 	yootil.ajax.bind("complete", $("form:first"), function(){ alert("AJAX completed"); }, "/plugin/key/set/");
-		*/
+		 * Adds a global AJAX event to an element.
+		 *
+		 *     yootil.ajax.bind("complete", $("form:first"), function(){
+		 *     	alert("AJAX completed");
+		 *     });
+		 *
+		 *     yootil.ajax.bind("complete", $("form:first"), function(){
+		 *     	alert("AJAX completed");
+		 *     }, "/plugin/key/set/");
+		 *
+		 * @param {String} event The ajax event to bind (i.e "complete"), without "ajax" prefix.
+		 * @param {Object} e The element to bind the event too.
+		 * @param {Function} f This is the callback function that will get called.
+		 * @param {Mixed} url The AJAX URL ProBoards calls to match against. If it is a boolean, then it will match all.
+		 * @param {Object} [context] The context of the callback function.
+		 * @chainable
+		 */
 
 		bind: function(event, e, f, url, context){
 			var elem = $(e);
@@ -44,31 +44,22 @@ yootil.ajax = (function(){
 				}
 			}
 
-			return yootil;
+			return this;
 		},
 
 		/**
-		* Method: after_search
-		*	Because ProBoards uses AJAX for pagination, and on filtering (i.e members page),
-		*	we need to apply our DOM changes after the content on the page has been updated.
-		*	Currently there is no official callback, however the Live Query plugin is included,
-		*	but not recommended if you are after best performance.
-		*
-		* 	This is now a wrapper around ProBoards event.
-		*
-		*	Note:  Pages are cached, so you will need to check the DOM for your modified changes,
-		*	otherwise you will see it repeat without checking.
-		*
-		* Parameters:
-		*	func - *function* - The function that will be called after search.
-		*	context - *object* - Context of func
-		*
-		* Returns:
-		*	*object* Yootil
-		*/
+		 *	Because ProBoards uses AJAX for pagination and on filtering (i.e members page),
+		 *	we need to apply our DOM changes after the content on the page has been updated.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
 
 		after_search: function(func, context){
 			proboards.on("afterSearch", ((context)? $.proxy(func, context) : func));
+
+			return this;
 		}
 
 	};

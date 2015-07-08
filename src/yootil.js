@@ -1,21 +1,14 @@
 /**
-* Namespace: yootil
-*
-* 	yootil contains helpful methods to help plugin developers develop quicker.
-*
-* 	There are various methods, some are just wrappers around ProBoards API.
-*
-*
-*	Project - https://github.com/pixelDepth/Yootil
-*
-*	Compressed - http://yootil.pixeldepth.net/yootil.min.js
-*
-*	Dev - https://raw.github.com/pixelDepth/Yootil/master/yootil.dev.js
-*
-*	Plugin - http://yootil.pixeldepth.net/yootil.library.pbp
-*
-*	Topic - http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360
-*/
+ * @class yootil
+ * @static
+ * Yootil is a utility library for ProBoards.  It was designed to help plugin developers develop quicker.
+ *
+ * The "yootil" namespace encapsulates all of the utilities and classes.
+ *
+ * <a href="https://github.com/PopThosePringles/ProBoards-Yootil">GitHub Repository</a> |
+ * <a href="http://support.proboards.com/index.cgi?action=display&board=plugindatabase&thread=429360">ProBoards Forum Topic</a> |
+ * <a href="https://www.proboards.com/library/plugins/item/38">ProBoards Plugin Library Link</a>
+ */
 
 yootil = (function(){
 
@@ -32,59 +25,44 @@ yootil = (function(){
 		notifications_queue: {},
 
 		/**
-		* Method: html_encode
-		*	Makes a value safe for inserting into the DOM.
-		*
-		* Parameters:
-		* 	value - *string* The value you want returned to be safe.
-		*
-		* Returns:
-		* 	*string* The safe value.
-		*
-		* Examples:
-		*	var safe_html = yootil.html_encode("<b>this won't be bold</b>");
-		*/
+		 * Makes a string safe for inserting into the DOM.
+		 *
+		 *     var safe_html = yootil.html_encode("<b>this won't be bold</b>");
+		 *
+		 * @param {String} str The value you want returned to be safe.
+		 * @return {string} The safe value.
+		 */
 
-		html_encode: function(value){
-			value = (value)? value : "";
+		html_encode: function(str){
+			str = (str)? str : "";
 
-			return $("<div />").text(value).html();
+			return $("<div />").text(str).html();
 		},
 
 		/**
-		* Method: html_decode
-		*	Converts back to HTML
-		*
-		* Parameters:
-		* 	value - *string* The value you want returned to be HTML string.
-		*
-		* Returns:
-		*	*string* The HTML string value.
-		*
-		* Examples:
-		*	var html = yootil.html_decode("<b>this will be bold</b>");
-		*/
+		 * Converts back to HTML
+		 *
+		 *     var html = yootil.html_decode("<b>this will be bold</b>");
+		 *
+		 * @param {String} str The string you want returned to be an HTML string.
+		 * @return {String} The HTML string.
+		 */
 
-		html_decode: function(value){
-			value = (value)? value : "";
+		html_decode: function(str){
+			str = (str)? str : "";
 
-			return $("<div />").html(value).text();
+			return $("<div />").html(str).text();
 		},
 
 		/**
-		* Method: number_format
-		* 	Formats numbers so they look pretty (i.e 1,530).
-		*
-		* Parameters:
-		* 	str - *string* The value to format.
-		*	delim - *string* The delimiter between each block (i.e 100.000.000, 100,000,000).
-		*
-		* Returns:
-		*	*string* Formatted string.
-		*
-		* Examples:
-		*	yootil.number_format(1000); // 1,000
-		*/
+		 * Formats numbers so they look pretty (i.e 1,530).
+		 *
+		 *     yootil.number_format(1000); // 1,000
+		 *
+		 * @param {String} str The string to format.
+		 * @param {String} [delim] The delimiter between each block (i.e 100.000.000, 100,000,000).
+		 * @return {String} Formatted string.
+		 */
 
 		number_format: function(str, delim){
 			str = (str)? str : "";
@@ -94,16 +72,14 @@ yootil = (function(){
 		},
 
 		/**
-		* Method: is_json
-		*	Checks to see if string passed in is a valid JSON string
-		*
-		* Parameters:
-		*	str - *string* This is the string that is getting checked for valid JSON
-		*	return_obj - *boolean* If true, the string will be parsed and returned back
-		*
-		* Returns:
-		*	*boolean* / *object*
-		*/
+		 * Checks to see if string passed in is a valid JSON string.
+		 *
+		 *     yootil.is_json("{\"hello\":\"world\"}");
+		 *
+		 * @param {String} str This is the string that is getting checked for valid JSON.
+		 * @param {Boolean} [return_obj] If true, the string will be parsed and returned back.
+		 * @return {Mixed}
+		 */
 
 		is_json: function(str, return_obj){
 			try {
@@ -120,23 +96,16 @@ yootil = (function(){
 		},
 
 		/**
-		* Method: pad
-		*	 Pad a string to a certain length with another string on the left or right side of passed in string.
-		*
-		* Parameters:
-		*	str - *string* This is the string that is going to be padded
-		*	len - *integer* The length of the string to be returned, defaults to 6
-		*	pad_str - *string* The string to pad with
-		*	pad_pos - *mixed* Position of the padding, can be 1, "RIGHT", for right padding.  Default is left.
-		*
-		* Returns:
-		*	*string*
-		*
-		* Examples:
-		*	yootil.pad(5, 6, "0"); // 000005
-		*
-		*	yootil.pad(5, 6, "#", "RIGHT"); // 5#####
-		*/
+		 * Pad a string to a certain length with another string on the left or right side of passed in string.
+		 *
+		 *     yootil.pad(5, 6, "0"); // 000005
+		 *
+		 * @param {String} str This is the string that is going to be padded.
+		 * @param {Number} len The length of the string to be returned, defaults to 6.
+		 * @param {String} [pad_str] The string to pad with.
+		 * @param {Mixed} [pad_pos] Position of the padding, can be 1 or "RIGHT", for right padding.  Default is left.
+		 * @return {String}
+		 */
 
 		pad: function(str, len, pad_str, pad_pos){
 			var pad_str = (pad_str)? pad_str : "0";
@@ -161,16 +130,13 @@ yootil = (function(){
 		},
 
 		/**
-		* Method: outer_html
-		*	Simple method to get the outerHTML of an element.  It will use outerHTML if
-		*	supported, or use jQuery.
-		*
-		* Parameters:
-		*	elem - *object* The element you want the outer HTML to be returned
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the outerHTML of an element.  It will use outerHTML if supported.
+		 *
+		 *     var html = yootil.outer_html($("#test"));
+		 *
+		 * @param {Object} elem The element you want the outer HTML to be returned.
+		 * @return {String}
+		 */
 
 		outer_html: function(elem){
 			if(elem){
@@ -187,21 +153,17 @@ yootil = (function(){
 		},
 
 		/**
-		* Method: convert_versions
-		*	Simple method to convert version numbers (format being 0.0.0).
-		*	Note:  Doesn't work with versions such as this: 0.9.10, it will appear
-		*	a smaller number compared to 0.9.3
-		*
-		* Parameters:
-		*	v1 - *string* Assumed old version
-		*	v2 - *string* Assumed new version
-		*
-		* Returns:
-		*	*array*
-		*
-		* Examples:
-		*	var versions = yootil.convert_versions("0.5.7", "0.8.2"); // [056, 082]
-		*/
+		 * Simple method to convert version numbers (format being 0.0.0).
+		 *
+		 * <strong>Note:</strong>  Doesn't work with versions such as this: 0.9.10, it will appear
+		 *	a smaller number compared to 0.9.3.
+		 *
+		 *     var versions = yootil.convert_versions("0.5.7", "0.8.2"); // [056, 082]
+		 *
+		 * @param {String} v1 Assumed old version.
+		 * @param {String} v2 Assumed new version.
+		 * @return {Array}
+		 */
 
 		convert_versions: function(v1, v2){
 			var versions = [];
@@ -232,6 +194,15 @@ yootil = (function(){
 			}
 
 			return this;
+		},
+		/**
+		 * Gets the version currently running.
+		 *
+		 * @return {String};
+		 */
+
+		version: function(){
+			return this.VERSION;
 		}
 
 	};

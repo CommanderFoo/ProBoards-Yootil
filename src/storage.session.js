@@ -1,9 +1,10 @@
 /**
-* Namespace: yootil.storage.session
-*	Allows you to store a value for the session.
-*
-*	HTML 5 is used if available, otherwise uses window.name
-*/
+ * @class yootil.storage.session
+ * @static
+ * Allows you to store a value for the session.
+ *
+ * HTML 5 is used if available, otherwise uses window.name
+ */
 
 yootil.storage.session = (function(){
 	
@@ -16,19 +17,14 @@ yootil.storage.session = (function(){
 	return {
 
 		/**
-		* Method: set
-		* 	Allows you to set a key and value.
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*	value - *string* The value that will be stored
-		*
-		* Returns:
-		*	yootil.storage.session
-		*
-		* Examples:
-		*	yootil.storage.session.set("mykey", "myvalue");
-		*/
+		 * Allows you to set a key and value.
+		 *
+		 *     yootil.storage.session.set("mykey", "myvalue");
+		 *
+		 * @param {String} key The key for the storage.
+		 * @param {String} value The value that will be stored.
+		 * @chainable
+		 */
 		
 		set: function(key, value){
 			if(yootil.storage.html5){
@@ -46,18 +42,11 @@ yootil.storage.session = (function(){
 		},
 
 		/**
-		* Method: get
-		* 	Gets a value from storage in.
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*
-		* Returns:
-		*	*string*
-		*
-		* Examples:
-		*	yootil.storage.session.get("mykey");
-		*/
+		 * Gets a value from storage in.
+		 *
+		 * @param {String} key The key for the storage.
+		 * @return {String}
+		 */
 		
 		get: function(key){
 			var value = "";
@@ -72,18 +61,11 @@ yootil.storage.session = (function(){
 		},
 
 		/**
-		* Method: remove
-		* 	Removes a key from storage
-		*
-		* Parameters:
-		*	key - *string* The key for the storage
-		*
-		* Returns:
-		*	yootil.storage.session
-		*
-		* Examples:
-		*	yootil.storage.session.remove("mykey");
-		*/
+		 * Removes a key from storage
+		 *
+		 * @param {String} key The key for the storage.
+		 * @chainable
+		 */
 			
 		remove: function(key){
 			if(yootil.storage.html5 && sessionStorage.length){

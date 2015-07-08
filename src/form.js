@@ -1,21 +1,20 @@
 /**
-* Namespace: yootil.form
-*	Easy access to forms for many of the forms on the forum.
-*
-*	Each method will return either the form or an empty array.  This keeps
-* 	things consistent with how jQuery works when a selector doesn't find anything.
-*/
+ * @class yootil.form
+ * @static
+ * Easy access to forms for many of the forms on the forum.
+ *
+ * Each method will return either the form or an empty array.  This keeps
+ * things consistent with how jQuery works when a selector doesn't find anything.
+ */
 
 yootil.form = (function(){
 
 	return {
 
 		/**
-		* Method: post_form
-		*	Checks for a form to do with posting on the post page.
+		* Checks for a form to do with posting on the post page.
 		*
-		* Returns:
-		*	*array* / *jQuery*
+		* @return {Array}
 		*/
 		
 		post_form: function(){
@@ -27,12 +26,10 @@ yootil.form = (function(){
 		},
 
 		/**
-		* Method: edit_post_form
-		*	Checks for a form to do with edit on the post page.
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Checks for a form to do with edit on the post page.
+		 *
+		 * @return {Array}
+		 */
 		
 		edit_post_form: function(){
 			if(yootil.location.check.editing_post()){
@@ -41,14 +38,12 @@ yootil.form = (function(){
 			
 			return [];
 		},
-		
+
 		/**
-		* Method: edit_thread_form
-		*	Checks for edit thread form.
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Checks for edit thread form.
+		 *
+		 * @return {Array}
+		 */
 		
 		edit_thread_form: function(){
 			if(yootil.location.check.editing_thread()){
@@ -57,26 +52,22 @@ yootil.form = (function(){
 			
 			return [];
 		},
-		
+
 		/**
-		* Method: quick_reply_form
-		*	Checks for any form to do with quick replies, this includes threads and conversations
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Checks for any form to do with quick replies, this includes threads and conversations.
+		 *
+		 * @return {Array}
+		 */
 				
 		quick_reply_form: function(){
 			return $("form.form_post_quick_reply");
 		},
-		
+
 		/**
-		* Method: post_quick_reply_form
-		*	Just for the quick reply on threads.
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Just for the quick reply on threads.
+		 *
+		 * @return {Array}
+		 */
 		
 		post_quick_reply_form: function(){
 			if(yootil.location.check.thread()){
@@ -85,27 +76,23 @@ yootil.form = (function(){
 			
 			return [];
 		},
-	
+
 		/**
-		* Method: shoutbox_form
-		*	Shoutbox form
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Shoutbox form.
+		 *
+		 * @return {Array}
+		 */
 		
 		shoutbox_form: function(){
 			return $("form.form_shoutbox_shoutbox");
 		},
 
 		/**
-		* Method: conversation_form
-		*	There are 2 forms for this, so we check if we are replying, if not
-		*	we return the conversation new form.
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * There are 2 forms for this, so we check if we are replying, if not
+		 * we return the conversation new form.
+		 *
+		 * @return {Array}
+		 */
 				
 		conversation_form: function(){
 			if(yootil.location.check.message_new()){
@@ -116,24 +103,20 @@ yootil.form = (function(){
 		},
 
 		/**
-		* Method: conversation_new_form
-		*	Returns the form used when creating a new conversation.
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Returns the form used when creating a new conversation.
+		 *
+		 * @return {Array}
+		 */
 		
 		conversation_new_form: function(){
 			return $("form.form_conversation_new");
 		},
-		
+
 		/**
-		* Method: message_form
-		*	Returns the form used when creating a reply to a conversation
-		*
-		* Returns:
-		*	*array* / *jQuery*
-		*/
+		 * Returns the form used when creating a reply to a conversation
+		 *
+		 * @return {Array}
+		 */
 				
 		message_form: function(){
 			return $("form.form_message_new");

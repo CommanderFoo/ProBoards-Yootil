@@ -1,543 +1,412 @@
 /**
-* Namespace: yootil.location.check
-*   Used to determine where we are currently
-*/
+ * @class yootil.location.check
+ * @static
+ * Used to determine where we are currently.
+ */
 
 yootil.location.check = (function(){
+	
+	return {
+	
+		cached_route: ((proboards.data && proboards.data("route")) ? proboards.data("route").name : ""),
+		
+		// Please keep these sorted alphabetically. Just helps our sanity
+		
+		/**
+		 * INTERNAL METHOD.  Used to easily see if an id is the current page.
+		 *
+		 * @param {String} id ID of the page to check route against.
+		 * @return {Boolean}
+		 * @ignore
+		 */
 
-    return {
+		__is_page: function(id){
+			return this.cached_route == id;
+		},
 
-    	cached_route: ((proboards.data && proboards.data("route"))? proboards.data("route").name : ""),
+		/**
+		 * Are we currently viewing the main page of a board? (i.e. thread listing)
+		 * @return {Boolean}
+		 */
 
+		board: function(){
+			return this.__is_page("board") || this.__is_page("list_threads");
+		},
 
-        // Please keep these sorted alphabetically. Just helps our sanity
+		/**
+		 * Are we currently viewing the bookmarks listing?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: __is_page
-        *   INTERNAL METHOD.  Used to easily see if an id is the current page.
-        *
-        * Parameters:
-        *   id - *string* ID of the page to check route against
-        *
-        * Examples:
-        *   yootil.locationcheck.__is_page("board");
-        *
-        * Returns:
-        *   *boolean*
-        */
+		bookmarks: function(){
+			return this.__is_page("bookmarks");
+		},
 
-        __is_page: function(id){
-            return this.cached_route == id;
-        },
+		/**
+		 * Are we currently viewing the main calendar page?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: board
-        *   Are we currently viewing the main page of a board? (i.e. thread listing)
-        *
-        * Returns:
-        *   *boolean*
-        */
+		calendar: function(){
+			// calendar == this month, calendar_month == this or any depending on query string
+			return this.__is_page("calendar") || this.__is_page("calendar_month") || this.__is_page("calendar_list");
+		},
 
-        board: function(){
-            return this.__is_page('board') || this.__is_page('list_threads');
-        },
+		/**
+		 * Are we viewing a day of calendar events?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: bookmarks
-        *   Are we currently viewing the bookmarks listing?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		calendar_day: function(){
+			return this.__is_page("calendar_day");
+		},
 
-        bookmarks: function(){
-            return this.__is_page('bookmarks');
-        },
+		/**
+		 * Are we currently viewing the main forum? (i.e. board listing)
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: calendar
-        *   Are we currently viewing the main calendar page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		forum: function(){
+			// CURRENT ISSUE: This is "forum" when custom page is homepage...
+			// See: http://support.proboards.com/index.cgi?board=openbetafeaturerequests&action=display&thread=429638&page=1
+			// Plugins don't run on custom pages, so if home or forum, this is viewing main page.
+			return this.__is_page("home") || this.__is_page("forum");
+		},
 
-        calendar: function(){
-            // calendar == this month, calendar_month == this or any depending on query string
-            return this.__is_page('calendar') || this.__is_page('calendar_month') || this.__is_page("calendar_list");
-        },
+		/**
+		 * Are we currently viewing the members list?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: calendar_day
-        *   Are we viewing a day of calendar events?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		members: function(){
+			return this.__is_page("members") || this.__is_page("list_members");
+		},
 
-        calendar_day: function(){
-            return this.__is_page('calendar_day');
-        },
+		/**
+		 * Are we currently viewing the list of messages?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: forum
-        *   Are we currently viewing the main forum? (i.e. board listing)
-        *
-        * Returns:
-        *   *boolean*
-        */
+		message_list: function(){
+			return this.__is_page("conversations") || this.__is_page("conversations_inbox") || this.__is_page("list_conversations");
+		},
 
-        forum: function(){
-            // CURRENT ISSUE: This is "forum" when custom page is homepage...
-            // See: http://support.proboards.com/index.cgi?board=openbetafeaturerequests&action=display&thread=429638&page=1
-            // Plugins don't run on custom pages, so if home or forum, this is viewing main page.
-            return this.__is_page('home') || this.__is_page('forum');
-        },
+		/**
+		 * Are we currently viewing a message?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: members
-        *   Are we currently viewing the members list?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		message_thread: function(){
+			return this.__is_page("conversation") || this.__is_page("list_messages");
+		},
 
-        members: function(){
-            return this.__is_page('members') || this.__is_page("list_members");
-        },
+		/**
+		 * Are we currently sending a message?
+		 * @return {Boolean}
+		 */
 
-        /**
-        * Method: message_list
-        *   Are we currently viewing the list of messages?
-        *
-        * Returns:
-        *   *boolean*
-        */
-
-        message_list: function(){
-            return this.__is_page('conversations') || this.__is_page('conversations_inbox') || this.__is_page("list_conversations");
-        },
-
-        /**
-        * Method: message_thread
-        *   Are we currently viewing a message?
-        *
-        * Returns:
-        *   *boolean*
-        */
-
-        message_thread: function(){
-            return this.__is_page('conversation') || this.__is_page("list_messages");
-        },
-
-        /**
-        * Method: messaging
-        *   Are we currently sending a message?
-        *
-        * Returns:
-        *   *boolean*
-        */
-
-        messaging: function(){
+		messaging: function(){
 			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote() || this.conversation_new_user();
-        },
+		},
 
-        /**
-        * Method: message_new
-        *   Are we currently replying to a conversation?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently replying to a conversation?
+		 * @return {Boolean}
+		 */
 
 		message_new: function(){
 			return this.__is_page("new_message");
 		},
 
-        /**
-        * Method: message_quote
-        *   Are we currently replying to a conversation by quoting?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently replying to a conversation by quoting?
+		 * @return {Boolean}
+		 */
 
 		message_quote: function(){
 			return this.__is_page("quote_messages");
 		},
 
 		/**
-        * Method: conversation_new
-        *   Are we currently creating a new conversation?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		 * Are we currently creating a new conversation?
+		 * @return {Boolean}
+		 */
 
 		conversation_new: function(){
 			return this.__is_page("new_conversation") || this.__is_page("create_conversation") || this.__is_page("conversation_new_user");
 		},
 
 		/**
-        * Method: conversation_create
-        *   Are we currently creating a new conversation?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		 * Are we currently creating a new conversation?
+		 * @return {Boolean}
+		 */
 
 		conversation_create: function(){
 			return this.__is_page("create_conversation");
 		},
 
 		/**
-        * Method: conversation_new_user
-        *   Are we currently creating a new conversation (new_user_conversation)?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		 * Are we currently creating a new conversation (new_user_conversation)?
+		 * @return {Boolean}
+		 */
 
 		conversation_new_user: function(){
 			return this.__is_page("new_user_conversation");
 		},
 
-        /**
-        * Method: posting
-        *   Are we currently trying to post/create a thread/quote a post?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to post/create a thread/quote a post?
+		 * @return {Boolean}
+		 */
 
-        posting: function(){
-            return this.posting_quote() || this.posting_reply() || this.posting_thread();
-        },
+		posting: function(){
+			return this.posting_quote() || this.posting_reply() || this.posting_thread();
+		},
 
-        /**
-        * Method: posting_quote
-        *   Are we currently trying to reply with a quote?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to reply with a quote?
+		 * @return {Boolean}
+		 */
 
-        posting_quote: function(){
-            return this.__is_page('quote_posts');
-        },
+		posting_quote: function(){
+			return this.__is_page("quote_posts");
+		},
 
-        /**
-        * Method: posting_reply
-        *   Are we currently trying to post a reply?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to post a reply?
+		 * @return {Boolean}
+		 */
 
-        posting_reply: function(){
-            return this.__is_page('new_post');
-        },
+		posting_reply: function(){
+			return this.__is_page("new_post");
+		},
 
-        /**
-        * Method: posting_thread
-        *   Are we currently trying to create a thread?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to create a thread?
+		 * @return {Boolean}
+		 */
 
-        posting_thread: function(){
-            return this.__is_page('new_thread');
-        },
+		posting_thread: function(){
+			return this.__is_page("new_thread");
+		},
 
-        /**
-        * Method: editing_post
-        *   Are we currently trying to edit a post?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to edit a post?
+		 * @return {Boolean}
+		 */
 
-        editing_post: function(){
-            return this.__is_page('edit_post');
-        },
+		editing_post: function(){
+			return this.__is_page("edit_post");
+		},
 
-        /**
-        * Method: editing_thread
-        *   Are we currently trying to edit a thread?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to edit a thread?
+		 * @return {Boolean}
+		 */
 
-        editing_thread: function(){
-            return this.__is_page('edit_thread');
-        },
+		editing_thread: function(){
+			return this.__is_page("edit_thread");
+		},
 
-        /**
-        * Method: editing
-        *   Are we currently trying to edit a thread or post?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to edit a thread or post?
+		 * @return {Boolean}
+		 */
 
-        editing: function(){
+		editing: function(){
 			return this.editing_thread() || this.editing_post();
-        },
+		},
 
-        /**
-        * Method: profile_activity
-        *   Are we viewing the activity profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the activity profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_activity: function(){
-            return this.__is_page('show_user_activity');
-        },
+		profile_activity: function(){
+			return this.__is_page("show_user_activity");
+		},
 
-        /**
-        * Method: profile_following
-        *   Are we viewing the following profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the following profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_following: function(){
-            return this.__is_page('show_user_following');
-        },
+		profile_following: function(){
+			return this.__is_page("show_user_following");
+		},
 
-        /**
-        * Method: profile_friends
-        *   Are we viewing the friends profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the friends profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_friends: function(){
-            return this.__is_page('show_user_friends');
-        },
+		profile_friends: function(){
+			return this.__is_page("show_user_friends");
+		},
 
-        /**
-        * Method: profile_gift
-        *   Are we viewing the gifts profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the gifts profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_gift: function(){
-            return this.__is_page('show_user_gift');
-        },
+		profile_gift: function(){
+			return this.__is_page("show_user_gift");
+		},
 
-        /**
-        * Method: profile_groups
-        *   Are we viewing the groups profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the groups profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_groups: function(){
-            return this.__is_page('show_user_groups');
-        },
+		profile_groups: function(){
+			return this.__is_page("show_user_groups");
+		},
 
-        /**
-        * Method: profile_home
-        *   Are we viewing a main profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing a main profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_home: function(){
-            return this.__is_page('user');
-        },
+		profile_home: function(){
+			return this.__is_page("user");
+		},
 
-        /**
-        * Method: profile_edit_admin
-        *   Are we editing the admin controls page for the user?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the admin controls page for the user?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_admin: function(){
-            return this.__is_page('edit_user_admin');
-        },
+		profile_edit_admin: function(){
+			return this.__is_page("edit_user_admin");
+		},
 
-        /**
-        * Method: profile_edit_avatar
-        *   Are we editing the user's avatar?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's avatar?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_avatar: function(){
-            return this.__is_page('edit_user_avatar');
-        },
+		profile_edit_avatar: function(){
+			return this.__is_page("edit_user_avatar");
+		},
 
-        /**
-        * Method: profile_edit_badges
-        *   Are we editing the user's badges?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's badges?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_badges: function(){
-            return this.__is_page('edit_user_badges');
-        },
+		profile_edit_badges: function(){
+			return this.__is_page("edit_user_badges");
+		},
 
-        /**
-        * Method: profile_edit_notifications
-        *   Are we editing the user's notifications?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's notifications?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_notifications: function(){
-            return this.__is_page('edit_user_notifications');
-        },
+		profile_edit_notifications: function(){
+			return this.__is_page("edit_user_notifications");
+		},
 
-        /**
-        * Method: profile_edit_personal
-        *   Are we editing the user's personal settings?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's personal settings?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_personal: function(){
-            return this.__is_page('edit_user_personal');
-        },
+		profile_edit_personal: function(){
+			return this.__is_page("edit_user_personal");
+		},
 
-        /**
-        * Method: profile_edit_privacy
-        *   Are we editing the user's privacy settings?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's privacy settings?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_privacy: function(){
-            return this.__is_page('edit_user_privacy');
-        },
+		profile_edit_privacy: function(){
+			return this.__is_page("edit_user_privacy");
+		},
 
-        /**
-        * Method: profile_edit_settings
-        *   Are we editing the user's general settings?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's general settings?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_settings: function(){
-            return this.__is_page('edit_user_settings');
-        },
+		profile_edit_settings: function(){
+			return this.__is_page("edit_user_settings");
+		},
 
-        /**
-        * Method: profile_edit_social
-        *   Are we editing the user's social settings?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we editing the user's social settings?
+		 * @return {Boolean}
+		 */
 
-        profile_edit_social: function(){
-            return this.__is_page('edit_user_social');
-        },
+		profile_edit_social: function(){
+			return this.__is_page("edit_user_social");
+		},
 
-        /**
-        * Method: profile_notifications
-        *   Are we viewing the notifications profile page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the notifications profile page?
+		 * @return {Boolean}
+		 */
 
-        profile_notifications: function(){
-            return this.__is_page('show_user_notifications') || this.__is_page("show_more_notifications");
-        },
+		profile_notifications: function(){
+			return this.__is_page("show_user_notifications") || this.__is_page("show_more_notifications");
+		},
 
-        /**
-        * Method: profile
-        *   Are we viewing the profile (including any of the profile tabs)
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing the profile (including any of the profile tabs)
+		 * @return {Boolean}
+		 */
 
 		profile: function(){
 			return (this.profile_activity() || this.profile_following() || this.profile_friends() || this.profile_gift() || this.profile_groups() || this.profile_home() || this.profile_notifications());
 		},
 
-        /**
-        * Method: recent_posts
-        *   Are we currently viewing the recent posts page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently viewing the recent posts page?
+		 * @return {Boolean}
+		 */
 
-        recent_posts: function(){
-            return (this.__is_page('all_recent_posts') || this.__is_page("recent_posts"));
-        },
+		recent_posts: function(){
+			return (this.__is_page("all_recent_posts") || this.__is_page("recent_posts"));
+		},
 
-        /**
-        * Method: recent_threads
-        *   Are we currently viewing the recent threads page?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently viewing the recent threads page?
+		 * @return {Boolean}
+		 */
 
-        recent_threads: function(){
-            return this.__is_page('recent_threads');
-        },
+		recent_threads: function(){
+			return this.__is_page("recent_threads");
+		},
 
-        /**
-        * Method: search
-        *   Are we currently trying to search?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently trying to search?
+		 * @return {Boolean}
+		 */
 
-        search: function(){
-            return this.__is_page('search');
-        },
+		search: function(){
+			return this.__is_page("search");
+		},
 
-        /**
-        * Method: search_results
-        *   Are we viewing results of a search?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we viewing results of a search?
+		 * @return {Boolean}
+		 */
 
-        search_results: function(){
-            return this.__is_page('search_results');
-        },
+		search_results: function(){
+			return this.__is_page("search_results");
+		},
 
-        /**
-        * Method: thread
-        *   Are we currently viewing a thread?
-        *
-        * Returns:
-        *   *boolean*
-        */
+		/**
+		 * Are we currently viewing a thread?
+		 * @return {Boolean}
+		 */
 
-        thread: function(){
-            // View thread
-            return this.__is_page('thread') || this.__is_page('list_posts');
-        }
+		thread: function(){
+			// View thread
+			return this.__is_page("thread") || this.__is_page("list_posts");
+		}
+		
+	};
 
-    };
- })();
+})();

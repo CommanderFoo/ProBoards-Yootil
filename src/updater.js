@@ -1,3 +1,8 @@
+/**
+ * @class yootil.updater
+ * @ignore
+ */
+
 yootil.updater = (function(){
 	
 	return {

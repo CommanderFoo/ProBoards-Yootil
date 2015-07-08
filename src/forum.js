@@ -1,6 +1,7 @@
 /**
- * Namespace: yootil.forum
- *	Wrapper around the ProBoards data hash object to get forum info
+ * @class yootil.forum
+ * @static
+ * Wrapper around the ProBoards data hash object to get forum info.
  */
 
 yootil.forum = (function(){
@@ -8,15 +9,12 @@ yootil.forum = (function(){
 	return {
 
 		/**
-		* Method: __get_data
-		*	This is an internal method
-		*
-		* Parameters:
-		*	key - *string* The key on the page object to check and get
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * This is an internal method.
+		 *
+		 * @param {String} key The key on the page object to check and get.
+		 * @return {Mixed}
+		 * @ignore
+		 */
 
 		__get_data: function(key){
 			if(proboards && proboards.dataHash && typeof proboards.dataHash[key] != "undefined"){
@@ -27,24 +25,20 @@ yootil.forum = (function(){
 		},
 
 		/**
-		* Method: ad_free
-		*	Gets the ad free value
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the ad free value.
+		 *
+		 * @return {Number}
+		 */
 
 		ad_free: function(){
 			return this.__get_data("ad_free");
 		},
 
 		/**
-		* Method: is_ad_free
-		*	Checks if the forum is ad free
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks if the forum is ad free.
+		 *
+		 * @return {Boolean}
+		 */
 
 		is_ad_free: function(){
 			if(this.ad_free() == 1){
@@ -55,60 +49,50 @@ yootil.forum = (function(){
 		},
 
 		/**
-		* Method: default_avatar
-		*	Gets the forum default avatar
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the forum default avatar.
+		 *
+		 * @return {String}
+		 */
 
 		default_avatar: function(){
 			return this.__get_data("default_avatar");
 		},
 
 		/**
-		* Method: id
-		*	Gets the forum ID
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the forum ID.
+		 *
+		 * @return {String} This is stored as a string by ProBoards.
+		 */
 
 		id: function(){
 			return this.__get_data("forum_id");
 		},
 
 		/**
-		* Method: login_url
-		*	Gets the forum login url
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the forum login url.
+		 *
+		 * @return {String}
+		 */
 
 		login_url: function(){
 			return this.__get_data("login_url");
 		},
 
 		/**
-		* Method: current_user_guest
-		*	Gets the guest value for the user viewing the forum
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the guest value for the user viewing the forum.
+		 *
+		 * @return {String}
+		 */
 
 		current_user_guest: function(){
 			return this.__get_data("is_current_user_guest");
 		},
 
 		/**
-		* Method: is_current_user_guest
-		*	Checks if the current use is a guest or not
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks if the current use is a guest or not.
+		 *
+		 * @return {Boolean}
+		 */
 
 		is_current_user_guest: function(){
 			if(this.current_user_guest() == 1){
@@ -119,48 +103,40 @@ yootil.forum = (function(){
 		},
 
 		/**
-		* Method: mark_boards_read_url
-		*	Gets url for marking boards as read
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets url for marking boards as read.
+		 *
+		 * @return {String}
+		 */
 
 		mark_boards_read_url: function(){
 			return this.__get_data("mark_boards_read_url");
 		},
 
 		/**
-		* Method: plugin_max_key_length
-		*	Gets plugin key length for all keys not including super forum key
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets plugin key length for all keys not including super forum key.
+		 *
+		 * @return {Number}
+		 */
 
 		plugin_max_key_length: function(){
 			return this.__get_data("plugin_max_key_length");
 		},
 
 		/**
-		* Method: plugin_max_super_forum_key_length
-		*	Gets key length for the super forum key
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets key length for the super forum key.
+		 *
+		 * @return {Number}
+		 */
 
 		plugin_max_super_forum_key_length: function(){
 			return this.__get_data("plugin_max_super_forum_key_length");
 		},
 
 		/**
-		* Method: register_url
-		*	Gets forum register url
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets forum register url.
+		 *
+		 * @return {String}
+		 */
 
 		register_url: function(){
 			return this.__get_data("register_url");

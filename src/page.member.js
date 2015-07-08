@@ -1,22 +1,20 @@
 /**
-* Namespace: yootil.page.member
-*	Various methods to help get member information
-*/
+ * @class yootil.page.member
+ * @static
+ * Various methods to help get member information.
+ */
 
 yootil.page.member = (function(){
 
 	return {
 
 		/**
-		* Method: __get_data
-		*	This is an internal method
-		*
-		* Parameters:
-		*	key - *string* The key on the board object to check and get
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [String}
+		 * @ignore
+		 */
 
 		__get_data: function(key){
 			var member_obj = yootil.page.__get_data("member");
@@ -29,48 +27,36 @@ yootil.page.member = (function(){
 		},
 
 		/**
-		* Method: id
-		*	Gets the members ID
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the members ID.
+		 * @return {Number}
+		 */
 
 		id: function(){
 			return this.__get_data("id");
 		},
 
 		/**
-		* Method: name
-		*	Gets the members name
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the members name.
+		 * @return {String}
+		 */
 
 		name: function(){
 			return this.__get_data("name");
 		},
 
 		/**
-		* Method: url
-		*	Gets the members URL
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the members URL.
+		 * @return {String}
+		 */
 
 		url: function(){
 			return this.__get_data("url");
 		},
 
 		/**
-		* Method: display_group_id
-		*	Gets the members display group id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the members display group id.
+		 * @return {Number}
+		 */
 
 		display_group_id: function(){
 			return this.__get_data("display_group_id");

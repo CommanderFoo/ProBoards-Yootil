@@ -1,7 +1,8 @@
 /**
-* Namespace: yootil.bar
-*   Mimics the ProBoards Network bar, but on the left and for plugins.
-*/
+ * @class yootil.bar
+ * @static
+ * Mimics the ProBoards Network bar, but on the left and for plugins.
+ */
 
 yootil.bar = (function(){
 
@@ -33,17 +34,18 @@ yootil.bar = (function(){
 		},
 
 		/**
-		* Method: add
-		*	Use this to add an item to the Yootil Bar
-		*
-		* Parameters:
-		*	link - *string* URL for the item
-		*	img - *string* URL for the image
-		*	alt - *string* Alt / title for the image
-		*	id - *string* Pass in a unique ID if you wish to have the option to remove it later
-		*	func - *function* Pass function to be executed when clicked on
-		*	context - *mixed* Context of the function
-		*/
+		 * Add an item to the Yootil Bar.
+		 *
+		 *     yootil.bar.add("http://proboards.com", "http://example.com/someimage.png", "Hello World");
+		 *
+		 * @param {String} link URL for the item.
+		 * @param {String} img URL for the image.
+		 * @param {String} [alt] Alt / title for the image.
+		 * @param {String} [id] Pass in a unique ID if you wish to have the option to remove it later.
+		 * @param {Function} [func] Pass function to be executed when clicked on.
+		 * @param {Mixed} [context] Context of the function being passed.
+		 * @chainable
+		 */
 
 		add: function(link, img, alt, id, func, context){
 			var self = this;
@@ -70,18 +72,18 @@ yootil.bar = (function(){
 					}
 				}
 			});
+
+			return this;
 		},
 
 		/**
-		* Method: remove
-		*	Use this to remove an item to the Yootil Bar
-		*
-		* Parameters:
-		*	id - *string* The unique ID used when adding the item
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Remove an item to the Yootil Bar.
+		 *
+		 *     yootil.bar.remove("myitem");
+		 *
+		 * @param {String} id The unique ID used when adding the item.
+		 * @chainable
+		 */
 
 		remove: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
@@ -93,30 +95,28 @@ yootil.bar = (function(){
 					this._bar.css("display", "none");
 				}
 			}
+
+			return this;
 		},
 
 		/**
-		* Method: total_items
-		*	Find out how many items are currently sitting in the bar
-		*
-		* Returns:
-		*	*integer"
-		*/
+		 * Find out how many items are currently sitting in the bar.
+		 *
+		 * @return {Number}
+		 */
 
 		total_items: function(){
 			return this._total_items;
 		},
 
 		/**
-		* Method: get
-		*	Use this to get the jQuery item (a tag)
-		*
-		* Parameters:
-		*	id - *string* The unique ID used when adding the item
-		*
-		* Returns:
-		*	*object* jQuery object is returned that wraps around the a tag
-		*/
+		 * Use this to get the item (jQuery wrapped)
+		 *
+		 *     yootil.get("myitem");
+		 *
+		 * @param {String} id The unique ID used when adding the item.
+		 * @return {Object} jQuery object is returned that wraps around the a tag.
+		 */
 
 		get: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
@@ -125,15 +125,15 @@ yootil.bar = (function(){
 		},
 
 		/**
-		* Method: has
-		*	Use this to see if an item exists in the bar
-		*
-		* Parameters:
-		*	id - *string* The unique ID used when adding the item
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Use this to see if an item exists in the bar.
+		 *
+		 *     if(yootil.bar.has("myitem")){
+		 *     	console.log("item is in the yootil bar");
+		 *     }
+		 *
+		 * @param {String} id The unique ID used when adding the item.
+		 * @return {Boolean}
+		 */
 
 		has: function(id){
 			if(id && id.toString().length && this._items["_" + id.toString()]){
@@ -159,6 +159,16 @@ yootil.bar = (function(){
 				this._bar.css("display", "");
 			}
 		},
+
+		/**
+		 * Checks to see if the bar is enabled.
+		 *
+		 *     if(yootil.bar.is_enabled()){
+		 *     	console.log("Bar is enabled");
+		 *     }
+		 *
+		 * @return {Boolean}
+		 */
 
 		is_enabled: function(){
 			if(yootil.settings && yootil.settings.bar_enabled && yootil.settings.bar_enabled == 0){

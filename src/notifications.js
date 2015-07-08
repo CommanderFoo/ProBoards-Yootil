@@ -1,31 +1,19 @@
 /**
- * Namespace: yootil.notifications
+ * @class yootil.notifications
+ * @constructor
+ * Easily create notifications that show to the user.
  *
- *  This class handles notifications grouped by the key.
+ *     var notify = new yootil.notifications("my_key");
  *
- *  Easily create and remove notifications using an existing key.
- *
- *  IMPORTANT:  Encoding of your message is to be done by you.  You need to keep
- *  security in mind, because this plugin will not encode your message to make it safe.
+ * @param {String} key The key to save and load too.
+ * @param {String} [template] The template to use for the notifications.
+ * @param {String} [klass] Custom class to add to the notifications.
+ * @chainable
  */
 
 // @TODO: Add hooks to forms so that notifications that have been viewed are removed
 
 yootil.notifications = (function(){
-
-	/**
-	 * Method: Notifications
-	 * 	Constructor
-	 *
-	 * Parameters:
-	 * 	key - *string* The key to save and load too.
-	 *
-	 * Returns:
-	 * 	*object*
-	 *
-	 * Examples:
-	 *	new yootil.notifications("my_key");
-	 */
 
 	function Notifications(key, template, klass){
 		if(!yootil.notifications_queue[key]){
@@ -34,7 +22,7 @@ yootil.notifications = (function(){
 
 		this.html_tpl = "";
 		this.key = key || null;
-		this.plugin = proboards.plugin.keys.data[this.key] || null;
+		this.plugin = yootil.key.exists(this.key);
 		this.data = {};
 
 		if(this.plugin){
@@ -70,20 +58,15 @@ yootil.notifications = (function(){
 		},
 
 		/**
-		* Method: create
-		* 	Creates a new notification and saves it to the key
-		*
-		* Parameters:
-		* 	message - *string* The message to be saved.  IMPORTANT: It's up to you to secure this.
-		*	the_user_id - *integer* User id who is getting the message (default is current user).
-		*	id - *mixed* Each message can have an id, this is optional.
-		*
-		* Returns:
-		* 	*object*
-		*
-		* Examples:
-		*	new yootil.notifications("my_key").create("Hello World!");
-		*/
+		 * Creates a new notification and saves it to the key.
+		 *
+		 *     new yootil.notifications("my_key").create("Hello").create("World");
+		 *
+		 * @param {String} message The message to be saved.  <strong>IMPORTANT:</strong> It's up to you to secure this.
+		 * @param {Number} [the_user_id] User id who is getting the message (default is current user).
+		 * @param {Mixed} [id] Each message can have an id, this is optional.
+		 * @chainable
+		 */
 
 		create: function(message, the_user_id, id){
 			if(this.plugin){
@@ -175,33 +158,25 @@ yootil.notifications = (function(){
 		},
 
 		/**
-		* Method: get_all
-		* 	Returns the object with all messages for this key
-		*
-		* Returns:
-		* 	*object*
-		*
-		* Examples:
-		*	new yootil.notifications("my_key").create("Hello World!").get_all();
-		*/
+		 * Returns the object with all messages for this key.
+		 *
+		 *     new yootil.notifications("my_key").create("Hello World!").get_all();
+		 *
+		 * @return {Object}
+		 */
 
 		get_all: function(){
 			return this.data;
 		},
 
 		/**
-		* Method: get
-		* 	Returns a specific message
-		*
-		* Parameters:
-		* 	id - *mixed* The id for the message you want to get.
-		*
-		* Returns:
-		* 	*object*
-		*
-		* Examples:
-		*	new yootil.notifications("my_key").get(44);
-		*/
+		 * Returns a specific message if an id was set.
+		 *
+		 *     var n = new yootil.notifications("my_key").get("notify44");
+		 *
+		 * @param {Mixed} id The id for the message you want to get.
+		 * @return {Object}
+		 */
 
 		get: function(id){
 			for(var key in this.data){
@@ -215,15 +190,12 @@ yootil.notifications = (function(){
 		},
 
 		/**
-		* Method: remove_all
-		* 	Removes all notifications from the key
-		*
-		* Returns:
-		* 	*object*
-		*
-		* Examples:
-		*	new yootil.notifications("my_key").remove_all();
-		*/
+		 * Removes all notifications from the key.
+		 *
+		 *     new yootil.notifications("my_key").remove_all();
+		 *
+		 * @chainable
+		 */
 
 		remove_all: function(){
 			this.data = {};
@@ -233,18 +205,11 @@ yootil.notifications = (function(){
 		},
 
 		/**
-		* Method: removes
-		* 	Removes a specific message
-		*
-		* Parameters:
-		* 	id - *mixed* The id for the message you want to remove.
-		*
-		* Returns:
-		* 	*object*
-		*
-		* Examples:
-		*	new yootil.notifications("my_key").remove(44);
-		*/
+		 * Removes a specific notification.
+		 *
+		 * @param {Mixed} id The id for the notification you want to remove.
+		 * @chainable
+		 */
 
 		remove: function(id){
 			for(var key in this.data){

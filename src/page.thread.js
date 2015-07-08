@@ -1,22 +1,20 @@
 /**
-* Namespace: yootil.page.thread
-*	Various methods to help get thread information
-*/
+ * @class yootil.page.thread
+ * @static
+ * Various methods to help get thread information.
+ */
 
 yootil.page.thread = (function(){
 
 	return {
 
 		/**
-		* Method: __get_data
-		*	This is an internal method
-		*
-		* Parameters:
-		*	key - *string* The key on the thread object to check and get
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [ String}
+		 * @ignore
+		 */
 
 		__get_data: function(key){
 			var thread_obj = yootil.page.__get_data("thread");
@@ -27,194 +25,145 @@ yootil.page.thread = (function(){
 
 			return "";
 		},
-
 		/**
-		* Method: Thread ID
-		*	Gets the thread ID
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the thread ID
+		 * @return {String}
+		 */
 
 		id: function(){
 			return this.__get_data("id");
 		},
 
 		/**
-		* Method: created_on
-		*	Gets the thread creation date timestamp
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the thread creation date timestamp
+		 * @return {String}
+		 */
 
 		created_on: function(){
 			return this.__get_data("created_on");
 		},
 
 		/**
-		* Method: is_announcement
-		*	Is the thread an announcement?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread an announcement?
+		 * @return {Boolean}
+		 */
 
 		is_announcement: function(){
 			return this.__get_data("is_announcement") == 1;
 		},
 
 		/**
-		* Method: is_bookmarked
-		*	Is the thread bookmarked?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread bookmarked?
+		 * @return {Boolean}
+		 */
 
 		is_bookmarked: function(){
 			return this.__get_data("is_bookmarked") == 1;
 		},
 
 		/**
-		* Method: is_falling
-		*	Is the thread falling?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread falling?
+		 * @return {Boolean}
+		 */
 
 		is_falling: function(){
 			return this.__get_data("is_falling") == 1;
 		},
 
 		/**
-		* Method: is_locked
-		*	Is the thread locked?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread locked?
+		 * @return {Boolean}
+		 */
 
 		is_locked: function(){
 			return this.__get_data("is_locked") == 1;
 		},
 
 		/**
-		* Method: is_new
-		*	Is the thread new?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread new?
+		 * @return {Boolean}
+		 */
 
 		is_new: function(){
 			return this.__get_data("is_new") == 1;
 		},
 
 		/**
-		* Method: is_poll
-		*	Is the thread a poll?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread a poll?
+		 * @return {Boolean}
+		 */
 
 		is_poll: function(){
 			return this.__get_data("is_poll") == 1;
 		},
 
 		/**
-		* Method: is_sticky
-		*	Is the thread sticky?
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Is the thread sticky?
+		 * @return {Boolean}
+		 */
 
 		is_sticky: function(){
 			return this.__get_data("is_sticky") == 1;
 		},
 
 		/**
-		* Method: subject
-		*	Gets the thread subject
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the thread subject
+		 * @return {String}
+		 */
 
 		subject: function(){
 			return this.__get_data("subject");
 		},
 
 		/**
-		* Method: url
-		*	Gets the thread URL
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the thread URL
+		 * @return {String}
+		 */
 
 		url: function(){
 			return this.__get_data("url");
 		},
 
 		/**
-		* Method: board_id
-		*	Gets the board id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the board id
+		 * @return {Number}
+		 */
 
 		board_id: function(){
 			return this.__get_data("board_id");
 		},
 
 		/**
-		* Method: created_by
-		*	Gets the member who created this thread
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the member who created this thread
+		 * @return {Number}
+		 */
 
 		created_by: function(){
 			return this.__get_data("created_by");
 		},
 
 		/**
-		* Method: last_post_id
-		*	Gets the last post id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the last post id
+		 * @return {Number}
+		 */
 
 		last_post_id: function(){
 			return this.__get_data("last_post_id");
 		},
 
 		/**
-		* Method: first_post_id
-		*	Gets the first post id
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the first post id
+		 * @return {Number}
+		 */
 
 		first_post_id: function(){
 			return this.__get_data("first_post_id");
 		},
 
 		/**
-		* Method: last_post_time
-		*	Gets the last post time
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the last post time
+		 * @return {Number}
+		 */
 
 		last_post_time: function(){
 			return this.__get_data("last_post_time");

@@ -1,22 +1,20 @@
 /**
-* Namespace: yootil.page.category
-*	Various methods to help get category information
-*/
+ * @class yootil.page.category
+ * @static
+ * Various methods to help get category information.
+ */
 
 yootil.page.category = (function(){
 
 	return {
-	
+
 		/**
-		* Method: __get_data
-		*	This is an internal method
-		*
-		* Parameters:
-		*	key - *string* The key on the category object to check and get
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * This is an internal method.
+		 *
+		 * @param {String} key The key on the category object to check and get.
+		 * @return {String}
+		 * @ignore
+		 */
 		
 		__get_data: function(key){
 			var cat_obj = yootil.page.__get_data("category");
@@ -29,24 +27,18 @@ yootil.page.category = (function(){
 		},
 
 		/**
-		* Method: id
-		*	Gets the category ID
-		*
-		* Returns:
-		*	*integer*
-		*/
+		 * Gets the category ID.
+		 * @return {Number}
+		 */
 		
 		id: function(){
 			return this.__get_data("id");
 		},
 
 		/**
-		* Method: name
-		*	Gets the category name
-		*
-		* Returns:
-		*	*string*
-		*/
+		 * Gets the category name.
+		 * @return {String}
+		 */
 		
 		name: function(){
 			return this.__get_data("name");

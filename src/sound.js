@@ -1,11 +1,12 @@
 /**
-* Namespace: yootil.sound
-*	Allows us to play a sound (uses HTML 5 Audio)
-*
-* 	Set access on the audio files, specifically Access-Control-Allow-Origin.
-* 	See http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea
-* 	for more information about Access-Control.
-*/
+ * @class yootil.sound
+ * @static
+ * Allows us to play a sound (uses HTML 5 Audio).
+ *
+ * Set access on the audio files, specifically Access-Control-Allow-Origin.
+ *
+ * See "<a href="http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea">Access Control Allow Origin - Response Header</a>" for more information about Access-Control.
+ */
 
 yootil.sound = (function(){
 

@@ -1,35 +1,40 @@
 /**
-* Namespace: yootil.create
-*
-* 	This object will contain useful ProBoards methods
-*/
+ * @class yootil.create
+ * @static
+ * Contains useful methods to creating things quickly (i.e containers).
+ */
 
 yootil.create = (function(){
 
-	return {		
+	return {
 
 		/**
-		* Method: container
-		* 	Creates ProBoards v5 div containers.
-		*
-		* Parameters:
-		* 	title - *string* The container title.
-		* 	content - *string* The container content.
-		* 	safe - *boolean* / *object* true or false, or pass onject to make html safe (i.e {title: false, content: true}).
-		* 	title_styles - *object* key value par for css styles (i.e {color: "red", padding: "11px"}).
-		* 	content_styles - *object* key value par for css styles (i.e {color: "red", padding: "11px"}).
-		* 	container_styles - *object* key value par for css styles (i.e {color: "red", padding: "11px"}).
-		* 	no_h2 - *boolean* If set to true, it will not wrap the title with an h2 tag.
-		* 	jquery_obj - *boolean* If false, returned content will be html string.
-		*
-		* Returns:
-		* 	*string* / *object* Depends on what jquery_obj is set too, default is jquery object.
-		*
-		* Examples:
-		*	yootil.create.container("My Title", "My Content");
-		*
-		*	yootil.create.container("My Title", "My Content", {title: false, content: true});
-		*/
+		 * Creates ProBoards div containers.
+		 *
+		 * Very basic example:
+		 *
+		 *     var container = yootil.create.container("My Title", "My Content");
+		 *
+		 *     $("#content").prepend(container);
+		 *
+		 * This example would make titles and content safe:
+		 *
+		 *     var container = yootil.create.container("My <em>Title</em>", "My <strong>Content</strong>", true);
+		 *
+		 *     $("#content").prepend(container);
+		 *
+		 * @param {String} title The container title.
+		 * @param {String} content The container content.
+		 * @param {Mixed} [safe] True or false, or pass an object to make html safe (i.e {title: false, content: true}).
+		 * @param {Boolean} safe.title If true, then yootil will handle making the title safe.
+		 * @param {Boolean} safe.content If true, then yootil will handle making the content safe.
+		 * @param {Object} [title_styles] Key value par for css styles (i.e {color: "red", padding: "11px"}).
+		 * @param {Object} [content_styles] Key value par for css styles (i.e {color: "red", padding: "11px"}).
+		 * @param {Object} [container_styles] Key value par for css styles (i.e {color: "red", padding: "11px"}).
+		 * @param {Boolean} [no_h2] If set to true, it will not wrap the title with an h2 tag.
+		 * @param {Boolean} [jquery_obj] If false, returned content will be an html string.
+		 * @return {Mixed} Depends on what jquery_obj is set too, default is jquery object.
+		 */
 	
 		container: function(title, content, safe, title_styles, content_styles, container_styles, no_h2, jquery_obj){
 			var html = "";
@@ -52,10 +57,10 @@ yootil.create = (function(){
 			title_styles = (title_styles)? title_styles : {};
 			content_styles = (content_styles)? content_styles : {};
 			
-			title = (safe_title)? this.make_safe(title) : title;
+			title = (safe_title)? yootil.html_encode(title) : title;
 			title = (typeof no_h2 != "undefined" && !no_h2)? title : ("<h2>" + title + "</h2>");
 			
-			content = (safe_content)? this.make_safe(content) : content;
+			content = (safe_content)? yootil.html_encode(content) : content;
 			
 			html += "<div class=\"container\">";
 			html += $("<div class=\"title-bar\">" + title + "</div>").css(title_styles).wrap("<span/>").parent().html();
@@ -68,24 +73,21 @@ yootil.create = (function(){
 				return $(html).css(container_styles).wrap("<span/>").parent().html();
 			}
 		},
-		
+
 		/**
-		* Function: page
-		*	Quickly create a blank page that matches a certain URL.
-		*
-		* Parameters:
-		*	locate - *string* / *object* This will get matched against the location.href value, can be a string or RegExp object.
-		*	document_title - *string* Add onto the current document title.
-		*	hide_content - *boolean* By default the children of #content gets hidden, you can override this
-		*
-		* Returns:
-		*	*object* yootil.create
-		*
-		* Examples:
-		*	yootil.create.page("shop", "Shop");
-		*
-		*	yootil.create.page("shop", "Shop").container("The Shop", "Welcome to the Shop").appendTo("#content");
-		*/
+		 * Quickly create a blank page that matches a certain URL.
+		 *
+		 *     yootil.create.page("shop", "Shop");
+		 *
+		 * An exanple adding a container to the page as well:
+		 *
+		 *     yootil.create.page("shop", "Shop").container("The Shop", "Welcome to the Shop").appendTo("#content");
+		 *
+		 * @param {Mixed} locate This will get matched against the location.href value, can be a string or RegExp object.
+		 * @param {String} [document_title] Gets Added onto the current document title.
+		 * @param {Boolean} [hide_content] By default the children of #content gets hidden, you can override this.
+		 * @chainable
+		 */
 	
 		page: function(locate, document_title, hide_content){
 			var reg = (locate.constructor == RegExp)? locate : new RegExp("\/" + locate, "i");
@@ -102,21 +104,16 @@ yootil.create = (function(){
 			
 			return yootil.create;
 		},
-		
+
 		/**
-		* Function: nav_branch
-		*	Extend the nav tree easily
-		*
-		* Parameters:
-		*	url - *string* URL of the branch.
-		*	text - *string* Text of the branch.
-		*
-		* Returns:
-		*	*object* Branch jQuery wrapped
-		*
-		* Examples:
-		*	yootil.create.nav_branch("/shop/", "Shop");
-		*/
+		 * Extend the nav tree easily.
+		 *
+		 *     yootil.create.nav_branch("/shop/", "Shop");
+		 *
+		 * @param {String} url URL of the branch.
+		 * @param {String} text Text of the branch.
+		 * @return {Object} Branch jQuery wrapped.
+		 */
 		
 		nav_branch: function(url, text){
 			var branch = $("#nav-tree li:last").clone();
@@ -130,20 +127,15 @@ yootil.create = (function(){
 		},
 
 		/**
-		* Function: profile_tab
-		*	Create a new tab on the profile
-		*
-		* Parameters:
-		*	text - *string* Text of the branch.
-		*	page - *string* URL of the branch.
-		*	active - *boolean* Active page
-		*
-		* Returns:
-		*	*object* Yootil
-		*
-		* Examples:
-		*	yootil.create.profile_tab("Test", "test") // /user/1/test
-		*/
+		 * Create a new tab on the profile
+		 *
+		 *     yootil.create.profile_tab("Test", "test");
+		 *
+		 * @param {String} text Text of the branch.
+		 * @param {String} page URL of the branch.
+		 * @param {Boolean} [active] Active page or not.
+		 * @chainable
+		 */
 		
 		profile_tab: function(text, page, active){
 			if(yootil.location.check.profile()){
@@ -155,22 +147,17 @@ yootil.create = (function(){
 				}
 			}
 			
-			return yootil;
+			return this;
 		},
-		
+
 		/**
-		* Function: profile_content_box
-		*	Creates a profile content box.
-		*
-		* Parameters:
-		*	id - *string* Enter a ID, or a unique one will be created
-		*
-		* Returns:
-		*	*object* jQuery
-		*
-		* Examples:
-		*	yootil.create.profile_content_box();
-		*/
+		 * Creates a profile content box.
+		 *
+		 *     yootil.create.profile_content_box();
+		 *
+		 * @param {String} id Enter a ID, or a unique one will be created.
+		 * @return {Object} The box is returned wrapped with jQuery.
+		 */
 		
 		profile_content_box: function(id){
 			var uid = (id || $.unique_id("yootil-"));
@@ -178,24 +165,20 @@ yootil.create = (function(){
 				
 			return box;
 		},
-		
+
 		/**
-		* Function: bbc_button
-		*	Adds a new BBC button to the end on the reply page.
-		*
-		* Parameters:
-		*	img - *object* The image you wish to add
-		*
-		* Returns:
-		*	*object* Yootil
-		*/
+		 * Adds a new BBC button to the end on the reply page.
+		 *
+		 * @param {Object} The image you wish to add
+		 * @chainable
+		 */
 		
 		bbc_button: function(img){
 			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
 				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append($("<li>").addClass("button").append($(img)));
 			});
 			
-			return yootil;
+			return this;
 		}
 		
 	};

@@ -1,12 +1,8 @@
 /**
-* Namespace: yootil.key
-*
-* 	This object is a wrapper around the proboards.plugin.key object.
-*
-* 	Note:  this isn't final, I might change things around a little and add a few more methods.
-*
-*	Also, things might get changed by ProBoards.
-*/
+ * @class yootil.key
+ * @static
+ *  Wrapper around the proboards.plugin.key object while including some useful methods.
+ */
 
 // @TODO: Add easy pop, shift, increment etc methods.  i.e yootil.key.pop(key, id, num_items).
 // @TODO: Add support for callbacks (success, error, complete)
@@ -14,27 +10,24 @@
 yootil.key = (function(){
 	
 	return {
-	
+
 		/**
-		* Property: pb_key_obj
-		*	*object* Holds a reference to the ProBoards key object.
-		*/
+		 * @property {Object} pb_key_obj Holds a reference to the ProBoards key object.
+		 * @ignore
+		 */
 		
 		pb_key_obj: pb.plugin.key,
-		
+
 		/**
-		* Method: exists
-		* 	Checks to see if a key exists.
-		*
-		* Parameters:
-		* 	key - *string* The key to check.
-		*
-		* Returns:
-		* 	*boolean*
-		*
-		* Examples:
-		*	yootil.key.exists("mykey");
-		*/
+		 * Checks to see if a key exists.
+		 *
+		 *     if(yootil.key.exists("mykey")){
+		 *     	console.log("key exists");
+		 *     }
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
 		
 		exists: function(key){
 			if(key){				
@@ -49,18 +42,13 @@ yootil.key = (function(){
 		},
 
 		/**
-		* Method: get_key
-		* 	Returns the key object.
-		*
-		* Parameters:
-		* 	key - *string* The key to get.
-		*
-		* Returns:
-		* 	*object* / *boolean*
-		*
-		* Examples:
-		*	yootil.key.get_key("mykey");
-		*/
+		 * Returns the ProBoards key object.
+		 *
+		 *     var the_key = yootil.key.get_key("mykey");
+		 *
+		 * @param {String} key The key to get.
+		 * @return {Mixed} Returns either the key object, or false if it doesn't exist.
+		 */
 		
 		get_key: function(key){
 			if(this.exists(key)){
@@ -69,21 +57,18 @@ yootil.key = (function(){
 			
 			return false;
 		},
-		
+
 		/**
-		* Method: has_value
-		* 	Checks to see if a key has a value.
-		*
-		* Parameters:
-		* 	key - *string* The key to check.
-		* 	user - *string* / *integer* This is the user id, proboards defaults to current user if not set.
-		*
-		* Returns:
-		* 	*boolean*
-		*
-		* Examples:
-		*	yootil.key.has_value("mykey");		
-		*/
+		 * Checks to see if a key has a value.
+		 *
+		 *     if(yootil.key.has_value("mykey")){
+		 *     	console.log("Key has a value");
+		 *     }
+		 *
+		 * @param {String} key The key to check.
+		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean}
+		 */
 		
 		has_value: function(key, user){
 			if(this.exists(key)){
@@ -98,24 +83,17 @@ yootil.key = (function(){
 			
 			return false;
 		},
-		
+
 		/**
-		* Method: value
-		* 	Gets the key value
-		*
-		* Parameters:
-		* 	key - *string* The key.
-		* 	user - *string* / *integer* This is the user id, proboards defaults to current user if not set.
-		* 	is_json - *boolean* If true, it will parse the JSON string.
-		*
-		* Returns:
-		* 	*string*
-		*
-		* Examples:
-		*	yootil.key.value("mykey");
-		*
-		*	yootil.key.value("mykey", null, true); // Parses JSON
-		*/
+		 * Gets the value stored in the key.
+		 *
+		 *      var value = yootil.key.value("mykey", yootil.user.id());
+		 *
+		 * @param {String} key The ProBoards key we are getting.
+		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+		 * @param {Boolean} [is_json] If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
+		 * @returns {Mixed} If no value, an empty string is returned.
+		 */
 		
 		value: function(key, user, is_json){
 			if(this.exists(key)){
@@ -132,47 +110,64 @@ yootil.key = (function(){
 			
 			return "";
 		},
-		
+
 		/**
-		* Method: clear
-		* 	Clears out key value.
-		*
-		* Parameters:
-		* 	key - *string* The key.
-		*	user - *string* / *integer* This is the user id, proboards defaults to current user if not set.
-		*
-		* Returns:
-		* 	*object* - returns yootil.key object to allow chaining.
-		*
-		* Examples:
-		*	yootil.key.clear("mykey");
-		*/
+		 * Clears out key value.
+		 *
+		 *     yootil.key.clear("mykey");
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+		 * @chainable
+		 */
 		
 		clear: function(key, user){
 			this.set(key, "", user);
 			
 			return this;
 		},
-		
+
 		/**
-		* Method: set
-		* 	Sets a keys value.
-		*
-		* Parameters:
-		* 	key - *string* The key.
-		* 	value - *string* / *object* Can be a string, or a object that will get .
-		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
-		*
-		* Returns:
-		*	*boolean*
-		*
-		* Examples:
-		*	yootil.key.set("mykey", "apples");
-		*
-		*	yootil.key.set("mykey", "apples", null, true); // Save as JSON
-		*/
+		 * Sets a key value.
+		 *
+		 * Basic example (will set for current user):
+		 *
+		 *     yootil.key.set("mykey", "apples");
+		 *
+		 * Using some callbacks with context:
+		 *
+		 *     yootil.key.set("mykey", "somevalue", yootil.user.id(), {
+		 *
+		 *     	error: function(status){
+		 *     		console.log(status.message);
+		 *     	},
+		 *
+		 *     	success: function(){
+		 *     		this.say("Success!");
+		 *     	},
+		 *
+		 *     	context: {
+		 *
+		 *     		say: function(msg){
+		 *     			console.log(msg);
+		 *     		}
+		 *
+		 *     	}
+		 *
+		 *     });
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value Can be a string, or a object.  ProBoards now handles stringifying objects.
+		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} callbacks.error
+		 * @param {Function} callbacks.success
+		 * @param {Function} callbacks.complete
+		 * @param {Object} callbacks.context
+		 * @chainable
+		 */
 		
-		set: function(key, value, user){
+		set: function(key, value, user, callbacks){
 			if(this.exists(key)){
 
 				// No longer need this as ProBoards handles it
@@ -186,28 +181,40 @@ yootil.key = (function(){
 					value = undefined;
 				}
 
-				this.pb_key_obj(key).set({
+				var options = {
 
 					object_id: user,
 					value: value
 
-				});
+				};
+
+				if(callbacks && typeof callbacks == "object"){
+					if(callbacks.success){
+						options.success = (callbacks.context)? $.proxy(callbacks.success, callbacks.context) : callbacks.success;
+					}
+
+					if(callbacks.error){
+						options.error = (callbacks.context)? $.proxy(callbacks.error, callbacks.context) : callbacks.error;
+					}
+
+					if(callbacks.complete){
+						options.complete = (callbacks.context)? $.proxy(callbacks.complete, callbacks.context) : callbacks.complete;
+					}
+				}
+
+				this.pb_key_obj(key).set(options);
 			}
 			
 			return this;
 		},
 
 		/**
-		* Method: write
-		* 	Checks permission on key to see if the user can write
-		*
-		* Parameters:
-		* 	key - *string* The key.
-		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 * Checks permission on key to see if the user can write.
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} user This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean}
+		 */
 
 		write: function(key, user){
 			if(this.exists(key)){
@@ -224,18 +231,14 @@ yootil.key = (function(){
 			
 			return false;
 		},
-	
+
 		/**
-		* Method: read
-		* 	Checks permission on key to see if the user can read
-		*
-		* Parameters:
-		* 	key - *string* The key.
-		* 	user - *string* / *integer This is the user id, proboards defaults to current user if not set.
-		*
-		* Returns:
-		*	*boolean*
-		*/
+		 *  Checks permission on key to see if the user can read.
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} user This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean}
+		 */
 
 		read: function(key, user){
 			if(this.exists(key)){
