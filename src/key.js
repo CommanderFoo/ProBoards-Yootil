@@ -7,7 +7,10 @@
 *
 *	Also, things might get changed by ProBoards.
 */
-	
+
+// @TODO: Add easy pop, shift, increment etc methods.  i.e yootil.key.pop(key, id, num_items).
+// @TODO: Add support for callbacks (success, error, complete)
+
 yootil.key = (function(){
 	
 	return {
