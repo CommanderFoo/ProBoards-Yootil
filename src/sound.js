@@ -2,6 +2,7 @@
  * @class yootil.sound
  * @static
  * @deprecated
+ *
  * Allows us to play a sound (uses HTML 5 Audio).
  *
  * Set access on the audio files, specifically Access-Control-Allow-Origin.

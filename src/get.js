@@ -122,7 +122,7 @@ yootil.element.get = yootil.get = (function(){
 		},
 
 		/**
-		 * Gets signatures.
+		 * Gets signatures for posts and messages.
 		 *
 		 *     yootil.element.get.signatures(); // Gets all signatures
 		 *
@@ -153,6 +153,127 @@ yootil.element.get = yootil.get = (function(){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
 			return $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+		},
+
+		/**
+		 * Gets post / message info (date, likes, etc)
+		 *
+		 *     yootil.element.get.post_info(); // Gets all
+		 *
+		 *     yootil.element.get.post_info(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_info: function(user_id){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+
+			return $("tr[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
+		},
+
+		/**
+		 * Gets post / message controls.
+		 *
+		 *     yootil.element.get.post_controls(); // Gets all
+		 *
+		 *     yootil.element.get.post_controls(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_controls: function(user_id){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+
+			return $("tr[id^=post-]" + selector + " .content .controls, tr[id^=message-]" + selector + " .content .controls");
+		},
+
+		/**
+		 * Gets post / message summary.
+		 *
+		 *     yootil.element.get.summary();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		summary: function(){
+			return $(".messages.summary, .posts.summary");
+		},
+
+		/**
+		 * Gets nav tree.
+		 *
+		 *     yootil.element.get.nav_tree();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_tree: function(){
+			return $("#navigation-tree");
+		},
+
+		/**
+		 * Gets nav branches.
+		 *
+		 *     yootil.element.get.nav_branches();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branches: function(){
+			return $("#navigation-tree #nav-tree .nav-tree-branch");
+		},
+
+		/**
+		 * Gets last nav branche.
+		 *
+		 *     yootil.element.get.last_nav_branch();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		last_nav_branch: function(){
+			return $("#navigation-tree #nav-tree .nav-tree-branch:last");
+		},
+
+		/**
+		 * Gets a branch based on options passed in.
+		 *
+		 *     var example1 = yootil.element.get.nav_branch("Members", "text");
+		 *
+		 *     var example2 = yootil.element.get.nav_branch(/user\/1/, "url");
+		 *
+		 * @param {Mixed} pattern This can be a string, or a regular expression pattern.
+		 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branch: function(pattern, type){
+			if(!pattern){
+				return [];
+			}
+
+			type = type || "text";
+
+			var matched = [];
+
+			$("#navigation-tree #nav-tree .nav-tree-branch a").each(function(){
+				var match_against = (type == "url")? $(this).attr("href") : $(this).text();
+
+				if(pattern.constructor == RegExp){
+					if(pattern.test(match_against)){
+						matched.push($(this).parent().parent());
+					}
+				} else if(typeof pattern == "string"){
+					if(match_against.indexOf(pattern) != -1){
+						matched.push($(this).parent().parent());
+					}
+				}
+
+			});
+
+			return matched;
 		}
 
 	};

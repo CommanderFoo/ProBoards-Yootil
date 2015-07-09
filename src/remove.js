@@ -177,7 +177,7 @@ yootil.element.remove = yootil.remove = (function(){
 		},
 
 		/**
-		 * Removes signatures.
+		 * Removes signatures from posts and messages.
 		 *
 		 *     yootil.element.remove.signatures(); // Removes all signatures
 		 *
@@ -189,8 +189,7 @@ yootil.element.remove = yootil.remove = (function(){
 		 */
 
 		signatures: function(user_id, hide){
-			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
-			var signatures = $("tr[id^=post-]" + selector + " .signature, tr[id^=message-]" + selector + " .signature");
+			var signatures = yootil.element.get.signatures(user_id);
 
 			if(signatures.length){
 				signatures[(!hide)? "remove" : "hide"]();
@@ -201,7 +200,7 @@ yootil.element.remove = yootil.remove = (function(){
 		},
 
 		/**
-		 * Removes last edit.
+		 * Removes last edit from posts.
 		 *
 		 *     yootil.element.remove.last_edit(); // Gets all last edits
 		 *
@@ -213,8 +212,7 @@ yootil.element.remove = yootil.remove = (function(){
 		 */
 
 		last_edit: function(user_id, hide){
-			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
-			var last_edit = $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+			var last_edit = yootil.element.get.last_edit(user_id);
 
 			if(last_edit.length){
 				last_edit[(!hide)? "remove" : "hide"]();
@@ -222,6 +220,155 @@ yootil.element.remove = yootil.remove = (function(){
 			}
 
 			return last_edit;
+		},
+
+		/**
+		 * Removes post / message info (date, likes, etc)
+		 *
+		 *     yootil.element.remove.post_info(); // Gets all
+		 *
+		 *     yootil.element.remove.post_info(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_info: function(user_id, hide){
+			var info = yootil.element.get.post_info(user_id);
+
+			if(info.length){
+				info[(!hide)? "remove" : "hide"]();
+
+			}
+
+			return info;
+		},
+
+		/**
+		 * Removes post / message controls.
+		 *
+		 *     yootil.element.remove.post_controls(); // Gets all
+		 *
+		 *     yootil.element.remove.post_controls(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_controls: function(user_id, hide){
+			var controls = yootil.element.get.post_controls(user_id);
+
+			if(controls.length){
+				controls[(!hide)? "remove" : "hide"]();
+
+			}
+
+			return controls;
+		},
+
+		/**
+		 * Removes post / message summary.
+		 *
+		 *     yootil.element.remove.summary();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		summary: function(hide){
+			var summary = yootil.element.get.summary();
+
+			if(summary.length){
+				summary[(!hide)? "remove" : "hide"]();
+			}
+
+			return summary;
+		},
+
+		/**
+		 * Removes navigation tree.
+		 *
+		 *     yootil.element.remove.nav_tree();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_tree: function(hide){
+			var nav = yootil.element.get.nav_tree();
+
+			if(nav.length){
+				nav[(!hide)? "remove" : "hide"]();
+			}
+
+			return nav;
+		},
+
+		/**
+		 * Removes navigation tree branches.
+		 *
+		 *     yootil.element.remove.nav_branches();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branches: function(hide){
+			var branches = yootil.element.get.nav_branches();
+
+			if(branches.length){
+				branches[(!hide)? "remove" : "hide"]();
+			}
+
+			return branches;
+		},
+
+		/**
+		 * Removes last navigation tree branch.
+		 *
+		 *     yootil.element.remove.last_nav_branch();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		last_nav_branch: function(hide){
+			var branch = yootil.element.get.last_nav_branch();
+
+			if(branch.length){
+				branch[(!hide)? "remove" : "hide"]();
+			}
+
+			return branch;
+		},
+
+		/**
+		 * Removes branches based on options passed in.
+		 *
+		 *     var example1 = yootil.element.remove.nav_branch("Members", "text");
+		 *
+		 *     var example2 = yootil.element.remove.nav_branch(/user\/1/, "url");
+		 *
+		 *     var example3 = yootil.element.remove.nav_branch(/^\/(members)?$/, "url"); // Removes "Home" and "Members".
+		 *
+		 * @param {Mixed} pattern This can be a string, or a regular expression pattern.
+		 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branch: function(pattern, type, hide){
+			var branches = yootil.element.get.nav_branch(pattern, type);
+
+			if(branches.length){
+				for(var branch in branches){
+					branches[branch][(!hide)? "remove" : "hide"]();
+				}
+			}
+
+			return branches;
 		}
 
 	};
