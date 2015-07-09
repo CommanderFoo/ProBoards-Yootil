@@ -169,13 +169,20 @@ yootil.create = (function(){
 		/**
 		 * Adds a new BBC button to the end on the reply page.
 		 *
-		 * @param {Object} The image you wish to add
+		 * @param {Object} img The image element to append.
+		 * @param {Function} [func] Adds an onlick event.
 		 * @chainable
 		 */
 		
-		bbc_button: function(img){
+		bbc_button: function(img, func){
 			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
-				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append($("<li>").addClass("button").append($(img)));
+				var li = $("<li>").addClass("button").append($(img));
+
+				if(func){
+					li.click(func);
+				}
+
+				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append(li);
 			});
 			
 			return this;
