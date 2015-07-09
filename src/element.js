@@ -3,8 +3,4 @@
  * @ignore
  */
 
-yootil.element = (function(){
-
-	return {};
-
-})();
+yootil.element = {};
