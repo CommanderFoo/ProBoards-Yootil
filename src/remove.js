@@ -174,6 +174,54 @@ yootil.element.remove = yootil.remove = (function(){
 			}
 
 			return info;
+		},
+
+		/**
+		 * Removes signatures.
+		 *
+		 *     yootil.element.remove.signatures(); // Removes all signatures
+		 *
+		 *     yootil.element.remove.signatures(1); // Removes all signatures for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		signatures: function(user_id, hide){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+			var signatures = $("tr[id^=post-]" + selector + " .signature, tr[id^=message-]" + selector + " .signature");
+
+			if(signatures.length){
+				signatures[(!hide)? "remove" : "hide"]();
+
+			}
+
+			return signatures;
+		},
+
+		/**
+		 * Removes last edit.
+		 *
+		 *     yootil.element.remove.last_edit(); // Gets all last edits
+		 *
+		 *     yootil.element.remove.last_edit(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		last_edit: function(user_id, hide){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+			var last_edit = $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+
+			if(last_edit.length){
+				last_edit[(!hide)? "remove" : "hide"]();
+
+			}
+
+			return last_edit;
 		}
 
 	};

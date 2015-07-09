@@ -118,8 +118,41 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_info: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-
 			return $(".mini-profile" + selector + " .info");
+		},
+
+		/**
+		 * Gets signatures.
+		 *
+		 *     yootil.element.get.signatures(); // Gets all signatures
+		 *
+		 *     yootil.element.get.signatures(1); // Gets all signatures for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		signatures: function(user_id){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+
+			return $("tr[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+		},
+
+		/**
+		 * Gets last edit.
+		 *
+		 *     yootil.element.get.last_edit(); // Gets all last edits
+		 *
+		 *     yootil.element.get.last_edit(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		last_edit: function(user_id){
+			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
+
+			return $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
 		}
 
 	};
