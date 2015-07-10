@@ -5,6 +5,10 @@
  *
  *     var notify = new yootil.notifications("my_key");
  *
+ *     notify.show(); // Shows notifications that may be in the queue.
+ *
+ *     notify.create("hello"); // Creates a new notification.
+ *
  * @param {String} key The key to save and load too.
  * @param {String} [template] The template to use for the notifications.
  * @param {String} [klass] Custom class to add to the notifications.
@@ -222,6 +226,16 @@ yootil.notifications = (function(){
 
 			return this;
 		},
+
+		/**
+		 * Call this to show notifications.
+		 *
+		 *     var notify = new yootil.notifications("mykey");
+		 *
+		 *     notify.show();
+		 *
+		 * @chainable
+		 */
 
 		show: function(){
 			if(this.data){

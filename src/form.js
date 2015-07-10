@@ -120,6 +120,56 @@ yootil.form = (function(){
 				
 		message_form: function(){
 			return $("form.form_message_new");
+		},
+
+		/**
+		 * Returns the form used for editing profile personal info
+		 *
+		 * @return {Array}
+		 */
+
+		edit_personal_form: function(){
+			return $("form.form_user_edit_personal");
+		},
+
+		/**
+		 * Returns the form used for editing profile social websites.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_social_form: function(){
+			return $("form.form_user_edit_social");
+		},
+
+		/**
+		 * Returns the form used for editing profile settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_settings_form: function(){
+			return $("form.form_user_edit_settings");
+		},
+
+		/**
+		 * Returns the form used for editing profile privacy settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_privacy_form: function(){
+			return $("form.form_user_edit_privacy");
+		},
+
+		/**
+		 * Returns the form used for editing profile staff settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_staff_options_form: function(){
+			return $("form.form_user_edit_admin");
 		}
 	
 	};

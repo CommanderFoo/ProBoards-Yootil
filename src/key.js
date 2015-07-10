@@ -1,11 +1,8 @@
 /**
  * @class yootil.key
  * @static
- *  Wrapper around the proboards.plugin.key object while including some useful methods.
+ * Most methods are just wrappers, to see the ProBoards API documentation, <a href="https://www.proboards.com/developer/js/class/key">click here</a>.
  */
-
-// @TODO: Add easy pop, shift, increment etc methods.  i.e yootil.key.pop(key, id, num_items).
-// @TODO: Add support for callbacks (success, error, complete)
 
 yootil.key = (function(){
 	
@@ -118,13 +115,11 @@ yootil.key = (function(){
 		 *
 		 * @param {String} key The key.
 		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
-		 * @chainable
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
 		 */
 		
 		clear: function(key, user){
-			this.set(key, "", user);
-			
-			return this;
+			return this.set(key, "", user);
 		},
 
 		/**
@@ -158,32 +153,21 @@ yootil.key = (function(){
 		 *
 		 * @param {String} key The key.
 		 * @param {Mixed} value Can be a string, or a object.  ProBoards now handles stringifying objects.
-		 * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
 		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
-		 * @param {Function} callbacks.error
-		 * @param {Function} callbacks.success
-		 * @param {Function} callbacks.complete
-		 * @param {Object} callbacks.context
-		 * @chainable
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @param {Number} [type] Passed on set the method type (i.e append, pop etc).
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
 		 */
 		
-		set: function(key, value, user, callbacks){
+		set: function(key, value, user_id, callbacks, type){
 			if(this.exists(key)){
-
-				// No longer need this as ProBoards handles it
-
-				/*if(is_json){
-					value = JSON.stringify(value);
-				}*/
-
-				if(typeof user == "undefined" || !user || !user.toString().length){
-					user = value;
-					value = undefined;
-				}
-
 				var options = {
 
-					object_id: user,
+					object_id: user_id,
 					value: value
 
 				};
@@ -202,10 +186,310 @@ yootil.key = (function(){
 					}
 				}
 
-				this.pb_key_obj(key).set(options);
+				if(type){
+					switch(type){
+
+						case "push" :
+						case "unshift" :
+
+							if(options.value.constructor == Array && options.value.length > 1){
+								options.values = options.value;
+								delete options.value;
+							}
+
+							break;
+
+						case "pop" :
+						case "shift" :
+
+							if(options.value){
+								options.num_items = (~~ options.value);
+								delete options.value;
+							}
+
+							break;
+					}
+
+					if(typeof this.pb_key_obj(key)[type] != "undefined"){
+						return this.pb_key_obj(key)[type](options);
+					}
+				} else {
+					return this.pb_key_obj(key).set(options);
+				}
 			}
-			
-			return this;
+		},
+
+		/**
+		 * Key is set when an event occurs.
+		 *
+		 *     yootil.key.set_on("post_new", "hello world", yootil.user.id(), "post_new");
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {String} [event] The event to use.  Currently there are 2 "thread_new" and "post_new".
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		set_on: function(key, value, user_id, event){
+			if(!event){
+				return;
+			}
+
+			return this.pb_key_obj(key).set_on(event, user_id, value);
+		},
+
+		/**
+		 * Key is set when a new thread is created.
+		 *
+		 *     yootil.key.new_thread("mykey", "hello world", yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		new_thread: function(key, value, user_id){
+			return this.set_on(key, value, user_id, "thread_new");
+		},
+
+		/**
+		 * Key is set when a new post is created.
+		 *
+		 *     yootil.key.new_post("mykey", "hello world", yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		new_post: function(key, value, user_id){
+			return this.set_on(key, value, user_id, "post_new");
+		},
+
+		/**
+		 * Concatenates a given value to the end of the existing key value.
+		 *
+		 *     yootil.key.append("mykey", "hello world", yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value Can be a string or a number.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		append: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "append");
+		},
+
+		/**
+		 * Inserts a given value in front of the existing key value.
+		 *
+		 *     yootil.key.prepend("mykey", "abc", yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value Can be a string or a number.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		prepend: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "prepend");
+		},
+
+		/**
+		 * If the key is an integer, increases the key's value by one, or you can supply a different amount to increment by.
+		 *
+		 *     yootil.key.increment("mykey");
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} [value] Increment by this amount.  Default is 1.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		increment: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "increment");
+		},
+
+		/**
+		 * If the key is an integer, decreases the key's value by one, or you can supply a different amount to decrement by.
+		 *
+		 *     yootil.key.decrement("mykey");
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} [value] Decrement by this amount.  Default is 1.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		decrement: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "decrement");
+		},
+
+		/**
+		 * If the key is an array, removes the last number of items specified and returns them back. Default is 1.
+		 *
+		 *     yootil.key.pop("mykey");
+		 *
+		 * @param {String} key The key.
+		 * @param {Number} [num_items] Number of items to pop from the key.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Array} Always returns an array of items, even if there is only 1.
+		 */
+
+		pop: function(key, num_items, user_id, callbacks){
+			var items = this.set(key, num_items, user_id, callbacks, "pop");
+
+			if(items && !items.constructor == Array){
+				items = [items];
+			}
+
+			return items;
+		},
+
+		/**
+		 * If the key is an array, adds the given value to the end of the array.
+		 *
+		 *     yootil.key.push("mykey", "apples");
+		 *
+		 *     yootil.key.push("mykey", ["apples", "pears"], yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		push: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "push");
+		},
+
+		/**
+		 * If the key is an array, adds the given value to the end of the array only if they are unique.
+		 *
+		 *     yootil.key.push_unique("mykey", "apples");
+		 *
+		 *     yootil.key.push_unique("mykey", ["apples", "pears"], false, yootil.user.id()); // Don't use strict
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		push_unique: function(key, value, user_id, strict, callbacks){
+			var current_value = this.value(key);
+
+			if(current_value && current_value.constructor == Array && value){
+				var to_push = [];
+				var method = (strict) ? $.inArray : $.inArrayLoose;
+
+				if(value.constructor == Array){
+					for(var i = 0, l = value.length; i < l; i++){
+						if(method(value[i], current_value) == -1){
+							to_push.push(value[i]);
+						}
+					}
+				} else {
+					if(method(value, current_value) == -1){
+						to_push = value;
+					}
+				}
+
+				if(to_push && to_push.length){
+					return this.push(key, to_push, user_id, callbacks);
+				}
+			}
+		},
+
+		/**
+		 * If the key is an array, removes the first "num_items" values and returns them.
+		 *
+		 *     yootil.key.shift("mykey");
+		 *
+		 *     yootil.key.push("mykey", 5);
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} num_items The number of items to shift from the array.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Array}
+		 */
+
+		shift: function(key, num_items, user_id, callbacks){
+			var items = this.set(key, num_items, user_id, callbacks, "shift");
+
+			if(items && !items.constructor == Array){
+				items = [items];
+			}
+
+			return items;
+		},
+
+		/**
+		 * If the key is an array, adds value to the front of the array.
+		 *
+		 *     yootil.key.shift("mykey");
+		 *
+		 *     yootil.key.push("mykey", 5);
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Array}
+		 */
+
+		unshift: function(key, value, user_id, callbacks){
+			return this.set(key, value, user_id, callbacks, "unshift");
 		},
 
 		/**
@@ -254,6 +538,31 @@ yootil.key = (function(){
 			}
 			
 			return false;
+		},
+
+		/**
+		 * Get they key type.
+		 *
+		 * @param {String} key The key.
+		 * @param {Boolean} [return_str] If true, it will return a string value (i.e "USER").
+		 * @return {Mixed}
+		 */
+
+		type: function(key, return_str){
+			var type = this.pb_key_obj(key).type();
+
+			if(return_str){
+				var types = pb.plugin.key_types();
+
+				for(var k in types){
+					if(types[k] == type){
+						type = k;
+						break;
+					}
+				}
+			}
+
+			return type;
 		}
 		
 	};
