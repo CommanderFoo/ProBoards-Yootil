@@ -447,7 +447,7 @@ yootil.key = (function(){
 		 *
 		 *     yootil.key.shift("mykey");
 		 *
-		 *     yootil.key.push("mykey", 5);
+		 *     yootil.key.shift("mykey", 5);
 		 *
 		 * @param {String} key The key.
 		 * @param {Mixed} num_items The number of items to shift from the array.
@@ -473,9 +473,7 @@ yootil.key = (function(){
 		/**
 		 * If the key is an array, adds value to the front of the array.
 		 *
-		 *     yootil.key.shift("mykey");
-		 *
-		 *     yootil.key.push("mykey", 5);
+		 *     yootil.key.unshift("mykey", "A");
 		 *
 		 * @param {String} key The key.
 		 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
@@ -490,6 +488,50 @@ yootil.key = (function(){
 
 		unshift: function(key, value, user_id, callbacks){
 			return this.set(key, value, user_id, callbacks, "unshift");
+		},
+
+		/**
+		 * If the key is an array, adds the given value to the front of the array only if they are unique.
+		 *
+		 *     yootil.key.unshift_unique("mykey", "apples");
+		 *
+		 *     yootil.key.unshift_unique("mykey", ["apples", "pears"], false, yootil.user.id()); // Don't use strict
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
+		 * @param {Object} [callbacks] Setup callbacks along with a context if needed.
+		 * @param {Function} [callbacks.error]
+		 * @param {Function} [callbacks.success]
+		 * @param {Function} [callbacks.complete]
+		 * @param {Object} [callbacks.context]
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		unshift_unique: function(key, value, user_id, strict, callbacks){
+			var current_value = this.value(key);
+
+			if(current_value && current_value.constructor == Array && value){
+				var to_shift = [];
+				var method = (strict) ? $.inArray : $.inArrayLoose;
+
+				if(value.constructor == Array){
+					for(var i = 0, l = value.length; i < l; i++){
+						if(method(value[i], current_value) == -1){
+							to_shift.push(value[i]);
+						}
+					}
+				} else {
+					if(method(value, current_value) == -1){
+						to_shift = value;
+					}
+				}
+
+				if(to_shift && to_shift.length){
+					return this.unshift(key, to_shift, user_id, callbacks);
+				}
+			}
 		},
 
 		/**
