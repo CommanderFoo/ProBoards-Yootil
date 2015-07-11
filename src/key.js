@@ -422,7 +422,7 @@ yootil.key = (function(){
 
 			if(current_value && current_value.constructor == Array && value){
 				var to_push = [];
-				var method = (strict) ? $.inArray : $.inArrayLoose;
+				var method = (strict)? $.inArray : $.inArrayLoose;
 
 				if(value.constructor == Array){
 					for(var i = 0, l = value.length; i < l; i++){
@@ -514,7 +514,7 @@ yootil.key = (function(){
 
 			if(current_value && current_value.constructor == Array && value){
 				var to_shift = [];
-				var method = (strict) ? $.inArray : $.inArrayLoose;
+				var method = (strict)? $.inArray : $.inArrayLoose;
 
 				if(value.constructor == Array){
 					for(var i = 0, l = value.length; i < l; i++){
@@ -605,6 +605,158 @@ yootil.key = (function(){
 			}
 
 			return type;
+		},
+
+		/**
+		 * Gets the length of a key.
+		 *
+		 * @param {String} key The key to be checked.
+		 * @return {Number} Returns the length.
+		 */
+
+		value_length: function(key){
+			if(typeof this.value(key) == "string"){
+				return this.value(key).length;
+			}
+
+			return JSON.stringify(this.value(key)).length;
+		},
+
+		/**
+		 * Checks to see if the key is a user type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		user: function(key){
+			if(this.type(key) == 1){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a super user type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		super_user: function(key){
+			if(this.type(key) == 2){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a thread type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		thread: function(key){
+			if(this.type(key) == 3){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a post type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		post: function(key){
+			if(this.type(key) == 4){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a conversation type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		conversation: function(key){
+			if(this.type(key) == 5){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a message type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		message: function(key){
+			if(this.type(key) == 6){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key is a super_forum type.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		super_forum: function(key){
+			if(this.type(key) == 7){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Checks to see if the key has space.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Boolean}
+		 */
+
+		has_space: function(key){
+			var max_length = (this.super_forum(key))? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
+
+			if(this.value_length(key) < max_length){
+				return true;
+			}
+
+			return false;
+		},
+
+		/**
+		 * Gets the space left in the key.
+		 *
+		 * @param {String} key The key to check.
+		 * @return {Number}
+		 */
+
+		space_left: function(key){
+			var max_length = (this.super_forum(key))? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
+			var key_length = this.value_length(key);
+			var space_left = max_length - key_length;
+
+			return (space_left < 0)? 0 : space_left;
 		}
 		
 	};

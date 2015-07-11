@@ -203,6 +203,28 @@ yootil = (function(){
 
 		version: function(){
 			return this.VERSION;
+		},
+
+		/**
+		 * Creates a timestamp.
+		 *
+		 * @return {Number}
+		 * @alias timestamp
+		 */
+
+		ts: function(){
+			return this.timestamp();
+		},
+
+		/**
+		 * Creates a timestamp.
+		 *
+		 * @return {Number}
+		 * @alias timestamp
+		 */
+
+		timestamp: function(){
+			return (+ new Date());
 		}
 
 	};

@@ -186,6 +186,121 @@ yootil.create = (function(){
 			});
 			
 			return this;
+		},
+
+		/**
+		 * Creates a new tab next to the BBCode tab on post / message reply pages.
+		 *
+		 *     var my_tab = yootil.create.ubbc_tab("myid", "My Title", "My Content");
+		 *
+		 * An example using the hide and show events:
+		 *
+		 *     var my_tab2 = yootil.create.ubbc_tab("myid2", "My Title 2", "My Content 2", {
+		 *
+		 *     	show: function(tab, tab_content){
+		 *     		tab.css("background-color", "red");
+		 *     	},
+		 *
+		 *     	hide: function(tab, tab_content){
+		 *     		tab.css("background-color", "");
+		 *     	}
+		 *
+		 *     );
+		 *
+		 * @param {String} tab_title The title for the tab, this can contain HTML.
+		 * @param {String} tab_content The content that will be shown when the tab is clicked.  HTML can be used.
+		 * @param {String} [id] The id for this tab.  If not specified a random one will be created.
+		 * @param {Object} [css] You can apply an object of css values that jQuery will apply, or defaults will be used.
+		 * @param {Object} [events] There are 2 events, show and hide.
+		 * @param {Function} [events.show] When the tab is clicked, this event will be called.  Tab and content are passed.
+		 * @param {Function} [events.hide] When another tab is click, this event will be called.  Tab and content are passed.
+		 * @param {Function} [events.context] Set the context of the functions.
+		 * @return {Object} The tab content div is returned wrapped with jQuery.
+		 */
+
+		ubbc_tab: function(tab_title, content, id, css, events){
+			id = id || yootil.ts();
+			tab_title = tab_title || id;
+			content = content || "";
+
+			var tab = $("<li id='menu-item-" + id + "'><a href='#'>" + tab_title + "</a></li>");
+			var wysiwyg_tabs = $("ul.wysiwyg-tabs").append(tab);
+			var tab_content = $("<div id='" + id + "'>" + content + "</div>");
+
+			if(typeof css == "undefined"){
+				tab_content.css({
+
+					border: "1px solid #E6E6E6",
+					padding: "5px"
+
+				});
+			} else if(css && typeof css == "object"){
+				tab_content.css(css);
+			}
+
+			tab_content.hide().insertBefore($("ul.wysiwyg-tabs"));
+
+			wysiwyg_tabs.find("li").click(function(e){
+				var active = $(this);
+
+				e.preventDefault();
+
+				active.parent().find("li").removeClass("ui-active");
+				active.addClass("ui-active");
+
+				active.parent().find("li").each(function(){
+					var id = $(this).attr("id");
+
+					if(id.match(/bbcode|visual/i)){
+						$(".ui-wysiwyg .editors").hide();
+					} else {
+						if(active.attr("id") == id){
+							return;
+						}
+
+						var selector = "";
+
+						if(id){
+							selector = "#" + id.split("menu-item-")[1];
+						}
+
+						if($(selector).length){
+							if(events && events.hide){
+								if(events.context){
+									$.proxy(events.hide, events.context, tab, tab_content)();
+								} else {
+									events.hide(tab, tab_content);
+								}
+							}
+
+							$(selector).hide();
+						}
+					}
+				});
+
+				var id = active.attr("id");
+				var selector = "";
+
+				if(id){
+					selector = "#" + id.split("menu-item-")[1];
+				}
+
+				if(id.match(/bbcode|visual/i)){
+					$(".ui-wysiwyg .editors").show();
+				} else if($(selector).length){
+					if(events && events.show){
+						if(events.context){
+							$.proxy(events.show, events.context, tab, tab_content)();
+						} else {
+							events.show(tab, tab_content);
+						}
+					}
+
+					$(selector).show();
+				}
+			});
+
+			return tab_content;
 		}
 		
 	};
