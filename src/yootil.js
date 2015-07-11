@@ -206,10 +206,9 @@ yootil = (function(){
 		},
 
 		/**
-		 * Creates a timestamp.
+		 * Shorthand version for {@link #timestamp}.
 		 *
 		 * @return {Number}
-		 * @alias timestamp
 		 */
 
 		ts: function(){
@@ -220,7 +219,6 @@ yootil = (function(){
 		 * Creates a timestamp.
 		 *
 		 * @return {Number}
-		 * @alias timestamp
 		 */
 
 		timestamp: function(){

@@ -138,7 +138,7 @@ yootil.create = (function(){
 		 */
 		
 		profile_tab: function(text, page, active){
-			if(yootil.location.check.profile()){
+			if(yootil.location.profile()){
 				var active_class = (active)? " class='ui-active'" : "";
 				var ul = $("div.show-user div.ui-tabMenu ul");
 				

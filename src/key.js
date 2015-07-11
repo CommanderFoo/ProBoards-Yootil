@@ -222,7 +222,7 @@ yootil.key = (function(){
 		/**
 		 * Key is set when an event occurs.
 		 *
-		 *     yootil.key.set_on("post_new", "hello world", yootil.user.id(), "post_new");
+		 *     yootil.key.set_on("mykey", "hello world", yootil.user.id(), "post_new");
 		 *
 		 * @param {String} key The key.
 		 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
@@ -267,6 +267,21 @@ yootil.key = (function(){
 
 		new_post: function(key, value, user_id){
 			return this.set_on(key, value, user_id, "post_new");
+		},
+
+		/**
+		 * Key is set when a new post is created using the quick reply.
+		 *
+		 *     yootil.key.post_quick_reply("mykey", "hello world", yootil.user.id());
+		 *
+		 * @param {String} key The key.
+		 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
+		 * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+		 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+		 */
+
+		post_quick_reply: function(key, value, user_id){
+			return this.set_on(key, value, user_id, "post_quick_reply");
 		},
 
 		/**

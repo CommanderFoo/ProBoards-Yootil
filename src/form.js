@@ -17,8 +17,8 @@ yootil.form = (function(){
 		* @return {Array}
 		*/
 		
-		post_form: function(){
-			if(yootil.location.check.posting_thread()){
+		post: function(){
+			if(yootil.location.posting_thread()){
 				return $("form.form_thread_new");
 			}
 			
@@ -31,8 +31,8 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 		
-		edit_post_form: function(){
-			if(yootil.location.check.editing_post()){
+		edit_post: function(){
+			if(yootil.location.editing_post()){
 				return $("form.form_post_edit");
 			}
 			
@@ -45,8 +45,8 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 		
-		edit_thread_form: function(){
-			if(yootil.location.check.editing_thread()){
+		edit_thread: function(){
+			if(yootil.location.editing_thread()){
 				return $("form.form_thread_edit");
 			}
 			
@@ -59,7 +59,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 				
-		quick_reply_form: function(){
+		quick_reply: function(){
 			return $("form.form_post_quick_reply");
 		},
 
@@ -69,11 +69,25 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 		
-		post_quick_reply_form: function(){
-			if(yootil.location.check.thread()){
-				return this.quick_reply_form();
+		post_quick_reply: function(){
+			if(yootil.location.thread()){
+				return this.quick_reply();
 			}
 			
+			return [];
+		},
+
+		/**
+		 * Just for the quick reply for messages.
+		 *
+		 * @return {Array}
+		 */
+
+		message_quick_reply: function(){
+			if(yootil.location.message_thread()){
+				return this.quick_reply();
+			}
+
 			return [];
 		},
 
@@ -83,7 +97,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 		
-		shoutbox_form: function(){
+		shoutbox: function(){
 			return $("form.form_shoutbox_shoutbox");
 		},
 
@@ -94,12 +108,12 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 				
-		conversation_form: function(){
-			if(yootil.location.check.message_new()){
-				return this.message_form();
+		conversation: function(){
+			if(yootil.location.message_new()){
+				return this.message();
 			}
 				
-			return this.conversation_new_form();
+			return this.conversation_new();
 		},
 
 		/**
@@ -108,7 +122,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 		
-		conversation_new_form: function(){
+		conversation_new: function(){
 			return $("form.form_conversation_new");
 		},
 
@@ -118,7 +132,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 				
-		message_form: function(){
+		message: function(){
 			return $("form.form_message_new");
 		},
 
@@ -128,7 +142,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 
-		edit_personal_form: function(){
+		edit_personal: function(){
 			return $("form.form_user_edit_personal");
 		},
 
@@ -138,7 +152,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 
-		edit_social_form: function(){
+		edit_social: function(){
 			return $("form.form_user_edit_social");
 		},
 
@@ -148,7 +162,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 
-		edit_settings_form: function(){
+		edit_settings: function(){
 			return $("form.form_user_edit_settings");
 		},
 
@@ -158,7 +172,7 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 
-		edit_privacy_form: function(){
+		edit_privacy: function(){
 			return $("form.form_user_edit_privacy");
 		},
 
@@ -168,9 +182,138 @@ yootil.form = (function(){
 		 * @return {Array}
 		 */
 
-		edit_staff_options_form: function(){
+		edit_staff_options: function(){
 			return $("form.form_user_edit_admin");
+		},
+
+		/**
+		 * Gets any form that is to do with conversations or messaging.
+		 *
+		 * @return {Array}
+		 */
+
+		any_messaging: function(){
+			var the_form = [];
+
+			if(this.conversation().length){
+				the_form = this.conversation();
+			} else if(this.conversation_new().length){
+				the_form = this.conversation_new();
+			} else if(this.message().length){
+				the_form = this.message();
+			} else if(this.message_quick_reply().length){
+				the_form = this.message_quick_reply();
+			}
+
+			return the_form;
+		},
+
+		/**
+		 * Gets any form to do with posting but not including messages.
+		 *
+		 * @return {Array}
+		 */
+
+		any_posting: function(){
+			var the_form = [];
+
+			if(this.post().length){
+				the_form = this.post();
+			} else if(this.edit_post().length){
+				the_form = this.edit_post();
+			} else if(this.post_quick_reply().length){
+				the_form = this.post_quick_reply();
+			} else if(this.edit_thread().length){
+				the_form = this.edit_thread();
+			}
+
+			return the_form;
+		},
+
+		// These are all aliases now and deprecated.
+
+		/**
+		 * @inheritdoc #post
+		 * @deprecated
+		 */
+
+		post_form: function(){
+			return this.post();
+		},
+
+		/**
+		 * @inheritdoc #edit_post
+		 * @deprecated
+		 */
+
+		edit_post_form: function(){
+			return this.edit_post();
+		},
+
+		/**
+		 * @inheritdoc #edit_thread
+		 * @deprecated
+		 */
+
+		edit_thread_form: function(){
+			return this.edit_thread();
+		},
+
+		/**
+		 * @inheritdoc #quick_reply
+		 * @deprecated
+		 */
+
+		quick_reply_form: function(){
+			return this.quick_reply();
+		},
+
+		/**
+		 * @inheritdoc #post_quick_reply
+		 * @deprecated
+		 */
+
+		post_quick_reply_form: function(){
+			return this.post_quick_reply();
+		},
+
+		/**
+		 * @inheritdoc #shoutbox
+		 * @deprecated
+		 */
+
+		shoutbox_form: function(){
+			return this.shoutbox();
+		},
+
+		/**
+		 * @inheritdoc #conversation
+		 * @deprecated
+		 */
+
+		conversation_form: function(){
+			return this.conversation();
+		},
+
+		/**
+		 * @inheritdoc #conversation_new
+		 * @deprecated
+		 */
+
+		conversation_new_form: function(){
+			return this.conversation_new();
+		},
+
+		/**
+		 * @inheritdoc #message
+		 * @deprecated
+		 */
+
+		message_form: function(){
+			return this.message();
 		}
+
+		// End aliases
 	
 	};
 

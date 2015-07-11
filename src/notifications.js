@@ -239,7 +239,11 @@ yootil.notifications = (function(){
 
 		show: function(){
 			if(this.data){
+				var has_notifications = false;
+
 				for(var key in this.data){
+					has_notifications = true;
+
 					var the_notification = this.data[key];
 
 					// Need to check if this notification hasn't already been view.
@@ -281,9 +285,78 @@ yootil.notifications = (function(){
 						)
 					);
 				}
+
+				// So we have notifications, but now we need to check storage and
+				// see if there are any in there.  If there are, then it means those
+				// have been marked as viewed and can be removed from key and storage.
+
+				if(has_notifications){
+
+					// Don't want to do location, form checks, and event binding for nothing,
+					// so we make sure there is local data first.
+
+					if(this.has_local_data()){
+						var posting = (yootil.location.thread() || yootil.location.editing() || yootil.location.posting());
+						var messaging = (yootil.location.conversation_new() || yootil.location.messaging());
+
+						if(posting || messaging){
+
+							// Ok, so we are posting or messaging, we need to work out which forum
+							// is available to us so we can bind the event.
+
+							var the_form;
+
+							if(posting){
+								the_form = yootil.form.any_posting();
+							} else {
+								the_form = yootil.form.any_messaging();
+							}
+
+							if(the_form.length == 1){
+								this.bind_form_submit(the_form);
+							}
+						}
+					}
+				}
 			}
 
 			return this;
+		},
+
+		// Checks the local data object to see if it is empty or not
+
+		has_local_data: function(){
+			var local_data = yootil.storage.get(this.key, true, true);
+
+			if(!$.isEmptyObject(local_data)){
+				return true;
+			}
+
+			return false;
+		},
+
+		// Bind event
+
+		bind_form_submit: function(the_form){
+			the_form.bind("submit", $.proxy(this.remove_viewed_notifications, this));
+		},
+
+		remove_viewed_notifications: function(){
+			var data = yootil.key.value(this.key, yootil.user.id());
+			var local_data = yootil.storage.get(this.key, true, true);
+
+			for(var key in local_data){
+				if(data[key]){
+					delete data[key];
+				}
+
+				delete local_data[key];
+			}
+
+			// Now update key and local
+
+			yootil.key.set(this.key, data, yootil.user.id());
+			yootil.storage.set(this.key, local_data, true, true);
 		},
 
 		add_to_storage: function(id){
