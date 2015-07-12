@@ -4808,7 +4808,7 @@ yootil.notifications = (function(){
 		 *     	},
 		 *
 		 *     	// No need to return the notification as we are finished
-		 *     	
+		 *
 		 *     	after: function(notification){
 		 *     		console.log(notification);
 		 *     	}
@@ -4823,8 +4823,6 @@ yootil.notifications = (function(){
 		 *
 		 * @chainable
 		 */
-
-		// todo: allow custom effects
 
 		show: function(events){
 			if(this.data){
