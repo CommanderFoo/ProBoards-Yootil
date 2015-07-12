@@ -234,10 +234,36 @@ yootil.notifications = (function(){
 		 *
 		 *     notify.show();
 		 *
+		 * Example using the events:
+		 *
+		 *     var notify = new yootil.notifications("mykey");
+		 *
+		 *     notify.show({
+		 *
+		 *     	before: function(notification){
+		 *     		notification.m = "message has been changed";
+		 *
+		 *     		return notification;
+		 *     	},
+		 *
+		 *     	// No need to return the notification as we are finished
+		 *
+		 *     	after: function(notification){
+		 *     		console.log(notification);
+		 *     	}
+		 *
+		 *     });
+		 *
+		 * @param {Object} [events]
+		 * @param {Function} [events.before] This is called before the notification is parsed.  The notification
+		 * is passed in as the first argument.  It's very important that you return the notification back in this event.
+		 * @param {Function} [events.after] This is called after the notification has been viewed.  The notification
+		 * is passed in as the first argument.
+		 *
 		 * @chainable
 		 */
-
-		show: function(){
+			
+		show: function(events){
 			if(this.data){
 				var has_notifications = false;
 
@@ -270,12 +296,21 @@ yootil.notifications = (function(){
 						$.proxy(
 							function(notification){
 								var self = this;
+
+								if(typeof events.before != "undefined" && typeof events.before == "function"){
+									notification = events.before(notification);
+								}
+
 								var notify_html = self.html_tpl.replace("{NOTIFICATION_MESSAGE}", notification.m);
 
 								$(notify_html).attr("id", "yootil-notification-" + notification.i).appendTo($("body")).delay(200).fadeIn("normal", function(){
 
 									self.add_to_storage(notification.i);
 								}).delay(3500).fadeOut("normal", function(){
+									if(typeof events.after != "undefined" && typeof events.after == "function"){
+										events.after(notification);
+									}
+
 									yootil.notifications_queue[self.key].next();
 								});
 							},
