@@ -40,7 +40,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_avatars: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile .avatar" + selector);;
+			return $(".mini-profile .avatar" + selector);
 		},
 
 		/**
