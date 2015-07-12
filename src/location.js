@@ -66,13 +66,23 @@ yootil.location = (function(){
 
 		/**
 		 * Are we currently viewing the main forum? (i.e. board listing)
+		 *
+		 * Use {@link #home}
+		 *
 		 * @return {Boolean}
+		 * @deprecated
 		 */
 
 		forum: function(){
-			// CURRENT ISSUE: This is "forum" when custom page is homepage...
-			// See: http://support.proboards.com/index.cgi?board=openbetafeaturerequests&action=display&thread=429638&page=1
-			// Plugins don't run on custom pages, so if home or forum, this is viewing main page.
+			return this.home();
+		},
+
+		/**
+		 * Are we currently viewing the main forum? (i.e. board listing)
+		 * @return {Boolean}
+		 */
+
+		home: function(){
 			return this.__is_page("home") || this.__is_page("forum");
 		},
 
@@ -109,7 +119,7 @@ yootil.location = (function(){
 		 */
 
 		messaging: function(){
-			return this.message_new() || this.conversation_new() || this.conversation_create() || this.message_quote() || this.conversation_new_user();
+			return this.message_new() || this.conversation_new() || this.message_quote();
 		},
 
 		/**
@@ -142,6 +152,7 @@ yootil.location = (function(){
 		/**
 		 * Are we currently creating a new conversation?
 		 * @return {Boolean}
+		 * @ignore
 		 */
 
 		conversation_create: function(){
@@ -151,6 +162,7 @@ yootil.location = (function(){
 		/**
 		 * Are we currently creating a new conversation (new_user_conversation)?
 		 * @return {Boolean}
+		 * @ignore
 		 */
 
 		conversation_new_user: function(){
@@ -218,6 +230,15 @@ yootil.location = (function(){
 
 		editing: function(){
 			return this.editing_thread() || this.editing_post();
+		},
+
+		/**
+		 * Are we viewing a custom page?
+		 * @return {Boolean}
+		 */
+
+		page: function(){
+			return this.__is_page("page");
 		},
 
 		/**
@@ -379,7 +400,7 @@ yootil.location = (function(){
 		 */
 
 		recent_threads: function(){
-			return this.__is_page("recent_threads");
+			return this.__is_page("recent_threads") || this.__is_page("recent_threads_created");
 		},
 
 		/**
