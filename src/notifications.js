@@ -234,7 +234,7 @@ yootil.notifications = (function(){
 		 *
 		 *     notify.show();
 		 *
-		 * Example using the events:
+		 * Example using the events and effect options:
 		 *
 		 *     var notify = new yootil.notifications("mykey");
 		 *
@@ -252,6 +252,13 @@ yootil.notifications = (function(){
 		 *     		console.log(notification);
 		 *     	}
 		 *
+		 *     }, {
+		 *
+		 *     	show_speed: 2000,
+		 *     	show_effect "slideDown",
+		 *
+		 *     	hide_speed: 4000
+		 *
 		 *     });
 		 *
 		 * @param {Object} [events]
@@ -259,13 +266,34 @@ yootil.notifications = (function(){
 		 * is passed in as the first argument.  It's very important that you return the notification back in this event.
 		 * @param {Function} [events.after] This is called after the notification has been viewed.  The notification
 		 * is passed in as the first argument.
-		 *
+		 * @param {Object} [effect_options] Pass in options to customise the effect.  Takes jQuery basic effect options.
+		 * @param {String} [effect_options.show_effect] Can be "fadeIn", "fadeOut", "slideDown", "slideUp", "show", "hide".
+		 * @param {Mixed} [effect_options.show_speed] Can be either "slow", "normal", "fast", or a number.
+		 * @param {Number} [effect_options.show_delay] Adds a delay before running the effect.
+		 * @param {String} [effect_options.hide_effect] Can be "fadeIn", "fadeOut", "slideDown", "slideUp", "show", "hide".
+		 * @param {Mixed} [effect_options.hide_speed] Can be either "slow", "normal", "fast", or a number.
+		 * @param {Number} [effect_options.hide_delay] Adds a delay before running the effect.
 		 * @chainable
 		 */
 
-		show: function(events){
+		show: function(events, effect_options){
 			if(this.data){
 				var has_notifications = false;
+				var options = {
+
+					show_effect: "fadeIn",
+					show_speed: "normal",
+					show_delay: 0,
+
+					hide_effect: "fadeOut",
+					hide_speed: "normal",
+					hide_delay: 3500
+
+				};
+
+				if(typeof effect_options == "object"){
+					options = $.extend(options, effect_options);
+				}
 
 				for(var key in this.data){
 					has_notifications = true;
@@ -303,10 +331,10 @@ yootil.notifications = (function(){
 
 								var notify_html = self.html_tpl.replace("{NOTIFICATION_MESSAGE}", notification.m);
 
-								$(notify_html).attr("id", "yootil-notification-" + notification.i).appendTo($("body")).delay(200).fadeIn("normal", function(){
+								$(notify_html).attr("id", "yootil-notification-" + notification.i).appendTo($("body")).delay(options.show_delay)[options.show_effect](options.show_speed, function(){
 
 									self.add_to_storage(notification.i);
-								}).delay(3500).fadeOut("normal", function(){
+								}).delay(options.hide_delay)[options.hide_effect](options.hide_speed, function(){
 									if(typeof events.after != "undefined" && typeof events.after == "function"){
 										events.after(notification);
 									}
