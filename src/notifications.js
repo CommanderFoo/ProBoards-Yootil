@@ -262,7 +262,7 @@ yootil.notifications = (function(){
 		 *
 		 * @chainable
 		 */
-			
+
 		show: function(events){
 			if(this.data){
 				var has_notifications = false;
