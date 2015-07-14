@@ -15,8 +15,6 @@
  * @chainable
  */
 
-// @TODO: Add hooks to forms so that notifications that have been viewed are removed
-
 yootil.notifications = (function(){
 
 	function Notifications(key, template, klass){
@@ -31,9 +29,9 @@ yootil.notifications = (function(){
 
 		if(this.plugin){
 			this.data = yootil.key.value(this.key, yootil.user.id(), true) || {};
+			this.parse_template(template || null, klass || null);
 		}
 
-		this.parse_template(template || null, klass || null);
 		return this;
 	}
 
@@ -277,7 +275,7 @@ yootil.notifications = (function(){
 		 */
 
 		show: function(events, effect_options){
-			if(this.data){
+			if(this.plugin && this.data){
 				var has_notifications = false;
 				var options = {
 

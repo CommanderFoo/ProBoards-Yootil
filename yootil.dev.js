@@ -380,11 +380,9 @@ yootil.key = (function(){
 		 */
 		
 		exists: function(key){
-			if(key){				
-				if(this.pb_key_obj){
-					if(this.pb_key_obj(key)){
-						return true;
-					}
+			if(key){
+				if(typeof proboards.plugin._keys[key] != "undefined"){
+					return true;
 				}
 			}
 		
@@ -4576,8 +4574,6 @@ yootil.bar = (function(){
  * @chainable
  */
 
-// @TODO: Add hooks to forms so that notifications that have been viewed are removed
-
 yootil.notifications = (function(){
 
 	function Notifications(key, template, klass){
@@ -4592,9 +4588,9 @@ yootil.notifications = (function(){
 
 		if(this.plugin){
 			this.data = yootil.key.value(this.key, yootil.user.id(), true) || {};
+			this.parse_template(template || null, klass || null);
 		}
 
-		this.parse_template(template || null, klass || null);
 		return this;
 	}
 
@@ -4838,7 +4834,7 @@ yootil.notifications = (function(){
 		 */
 
 		show: function(events, effect_options){
-			if(this.data){
+			if(this.plugin && this.data){
 				var has_notifications = false;
 				var options = {
 

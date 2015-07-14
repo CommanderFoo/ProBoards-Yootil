@@ -27,11 +27,9 @@ yootil.key = (function(){
 		 */
 		
 		exists: function(key){
-			if(key){				
-				if(this.pb_key_obj){
-					if(this.pb_key_obj(key)){
-						return true;
-					}
+			if(key){
+				if(typeof proboards.plugin._keys[key] != "undefined"){
+					return true;
 				}
 			}
 		
