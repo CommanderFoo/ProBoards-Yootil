@@ -22,13 +22,18 @@ yootil.notifications = (function(){
 			yootil.notifications_queue[key] = new yootil.queue();
 		}
 
+		this.lookup = {};
 		this.html_tpl = "";
 		this.key = key || null;
 		this.plugin = yootil.key.exists(this.key);
-		this.data = {};
 
 		if(this.plugin){
-			this.data = yootil.key.value(this.key, yootil.user.id(), true) || {};
+			var all_data = proboards.plugin.keys.data[this.key];
+
+			for(var key in all_data){
+				this.lookup[key] = all_data[key] || {};
+			}
+
 			this.parse_template(template || null, klass || null);
 		}
 
@@ -75,21 +80,24 @@ yootil.notifications = (function(){
 				var user_id = the_user_id || yootil.user.id();
 				var ts = (+ new Date());
 
-				if(id){
-					this.data[ts] = {
+				if(!this.lookup[user_id]){
+					this.lookup[user_id] = {};
+				}
 
+				if(id){
+					this.lookup[user_id][ts] = {
 						i: id,
 						m: message
-
 					};
 				} else {
 					id = ts;
-					this.data[ts] = message;
+
+					this.lookup[user_id][ts] = message;
 				}
 
-				this.check_key_data(id);
+				this.check_key_data(id, user_id);
 
-				yootil.key.set(this.key, this.data, user_id);
+				yootil.key.set(this.key, this.lookup[user_id], user_id);
 			}
 
 			return this;
@@ -100,17 +108,17 @@ yootil.notifications = (function(){
 		// them or not.  It's better this way then the key breaking, or
 		// the user not getting newer messages.
 
-		check_key_data: function(last_id){
-			var current_length = JSON.stringify(this.data).length;
-			var max_len = proboards.data("plugin_max_key_length");
+		check_key_data: function(last_id, user_id){
+			var current_length = JSON.stringify(this.lookup[user_id]).length;
+			var max_len = (yootil.key.super_forum(this.key))? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
 
 			if(current_length > max_len){
 				var entries = [];
-				for (var key in this.data){
+				for (var key in this.lookup[user_id]){
 					entries.push({
 						ts: key,
-						m: (this.data[key].m) ? this.data[key].m : this.data[key],
-						i: (this.data[key].m) ? this.data[key].i : null
+						m: (this.lookup[user_id][key].m) ? this.lookup[user_id][key].m : this.lookup[user_id][key],
+						i: (this.lookup[user_id][key].m) ? this.lookup[user_id][key].i : null
 					});
 				}
 
@@ -124,18 +132,18 @@ yootil.notifications = (function(){
 
 					// Start by just removing the oldest one to hopefully skip loop checking
 
-					if(this.data[entries[0].ts]){
-						delete this.data[entries[0].ts];
+					if(this.lookup[user_id][entries[0].ts]){
+						delete this.lookup[user_id][entries[0].ts];
 						entries.shift();
 					}
 
 					// Check length again to try and avoid the loop
 
-					if(JSON.stringify(this.data).length > max_len){
+					if(JSON.stringify(this.lookup[user_id]).length > max_len){
 
 						// Now we need to keep removing entries until we are under the max length
 
-						while(JSON.stringify(this.data).length > max_len){
+						while(JSON.stringify(this.lookup[user_id]).length > max_len){
 
 							// Don't want an infinite loop, so check entries and bail out of loop
 
@@ -145,7 +153,7 @@ yootil.notifications = (function(){
 
 							// Delete from top to bottom
 
-							delete this.data[entries[0].ts];
+							delete this.lookup[user_id][entries[0].ts];
 							entries.shift();
 						}
 					}
@@ -154,7 +162,7 @@ yootil.notifications = (function(){
 				// Finally check length of entries, if it's 0, then clear data
 
 				if(!entries.length){
-					this.data = {};
+					this.lookup[user_id] = {};
 				}
 			}
 		},
@@ -164,11 +172,12 @@ yootil.notifications = (function(){
 		 *
 		 *     new yootil.notifications("my_key").create("Hello World!").get_all();
 		 *
+		 * @param {Number} [user_id] The user we are targetting.
 		 * @return {Object}
 		 */
 
-		get_all: function(){
-			return this.data;
+		get_all: function(user_id){
+			return this.lookup[user_id || yootil.user.id()] || {};
 		},
 
 		/**
@@ -177,13 +186,16 @@ yootil.notifications = (function(){
 		 *     var n = new yootil.notifications("my_key").get("notify44");
 		 *
 		 * @param {Mixed} id The id for the message you want to get.
+		 * @param {Number} [user_id] The user we are targetting.
 		 * @return {Object}
 		 */
 
-		get: function(id){
-			for(var key in this.data){
-				if(this.data[key].i != null && this.data[key].i == id){
-					return this.data[key];
+		get: function(id, user_id){
+			var user = user_id || yootil.user.id();
+
+			for(var key in this.lookup[user]){
+				if(this.lookup[user] && this.lookup[user][key].i != null && this.lookup[user][key].i == id){
+					return this.lookup[user][key];
 					break;
 				}
 			}
@@ -192,16 +204,20 @@ yootil.notifications = (function(){
 		},
 
 		/**
-		 * Removes all notifications from the key.
+		 * Removes all notifications from the key for the user.
 		 *
 		 *     new yootil.notifications("my_key").remove_all();
 		 *
+		 * @param {Number} [user_id] The user we are targetting.
 		 * @chainable
 		 */
 
-		remove_all: function(){
-			this.data = {};
-			yootil.key.set(this.key, this.data, yootil.user.id(), true);
+		remove_all: function(user_id){
+			var user = user_id || yootil.user.id();
+
+			this.lookup[user] = {};
+
+			yootil.key.set(this.key, this.lookup[user], user, true);
 
 			return this;
 		},
@@ -210,14 +226,17 @@ yootil.notifications = (function(){
 		 * Removes a specific notification.
 		 *
 		 * @param {Mixed} id The id for the notification you want to remove.
+		 * @param {Number} [user_id] The user we are targetting.
 		 * @chainable
 		 */
 
-		remove: function(id){
-			for(var key in this.data){
-				if(this.data[key].i != null && this.data[key].i == id){
-					delete this.data[key];
-					yootil.key.set(this.key, this.data, yootil.user.id(), true);
+		remove: function(id, user_id){
+			var user = user_id || yootil.user.id();
+
+			for(var key in this.lookup[user]){
+				if(this.lookup[user][key].i != null && this.lookup[user][key].i == id){
+					delete this.lookup[user][key];
+					yootil.key.set(this.key, this.lookup[user], user, true);
 					break;
 				}
 			}
@@ -275,7 +294,9 @@ yootil.notifications = (function(){
 		 */
 
 		show: function(events, effect_options){
-			if(this.plugin && this.data){
+			var user = yootil.user.id();
+
+			if(this.plugin && this.lookup[user]){
 				var has_notifications = false;
 				var options = {
 
@@ -293,10 +314,10 @@ yootil.notifications = (function(){
 					options = $.extend(options, effect_options);
 				}
 
-				for(var key in this.data){
+				for(var key in this.lookup[user]){
 					has_notifications = true;
 
-					var the_notification = this.data[key];
+					var the_notification = this.lookup[user][key];
 
 					// Need to check if this notification hasn't already been view.
 					// Each notification is stored in localStorage when the user has
@@ -403,7 +424,7 @@ yootil.notifications = (function(){
 		},
 
 		remove_viewed_notifications: function(){
-			var data = yootil.key.value(this.key, yootil.user.id());
+			var data = yootil.key.value(this.key, yootil.user.id()) || {};
 			var local_data = yootil.storage.get(this.key, true, true);
 
 			for(var key in local_data){
