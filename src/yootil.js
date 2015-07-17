@@ -24,17 +24,21 @@ yootil = (function(){
 
 		notifications_queue: {},
 
+		textarea: document.createElement("textarea"),
+
 		/**
 		 * Makes a string safe for inserting into the DOM.
 		 *
 		 *     var safe_html = yootil.html_encode("<b>this won't be bold</b>");
 		 *
 		 * @param {String} str The value you want returned to be safe.
+		 * @param {Boolean} decode_first Pass true if you want to decode before encoding to prevent double encoding.
 		 * @return {string} The safe value.
 		 */
 
-		html_encode: function(str){
+		html_encode: function(str, decode_first){
 			str = (str)? str : "";
+			str = (decode_first)? this.html_decode(str) : str;
 
 			return $("<div />").text(str).html();
 		},
@@ -51,8 +55,15 @@ yootil = (function(){
 		html_decode: function(str){
 			str = (str)? str : "";
 
-			return $("<div />").html(str).text();
+			this.textarea.innerHTML = str;
+
+			var val = this.textarea.value;
+
+			this.textarea.innerHTML = "";
+
+			return val;
 		},
+
 
 		/**
 		 * Formats numbers so they look pretty (i.e 1,530).
