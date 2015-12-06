@@ -23,7 +23,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profiles: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile" + selector);
+			return $(".item .mini-profile" + selector);
 		},
 
 		/**
@@ -40,7 +40,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_avatars: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile .avatar" + selector);
+			return $(".item .mini-profile .avatar" + selector);
 		},
 
 		/**
@@ -57,7 +57,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_user_links: function(user_id){
 			var selector = (~~ user_id)? (".user-" + (~~ user_id)) : "";
 
-			return $(".mini-profile a.user-link" + selector);
+			return $(".item .mini-profile a.user-link" + selector);
 		},
 
 		/**
@@ -74,7 +74,24 @@ yootil.element.get = yootil.get = (function(){
 		posts: function(post_id){
 			var selector = (~~ post_id)? ("-" + (~~ post_id)) : "";
 
-			return $("tr[id^=post" + selector + "]");
+			return $("tr.item[id^=post" + selector + "]");
+		},
+
+		/**
+		 * Gets messages.
+		 *
+		 *     yootil.element.get.messages(); // Get all messages
+		 *
+		 *     yootil.element.get.messages(123); // Gets post with id 123
+		 *
+		 * @param {Number} [post_id] The message id for the message to get.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		messages: function(message_id){
+			var selector = (~~ message_id)? ("-" + (~~ message_id)) : "";
+
+			return $("tr.item[id^=message" + selector + "]");
 		},
 
 		/**
@@ -91,7 +108,24 @@ yootil.element.get = yootil.get = (function(){
 				return [];
 			}
 
-			return $("tr[id^=post]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
+			return $("tr.item[id^=post]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
+		},
+
+		/**
+		 * Gets user messages.
+		 *
+		 *     yootil.element.get.user_messages(1); // Gets all messages for user id 1
+		 *
+		 * @param {Number} [user_id] The user id to find messages for.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id){
+			if(!user_id){
+				return [];
+			}
+
+			return $("tr.item[id^=message]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
 		},
 
 		/**
@@ -118,7 +152,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_info: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile" + selector + " .info");
+			return $(".item .mini-profile" + selector + " .info");
 		},
 
 		/**
@@ -135,7 +169,7 @@ yootil.element.get = yootil.get = (function(){
 		signatures: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+			return $("tr.item[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
 		},
 
 		/**
@@ -152,7 +186,7 @@ yootil.element.get = yootil.get = (function(){
 		last_edit: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+			return $("tr.item[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
 		},
 
 		/**
@@ -169,7 +203,7 @@ yootil.element.get = yootil.get = (function(){
 		post_info: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
+			return $("tr.item[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
 		},
 
 		/**
@@ -186,7 +220,7 @@ yootil.element.get = yootil.get = (function(){
 		post_controls: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .content .controls, tr[id^=message-]" + selector + " .content .controls");
+			return $("tr.item[id^=post-]" + selector + " .content .controls, tr[id^=message-]" + selector + " .content .controls");
 		},
 
 		/**
@@ -222,7 +256,7 @@ yootil.element.get = yootil.get = (function(){
 		 */
 
 		nav_branches: function(){
-			return $("#navigation-tree #nav-tree .nav-tree-branch");
+			return $("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch");
 		},
 
 		/**
@@ -234,7 +268,7 @@ yootil.element.get = yootil.get = (function(){
 		 */
 
 		last_nav_branch: function(){
-			return $("#navigation-tree #nav-tree .nav-tree-branch:last");
+			return $("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch:last");
 		},
 
 		/**
@@ -258,7 +292,7 @@ yootil.element.get = yootil.get = (function(){
 
 			var matched = [];
 
-			$("#navigation-tree #nav-tree .nav-tree-branch a").each(function(){
+			$("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch a").each(function(){
 				var match_against = (type == "url")? $(this).attr("href") : $(this).text();
 
 				if(pattern.constructor == RegExp){

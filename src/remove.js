@@ -112,6 +112,30 @@ yootil.element.remove = yootil.remove = (function(){
 		},
 
 		/**
+		 * Removes messages.
+		 *
+		 *     yootil.element.remove.messages(); // Removes all messages
+		 *
+		 *     yootil.element.remove.messages(123); // Removes message with id 123
+		 *
+		 *     yootil.element.remove.messages(123, true); // Hides message with id 123
+		 *
+		 * @param {Number} [message_id] The message id for the message to remove.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched message is returned.
+		 */
+
+		messages: function(message_id, hide){
+			var message = yootil.element.get.messages(message_id);
+
+			if(message.length){
+				message[(!hide)? "remove" : "hide"]();
+			}
+
+			return message;
+		},
+
+		/**
 		 * Removes user posts.
 		 *
 		 *     yootil.element.remove.user_posts(1); // Removes all posts for user id 1
@@ -131,6 +155,28 @@ yootil.element.remove = yootil.remove = (function(){
 			}
 
 			return user_post;
+		},
+
+		/**
+		 * Removes user messages.
+		 *
+		 *     yootil.element.remove.user_messages(1); // Removes all messages for user id 1
+		 *
+		 *     yootil.element.remove.user_messages(1, true); // Hides all messages for user id 1
+		 *
+		 * @param {Number} user_id The user id to find messages for.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id, hide){
+			var user_messages = yootil.element.get.user_messages(user_id);
+
+			if(user_messages.length){
+				user_messages[(!hide)? "remove" : "hide"]();
+			}
+
+			return user_messages;
 		},
 
 		/**

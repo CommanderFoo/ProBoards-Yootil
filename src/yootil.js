@@ -26,6 +26,10 @@ yootil = (function(){
 
 		textarea: document.createElement("textarea"),
 
+		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+
+		days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
 		/**
 		 * Makes a string safe for inserting into the DOM.
 		 *
@@ -234,6 +238,69 @@ yootil = (function(){
 
 		timestamp: function(){
 			return (+ new Date());
+		},
+
+		/**
+		 * Checks a number and returns the correct suffix to be used with it.
+		 *
+		 *     yootil.suffix(3); // "rd"
+		 *
+		 * @param {Number} n The number to be checked.
+		 * @return {String}
+		 */
+
+		suffix: function(n){
+			var j = (n % 10);
+
+			if(j == 1 && n != 11){
+				return "st";
+			}
+
+			if(j == 2 && n != 12){
+				return "nd";
+			}
+
+			if(j == 3 && n != 13) {
+				return "rd";
+			}
+
+			return "th";
+		},
+
+		/**
+		 * Gets a day from the days array.
+		 *
+		 *     yootil.day(1); // "Mon"
+		 *
+		 * @param {Number} index Indexing starts at 0, with Sunday being 0.
+		 * @param {Boolean} full Returns full day name.
+		 * @return {String}
+		 */
+
+		day: function(index, full){
+			if(index >= 0 && index < this.days.length){
+				return this.days[index].substr(0, ((full)? 9 : 3));
+			}
+
+			return "";
+		},
+
+		/**
+		 * Gets a month from the months array.
+		 *
+		 *     yootil.month(2); // "Mar"
+		 *
+		 * @param {Number} index Indexing starts at 0.
+		 * @param {Boolean} full Returns full month name.
+		 * @return {String}
+		 */
+
+		month: function(index, full){
+			if(index >= 0 && index < this.months.length){
+				return this.months[index].substr(0, ((full)? 9 : ((index == 8)? 4 : 3)));
+			}
+
+			return "";
 		}
 
 	};

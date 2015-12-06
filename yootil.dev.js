@@ -1,5 +1,5 @@
 /**
-* Yootil 1.0.0
+* Yootil 1.1.0
 *
 * http://yootil.pixeldepth.net
 */
@@ -20,7 +20,7 @@ yootil = (function(){
 
 	return {
 
-		VERSION: "1.0.0",
+		VERSION: "1.1.0",
 
 		settings: {},
 
@@ -31,6 +31,10 @@ yootil = (function(){
 		notifications_queue: {},
 
 		textarea: document.createElement("textarea"),
+
+		months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+
+		days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 
 		/**
 		 * Makes a string safe for inserting into the DOM.
@@ -240,6 +244,69 @@ yootil = (function(){
 
 		timestamp: function(){
 			return (+ new Date());
+		},
+
+		/**
+		 * Checks a number and returns the correct suffix to be used with it.
+		 *
+		 *     yootil.suffix(3); // "rd"
+		 *
+		 * @param {Number} n The number to be checked.
+		 * @return {String}
+		 */
+
+		suffix: function(n){
+			var j = (n % 10);
+
+			if(j == 1 && n != 11){
+				return "st";
+			}
+
+			if(j == 2 && n != 12){
+				return "nd";
+			}
+
+			if(j == 3 && n != 13) {
+				return "rd";
+			}
+
+			return "th";
+		},
+
+		/**
+		 * Gets a day from the days array.
+		 *
+		 *     yootil.day(1); // "Mon"
+		 *
+		 * @param {Number} index Indexing starts at 0, with Sunday being 0.
+		 * @param {Boolean} full Returns full day name.
+		 * @return {String}
+		 */
+
+		day: function(index, full){
+			if(index >= 0 && index < this.days.length){
+				return this.days[index].substr(0, ((full)? 9 : 3));
+			}
+
+			return "";
+		},
+
+		/**
+		 * Gets a month from the months array.
+		 *
+		 *     yootil.month(2); // "Mar"
+		 *
+		 * @param {Number} index Indexing starts at 0.
+		 * @param {Boolean} full Returns full month name.
+		 * @return {String}
+		 */
+
+		month: function(index, full){
+			if(index >= 0 && index < this.months.length){
+				return this.months[index].substr(0, ((full)? 9 : ((index == 8)? 4 : 3)));
+			}
+
+			return "";
 		}
 
 	};
@@ -1406,7 +1473,7 @@ yootil.create = (function(){
 		 */
 		
 		nav_branch: function(url, text){
-			var branch = $("#nav-tree li:last").clone();
+			var branch = $("#navigation-tree .nav-tree-wrapper #nav-tree li:last").clone();
 
 			if(branch && branch.length){
 				branch.find("a").attr("href", url).find("span").html(text);
@@ -1430,7 +1497,7 @@ yootil.create = (function(){
 		profile_tab: function(text, page, active){
 			if(yootil.location.profile()){
 				var active_class = (active)? " class='ui-active'" : "";
-				var ul = $("div.show-user div.ui-tabMenu ul");
+				var ul = $("div.show-user div.ui-tabMenu:first ul");
 				
 				if(ul.length){
 					ul.append($("<li" + active_class + "><a href='/user/" + yootil.page.member.id() + "/" + page + "'>" + text + "</a></li>"));
@@ -1465,16 +1532,21 @@ yootil.create = (function(){
 		 */
 		
 		bbc_button: function(img, func){
-			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
+			$(document).ready(function(){
 				var li = $("<li>").addClass("button").append($(img));
 
 				if(func){
 					li.click(func);
 				}
 
-				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append(li);
+				var controls = $(".editor .ui-wysiwyg .controls");
+				var ul = controls.find(".bbcode-editor, .visual-editor").find(".group:last ul:last");
+
+				if(controls.length && ul.length){
+					ul.append(li);
+				}
 			});
-			
+
 			return this;
 		},
 
@@ -1514,7 +1586,7 @@ yootil.create = (function(){
 			content = content || "";
 
 			var tab = $("<li id='menu-item-" + id + "'><a href='#'>" + tab_title + "</a></li>");
-			var wysiwyg_tabs = $("ul.wysiwyg-tabs").append(tab);
+			var wysiwyg_tabs = $(".editor ul.wysiwyg-tabs").append(tab);
 			var tab_content = $("<div id='" + id + "'>" + content + "</div>");
 
 			if(typeof css == "undefined"){
@@ -1528,7 +1600,7 @@ yootil.create = (function(){
 				tab_content.css(css);
 			}
 
-			tab_content.hide().insertBefore($("ul.wysiwyg-tabs"));
+			tab_content.hide().insertBefore($(".editor ul.wysiwyg-tabs"));
 
 			wysiwyg_tabs.find("li").click(function(e){
 				var active = $(this);
@@ -1542,7 +1614,7 @@ yootil.create = (function(){
 					var id = $(this).attr("id");
 
 					if(id.match(/bbcode|visual/i)){
-						$(".ui-wysiwyg .editors").hide();
+						$(".editor .ui-wysiwyg .editors").hide();
 					} else {
 						if(active.attr("id") == id){
 							return;
@@ -1576,7 +1648,7 @@ yootil.create = (function(){
 				}
 
 				if(id.match(/bbcode|visual/i)){
-					$(".ui-wysiwyg .editors").show();
+					$(".editor .ui-wysiwyg .editors").show();
 				} else if($(selector).length){
 					if(events && events.show){
 						if(events.context){
@@ -3902,7 +3974,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profiles: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile" + selector);
+			return $(".item .mini-profile" + selector);
 		},
 
 		/**
@@ -3919,7 +3991,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_avatars: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile .avatar" + selector);
+			return $(".item .mini-profile .avatar" + selector);
 		},
 
 		/**
@@ -3936,7 +4008,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_user_links: function(user_id){
 			var selector = (~~ user_id)? (".user-" + (~~ user_id)) : "";
 
-			return $(".mini-profile a.user-link" + selector);
+			return $(".item .mini-profile a.user-link" + selector);
 		},
 
 		/**
@@ -3953,7 +4025,24 @@ yootil.element.get = yootil.get = (function(){
 		posts: function(post_id){
 			var selector = (~~ post_id)? ("-" + (~~ post_id)) : "";
 
-			return $("tr[id^=post" + selector + "]");
+			return $("tr.item[id^=post" + selector + "]");
+		},
+
+		/**
+		 * Gets messages.
+		 *
+		 *     yootil.element.get.messages(); // Get all messages
+		 *
+		 *     yootil.element.get.messages(123); // Gets post with id 123
+		 *
+		 * @param {Number} [post_id] The message id for the message to get.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		messages: function(message_id){
+			var selector = (~~ message_id)? ("-" + (~~ message_id)) : "";
+
+			return $("tr.item[id^=message" + selector + "]");
 		},
 
 		/**
@@ -3970,7 +4059,24 @@ yootil.element.get = yootil.get = (function(){
 				return [];
 			}
 
-			return $("tr[id^=post]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
+			return $("tr.item[id^=post]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
+		},
+
+		/**
+		 * Gets user messages.
+		 *
+		 *     yootil.element.get.user_messages(1); // Gets all messages for user id 1
+		 *
+		 * @param {Number} [user_id] The user id to find messages for.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id){
+			if(!user_id){
+				return [];
+			}
+
+			return $("tr.item[id^=message]:has(.mini-profile a.user-link.user-" + (~~ user_id) + ")");
 		},
 
 		/**
@@ -3997,7 +4103,7 @@ yootil.element.get = yootil.get = (function(){
 		mini_profile_info: function(user_id){
 			var selector = (~~ user_id)? ":has(a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $(".mini-profile" + selector + " .info");
+			return $(".item .mini-profile" + selector + " .info");
 		},
 
 		/**
@@ -4014,7 +4120,7 @@ yootil.element.get = yootil.get = (function(){
 		signatures: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+			return $("tr.item[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
 		},
 
 		/**
@@ -4031,7 +4137,7 @@ yootil.element.get = yootil.get = (function(){
 		last_edit: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+			return $("tr.item[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
 		},
 
 		/**
@@ -4048,7 +4154,7 @@ yootil.element.get = yootil.get = (function(){
 		post_info: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
+			return $("tr.item[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
 		},
 
 		/**
@@ -4065,7 +4171,7 @@ yootil.element.get = yootil.get = (function(){
 		post_controls: function(user_id){
 			var selector = (~~ user_id)? ":has(.mini-profile a.user-link.user-" + (~~ user_id) + ")" : "";
 
-			return $("tr[id^=post-]" + selector + " .content .controls, tr[id^=message-]" + selector + " .content .controls");
+			return $("tr.item[id^=post-]" + selector + " .content .controls, tr[id^=message-]" + selector + " .content .controls");
 		},
 
 		/**
@@ -4101,7 +4207,7 @@ yootil.element.get = yootil.get = (function(){
 		 */
 
 		nav_branches: function(){
-			return $("#navigation-tree #nav-tree .nav-tree-branch");
+			return $("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch");
 		},
 
 		/**
@@ -4113,7 +4219,7 @@ yootil.element.get = yootil.get = (function(){
 		 */
 
 		last_nav_branch: function(){
-			return $("#navigation-tree #nav-tree .nav-tree-branch:last");
+			return $("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch:last");
 		},
 
 		/**
@@ -4137,7 +4243,7 @@ yootil.element.get = yootil.get = (function(){
 
 			var matched = [];
 
-			$("#navigation-tree #nav-tree .nav-tree-branch a").each(function(){
+			$("#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch a").each(function(){
 				var match_against = (type == "url")? $(this).attr("href") : $(this).text();
 
 				if(pattern.constructor == RegExp){
@@ -4273,6 +4379,30 @@ yootil.element.remove = yootil.remove = (function(){
 		},
 
 		/**
+		 * Removes messages.
+		 *
+		 *     yootil.element.remove.messages(); // Removes all messages
+		 *
+		 *     yootil.element.remove.messages(123); // Removes message with id 123
+		 *
+		 *     yootil.element.remove.messages(123, true); // Hides message with id 123
+		 *
+		 * @param {Number} [message_id] The message id for the message to remove.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched message is returned.
+		 */
+
+		messages: function(message_id, hide){
+			var message = yootil.element.get.messages(message_id);
+
+			if(message.length){
+				message[(!hide)? "remove" : "hide"]();
+			}
+
+			return message;
+		},
+
+		/**
 		 * Removes user posts.
 		 *
 		 *     yootil.element.remove.user_posts(1); // Removes all posts for user id 1
@@ -4292,6 +4422,28 @@ yootil.element.remove = yootil.remove = (function(){
 			}
 
 			return user_post;
+		},
+
+		/**
+		 * Removes user messages.
+		 *
+		 *     yootil.element.remove.user_messages(1); // Removes all messages for user id 1
+		 *
+		 *     yootil.element.remove.user_messages(1, true); // Hides all messages for user id 1
+		 *
+		 * @param {Number} user_id The user id to find messages for.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id, hide){
+			var user_messages = yootil.element.get.user_messages(user_id);
+
+			if(user_messages.length){
+				user_messages[(!hide)? "remove" : "hide"]();
+			}
+
+			return user_messages;
 		},
 
 		/**
@@ -5263,51 +5415,5 @@ yootil.notifications = (function(){
 	};
 
 	return Notifications;
-
-})();
-
-/**
- * @class yootil.sound
- * @static
- * @deprecated
- *
- * Allows us to play a sound (uses HTML 5 Audio).
- *
- * Set access on the audio files, specifically Access-Control-Allow-Origin.
- *
- * See "<a href="http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea">Access Control Allow Origin - Response Header</a>" for more information about Access-Control.
- */
-
-yootil.sound = (function(){
-
-	return {
-
-		audio_obj: null,
-
-		/**
-		 * Plays a sound.
-		 *
-		 * Browsers in force the origin policy, so make sure you allow access to the sounds.
-		 *
-		 * @param {String} sound The URL to the sound file.
-		 */
-
-		play: function(sound){
-			if(!this.audio_obj){
-				this.create_audio_obj();
-			}
-
-			if(sound){
-				this.audio_obj.attr("src", sound);
-				this.audio_obj.get(0).play();
-			}
-		},
-
-		create_audio_obj: function(){
-			this.audio_obj = $("<audio id='yootil_sound_player' style='display: none'></audio>");
-			this.audio_obj.appendTo($("body"));
-		}
-
-	};
 
 })();

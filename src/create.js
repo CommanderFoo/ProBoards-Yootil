@@ -116,7 +116,7 @@ yootil.create = (function(){
 		 */
 		
 		nav_branch: function(url, text){
-			var branch = $("#nav-tree li:last").clone();
+			var branch = $("#navigation-tree .nav-tree-wrapper #nav-tree li:last").clone();
 
 			if(branch && branch.length){
 				branch.find("a").attr("href", url).find("span").html(text);
@@ -140,7 +140,7 @@ yootil.create = (function(){
 		profile_tab: function(text, page, active){
 			if(yootil.location.profile()){
 				var active_class = (active)? " class='ui-active'" : "";
-				var ul = $("div.show-user div.ui-tabMenu ul");
+				var ul = $("div.show-user div.ui-tabMenu:first ul");
 				
 				if(ul.length){
 					ul.append($("<li" + active_class + "><a href='/user/" + yootil.page.member.id() + "/" + page + "'>" + text + "</a></li>"));
@@ -175,16 +175,21 @@ yootil.create = (function(){
 		 */
 		
 		bbc_button: function(img, func){
-			$(".controls").find(".bbcode-editor, .visual-editor").ready(function(){
+			$(document).ready(function(){
 				var li = $("<li>").addClass("button").append($(img));
 
 				if(func){
 					li.click(func);
 				}
 
-				$(".controls").find(".bbcode-editor, .visual-editor").find(".group:last ul:last").append(li);
+				var controls = $(".editor .ui-wysiwyg .controls");
+				var ul = controls.find(".bbcode-editor, .visual-editor").find(".group:last ul:last");
+
+				if(controls.length && ul.length){
+					ul.append(li);
+				}
 			});
-			
+
 			return this;
 		},
 
@@ -224,7 +229,7 @@ yootil.create = (function(){
 			content = content || "";
 
 			var tab = $("<li id='menu-item-" + id + "'><a href='#'>" + tab_title + "</a></li>");
-			var wysiwyg_tabs = $("ul.wysiwyg-tabs").append(tab);
+			var wysiwyg_tabs = $(".editor ul.wysiwyg-tabs").append(tab);
 			var tab_content = $("<div id='" + id + "'>" + content + "</div>");
 
 			if(typeof css == "undefined"){
@@ -238,7 +243,7 @@ yootil.create = (function(){
 				tab_content.css(css);
 			}
 
-			tab_content.hide().insertBefore($("ul.wysiwyg-tabs"));
+			tab_content.hide().insertBefore($(".editor ul.wysiwyg-tabs"));
 
 			wysiwyg_tabs.find("li").click(function(e){
 				var active = $(this);
@@ -252,7 +257,7 @@ yootil.create = (function(){
 					var id = $(this).attr("id");
 
 					if(id.match(/bbcode|visual/i)){
-						$(".ui-wysiwyg .editors").hide();
+						$(".editor .ui-wysiwyg .editors").hide();
 					} else {
 						if(active.attr("id") == id){
 							return;
@@ -286,7 +291,7 @@ yootil.create = (function(){
 				}
 
 				if(id.match(/bbcode|visual/i)){
-					$(".ui-wysiwyg .editors").show();
+					$(".editor .ui-wysiwyg .editors").show();
 				} else if($(selector).length){
 					if(events && events.show){
 						if(events.context){
