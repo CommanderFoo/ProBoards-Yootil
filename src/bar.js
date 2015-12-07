@@ -54,7 +54,17 @@ yootil.bar = (function(){
 			$(function(){
 				if(self.has_bar()){
 					if(link && img){
-						var item = $("<a href='" + link + "' style='margin-top: 3px; display: inline-block;'><img src='" + img + "' style='padding: 0px 3px;' alt='" + alt + "' title='" + alt + "' /></a>");
+						var line_break = "";
+
+						if(yootil.settings.bar_position == 7 || yootil.settings.bar_position == 8){
+							line_break = "<br />";
+						}
+
+						var item = $("<a href='" + link + "'><img src='" + img + "' alt='" + alt + "' title='" + alt + "' />" + line_break + "</a>");
+
+						if(line_break.length){
+							item.addClass("yootil-bar-item-block");
+						}
 
 						if(id && id.toString().length){
 							self._items["_" + id.toString()] = item;
@@ -68,7 +78,13 @@ yootil.bar = (function(){
 
 						self._total_items ++;
 						self._bar.find("#yootil-bar").append(item);
-						self.show_bar();
+
+						self.reposition_top();
+						self.reposition_left();
+					}
+
+					if(self._bar.find("#yootil-bar a").length > 0){
+						self._bar.show();
 					}
 				}
 			});
@@ -93,6 +109,9 @@ yootil.bar = (function(){
 
 				if(this._bar.find("#yootil-bar a").length == 0){
 					this._bar.css("display", "none");
+				} else {
+					this.reposition_left();
+					this.reposition_top();
 				}
 			}
 
@@ -143,23 +162,6 @@ yootil.bar = (function(){
 			return false;
 		},
 
-		show_bar: function(){
-			if(this._bar.find("#yootil-bar a").length > 0){
-				var display = yootil.storage.get("yootil_bar", false);
-
-				if(display){
-					if(display.toString() == "1" || display.toString().length == 0){
-						this._bar.find("#yootil-bar").css("display", "inline-block");
-					} else {
-						this._bar.find("> img").attr("src", yootil.images.collapse).attr("alt", ">");
-						this._bar.find("#yootil-bar").css("display", "none");
-					}
-				}
-
-				this._bar.css("display", "");
-			}
-		},
-
 		/**
 		 * Checks to see if the bar is enabled.
 		 *
@@ -171,75 +173,124 @@ yootil.bar = (function(){
 		 */
 
 		is_enabled: function(){
-			if(yootil.settings && yootil.settings.bar_enabled && yootil.settings.bar_enabled == 0){
-				return false;
+			if(yootil.settings.bar_enabled){
+				return true;
 			}
 
-			return true;
+			return false;
+		},
+
+		reposition_left: function(){
+			var position = yootil.settings.bar_position;
+
+			if(position == 2 || position == 5){
+				this._bar.css("left", (($(window).width() / 2) - (this._bar.width() / 2)));
+			}
+		},
+
+		reposition_top: function(){
+			var position = yootil.settings.bar_position;
+
+			if(position == 7 || position == 8){
+				this._bar.css("top", (($(window).height() / 2) - (this._bar.height() / 2)));
+			}
+		},
+
+		get_bar_settings: function(){
+			var position = yootil.settings.bar_position;
+			var bar_settings = {
+
+				position: "yootil-bar-bottom-left",
+				setting: position,
+				custom: null
+
+			};
+
+			switch(position){
+
+				case 1 :
+					bar_settings.position = "yootil-bar-top-left";
+					break;
+
+				case 2 :
+					bar_settings.position = "yootil-bar-top-center";
+					bar_settings.custom = {
+
+						left: $(window).width() / 2
+
+					}
+
+					break;
+
+				case 3 :
+					bar_settings.position = "yootil-bar-top-right";
+					break;
+
+				case 4 :
+					bar_settings.position = "yootil-bar-bottom-left";
+					break;
+
+				case 5 :
+					bar_settings.position = "yootil-bar-bottom-center";
+					bar_settings.custom = {
+
+						left: $(window).width() / 2
+
+					}
+
+					break;
+
+				case 6 :
+					bar_settings.position = "yootil-bar-bottom-right";
+					break;
+
+				case 7 :
+					bar_settings.position = "yootil-bar-left-middle";
+					bar_settings.custom = {
+
+						top: $(window).height() / 2
+
+					}
+
+					break;
+
+				case 8 :
+					bar_settings.position = "yootil-bar-right-middle";
+					bar_settings.custom = {
+
+						top: $(window).height() / 2
+
+					}
+
+					break;
+
+			}
+
+			return bar_settings;
 		}
 
 	};
 
-	$(function(){
-		if(!yootil.user.logged_in() || !bar.is_enabled()){
-			return;
-		}
+	if(yootil.user.logged_in() || bar.is_enabled()){
+		$(function(){
+			var bar_settings = yootil.bar.get_bar_settings();
+			var plugin_bar = $("<div id='yootil-bar-wrapper'><div id='yootil-bar'></div></div>").addClass(bar_settings.position);
 
-		var html_built = false;
-		var pb_bar = $("div#pbn-bar-wrapper");
-
-		// If it doesn't exist, manually create it.
-
-		if(!pb_bar.length){
-			html_built = true;
-			pb_bar = $('<div style="position: fixed; right: inherit; bottom: 0px; left: 0px; height: 22px; *height: 23px; display: none; text-align: right; z-index: 20;" id="yootil-bar-wrapper"><img style="display: inline-block; float: left;" alt="<" src="' + yootil.images.expand + '"><div style="display: inline-block; float: left; height: 23px; background-color: #F0F0F0; border-width: 1px 1px 0px 0px; border-style: solid; border-color: #B0B0B0;" id="yootil-bar"></div></div>');
-		}
-
-		if(pb_bar.length == 1){
-			if(html_built){
-				plugin_bar = pb_bar;
-			} else {
-				var plugin_bar = pb_bar.clone();
-
-				plugin_bar.attr("id", "yootil-bar-wrapper");
-				plugin_bar.css({
-
-					right: "inherit",
-					left: "0px",
-					display: "none"
-
-				});
-
-				plugin_bar.find("img:first").css("float", "left").attr("src", yootil.images.expand).attr("alt", "<");
-
-				plugin_bar.find("div#pbn-bar").css({
-
-					width: "",
-					"float": "left",
-					"border-width": "1px 1px 0px 0px"
-
-				}).attr("id", "yootil-bar").html("");
+			if(bar_settings.custom){
+				plugin_bar.css(bar_settings.custom);
 			}
 
-			plugin_bar.find("> img").click(function(){
-				var yootil_bar = $("#yootil-bar");
+			// If the PB bar exists, lets move it above it
 
-				yootil_bar.toggle();
-
-				if(yootil_bar.is(":visible")){
-					yootil_bar.css("display", "inline-block");
-					$(this).attr("src", yootil.images.expand).attr("alt", "<");
-				} else {
-					$(this).attr("src", yootil.images.collapse).attr("alt", ">");
+			if(bar_settings.setting == 6){
+				if($("#pbn-bar-wrapper").length){
+					plugin_bar.addClass("yootil-bar-offset");
 				}
-
-				yootil.storage.set("yootil_bar", ((yootil_bar.is(":visible"))? "1" : "0"), false, true);
-			});
+			}
 
 			$("body").append(plugin_bar);
-		}
-
-	});
+		});
+	};
 
     return bar;
 

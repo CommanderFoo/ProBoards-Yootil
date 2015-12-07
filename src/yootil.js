@@ -16,7 +16,12 @@ yootil = (function(){
 
 		VERSION: "{VER}",
 
-		settings: {},
+		settings: {
+
+			bar_enabled: 1,
+			bar_position: 4
+
+		},
 
 		images: {},
 
@@ -202,6 +207,8 @@ yootil = (function(){
 
 			if(settings){
 				this.settings = settings;
+				this.settings.bar_enabled = !! ~~ ((settings.bar_enabled)? settings.bar_enabled : true);
+				this.settings.bar_position = ~~ ((settings.bar_position)? settings.bar_position : 4);
 			}
 
 			if(plugin.images){
