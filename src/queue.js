@@ -77,7 +77,7 @@ yootil.queue = (function(){
 			}
 
 			if(!this.queue.length){
-				clearInterval(this.interval);
+				this.stop();
 			}
 
 			return this;

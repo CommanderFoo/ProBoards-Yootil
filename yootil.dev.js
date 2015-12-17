@@ -1,5 +1,5 @@
 /**
-* Yootil 1.1.0
+* Yootil 1.1.1
 *
 * http://yootil.pixeldepth.net
 */
@@ -20,7 +20,7 @@ yootil = (function(){
 
 	return {
 
-		VERSION: "1.1.0",
+		VERSION: "1.1.1",
 
 		settings: {
 
@@ -399,7 +399,7 @@ yootil.queue = (function(){
 			}
 
 			if(!this.queue.length){
-				clearInterval(this.interval);
+				this.stop();
 			}
 
 			return this;
