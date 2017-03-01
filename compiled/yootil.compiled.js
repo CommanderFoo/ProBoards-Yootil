@@ -794,73 +794,83 @@ yootil.create = function () {
 		/**
    * Creates ProBoards div containers.
    *
-   * Very basic example:
+   * Example:
    *
-   *     let $container = yootil.create.container("My Title", "My Content");
+   *     let $container = yootil.create.container({
+   *
+   *        title: "My Title",
+   *        content: "My Content",
+   *        h2: true
+   *
+   *     });
    *
    *     $("#content").prepend($container);
    *
-   * This example would make titles and content safe:
+   * @param {String} $0.title Title of the container.
+   * @param {Boolean} [$0.h2] If set to true, it will not wrap the title with an h2 tag.
+   * @param {String} $0.content Content of the container
    *
-   *     let $container = yootil.create.container("My <em>Title</em>", "My <strong>Content</strong>", true);
-   *
-   *     $("#content").prepend($container);
-   *
-   * @param {String} title The container title.
-   * @param {String} content The container content.
-   * @param {Boolean} [no_h2] If set to true, it will not wrap the title with an h2 tag.
-   * @param {Boolean} [html_back] If true, returned content will be an html string.
-   * @return {String|Object} Depends on what html_back is set too, default is jquery object.
+   * @return {Object} jQuery
    */
 
 		value: function container() {
-			var title = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var content = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-			var no_h2 = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-			var html_back = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+			var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var _ref$title = _ref.title;
+			var title = _ref$title === undefined ? "" : _ref$title;
+			var _ref$h = _ref.h2;
+			var h2 = _ref$h === undefined ? true : _ref$h;
+			var _ref$content = _ref.content;
+			var content = _ref$content === undefined ? "" : _ref$content;
 
 			var html = "";
 
-			title = !no_h2 ? title : "<h2>" + title + "</h2>";
+			title = !h2 ? title : "<h2>" + title + "</h2>";
 
 			html += "<div class=\"container\">";
 			html += "<div class=\"title-bar\">" + title + "</div>";
 			html += "<div class=\"content pad-all\">" + content + "</div>";
 			html += "</div>";
 
-			if (html_back) {
-				return $(html).wrap("<span/>").parent().html();
-			} else {
-				return $(html);
-			}
+			return $(html);
 		}
 
 		/**
    * Quickly create a blank page that matches a certain URL.
    *
-   *     yootil.create.page("shop", "Shop");
+   *     yootil.create.page({pattern: "shop", title: "Shop"});
    *
-   * An example adding a container to the page as well:
+   * An example adding a container to the page:
    *
-   *     yootil.create.page("shop", "Shop").container("The Shop", "Welcome to the Shop").appendTo("#content");
+   *     yootil.create.page({pattern: "shop", title: "Shop"}).container("The Shop", "Welcome to the Shop").appendTo("#content");
    *
-   * @param {String|Object} locate This will get matched against the location.href value, can be a string or RegExp object.
-   * @param {String} [document_title] Gets Added onto the current document title.
-   * @param {Boolean} [hide_content] By default the children of #content gets hidden, you can override this.
+   * @param {String|Object} $0.pattern This will get matched against the location.href value, can be a string or RegExp object.
+   * @param {String} [$0.title] Gets Added onto the current document title.
+   * @param {Boolean} [$0.hide_content] By default the children of #content gets hidden, you can override this.
    * @chainable
    */
 
 	}, {
 		key: "page",
-		value: function page(locate) {
-			var document_title = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-			var hide_content = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+		value: function page() {
+			var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var reg = locate.constructor == RegExp ? locate : new RegExp("\/" + locate, "i");
+			var _ref2$pattern = _ref2.pattern;
+			var pattern = _ref2$pattern === undefined ? null : _ref2$pattern;
+			var _ref2$title = _ref2.title;
+			var title = _ref2$title === undefined ? "" : _ref2$title;
+			var _ref2$hide_content = _ref2.hide_content;
+			var hide_content = _ref2$hide_content === undefined ? true : _ref2$hide_content;
 
-			if (locate && location.href.match(reg)) {
-				if (typeof document_title != "undefined" && document_title.length) {
-					document.title += " - " + document_title;
+			if (!pattern) {
+				return this;
+			}
+
+			var reg = pattern.constructor == RegExp ? pattern : new RegExp("\/\?" + pattern, "i");
+
+			if (pattern && location.href.match(reg)) {
+				if (typeof title != "undefined" && title.length) {
+					document.title += " - " + title;
 				}
 
 				if (typeof hide_content == "undefined" || hide_content) {
@@ -874,18 +884,22 @@ yootil.create = function () {
 		/**
    * Extend the nav tree easily.
    *
-   *     yootil.create.nav_branch("/shop/", "Shop");
+   *     yootil.create.nav_branch({url: "/shop/", text: "Shop"});
    *
-   * @param {String} url URL of the branch.
-   * @param {String} text Text of the branch.
+   * @param {String} $0.url URL of the branch.
+   * @param {String} $0.text Text of the branch.
    * @return {Object} Branch jQuery wrapped.
    */
 
 	}, {
 		key: "nav_branch",
 		value: function nav_branch() {
-			var url = arguments.length <= 0 || arguments[0] === undefined ? "/" : arguments[0];
-			var text = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
+			var _ref3 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var _ref3$url = _ref3.url;
+			var url = _ref3$url === undefined ? "/" : _ref3$url;
+			var _ref3$text = _ref3.text;
+			var text = _ref3$text === undefined ? "" : _ref3$text;
 
 			var $branch = yootil.get.last_nav_branch().clone();
 
@@ -900,20 +914,25 @@ yootil.create = function () {
 		/**
    * Create a new tab on the profile
    *
-   *     yootil.create.profile_tab("Test", "test");
-   *
-   * @param {String} text Text of the branch.
-   * @param {String} page URL of the branch.
-   * @param {Boolean} [active] Active page or not.
+   *     yootil.create.profile_tab({text: "Test", page: "test", active: false});
+   *	 *
+   * @param {String} $0.text Text of the branch.
+   * @param {String} $0.page URL of the branch.
+   * @param {Boolean} [$0.active] Active page or not.
    * @chainable
    */
 
 	}, {
 		key: "profile_tab",
 		value: function profile_tab() {
-			var text = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var page = arguments.length <= 1 || arguments[1] === undefined ? "/" : arguments[1];
-			var active = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+			var _ref4 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var _ref4$text = _ref4.text;
+			var text = _ref4$text === undefined ? "" : _ref4$text;
+			var _ref4$page = _ref4.page;
+			var page = _ref4$page === undefined ? "/" : _ref4$page;
+			var _ref4$active = _ref4.active;
+			var active = _ref4$active === undefined ? false : _ref4$active;
 
 			if (yootil.location.profile()) {
 				var active_class = active ? " class='ui-active'" : "";
@@ -928,7 +947,7 @@ yootil.create = function () {
 		}
 
 		/**
-   * Creates a profile content box.
+   * Creates a profile content box.  Doesn't add to the DOM.
    *
    *     yootil.create.profile_content_box();
    *
@@ -951,16 +970,20 @@ yootil.create = function () {
    *
    * Note:  Due to the WYSIWYG being dynamically created, this can fail.
    *
-   * @param {Object} img The image element to append.
-   * @param {Function} [func] Adds an onlick event.
+   * @param {Object} $0.img The image element to append.
+   * @param {Function} [$0.func] Adds an onlick event.
    * @chainable
    */
 
 	}, {
 		key: "bbc_button",
 		value: function bbc_button() {
-			var img = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var func = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var _ref5 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var _ref5$img = _ref5.img;
+			var img = _ref5$img === undefined ? "" : _ref5$img;
+			var _ref5$func = _ref5.func;
+			var func = _ref5$func === undefined ? null : _ref5$func;
 
 			$(function () {
 				var $li = $("<li>").addClass("button").append($(img));
@@ -999,30 +1022,37 @@ yootil.create = function () {
    *
    *     );
    *
-   * @param {String} tab_title The title for the tab, this can contain HTML.
-   * @param {String} content The content that will be shown when the tab is clicked.  HTML can be used.
-   * @param {String} [id] The id for this tab.  If not specified a random one will be created.
-   * @param {Object} [css] You can apply an object of css values that jQuery will apply, or defaults will be used.
-   * @param {Object} [events] There are 2 events, show and hide.
-   * @param {Function} [events.show] When the tab is clicked, this event will be called.  Tab and content are passed.
-   * @param {Function} [events.hide] When another tab is click, this event will be called.  Tab and content are passed.
-   * @param {Function} [events.context] Set the context of the functions.
+   * @param {String} $0.title The title for the tab, this can contain HTML.
+   * @param {String} $0.content The content that will be shown when the tab is clicked.  HTML can be used.
+   * @param {String} [$0.id] The id for this tab.  If not specified a random one will be created.
+   * @param {Object} [$0.css] You can apply an object of css values that jQuery will apply, or defaults will be used.
+   * @param {Object} [$0.events] There are 2 events, show and hide.
+   * @param {Function} [$0.events.show] When the tab is clicked, this event will be called.  Tab and content are passed.
+   * @param {Function} [$0.events.hide] When another tab is click, this event will be called.  Tab and content are passed.
+   * @param {Function} [$0.events.context] Set the context of the functions.
    * @return {Object} The tab content div is returned wrapped with jQuery.
    */
 
 	}, {
-		key: "ubbc_tab",
-		value: function ubbc_tab() {
-			var tab_title = arguments.length <= 0 || arguments[0] === undefined ? "My Tab" : arguments[0];
-			var content = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-			var id = arguments.length <= 2 || arguments[2] === undefined ? "" : arguments[2];
-			var css = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-			var events = arguments.length <= 4 || arguments[4] === undefined ? {} : arguments[4];
+		key: "bbc_tab",
+		value: function bbc_tab() {
+			var _ref6 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			id = id || yootil.ts();
+			var _ref6$title = _ref6.title;
+			var title = _ref6$title === undefined ? "My Tab" : _ref6$title;
+			var _ref6$content = _ref6.content;
+			var content = _ref6$content === undefined ? "" : _ref6$content;
+			var _ref6$id = _ref6.id;
+			var id = _ref6$id === undefined ? "" : _ref6$id;
+			var _ref6$css = _ref6.css;
+			var css = _ref6$css === undefined ? null : _ref6$css;
+			var _ref6$events = _ref6.events;
+			var events = _ref6$events === undefined ? {} : _ref6$events;
+
+			id = id || yootil.timestamp();
 
 			var $wysiwyg_tabs = $(".editor ul.wysiwyg-tabs");
-			var $tab = $("<li id='menu-item-" + id + "'><a href='#'>" + tab_title + "</a></li>");
+			var $tab = $("<li id='menu-item-" + id + "'><a href='#'>" + title + "</a></li>");
 			var $tab_content = $("<div id='" + id + "'>" + content + "</div>");
 
 			$wysiwyg_tabs.append($tab);
