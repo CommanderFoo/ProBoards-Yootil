@@ -370,26 +370,36 @@ var yootil = function () {
  *
  *     let last_time = 0;
  *
- *     new yootil.animation((animator, start_time, current_time, duration, anim_id) => {
- *	       if(current_time >= (last_time + 2000)){
- *      		console.log("hello world!"); // will show every 2 seconds
- *		        last_time = current_time;
- *	       }
- *     }, 20000);
+ *     new yootil.animation({
  *
- * @param {Function} [callback] The function to be called on each frame.
- * @param {Number} [duration] The length of the animation.
- * @param {Boolean} [start] Pass true to auto start.
+ *     	   callback: (animator, start_time, current_time, duration, anim_id) => {
+ *		       if(current_time >= (last_time + 2000)){
+ *  	    		console.log("hello world!"); // will show every 2 seconds
+ *			        last_time = current_time;
+ *	       		}
+ *	       },
+ *
+ *         duration: 20000
+ *
+ *     }).start();
+ *
+ * @param {Function} [$0.callback] The function to be called on each frame.
+ * @param {Number} [$0.duration] The length of the animation.
+ * @param {Boolean} [$0.start] Pass true to auto start.
  */
 
 yootil.animation = function () {
 	function _class() {
-		var callback = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-
 		var _this = this;
 
-		var duration = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
-		var start = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+		var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+		var _ref$callback = _ref.callback;
+		var callback = _ref$callback === undefined ? null : _ref$callback;
+		var _ref$duration = _ref.duration;
+		var duration = _ref$duration === undefined ? 0 : _ref$duration;
+		var _ref$start = _ref.start;
+		var start = _ref$start === undefined ? false : _ref$start;
 
 		_classCallCheck(this, _class);
 
@@ -814,14 +824,14 @@ yootil.create = function () {
    */
 
 		value: function container() {
-			var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref$title = _ref.title;
-			var title = _ref$title === undefined ? "" : _ref$title;
-			var _ref$h = _ref.h2;
-			var h2 = _ref$h === undefined ? true : _ref$h;
-			var _ref$content = _ref.content;
-			var content = _ref$content === undefined ? "" : _ref$content;
+			var _ref2$title = _ref2.title;
+			var title = _ref2$title === undefined ? "" : _ref2$title;
+			var _ref2$h = _ref2.h2;
+			var h2 = _ref2$h === undefined ? true : _ref2$h;
+			var _ref2$content = _ref2.content;
+			var content = _ref2$content === undefined ? "" : _ref2$content;
 
 			var html = "";
 
@@ -853,14 +863,14 @@ yootil.create = function () {
 	}, {
 		key: "page",
 		value: function page() {
-			var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref3 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref2$pattern = _ref2.pattern;
-			var pattern = _ref2$pattern === undefined ? null : _ref2$pattern;
-			var _ref2$title = _ref2.title;
-			var title = _ref2$title === undefined ? "" : _ref2$title;
-			var _ref2$hide_content = _ref2.hide_content;
-			var hide_content = _ref2$hide_content === undefined ? true : _ref2$hide_content;
+			var _ref3$pattern = _ref3.pattern;
+			var pattern = _ref3$pattern === undefined ? null : _ref3$pattern;
+			var _ref3$title = _ref3.title;
+			var title = _ref3$title === undefined ? "" : _ref3$title;
+			var _ref3$hide_content = _ref3.hide_content;
+			var hide_content = _ref3$hide_content === undefined ? true : _ref3$hide_content;
 
 			if (!pattern) {
 				return this;
@@ -894,12 +904,12 @@ yootil.create = function () {
 	}, {
 		key: "nav_branch",
 		value: function nav_branch() {
-			var _ref3 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref4 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref3$url = _ref3.url;
-			var url = _ref3$url === undefined ? "/" : _ref3$url;
-			var _ref3$text = _ref3.text;
-			var text = _ref3$text === undefined ? "" : _ref3$text;
+			var _ref4$url = _ref4.url;
+			var url = _ref4$url === undefined ? "/" : _ref4$url;
+			var _ref4$text = _ref4.text;
+			var text = _ref4$text === undefined ? "" : _ref4$text;
 
 			var $branch = yootil.get.last_nav_branch().clone();
 
@@ -925,14 +935,14 @@ yootil.create = function () {
 	}, {
 		key: "profile_tab",
 		value: function profile_tab() {
-			var _ref4 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref5 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref4$text = _ref4.text;
-			var text = _ref4$text === undefined ? "" : _ref4$text;
-			var _ref4$page = _ref4.page;
-			var page = _ref4$page === undefined ? "/" : _ref4$page;
-			var _ref4$active = _ref4.active;
-			var active = _ref4$active === undefined ? false : _ref4$active;
+			var _ref5$text = _ref5.text;
+			var text = _ref5$text === undefined ? "" : _ref5$text;
+			var _ref5$page = _ref5.page;
+			var page = _ref5$page === undefined ? "/" : _ref5$page;
+			var _ref5$active = _ref5.active;
+			var active = _ref5$active === undefined ? false : _ref5$active;
 
 			if (yootil.location.profile()) {
 				var active_class = active ? " class='ui-active'" : "";
@@ -978,12 +988,12 @@ yootil.create = function () {
 	}, {
 		key: "bbc_button",
 		value: function bbc_button() {
-			var _ref5 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref6 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref5$img = _ref5.img;
-			var img = _ref5$img === undefined ? "" : _ref5$img;
-			var _ref5$func = _ref5.func;
-			var func = _ref5$func === undefined ? null : _ref5$func;
+			var _ref6$img = _ref6.img;
+			var img = _ref6$img === undefined ? "" : _ref6$img;
+			var _ref6$func = _ref6.func;
+			var func = _ref6$func === undefined ? null : _ref6$func;
 
 			$(function () {
 				var $li = $("<li>").addClass("button").append($(img));
@@ -1036,18 +1046,18 @@ yootil.create = function () {
 	}, {
 		key: "bbc_tab",
 		value: function bbc_tab() {
-			var _ref6 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref7 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref6$title = _ref6.title;
-			var title = _ref6$title === undefined ? "My Tab" : _ref6$title;
-			var _ref6$content = _ref6.content;
-			var content = _ref6$content === undefined ? "" : _ref6$content;
-			var _ref6$id = _ref6.id;
-			var id = _ref6$id === undefined ? "" : _ref6$id;
-			var _ref6$css = _ref6.css;
-			var css = _ref6$css === undefined ? null : _ref6$css;
-			var _ref6$events = _ref6.events;
-			var events = _ref6$events === undefined ? {} : _ref6$events;
+			var _ref7$title = _ref7.title;
+			var title = _ref7$title === undefined ? "My Tab" : _ref7$title;
+			var _ref7$content = _ref7.content;
+			var content = _ref7$content === undefined ? "" : _ref7$content;
+			var _ref7$id = _ref7.id;
+			var id = _ref7$id === undefined ? "" : _ref7$id;
+			var _ref7$css = _ref7.css;
+			var css = _ref7$css === undefined ? null : _ref7$css;
+			var _ref7$events = _ref7.events;
+			var events = _ref7$events === undefined ? {} : _ref7$events;
 
 			id = id || yootil.timestamp();
 

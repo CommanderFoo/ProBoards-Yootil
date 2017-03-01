@@ -326,21 +326,27 @@ class yootil {
  *
  *     let last_time = 0;
  *
- *     new yootil.animation((animator, start_time, current_time, duration, anim_id) => {
- *	       if(current_time >= (last_time + 2000)){
- *      		console.log("hello world!"); // will show every 2 seconds
- *		        last_time = current_time;
- *	       }
- *     }, 20000);
+ *     new yootil.animation({
  *
- * @param {Function} [callback] The function to be called on each frame.
- * @param {Number} [duration] The length of the animation.
- * @param {Boolean} [start] Pass true to auto start.
+ *     	   callback: (animator, start_time, current_time, duration, anim_id) => {
+ *		       if(current_time >= (last_time + 2000)){
+ *  	    		console.log("hello world!"); // will show every 2 seconds
+ *			        last_time = current_time;
+ *	       		}
+ *	       },
+ *
+ *         duration: 20000
+ *
+ *     }).start();
+ *
+ * @param {Function} [$0.callback] The function to be called on each frame.
+ * @param {Number} [$0.duration] The length of the animation.
+ * @param {Boolean} [$0.start] Pass true to auto start.
  */
 
 yootil.animation = class {
 
-	constructor(callback = null, duration = 0, start = false){
+	constructor({callback = null, duration = 0, start = false} = {}){
 		if(!callback){
 			console.error("yootil.animation constructor: No callback passed");
 		}
@@ -362,7 +368,7 @@ yootil.animation = class {
 
 			this._callback(this, this._time_start, current_time, this._duration, this._anim_id);
 			this._anim_id = requestAnimationFrame(this._anim_func);
-		}
+		};
 
 		if(this._start){
 			this.start();
