@@ -2,6 +2,12 @@
  * @class yootil.clock
  * @constructor
  *
+ * let clock = new yootil.clock();
+ *
+ * clock.start();
+ * clock.stop();
+ * console.log(clock.elapsed());
+ *
  * @param {Boolean} [start] If true, then the clock will start right away.
  * @param {Boolean} [seconds] If true, then "elapsed" will return seconds.
  */
