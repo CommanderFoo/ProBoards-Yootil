@@ -4,22 +4,28 @@
  *
  * Helper methods for plugin extensions.
  *
- *     yootil.extension.create("monetary", "test_money", class {
+ *     yootil.extension.create({
  *
- *         static init(){
- *             console.log("init");
- *         }
+ *         plugin: "monetary",
+ *         id: "test_money",
+ *         handlers: {
  *
- *         static pre_init(){
- *	           console.log("pre");
- *         }
+ *              init(){
+ *                  console.log("init");
+ *              }
  *
- *         static post_init(){
- *	           console.log("post");
- *         }
+ *              pre_init(){
+ *     	           console.log("pre");
+ *              }
  *
- *         static ready(){
- *	           console.log("ready");
+ *              post_init(){
+ *	                console.log("post");
+ *              }
+ *
+ *              ready(){
+ *	                console.log("ready");
+ *              }
+ *              
  *         }
  *
  *     });
@@ -44,23 +50,23 @@ yootil.extension = (class {
 	 * Creates an extension for an existing plugin.
 	 *
 	 * @param {String} plugin The name of the plugin this extension is for.
-	 * @param {String} ext_key The name of your extension plugin.
-	 * @param {Object} klass The klass that contains methods to execute.
+	 * @param {String} id The name of your extension plugin.
+	 * @param {Object} handlers The handlers will be executed.
 	 */
 
-	static create(plugin = "", ext_key = "", klass = null){
-		if(!plugin || !key || !klass){
+	static create({plugin = "", id = "", handlers = null} = {}){
+		if(!plugin || !key || !handlers){
 			return;
 		}
 
-		let plugin_name = plugin.toUpperCase() + "_EXTENSIONS";
-		let ext_name = ext_key.toUpperCase();
+		let plugin_name = plugin.toString().toUpperCase() + "_EXTENSIONS";
+		let id_name = id.toString().toUpperCase();
 
 		if(!this._plugin_extensions.has(plugin_name)){
 			this._plugin_extensions.set(plugin_name, new Map());
 		}
 
-		this._plugin_extensions.get(plugin_name).set(ext_name, klass);
+		this._plugin_extensions.get(plugin_name).set(id_name, handlers);
 
 		return this;
 	}
