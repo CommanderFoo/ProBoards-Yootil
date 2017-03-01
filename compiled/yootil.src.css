@@ -1,0 +1,178 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2017 pixeldepth.net - http://support.proboards.com/user/2671
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+div#yootil-bar-wrapper {
+
+    position: fixed;
+    text-align: right;
+    z-index: 20;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-left {
+
+    top: 0px;
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-right {
+
+    top: 0px;
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-left {
+
+    bottom: 0px;
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right {
+
+    bottom: 0px;
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-center {
+
+    bottom: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-center {
+
+    top: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-left-middle {
+
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-right-middle {
+
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar {
+
+    background-color: #F0F0F0;
+    border-style: solid;
+    border-color: #B0B0B0;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-left #yootil-bar {
+
+
+    border-width: 0px 1px 1px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-right #yootil-bar {
+
+
+    border-width: 0px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-left #yootil-bar {
+
+
+    border-width: 1px 1px 0px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right #yootil-bar {
+
+
+    border-width: 1px 0px 0px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-center #yootil-bar {
+
+
+    border-width: 1px 1px 0px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-center #yootil-bar {
+
+
+    border-width: 0px 1px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-left-middle #yootil-bar {
+
+
+    border-width: 1px 1px 1px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-right-middle #yootil-bar {
+
+
+    border-width: 1px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right.yootil-bar-offset {
+
+    bottom: 30px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right.yootil-bar-offset #yootil-bar {
+
+    border-width: 1px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a {
+
+    margin-top: 3px;
+    display: inline-block;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a img {
+
+    padding: 0px 3px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a.yootil-bar-item-block  {
+
+    display: block;
+
+}

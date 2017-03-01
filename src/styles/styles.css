@@ -1,0 +1,154 @@
+div#yootil-bar-wrapper {
+
+    position: fixed;
+    text-align: right;
+    z-index: 20;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-left {
+
+    top: 0px;
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-right {
+
+    top: 0px;
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-left {
+
+    bottom: 0px;
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right {
+
+    bottom: 0px;
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-center {
+
+    bottom: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-center {
+
+    top: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-left-middle {
+
+    left: 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-right-middle {
+
+    right: 0px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar {
+
+    background-color: #F0F0F0;
+    border-style: solid;
+    border-color: #B0B0B0;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-left #yootil-bar {
+
+
+    border-width: 0px 1px 1px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-right #yootil-bar {
+
+
+    border-width: 0px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-left #yootil-bar {
+
+
+    border-width: 1px 1px 0px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right #yootil-bar {
+
+
+    border-width: 1px 0px 0px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-center #yootil-bar {
+
+
+    border-width: 1px 1px 0px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-top-center #yootil-bar {
+
+
+    border-width: 0px 1px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-left-middle #yootil-bar {
+
+
+    border-width: 1px 1px 1px 0px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-right-middle #yootil-bar {
+
+
+    border-width: 1px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right.yootil-bar-offset {
+
+    bottom: 30px;
+
+}
+
+div#yootil-bar-wrapper.yootil-bar-bottom-right.yootil-bar-offset #yootil-bar {
+
+    border-width: 1px 0px 1px 1px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a {
+
+    margin-top: 3px;
+    display: inline-block;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a img {
+
+    padding: 0px 3px;
+
+}
+
+div#yootil-bar-wrapper #yootil-bar a.yootil-bar-item-block  {
+
+    display: block;
+
+}
