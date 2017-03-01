@@ -485,30 +485,30 @@ yootil.bar = class {
 	/**
 	 * Add an item to the Yootil Bar.
 	 *
-	 *     yootil.bar.add("http://proboards.com", "http://example.com/someimage.png", "Hello World");
+	 *     yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
 	 *
-	 * @param {String} link URL for the item.
-	 * @param {String} img URL for the image.
-	 * @param {String} [alt] Alt / title for the image.
-	 * @param {String} [key] Pass in a unique key if you wish to have the option to remove it later.
-	 * @param {Function} [func] Pass function to be executed when clicked on.
-	 * @param {Object} [context] Context of the function being passed.
+	 * @param {String} $0.link URL for the item.
+	 * @param {String} $0.img URL for the image.
+	 * @param {String} [$0.alt] Alt / title for the image.
+	 * @param {String} [$0.key] Pass in a unique key if you wish to have the option to remove it later.
+	 * @param {Function} [$0.func] Pass function to be executed when clicked on.
+	 * @param {Object} [$0.context] Context of the function being passed.
 	 * @chainable
 	 */
 
-	static add(link = "", img = "", alt = "", key = "", func = null, context = null){
+	static add({url = "", img = "", alt = "", key = "", func = null, context = null} = {}){
 		if(!this._settings.enabled){
 			return;
 		}
 
-		if(link && img){
+		if(url && img){
 			let line_break = "";
 
 			if(this._settings.position == 7 || this._settings.position == 8){
 				line_break = "<br />";
 			}
 
-			let $item = $("<a href='" + link + "'><img src='" + img + "' alt='" + alt + "' title='" + alt + "' />" + line_break + "</a>");
+			let $item = $("<a href='" + url + "'><img src='" + img + "' alt='" + alt + "' title='" + alt + "' />" + line_break + "</a>");
 
 			if(line_break.length){
 				$item.addClass("yootil-bar-item-block");

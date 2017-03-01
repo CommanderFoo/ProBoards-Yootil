@@ -2,7 +2,7 @@
  * @class yootil.sync
  *
  * let my_key = yootil.key("my_key");
- * let sync = new Sync("my_key", my_key.get(yootil.user.id()));
+ * let sync = new Sync({key: "my_key", data: my_key.get(yootil.user.id())});
  *
  * sync.update(my_key.get()); // Called after setting key
  *
@@ -11,7 +11,7 @@
 
 yootil.sync = class {
 
-	constructor(key = "", data = {}, options = null){
+	constructor({key = "", data = {}, options = null} = {}){
 		if(!key){
 			return;
 		}

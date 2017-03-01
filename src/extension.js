@@ -25,7 +25,7 @@
  *              ready(){
  *	                console.log("ready");
  *              }
- *              
+ *
  *         }
  *
  *     });

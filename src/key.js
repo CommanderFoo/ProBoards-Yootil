@@ -1,3 +1,6 @@
+// @TODO: Don't touch this until v6
+// Needs a rewrite??
+
 /**
  * @class yootil.key
  * @static
