@@ -468,12 +468,12 @@ yootil.location = (class {
 	}
 
 	/**
-	 * Are we currently viewing any threads?
+	 * Are we currently viewing any type of thread listing?
 	 * @return {Boolean}
 	 */
 
-	static threads(){
-		return this.recent_threads() || this.ip_threads();
+	static thread_list(){
+		return this.recent_threads() || this.ip_threads() || this.search_results() || this.message_thread();
 	}
 
 	/**

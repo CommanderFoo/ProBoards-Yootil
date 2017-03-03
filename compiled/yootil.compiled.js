@@ -459,6 +459,8 @@ yootil.animation = function () {
 	return _class;
 }();
 
+// This will likely be removed in v6
+
 yootil.bar = function () {
 	function _class2() {
 		_classCallCheck(this, _class2);
@@ -724,6 +726,12 @@ yootil.bar = function () {
 /**
  * @class yootil.clock
  * @constructor
+ *
+ * let clock = new yootil.clock();
+ *
+ * clock.start();
+ * clock.stop();
+ * console.log(clock.elapsed());
  *
  * @param {Boolean} [start] If true, then the clock will start right away.
  * @param {Boolean} [seconds] If true, then "elapsed" will return seconds.
@@ -1484,22 +1492,28 @@ yootil.event = function () {
  *
  * Helper methods for plugin extensions.
  *
- *     yootil.extension.create("monetary", "test_money", class {
+ *     yootil.extension.create({
  *
- *         static init(){
- *             console.log("init");
- *         }
+ *         plugin: "monetary",
+ *         id: "test_money",
+ *         handlers: {
  *
- *         static pre_init(){
- *	           console.log("pre");
- *         }
+ *              init(){
+ *                  console.log("init");
+ *              }
  *
- *         static post_init(){
- *	           console.log("post");
- *         }
+ *              pre_init(){
+ *     	           console.log("pre");
+ *              }
  *
- *         static ready(){
- *	           console.log("ready");
+ *              post_init(){
+ *	                console.log("post");
+ *              }
+ *
+ *              ready(){
+ *	                console.log("ready");
+ *              }
+ *
  *         }
  *
  *     });
@@ -1529,29 +1543,34 @@ yootil.extension = function () {
    * Creates an extension for an existing plugin.
    *
    * @param {String} plugin The name of the plugin this extension is for.
-   * @param {String} ext_key The name of your extension plugin.
-   * @param {Object} klass The klass that contains methods to execute.
+   * @param {String} id The name of your extension plugin.
+   * @param {Object} handlers The handlers will be executed.
    */
 
 	}, {
 		key: "create",
 		value: function create() {
-			var plugin = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var ext_key = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-			var klass = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+			var _ref9 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			if (!plugin || !key || !klass) {
+			var _ref9$plugin = _ref9.plugin;
+			var plugin = _ref9$plugin === undefined ? "" : _ref9$plugin;
+			var _ref9$id = _ref9.id;
+			var id = _ref9$id === undefined ? "" : _ref9$id;
+			var _ref9$handlers = _ref9.handlers;
+			var handlers = _ref9$handlers === undefined ? null : _ref9$handlers;
+
+			if (!plugin || !key || !handlers) {
 				return;
 			}
 
-			var plugin_name = plugin.toUpperCase() + "_EXTENSIONS";
-			var ext_name = ext_key.toUpperCase();
+			var plugin_name = plugin.toString().toUpperCase() + "_EXTENSIONS";
+			var id_name = id.toString().toUpperCase();
 
 			if (!this._plugin_extensions.has(plugin_name)) {
 				this._plugin_extensions.set(plugin_name, new Map());
 			}
 
-			this._plugin_extensions.get(plugin_name).set(ext_name, klass);
+			this._plugin_extensions.get(plugin_name).set(id_name, handlers);
 
 			return this;
 		}
@@ -2420,6 +2439,9 @@ yootil.get = function () {
 
 	return _class8;
 }();
+
+// @TODO: Don't touch this until v6
+// Needs a rewrite??
 
 /**
  * @class yootil.key
@@ -3973,14 +3995,14 @@ yootil.location = function () {
 		}
 
 		/**
-   * Are we currently viewing any threads?
+   * Are we currently viewing any type of thread listing?
    * @return {Boolean}
    */
 
 	}, {
-		key: "threads",
-		value: function threads() {
-			return this.recent_threads() || this.ip_threads();
+		key: "thread_list",
+		value: function thread_list() {
+			return this.recent_threads() || this.ip_threads() || this.search_results() || this.message_thread();
 		}
 
 		/**
@@ -5034,7 +5056,7 @@ yootil.storage = function () {
  * @class yootil.sync
  *
  * let my_key = yootil.key("my_key");
- * let sync = new Sync("my_key", my_key.get(yootil.user.id()));
+ * let sync = new Sync({key: "my_key", data: my_key.get(yootil.user.id())});
  *
  * sync.update(my_key.get()); // Called after setting key
  *
@@ -5043,12 +5065,16 @@ yootil.storage = function () {
 
 yootil.sync = function () {
 	function _class20() {
-		var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-
 		var _this5 = this;
 
-		var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-		var options = arguments.length <= 2 || arguments[2] === undefined ? null : arguments[2];
+		var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+		var _ref10$key = _ref10.key;
+		var key = _ref10$key === undefined ? "" : _ref10$key;
+		var _ref10$data = _ref10.data;
+		var data = _ref10$data === undefined ? {} : _ref10$data;
+		var _ref10$options = _ref10.options;
+		var options = _ref10$options === undefined ? null : _ref10$options;
 
 		_classCallCheck(this, _class20);
 
