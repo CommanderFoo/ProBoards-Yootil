@@ -5073,8 +5073,8 @@ yootil.sync = function () {
 		var key = _ref10$key === undefined ? "" : _ref10$key;
 		var _ref10$data = _ref10.data;
 		var data = _ref10$data === undefined ? {} : _ref10$data;
-		var _ref10$options = _ref10.options;
-		var options = _ref10$options === undefined ? null : _ref10$options;
+		var _ref10$handler = _ref10.handler;
+		var handler = _ref10$handler === undefined ? {} : _ref10$handler;
 
 		_classCallCheck(this, _class20);
 
@@ -5083,7 +5083,7 @@ yootil.sync = function () {
 		}
 
 		this._trigger_caller = false;
-		this._change = options && typeof options.change != "undefined" ? options.change : this.change;
+		this._change = handler && handler.change ? handler.change : this.change;
 		this._key = key;
 		this._ls_key = key + "_data_sync_" + yootil.user.id();
 
@@ -5111,7 +5111,7 @@ yootil.sync = function () {
 					// If old == new, don't do anything
 
 					if (old_data != new_data) {
-						_this5._change(JSON.parse(new_data), JSON.parse(old_data));
+						_this5._change.bind(handler && handler.change ? handler : _this5, JSON.parse(new_data), JSON.parse(old_data))();
 					}
 				}
 			});

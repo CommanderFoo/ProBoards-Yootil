@@ -11,13 +11,13 @@
 
 yootil.sync = class {
 
-	constructor({key = "", data = {}, options = null} = {}){
+	constructor({key = "", data = {}, handler = {}} = {}){
 		if(!key){
 			return;
 		}
 
 		this._trigger_caller = false;
-		this._change = (options && typeof options.change != "undefined")? options.change : this.change;
+		this._change = (handler && handler.change)? handler.change : this.change;
 		this._key = key;
 		this._ls_key = key + "_data_sync_" + yootil.user.id();
 
@@ -44,7 +44,7 @@ yootil.sync = class {
 				// If old == new, don't do anything
 
 				if(old_data != new_data){
-					this._change(JSON.parse(new_data), JSON.parse(old_data));
+					this._change.bind((handler && handler.change)? handler : this, JSON.parse(new_data), JSON.parse(old_data))();
 				}
 			}
 		}), 100);
