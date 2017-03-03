@@ -39,7 +39,7 @@ class yootil {
 	static init(){
 		this._PLUGIN = "pixeldepth_yootil";
 		this._called = this.timestamp();
-		this._version = "{VER}";
+		this._version = "2.0.0";
 
 		this._notifications_queue = {};
 
