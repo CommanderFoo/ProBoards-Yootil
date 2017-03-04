@@ -23,12 +23,12 @@ yootil.sync = class {
 
 		// Need to set the storage off the bat
 
-		yootil.storage.set(this._key, data, true, true);
+		yootil.storage.set(this._ls_key, data, true, true);
 
 		// Delay adding event (IE issues yet again)
 
 		setTimeout(() => $(window).on("storage", (evt) => {
-			if(evt && evt.originalEvent && evt.originalEvent.key == this._key){
+			if(evt && evt.originalEvent && evt.originalEvent.key == this._ls_key){
 
 				// IE fix
 
@@ -54,7 +54,7 @@ yootil.sync = class {
 
 	update(data = {}){
 		this._trigger_caller = true;
-		yootil.storage.set(this._key, data, true, true);
+		yootil.storage.set(this._ls_key, data, true, true);
 	}
 
 	change(new_data, old_data){
