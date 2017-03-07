@@ -2,8 +2,13 @@
 
 let splitter = new yootil.key.splitter(["testy", "testy2"])
 
-splitter.split("123456789", 3);
-splitter.save(yootil.user.id());
+splitter.split("123456789", 5); // Split 5 into each key
+
+if(!splitter.has_excess()){
+	splitter.save(yootil.user.id());
+} else {
+	console.log("No space");
+}
 
 */
 
@@ -49,6 +54,12 @@ yootil.key.splitter = class {
 		}
 	}
 
+	/**
+	 * Check to see if there is any excess data when splitting.
+	 *
+	 * @returns {Boolean}
+	 */
+
 	has_excess(){
 		if(this.excess_data.length){
 			return true;
@@ -56,6 +67,12 @@ yootil.key.splitter = class {
 
 		return false;
 	}
+
+	/**
+	 * Returns the excess data
+	 *
+	 * @returns {String}
+	 */
 
 	excess(){
 		return this.excess_data;
@@ -65,19 +82,20 @@ yootil.key.splitter = class {
 	 * The data pass in is what gets split between the keys.
 	 *
 	 * @param {String|Object|Array} data The data to be split.
-	 * @param {Number} chunk_len The length of each chunk. It's recommended to not pass a value in.
+	 * @param {Boolean} json Split as JSON string
+	 * @param {Number} length The length of each chunk. It's recommended to not pass a value in.
 	 * @returns {Boolean}
 	 */
 
-	split(data = "", chunk_len = 0){
+	split({data = "", json = true, length = 0} = {}){
 		if(!data || this.keys.length < 2){
 			return false;
 		}
 
-		data = JSON.stringify(data);
+		data = (json)? JSON.stringify(data) : data.toString();
 
 		for(let obj of this.keys){
-			let data_chunk = data.substr(0, (chunk_len || obj.key.max_space()));
+			let data_chunk = data.substr(0, (length || obj.key.max_space()));
 
 			obj.data = data_chunk;
 

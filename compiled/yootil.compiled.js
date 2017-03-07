@@ -2440,9 +2440,6 @@ yootil.get = function () {
 	return _class8;
 }();
 
-// @TODO: Don't touch this until v6
-// Needs a rewrite??
-
 /**
  * @class yootil.key
  * @static
@@ -2484,74 +2481,74 @@ yootil.key = function () {
 				obj: function obj() {
 					return _this3.key_obj(key);
 				},
-				is_empty: function is_empty(user_id) {
-					return _this3.is_empty(key, user_id);
+				is_empty: function is_empty(object_id) {
+					return _this3.is_empty(key, object_id);
 				},
-				has_value: function has_value(user_id) {
-					return !_this3.is_empty(key, user_id);
+				has_value: function has_value(object_id) {
+					return !_this3.is_empty(key, object_id);
 				},
-				get: function get(user_id, is_json) {
-					return _this3.get(key, user_id);
+				get: function get(object_id, is_json) {
+					return _this3.get(key, object_id);
 				},
-				clear: function clear(user_id) {
-					return _this3.clear(key, user_id);
+				clear: function clear(object_id) {
+					return _this3.clear(key, object_id);
 				},
-				set: function set(value, user_id, type) {
-					return _this3.set(key, value, user_id, type);
+				set: function set(value, object_id, type) {
+					return _this3.set(key, value, object_id, type);
 				},
-				on: function on(evt, value, user_id) {
-					return _this3.on(key, evt, value, user_id);
+				on: function on(evt, value, object_id) {
+					return _this3.on(key, evt, value, object_id);
 				},
-				new_thread: function new_thread(value, user_id) {
-					return _this3.new_thread(key, value, user_id);
+				new_thread: function new_thread(value, object_id) {
+					return _this3.new_thread(key, value, object_id);
 				},
-				new_post: function new_post(value, user_id) {
-					return _this3.new_post(key, value, user_id);
+				new_post: function new_post(value, object_id) {
+					return _this3.new_post(key, value, object_id);
 				},
-				new_quick_reply: function new_quick_reply(value, user_id) {
-					return _this3.post_quick_reply(key, value, user_id);
+				new_quick_reply: function new_quick_reply(value, object_id) {
+					return _this3.post_quick_reply(key, value, object_id);
 				},
-				append: function append(value, user_id) {
-					return _this3.append(key, value, user_id);
+				append: function append(value, object_id) {
+					return _this3.append(key, value, object_id);
 				},
-				prepend: function prepend(value, user_id) {
-					return _this3.prepend(key, value, user_id);
+				prepend: function prepend(value, object_id) {
+					return _this3.prepend(key, value, object_id);
 				},
-				increment: function increment(value, user_id) {
-					return _this3.increment(key, value, user_id);
+				increment: function increment(value, object_id) {
+					return _this3.increment(key, value, object_id);
 				},
-				decrement: function decrement(value, user_id) {
-					return _this3.decrement(key, value, user_id);
+				decrement: function decrement(value, object_id) {
+					return _this3.decrement(key, value, object_id);
 				},
-				pop: function pop(items, user_id) {
-					return _this3.pop(key, items, user_id);
+				pop: function pop(items, object_id) {
+					return _this3.pop(key, items, object_id);
 				},
-				push: function push(value, user_id) {
-					return _this3.push(key, value, user_id);
+				push: function push(value, object_id) {
+					return _this3.push(key, value, object_id);
 				},
-				push_unique: function push_unique(value, user_id, strict) {
-					return _this3.push_unique(key, value, user_id, strict);
+				push_unique: function push_unique(value, object_id, strict) {
+					return _this3.push_unique(key, value, object_id, strict);
 				},
-				shift: function shift(items, user_id) {
-					return _this3.shift(key, items, user_id);
+				shift: function shift(items, object_id) {
+					return _this3.shift(key, items, object_id);
 				},
-				unshift: function unshift(value, user_id) {
-					return _this3.unshift(key, value, user_id);
+				unshift: function unshift(value, object_id) {
+					return _this3.unshift(key, value, object_id);
 				},
-				unshift_unique: function unshift_unique(value, user_id, strict) {
-					return _this3.unshift_unique(key, value, user_id, strict);
+				unshift_unique: function unshift_unique(value, object_id, strict) {
+					return _this3.unshift_unique(key, value, object_id, strict);
 				},
-				write: function write(user_id) {
-					return _this3.write(key, user_id);
+				write: function write(object_id) {
+					return _this3.write(key, object_id);
 				},
-				read: function read(user_id) {
-					return _this3.read(key, user_id);
+				read: function read(object_id) {
+					return _this3.read(key, object_id);
 				},
-				type: function type(user_id, return_str) {
+				type: function type(object_id, return_str) {
 					return _this3.type(key, return_str);
 				},
-				length: function length(user_id) {
-					return _this3.length(key, user_id);
+				length: function length(object_id) {
+					return _this3.length(key, object_id);
 				},
 				user_key: function user_key() {
 					return _this3.user_key(key);
@@ -2574,11 +2571,14 @@ yootil.key = function () {
 				super_forum_key: function super_forum_key() {
 					return _this3.super_forum_key(key);
 				},
-				has_space: function has_space(user_id) {
-					return _this3.has_space(key, user_id);
+				has_space: function has_space(object_id) {
+					return _this3.has_space(key, object_id);
 				},
-				space_left: function space_left(user_id) {
-					return _this3.space_left(key, user_id);
+				space_left: function space_left(object_id) {
+					return _this3.space_left(key, object_id);
+				},
+				max_space: function max_space() {
+					return _this3.max_space(key);
 				}
 
 			});
@@ -2628,7 +2628,7 @@ yootil.key = function () {
    * Checks to see if a key is empty
    *
    * @param {String} key The key to check.
-   * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Boolean}
    */
 
@@ -2636,11 +2636,11 @@ yootil.key = function () {
 		key: "is_empty",
 		value: function is_empty() {
 			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var user = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+			var object_id = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
 
 			if (this.exists(key)) {
 				if (typeof this.pb_key_obj(key).get != "undefined") {
-					var val = this.pb_key_obj(key).get(user || undefined);
+					var val = this.pb_key_obj(key).get(object_id || undefined);
 
 					if (val && val.toString().length) {
 						return false;
@@ -2655,7 +2655,7 @@ yootil.key = function () {
    * Gets the value stored in the key.
    *
    * @param {String} key The ProBoards key we are getting.
-   * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @param {Boolean} [is_json] If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
    * @returns {String|Object} If no value, an empty string is returned.
    */
@@ -2664,12 +2664,14 @@ yootil.key = function () {
 		key: "get",
 		value: function get() {
 			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var user = arguments[1];
+			var object_id = arguments[1];
 			var is_json = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 
 			if (this.exists(key)) {
-				if (!this.is_empty(key, user)) {
-					var value = this.pb_key_obj(key).get(user || undefined);
+				object_id = object_id || undefined;
+
+				if (!this.is_empty(key, object_id)) {
+					var value = this.pb_key_obj(key).get(object_id);
 
 					if (is_json && yootil.is_json(value)) {
 						value = JSON.parse(value);
@@ -2686,7 +2688,7 @@ yootil.key = function () {
    * Clears out key value.
    *
    * @param {String} key The key.
-   * @param {Number} [user] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
@@ -2694,9 +2696,9 @@ yootil.key = function () {
 		key: "clear",
 		value: function clear() {
 			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var user = arguments[1];
+			var object_id = arguments[1];
 
-			return this.set(key, "", user);
+			return this.set(key, "", object_id);
 		}
 
 		/**
@@ -2716,7 +2718,7 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {String|Object} value Can be a string, or a object.  ProBoards now handles stringifying objects.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @param {String} [type] Passed on set the method type (i.e append, pop etc).
    * @return {Object} Returns a promise.
    */
@@ -2729,14 +2731,16 @@ yootil.key = function () {
 
 			var _this4 = this;
 
-			var user_id = arguments[2];
+			var object_id = arguments[2];
 			var type = arguments.length <= 3 || arguments[3] === undefined ? "" : arguments[3];
 
 			var p = new Promise(function (resolve, reject) {
+				object_id = object_id || undefined;
+
 				if (_this4.exists(key)) {
 					var options = {
 
-						object_id: user_id,
+						object_id: object_id,
 						value: value
 
 					};
@@ -2793,7 +2797,7 @@ yootil.key = function () {
    * @param {String} key The key.
    * @param {String} [event] The event to use.  Currently there are 2 "thread_new" and "post_new".
    * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
    */
 
@@ -2802,13 +2806,13 @@ yootil.key = function () {
 		value: function on(key) {
 			var event = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
 			var value = arguments[2];
-			var user_id = arguments[3];
+			var object_id = arguments.length <= 3 || arguments[3] === undefined ? undefined : arguments[3];
 
 			if (!event) {
 				return false;
 			}
 
-			return this.pb_key_obj(key).set_on(event, user_id, value);
+			return this.pb_key_obj(key).set_on(event, object_id, value);
 		}
 
 		/**
@@ -2816,14 +2820,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
    */
 
 	}, {
 		key: "new_thread",
-		value: function new_thread(key, value, user_id) {
-			return this.on(key, "thread_new", value, user_id);
+		value: function new_thread(key, value, object_id) {
+			return this.on(key, "thread_new", value, object_id);
 		}
 
 		/**
@@ -2831,14 +2835,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
    */
 
 	}, {
 		key: "new_post",
-		value: function new_post(key, value, user_id) {
-			return this.on(key, "post_new", value, user_id);
+		value: function new_post(key, value, object_id) {
+			return this.on(key, "post_new", value, object_id);
 		}
 
 		/**
@@ -2846,14 +2850,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
    */
 
 	}, {
 		key: "post_quick_reply",
-		value: function post_quick_reply(key, value, user_id) {
-			return this.on(key, "post_quick_reply", value, user_id);
+		value: function post_quick_reply(key, value, object_id) {
+			return this.on(key, "post_quick_reply", value, object_id);
 		}
 
 		/**
@@ -2861,14 +2865,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value Can be a string or a number.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "append",
-		value: function append(key, value, user_id) {
-			return this.set(key, value, user_id, "append");
+		value: function append(key, value, object_id) {
+			return this.set(key, value, object_id, "append");
 		}
 
 		/**
@@ -2876,14 +2880,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value Can be a string or a number.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "prepend",
-		value: function prepend(key, value, user_id) {
-			return this.set(key, value, user_id, "prepend");
+		value: function prepend(key, value, object_id) {
+			return this.set(key, value, object_id, "prepend");
 		}
 
 		/**
@@ -2891,7 +2895,7 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Number} [value] Increment by this amount.  Default is 1.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
@@ -2899,9 +2903,9 @@ yootil.key = function () {
 		key: "increment",
 		value: function increment(key) {
 			var value = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-			var user_id = arguments[2];
+			var object_id = arguments[2];
 
-			return this.set(key, value, user_id, "increment");
+			return this.set(key, value, object_id, "increment");
 		}
 
 		/**
@@ -2909,7 +2913,7 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Number} [value] Decrement by this amount.  Default is 1.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
@@ -2917,9 +2921,9 @@ yootil.key = function () {
 		key: "decrement",
 		value: function decrement(key) {
 			var value = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-			var user_id = arguments[2];
+			var object_id = arguments[2];
 
-			return this.set(key, value, user_id, "decrement");
+			return this.set(key, value, object_id, "decrement");
 		}
 
 		/**
@@ -2927,7 +2931,7 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Number} [num_items] Number of items to pop from the key.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
@@ -2935,9 +2939,9 @@ yootil.key = function () {
 		key: "pop",
 		value: function pop(key) {
 			var num_items = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-			var user_id = arguments[2];
+			var object_id = arguments[2];
 
-			return this.set(key, num_items, user_id, "pop");
+			return this.set(key, num_items, object_id, "pop");
 		}
 
 		/**
@@ -2949,17 +2953,17 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "push",
-		value: function push(key, value, user_id) {
+		value: function push(key, value, object_id) {
 			value = Array.isArray(value) && value.length == 1 ? value[0] : value;
 
-			return this.set(key, value, user_id, "push");
+			return this.set(key, value, object_id, "push");
 		}
 
 		/**
@@ -2971,14 +2975,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "push_unique",
-		value: function push_unique(key, value, user_id) {
+		value: function push_unique(key, value, object_id) {
 			var strict = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
 			var current_value = this.value(key);
@@ -3040,7 +3044,7 @@ yootil.key = function () {
 				if (to_push.length) {
 					to_push = to_push.length == 1 ? to_push[0] : to_push;
 
-					return this.push(key, to_push, user_id);
+					return this.push(key, to_push, object_id);
 				}
 			}
 		}
@@ -3050,7 +3054,7 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Number} num_items The number of items to shift from the array.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
@@ -3058,9 +3062,9 @@ yootil.key = function () {
 		key: "shift",
 		value: function shift(key) {
 			var num_items = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
-			var user_id = arguments[2];
+			var object_id = arguments[2];
 
-			return this.set(key, num_items, user_id, "shift");
+			return this.set(key, num_items, object_id, "shift");
 		}
 
 		/**
@@ -3068,16 +3072,16 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "unshift",
-		value: function unshift(key, value, user_id) {
+		value: function unshift(key, value, object_id) {
 			value = Array.isArray(value) && value.length == 1 ? value[0] : value;
 
-			return this.set(key, value, user_id, "unshift");
+			return this.set(key, value, object_id, "unshift");
 		}
 
 		/**
@@ -3089,14 +3093,14 @@ yootil.key = function () {
    *
    * @param {String} key The key.
    * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-   * @param {Number} [user_id] This is the user id, proboards defaults to current user if not set.
+   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
    * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
    * @return {Object} Returns promise.
    */
 
 	}, {
 		key: "unshift_unique",
-		value: function unshift_unique(key, value, user_id) {
+		value: function unshift_unique(key, value, object_id) {
 			var strict = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
 
 			var current_value = this.value(key);
@@ -3158,7 +3162,7 @@ yootil.key = function () {
 				if (to_push.length) {
 					to_push = to_push.length == 1 ? to_push[0] : to_push;
 
-					return this.unshift(key, to_push, user_id);
+					return this.unshift(key, to_push, object_id);
 				}
 			}
 		}
@@ -3167,22 +3171,16 @@ yootil.key = function () {
    * Checks permission on key to see if the user can write.
    *
    * @param {String} key The key.
-   * @param {Number} user This is the user id, proboards defaults to current user if not set.
+   * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
    * @return {Boolean}
    */
 
 	}, {
 		key: "write",
-		value: function write(key, user) {
+		value: function write(key, object_id) {
 			if (this.exists(key)) {
 				if (typeof this.pb_key_obj(key).can_write != "undefined") {
-					return !!this.pb_key_obj(key).can_write(user);
-				} else {
-
-					// ProBoards hasn't exposed it.
-					// Just return true so we don't break plugins
-
-					return true;
+					return !!this.pb_key_obj(key).can_write(object_id);
 				}
 			}
 
@@ -3193,7 +3191,7 @@ yootil.key = function () {
    *  Checks permission on key to see if the user can read.
    *
    * @param {String} key The key.
-   * @param {Number} user This is the user id, proboards defaults to current user if not set.
+   * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
    * @return {Boolean}
    */
 
@@ -3202,7 +3200,7 @@ yootil.key = function () {
 		value: function read(key, user) {
 			if (this.exists(key)) {
 				if (typeof this.pb_key_obj(key).can_read != "undefined") {
-					return !!this.pb_key_obj(key).can_read(user);
+					return !!this.pb_key_obj(key).can_read(object_id);
 				} else {
 
 					// ProBoards hasn't exposed it.
@@ -3248,13 +3246,14 @@ yootil.key = function () {
    * Gets the length of a key.
    *
    * @param {String} key The key to be checked.
+   * @param {Number} object_id Object id.
    * @return {Number} Returns the length.
    */
 
 	}, {
 		key: "length",
-		value: function length(key, user) {
-			var val = this.get(key, user);
+		value: function length(key, object_id) {
+			var val = this.get(key, object_id);
 
 			if (typeof val == "string") {
 				return val.length;
@@ -3386,16 +3385,16 @@ yootil.key = function () {
    * Checks to see if the key has space.
    *
    * @param {String} key The key to check.
-   * @param {Number} user User id.
+   * @param {Number} object_id Object id.
    * @return {Boolean}
    */
 
 	}, {
 		key: "has_space",
-		value: function has_space(key, user) {
+		value: function has_space(key, object_id) {
 			var max_length = this.super_forum_key(key) ? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
 
-			if (this.length(key, user) < max_length) {
+			if (this.length(key, object_id) < max_length) {
 				return true;
 			}
 
@@ -3406,23 +3405,347 @@ yootil.key = function () {
    * Gets the space left in the key.
    *
    * @param {String} key The key to check.
-   * @param {Number} user User id.
+   * @param {Number} object_id Object id.
    * @return {Number}
    */
 
 	}, {
 		key: "space_left",
-		value: function space_left(key, user) {
+		value: function space_left(key, object_id) {
 			var max_length = this.super_forum_key(key) ? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
-			var key_length = this.length(key, user);
+			var key_length = this.length(key, object_id);
 			var space_left = max_length - key_length;
 
 			return space_left < 0 ? 0 : space_left;
+		}
+
+		/**
+   * Gets max space (characters).
+   *
+   * @param {String} key The key to check.
+   * @return {Number}
+   */
+
+	}, {
+		key: "max_space",
+		value: function max_space(key) {
+			var max_length = this.super_forum_key(key) ? pb.data("plugin_max_super_forum_key_length") : pb.data("plugin_max_key_length");
+
+			return max_length;
 		}
 	}]);
 
 	return _class9;
 }().init();
+
+/*
+
+let splitter = new yootil.key.splitter(["testy", "testy2"])
+
+splitter.split("123456789", 5); // Split 5 into each key
+
+if(!splitter.has_excess()){
+	splitter.save(yootil.user.id());
+} else {
+	console.log("No space");
+}
+
+*/
+
+/**
+ * Splits up data between keys.  The order of the keys is very important if
+ * you are joining later.
+ *
+ * Any left over data that cannot be put into a key is lost.  It's important you
+ * check the data length doesn't exceed the total length of the keys.  Use the
+ * "has_excess" method to see if there was any data remaining before saving.
+ */
+
+yootil.key.splitter = function () {
+
+	/**
+  * @param {String|Array} keys The keys that the data will be split between.
+  */
+
+	function _class10() {
+		var keys = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+		_classCallCheck(this, _class10);
+
+		if (!Array.isArray(keys)) {
+			keys = [keys];
+		}
+
+		this.keys = keys;
+		this.excess_data = "";
+		this.convert_keys_to_objs();
+	}
+
+	_createClass(_class10, [{
+		key: "convert_keys_to_objs",
+		value: function convert_keys_to_objs() {
+			var _iteratorNormalCompletion7 = true;
+			var _didIteratorError7 = false;
+			var _iteratorError7 = undefined;
+
+			try {
+				for (var _iterator7 = this.keys.entries()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+					var _step7$value = _slicedToArray(_step7.value, 2);
+
+					var index = _step7$value[0];
+					var value = _step7$value[1];
+
+					var obj = yootil.key(value);
+
+					if (obj.exists()) {
+						this.keys[index] = {
+
+							key: obj,
+							data: ""
+
+						};
+					} else {
+						delete this.keys[index];
+					}
+				}
+			} catch (err) {
+				_didIteratorError7 = true;
+				_iteratorError7 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion7 && _iterator7.return) {
+						_iterator7.return();
+					}
+				} finally {
+					if (_didIteratorError7) {
+						throw _iteratorError7;
+					}
+				}
+			}
+		}
+
+		/**
+   * Check to see if there is any excess data when splitting.
+   *
+   * @returns {Boolean}
+   */
+
+	}, {
+		key: "has_excess",
+		value: function has_excess() {
+			if (this.excess_data.length) {
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+   * Returns the excess data
+   *
+   * @returns {String}
+   */
+
+	}, {
+		key: "excess",
+		value: function excess() {
+			return this.excess_data;
+		}
+
+		/**
+   * The data pass in is what gets split between the keys.
+   *
+   * @param {String|Object|Array} data The data to be split.
+   * @param {Boolean} json Split as JSON string
+   * @param {Number} length The length of each chunk. It's recommended to not pass a value in.
+   * @returns {Boolean}
+   */
+
+	}, {
+		key: "split",
+		value: function split() {
+			var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+			var _ref10$data = _ref10.data;
+			var data = _ref10$data === undefined ? "" : _ref10$data;
+			var _ref10$json = _ref10.json;
+			var json = _ref10$json === undefined ? true : _ref10$json;
+			var _ref10$length = _ref10.length;
+			var length = _ref10$length === undefined ? 0 : _ref10$length;
+
+			if (!data || this.keys.length < 2) {
+				return false;
+			}
+
+			data = json ? JSON.stringify(data) : data.toString();
+
+			var _iteratorNormalCompletion8 = true;
+			var _didIteratorError8 = false;
+			var _iteratorError8 = undefined;
+
+			try {
+				for (var _iterator8 = this.keys[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+					var obj = _step8.value;
+
+					var data_chunk = data.substr(0, length || obj.key.max_space());
+
+					obj.data = data_chunk;
+
+					data = data.substr(data_chunk.length, data.length);
+				}
+			} catch (err) {
+				_didIteratorError8 = true;
+				_iteratorError8 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion8 && _iterator8.return) {
+						_iterator8.return();
+					}
+				} finally {
+					if (_didIteratorError8) {
+						throw _iteratorError8;
+					}
+				}
+			}
+
+			this.excess_data = data || "";
+
+			return true;
+		}
+
+		/**
+   * Call this method to save the data to the keys.
+   *
+   * @param {Number} object_id ID of the object (i.e user)
+   * @returns {Object} Last key to be set gets that promise returned.
+   */
+
+	}, {
+		key: "save",
+		value: function save() {
+			var object_id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+
+			var last = null;
+
+			var _iteratorNormalCompletion9 = true;
+			var _didIteratorError9 = false;
+			var _iteratorError9 = undefined;
+
+			try {
+				for (var _iterator9 = this.keys[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+					var obj = _step9.value;
+
+					last = obj.key.set(obj.data, object_id);
+				}
+			} catch (err) {
+				_didIteratorError9 = true;
+				_iteratorError9 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion9 && _iterator9.return) {
+						_iterator9.return();
+					}
+				} finally {
+					if (_didIteratorError9) {
+						throw _iteratorError9;
+					}
+				}
+			}
+
+			return last;
+		}
+	}]);
+
+	return _class10;
+}();
+
+/*
+
+ let joiner = new yootil.key.joiner(["testy", "testy2"])
+
+ console.log(joiner.data(yootil.user.id()));
+
+ */
+
+yootil.key.joiner = function () {
+
+	/**
+  * @param {String|Array} keys The keys that has data that will be joined.
+  * @param {Number} object_id
+  */
+
+	function _class11() {
+		var _ref11 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+		var _ref11$keys = _ref11.keys;
+		var keys = _ref11$keys === undefined ? [] : _ref11$keys;
+		var _ref11$object_id = _ref11.object_id;
+		var object_id = _ref11$object_id === undefined ? undefined : _ref11$object_id;
+
+		_classCallCheck(this, _class11);
+
+		if (!Array.isArray(keys)) {
+			keys = [keys];
+		}
+
+		this.object_id = object_id;
+		this.keys = keys;
+	}
+
+	/**
+  * Returns the data joined.
+  *
+  * @param {Boolean} json Pass false to not JSON parse the data.
+  * @returns {String|Object}
+  */
+
+
+	_createClass(_class11, [{
+		key: "data",
+		value: function data() {
+			var json = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+
+			if (this.keys.length > 1) {
+				var data = "";
+
+				var _iteratorNormalCompletion10 = true;
+				var _didIteratorError10 = false;
+				var _iteratorError10 = undefined;
+
+				try {
+					for (var _iterator10 = this.keys[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+						var _key = _step10.value;
+
+						data += yootil.key(_key).get(this.object_id);
+					}
+				} catch (err) {
+					_didIteratorError10 = true;
+					_iteratorError10 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion10 && _iterator10.return) {
+							_iterator10.return();
+						}
+					} finally {
+						if (_didIteratorError10) {
+							throw _iteratorError10;
+						}
+					}
+				}
+
+				if (json && yootil.is_json(data)) {
+					data = JSON.parse(data);
+				}
+
+				return data;
+			}
+
+			return null;
+		}
+	}]);
+
+	return _class11;
+}();
 
 /**
  * @class yootil.location
@@ -3432,11 +3755,11 @@ yootil.key = function () {
  */
 
 yootil.location = function () {
-	function _class10() {
-		_classCallCheck(this, _class10);
+	function _class12() {
+		_classCallCheck(this, _class12);
 	}
 
-	_createClass(_class10, null, [{
+	_createClass(_class12, null, [{
 		key: "init",
 		value: function init() {
 			this._cached_route = pb.data && pb.data("route") ? pb.data("route").name : "";
@@ -4039,7 +4362,7 @@ yootil.location = function () {
 		}
 	}]);
 
-	return _class10;
+	return _class12;
 }().init();
 
 /**
@@ -4049,11 +4372,11 @@ yootil.location = function () {
  */
 
 yootil.page = function () {
-	function _class11() {
-		_classCallCheck(this, _class11);
+	function _class13() {
+		_classCallCheck(this, _class13);
 	}
 
-	_createClass(_class11, null, [{
+	_createClass(_class13, null, [{
 		key: "__get_data",
 
 
@@ -4073,7 +4396,7 @@ yootil.page = function () {
 		}
 	}]);
 
-	return _class11;
+	return _class13;
 }();
 
 /**
@@ -4083,11 +4406,11 @@ yootil.page = function () {
  */
 
 yootil.page.board = function () {
-	function _class12() {
-		_classCallCheck(this, _class12);
+	function _class14() {
+		_classCallCheck(this, _class14);
 	}
 
-	_createClass(_class12, null, [{
+	_createClass(_class14, null, [{
 		key: "__get_data",
 
 
@@ -4231,7 +4554,7 @@ yootil.page.board = function () {
 		}
 	}]);
 
-	return _class12;
+	return _class14;
 }();
 
 /**
@@ -4241,11 +4564,11 @@ yootil.page.board = function () {
  */
 
 yootil.page.category = function () {
-	function _class13() {
-		_classCallCheck(this, _class13);
+	function _class15() {
+		_classCallCheck(this, _class15);
 	}
 
-	_createClass(_class13, null, [{
+	_createClass(_class15, null, [{
 		key: "__get_data",
 
 
@@ -4290,7 +4613,7 @@ yootil.page.category = function () {
 		}
 	}]);
 
-	return _class13;
+	return _class15;
 }();
 
 /**
@@ -4300,11 +4623,11 @@ yootil.page.category = function () {
  */
 
 yootil.page.member = function () {
-	function _class14() {
-		_classCallCheck(this, _class14);
+	function _class16() {
+		_classCallCheck(this, _class16);
 	}
 
-	_createClass(_class14, null, [{
+	_createClass(_class16, null, [{
 		key: "__get_data",
 
 
@@ -4382,7 +4705,7 @@ yootil.page.member = function () {
 		}
 	}]);
 
-	return _class14;
+	return _class16;
 }();
 
 /**
@@ -4392,11 +4715,11 @@ yootil.page.member = function () {
  */
 
 yootil.page.post = function () {
-	function _class15() {
-		_classCallCheck(this, _class15);
+	function _class17() {
+		_classCallCheck(this, _class17);
 	}
 
-	_createClass(_class15, null, [{
+	_createClass(_class17, null, [{
 		key: "__get_data",
 
 
@@ -4485,7 +4808,7 @@ yootil.page.post = function () {
 		}
 	}]);
 
-	return _class15;
+	return _class17;
 }();
 
 /**
@@ -4495,11 +4818,11 @@ yootil.page.post = function () {
  */
 
 yootil.page.thread = function () {
-	function _class16() {
-		_classCallCheck(this, _class16);
+	function _class18() {
+		_classCallCheck(this, _class18);
 	}
 
-	_createClass(_class16, null, [{
+	_createClass(_class18, null, [{
 		key: "__get_data",
 
 
@@ -4698,7 +5021,7 @@ yootil.page.thread = function () {
 		}
 	}]);
 
-	return _class16;
+	return _class18;
 }();
 
 /**
@@ -4726,10 +5049,10 @@ yootil.page.thread = function () {
  */
 
 yootil.queue = function () {
-	function _class17() {
+	function _class19() {
 		var auto_start = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
-		_classCallCheck(this, _class17);
+		_classCallCheck(this, _class19);
 
 		this._queue = [];
 		this._iterator = null;
@@ -4744,7 +5067,7 @@ yootil.queue = function () {
   * @chainable
   */
 
-	_createClass(_class17, [{
+	_createClass(_class19, [{
 		key: "add",
 		value: function add() {
 			var func = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
@@ -4890,15 +5213,15 @@ yootil.queue = function () {
 		}
 	}]);
 
-	return _class17;
+	return _class19;
 }();
 
 yootil.settings = function () {
-	function _class18() {
-		_classCallCheck(this, _class18);
+	function _class20() {
+		_classCallCheck(this, _class20);
 	}
 
-	_createClass(_class18, null, [{
+	_createClass(_class20, null, [{
 		key: "init",
 		value: function init() {
 			this.images = {};
@@ -4913,7 +5236,7 @@ yootil.settings = function () {
 		}
 	}]);
 
-	return _class18;
+	return _class20;
 }();
 
 /**
@@ -4923,11 +5246,11 @@ yootil.settings = function () {
  */
 
 yootil.storage = function () {
-	function _class19() {
-		_classCallCheck(this, _class19);
+	function _class21() {
+		_classCallCheck(this, _class21);
 	}
 
-	_createClass(_class19, null, [{
+	_createClass(_class21, null, [{
 		key: "set",
 
 
@@ -5049,7 +5372,7 @@ yootil.storage = function () {
 		}
 	}]);
 
-	return _class19;
+	return _class21;
 }();
 
 /**
@@ -5064,19 +5387,19 @@ yootil.storage = function () {
  */
 
 yootil.sync = function () {
-	function _class20() {
+	function _class22() {
 		var _this5 = this;
 
-		var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+		var _ref12 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-		var _ref10$key = _ref10.key;
-		var key = _ref10$key === undefined ? "" : _ref10$key;
-		var _ref10$data = _ref10.data;
-		var data = _ref10$data === undefined ? {} : _ref10$data;
-		var _ref10$handler = _ref10.handler;
-		var handler = _ref10$handler === undefined ? {} : _ref10$handler;
+		var _ref12$key = _ref12.key;
+		var key = _ref12$key === undefined ? "" : _ref12$key;
+		var _ref12$data = _ref12.data;
+		var data = _ref12$data === undefined ? {} : _ref12$data;
+		var _ref12$handler = _ref12.handler;
+		var handler = _ref12$handler === undefined ? {} : _ref12$handler;
 
-		_classCallCheck(this, _class20);
+		_classCallCheck(this, _class22);
 
 		if (!key) {
 			return;
@@ -5089,13 +5412,13 @@ yootil.sync = function () {
 
 		// Need to set the storage off the bat
 
-		yootil.storage.set(this._key, data, true, true);
+		yootil.storage.set(this._ls_key, data, true, true);
 
 		// Delay adding event (IE issues yet again)
 
 		setTimeout(function () {
 			return $(window).on("storage", function (evt) {
-				if (evt && evt.originalEvent && evt.originalEvent.key == _this5._key) {
+				if (evt && evt.originalEvent && evt.originalEvent.key == _this5._ls_key) {
 
 					// IE fix
 
@@ -5120,13 +5443,13 @@ yootil.sync = function () {
 
 	// For outside calls to trigger a manual update
 
-	_createClass(_class20, [{
+	_createClass(_class22, [{
 		key: "update",
 		value: function update() {
 			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
 			this._trigger_caller = true;
-			yootil.storage.set(this._key, data, true, true);
+			yootil.storage.set(this._ls_key, data, true, true);
 		}
 	}, {
 		key: "change",
@@ -5149,7 +5472,7 @@ yootil.sync = function () {
 		}
 	}]);
 
-	return _class20;
+	return _class22;
 }();
 
 /**
@@ -5159,11 +5482,11 @@ yootil.sync = function () {
  */
 
 yootil.user = function () {
-	function _class21() {
-		_classCallCheck(this, _class21);
+	function _class23() {
+		_classCallCheck(this, _class23);
 	}
 
-	_createClass(_class21, null, [{
+	_createClass(_class23, null, [{
 		key: "init",
 		value: function init() {
 			this._data = {};
@@ -5626,7 +5949,7 @@ yootil.user = function () {
 		}
 	}]);
 
-	return _class21;
+	return _class23;
 }().init();
 
 

@@ -255,45 +255,6 @@ yootil.key = (class {
 	}
 
 	/**
-	 * Key is set when a new thread is created.
-	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-	 */
-
-	static new_thread(key, value, object_id){
-		return this.on(key, "thread_new", value, object_id);
-	}
-
-	/**
-	 * Key is set when a new post is created.
-	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-	 */
-
-	static new_post(key, value, object_id){
-		return this.on(key, "post_new", value, object_id);
-	}
-
-	/**
-	 * Key is set when a new post is created using the quick reply.
-	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-	 */
-
-	static post_quick_reply(key, value, object_id){
-		return this.on(key, "post_quick_reply", value, object_id);
-	}
-
-	/**
 	 * Concatenates a given value to the end of the existing key value.
 	 *
 	 * @param {String} key The key.
