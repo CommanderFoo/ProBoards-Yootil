@@ -1,4 +1,18 @@
+/**
+ * Uses a basic LCG algorithm for seeded random numbers.
+ *
+ * let rnd = new yootil.random(555);
+ *
+ * console.log(rnd.next()); // 0.19470878187320603
+ *
+ */
+
 yootil.random = class {
+
+	/**
+	 *
+	 * @param {Integer} seed
+	 */
 
 	constructor(seed){
 		this.m = 2147483647;
@@ -7,9 +21,19 @@ yootil.random = class {
 		this.seed = seed || Math.floor(Math.random() * this.m);
 	}
 
+	/**
+	 *
+	 * @returns {Number}
+	 */
+
 	current(){
 		return this.seed / this.m;
 	}
+
+	/**
+	 *
+	 * @returns {Number}
+	 */
 
 	next(){
 		this.seed = (this.a * this.seed + this.c) % this.m;
