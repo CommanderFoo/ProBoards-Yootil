@@ -105,9 +105,9 @@ yootil.key = (class {
 	static is_empty(key = "", object_id = 0){
 		if(this.exists(key)){
 			if(typeof this.pb_key_obj(key).get != "undefined"){
-				let val = this.pb_key_obj(key).get(object_id || undefined);
+				let val = this.pb_key_obj(key).get(object_id || undefined) || "";
 
-				if(val && val.toString().length){
+				if(val.toString().length || JSON.stringify(val).length){
 					return false;
 				}
 			}
@@ -549,7 +549,7 @@ yootil.key = (class {
 			return val.length;
 		}
 
-		return JSON.stringify(val).length;
+		return (typeof val === "undefined")? 0 : JSON.stringify(val).length;
 	}
 
 	/**

@@ -26,17 +26,30 @@ yootil.key.joiner = class {
 	 * Returns the data joined.
 	 *
 	 * @param {Boolean} json Pass false to not JSON parse the data.
-	 * @returns {String|Object}
+	 * @returns {String|Object|Array}
 	 */
 	data(json = true){
-		if(this.keys.length > 1){
+		if(this.keys.length){
 			let data = "";
+			let data_is_array = false;
 
 			for(let key of this.keys){
-				data += yootil.key(key).get(this.object_id);
+				let the_data = yootil.key(key).get(this.object_id);
+
+				if(Array.isArray(the_data)){
+					data_is_array = true;
+
+					if(!Array.isArray(data)){
+						data = [];
+					}
+
+					data = data.concat(the_data);
+				} else if(!data_is_array){
+					data += the_data || ""
+				}
 			}
 
-			if(json && yootil.is_json(data)){
+			if(!Array.isArray(data) && (json && yootil.is_json(data))){
 				data = JSON.parse(data);
 			}
 
