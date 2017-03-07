@@ -294,4 +294,30 @@ class yootil {
 		return 0;
 	}
 
+	/**
+	 * Digests the string in to a single hash value (32 bit).
+	 *
+	 * Source: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+	 *
+	 * @param (String) str
+	 * @returns {Number}
+	 */
+
+	static hash_code(str = ""){
+		str = str.toString();
+
+		if(!str.length){
+			return 0;
+		}
+
+		let hash = 0;
+
+		for(let i = 0, len = str.length; i < len; ++ i){
+			hash = ((hash << 5) - hash) + str.charCodeAt(i);
+			hash |= 0;
+		}
+
+		return Math.abs(hash);
+	}
+
 };

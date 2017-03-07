@@ -18,7 +18,7 @@ yootil.random = class {
 		this.m = 2147483647;
 		this.a = 1103515245;
 		this.c = 12345;
-		this.seed = seed || Math.floor(Math.random() * this.m);
+		this.seed = (seed && typeof seed === "string")? yootil.hash_code(seed) :  Math.floor(Math.random() * this.m);
 	}
 
 	/**
