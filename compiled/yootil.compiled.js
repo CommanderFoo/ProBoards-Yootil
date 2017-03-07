@@ -311,6 +311,36 @@ var yootil = function () {
 
 			return 0;
 		}
+
+		/**
+   * Digests the string in to a single hash value (32 bit).
+   *
+   * Source: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+   *
+   * @param (String) str
+   * @returns {Number}
+   */
+
+	}, {
+		key: "hash_code",
+		value: function hash_code() {
+			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+
+			str = str.toString();
+
+			if (!str.length) {
+				return 0;
+			}
+
+			var hash = 0;
+
+			for (var i = 0, len = str.length; i < len; ++i) {
+				hash = (hash << 5) - hash + str.charCodeAt(i);
+				hash |= 0;
+			}
+
+			return Math.abs(hash);
+		}
 	}, {
 		key: "images",
 		get: function get() {
@@ -2813,51 +2843,6 @@ yootil.key = function () {
 			}
 
 			return this.pb_key_obj(key).set_on(event, object_id, value);
-		}
-
-		/**
-   * Key is set when a new thread is created.
-   *
-   * @param {String} key The key.
-   * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-   * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-   */
-
-	}, {
-		key: "new_thread",
-		value: function new_thread(key, value, object_id) {
-			return this.on(key, "thread_new", value, object_id);
-		}
-
-		/**
-   * Key is set when a new post is created.
-   *
-   * @param {String} key The key.
-   * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-   * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-   */
-
-	}, {
-		key: "new_post",
-		value: function new_post(key, value, object_id) {
-			return this.on(key, "post_new", value, object_id);
-		}
-
-		/**
-   * Key is set when a new post is created using the quick reply.
-   *
-   * @param {String} key The key.
-   * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-   * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-   * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
-   */
-
-	}, {
-		key: "post_quick_reply",
-		value: function post_quick_reply(key, value, object_id) {
-			return this.on(key, "post_quick_reply", value, object_id);
 		}
 
 		/**
@@ -5951,6 +5936,59 @@ yootil.user = function () {
 
 	return _class23;
 }().init();
+
+/**
+ * Uses a basic LCG algorithm for seeded random numbers.
+ *
+ * let rnd = new yootil.random(555);
+ *
+ * console.log(rnd.next()); // 0.19470878187320603
+ *
+ */
+
+yootil.random = function () {
+
+	/**
+  *
+  * @param {Integer} seed
+  */
+
+	function _class24(seed) {
+		_classCallCheck(this, _class24);
+
+		this.m = 2147483647;
+		this.a = 1103515245;
+		this.c = 12345;
+		this.seed = seed && typeof seed === "string" ? yootil.hash_code(seed) : Math.floor(Math.random() * this.m);
+	}
+
+	/**
+  *
+  * @returns {Number}
+  */
+
+	_createClass(_class24, [{
+		key: "current",
+		value: function current() {
+			return this.seed / this.m;
+		}
+
+		/**
+   *
+   * @returns {Number}
+   */
+
+	}, {
+		key: "next",
+		value: function next() {
+			this.seed = (this.a * this.seed + this.c) % this.m;
+
+			return this.seed / this.m;
+		}
+	}]);
+
+	return _class24;
+}();
 
 
 yootil.init();

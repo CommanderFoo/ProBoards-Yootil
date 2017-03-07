@@ -321,7 +321,7 @@ yootil.location = (class {
 	 */
 
 	static profile_home(){
-		return this.__is_page("user");
+		return this.__is_page("user") || this.__is_page("current_user");;
 	}
 
 	/**
