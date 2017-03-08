@@ -16,8 +16,6 @@ pruner.prune({
 
 */
 
-// @TODO:  Length checking is not correct.  Finish.  See test plugin.
-
 yootil.key.pruner = class {
 
 	constructor({keys = [], object_id = undefined, from = "front"} = {}){
@@ -49,6 +47,30 @@ yootil.key.pruner = class {
 		}
 	}
 
+	defrag(all_data = []){
+
+		// Clear data first
+
+		for(let obj of this.keys){
+			obj.data = [];
+		}
+
+		// Write back to data
+
+		for(let obj of this.keys){
+			for(let i = 0; i < all_data.length; ++ i){
+				let elem_len = JSON.stringify(all_data[i]).length;
+				let key_data_length = JSON.stringify(obj.data).length;
+
+				if((key_data_length + elem_len) <= obj.key.max_space()){
+					obj.data = obj.data.concat(all_data[i]);
+					all_data.splice(i, 1);
+					i --;
+				}
+			}
+		}
+	}
+
 	prune({add = [], to = "end"} = {}){
 		if(!add || !this.keys.length){
 			return false;
@@ -69,10 +91,19 @@ yootil.key.pruner = class {
 		}
 
 		let new_data_len = JSON.stringify(add).length;
-		let max_len = this.keys[0].key.max_space();
+
+		if(to == "end"){
+			all_data = all_data.concat(add);
+		} else {
+			all_data = data.concat(all_data);
+		}
 
 		if(all_data.length){
-			let counter = 0;
+			this.defrag(all_data, new_data_len);
+
+			console.log(this.keys);
+		}
+			/*let counter = 0;
 
 			for(let obj of this.keys){
 				let max_len = obj.key.max_space();
@@ -97,9 +128,9 @@ yootil.key.pruner = class {
 				}
 
 				counter ++;
-			}
+			}*/
 
-			if(to == "front"){
+			/*if(to == "front"){
 				let f_key = this.keys[0];
 				let first_key_len = JSON.stringify(f_key.data).length;
 
@@ -109,6 +140,7 @@ yootil.key.pruner = class {
 					return false;
 				}
 			} else {
+
 				let l_key = null;
 				let l_key_index = 0;
 				let last_key_len = 0;
@@ -144,7 +176,7 @@ yootil.key.pruner = class {
 			this.keys[0].data = add;
 		} else {
 			return false;
-		}
+		}*/
 
 		return true;
 	}
