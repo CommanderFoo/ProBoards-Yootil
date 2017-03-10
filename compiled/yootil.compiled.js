@@ -3383,6 +3383,319 @@ yootil.key = function () {
 
 /*
 
+Front multi key pruner.
+
+Will prune from the front and add to the end.  Use in combination with key pushing.  Atttempt
+to push to the key, if it fails, prune it and save.
+
+
+let pruner = new yootil.key.pruner({
+
+	keys: ["test", "test2"],
+	object_id: yootil.user.id()
+
+});
+
+pruner.prune(["G"]); // Prunes key and adds new elements to the end.
+
+console.log(pruner.pruned_data()); // Gets the data that got pruned.
+
+*/
+
+yootil.key.pruner = function () {
+	function _class10() {
+		var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+		var _ref10$keys = _ref10.keys;
+		var keys = _ref10$keys === undefined ? [] : _ref10$keys;
+		var _ref10$object_id = _ref10.object_id;
+		var object_id = _ref10$object_id === undefined ? undefined : _ref10$object_id;
+
+		_classCallCheck(this, _class10);
+
+		if (!Array.isArray(keys)) {
+			keys = [keys];
+		}
+
+		this.keys = keys;
+		this.object_id = object_id;
+		this._pruned_data = [];
+		this.convert_keys_to_objs();
+	}
+
+	_createClass(_class10, [{
+		key: "convert_keys_to_objs",
+		value: function convert_keys_to_objs() {
+			var _iteratorNormalCompletion6 = true;
+			var _didIteratorError6 = false;
+			var _iteratorError6 = undefined;
+
+			try {
+				for (var _iterator6 = this.keys.entries()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+					var _step6$value = _slicedToArray(_step6.value, 2);
+
+					var index = _step6$value[0];
+					var value = _step6$value[1];
+
+					var obj = yootil.key(value);
+
+					if (obj.exists()) {
+						this.keys[index] = {
+
+							key: obj,
+							data: []
+
+						};
+					} else {
+						delete this.keys[index];
+					}
+				}
+			} catch (err) {
+				_didIteratorError6 = true;
+				_iteratorError6 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion6 && _iterator6.return) {
+						_iterator6.return();
+					}
+				} finally {
+					if (_didIteratorError6) {
+						throw _iteratorError6;
+					}
+				}
+			}
+		}
+	}, {
+		key: "defrag",
+		value: function defrag() {
+			var data = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+			var first_run = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+			if (!first_run) {
+				var _iteratorNormalCompletion7 = true;
+				var _didIteratorError7 = false;
+				var _iteratorError7 = undefined;
+
+				try {
+					for (var _iterator7 = this.keys[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+						var obj = _step7.value;
+
+						data = data.concat(obj.data);
+						obj.data = [];
+					}
+				} catch (err) {
+					_didIteratorError7 = true;
+					_iteratorError7 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion7 && _iterator7.return) {
+							_iterator7.return();
+						}
+					} finally {
+						if (_didIteratorError7) {
+							throw _iteratorError7;
+						}
+					}
+				}
+			}
+
+			// Write back to data
+
+			var _iteratorNormalCompletion8 = true;
+			var _didIteratorError8 = false;
+			var _iteratorError8 = undefined;
+
+			try {
+				keys_loop: for (var _iterator8 = this.keys.entries()[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+					var _step8$value = _slicedToArray(_step8.value, 2);
+
+					var index = _step8$value[0];
+					var _obj = _step8$value[1];
+
+					for (var i = 0; i < data.length; ++i) {
+						var elem_len = JSON.stringify(data[i]).length;
+						var key_data_length = JSON.stringify(_obj.data).length;
+
+						if (index == this.keys.length - 1) {
+							_obj.data.push(data[i]);
+						} else if (key_data_length + elem_len <= _obj.key.max_space()) {
+							_obj.data.push(data[i]);
+							data.splice(i, 1);
+							i--;
+						} else {
+							continue keys_loop;
+						}
+					}
+				}
+			} catch (err) {
+				_didIteratorError8 = true;
+				_iteratorError8 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion8 && _iterator8.return) {
+						_iterator8.return();
+					}
+				} finally {
+					if (_didIteratorError8) {
+						throw _iteratorError8;
+					}
+				}
+			}
+		}
+	}, {
+		key: "prune",
+		value: function prune() {
+			var add = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+			if (!add || !this.keys.length) {
+				return false;
+			}
+
+			if (!Array.isArray(add)) {
+				add = [add];
+			}
+
+			var all_data = [];
+
+			var _iteratorNormalCompletion9 = true;
+			var _didIteratorError9 = false;
+			var _iteratorError9 = undefined;
+
+			try {
+				for (var _iterator9 = this.keys[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+					var obj = _step9.value;
+
+					var data = obj.key.get(this.object_id);
+
+					if (Array.isArray(data)) {
+						all_data = all_data.concat(data);
+					}
+				}
+			} catch (err) {
+				_didIteratorError9 = true;
+				_iteratorError9 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion9 && _iterator9.return) {
+						_iterator9.return();
+					}
+				} finally {
+					if (_didIteratorError9) {
+						throw _iteratorError9;
+					}
+				}
+			}
+
+			all_data = all_data.concat(add);
+
+			if (all_data.length) {
+				this.defrag(all_data, true);
+
+				var last_obj = this.get_last_key_with_data();
+				var first_obj = this.keys[0];
+
+				while (JSON.stringify(last_obj.data).length >= last_obj.key.max_space()) {
+					this._pruned_data.push(first_obj.data.shift());
+					this.defrag([]);
+				}
+			}
+
+			return true;
+		}
+	}, {
+		key: "get_last_key_with_data",
+		value: function get_last_key_with_data() {
+			var last = null;
+
+			var _iteratorNormalCompletion10 = true;
+			var _didIteratorError10 = false;
+			var _iteratorError10 = undefined;
+
+			try {
+				for (var _iterator10 = this.keys[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+					var obj = _step10.value;
+
+					if (obj.data.length) {
+						last = obj;
+					}
+				}
+			} catch (err) {
+				_didIteratorError10 = true;
+				_iteratorError10 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion10 && _iterator10.return) {
+						_iterator10.return();
+					}
+				} finally {
+					if (_didIteratorError10) {
+						throw _iteratorError10;
+					}
+				}
+			}
+
+			if (!last) {
+				last = this.keys[this.keys.length - 1];
+			}
+
+			return last;
+		}
+
+		/**
+   * Call this method to save the data to the keys.
+   *
+   * @param {Number} object_id ID of the object (i.e user)
+   * @returns {Object} Last key to be set gets that promise returned.
+   */
+
+	}, {
+		key: "save",
+		value: function save() {
+			var object_id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+
+			var last = null;
+
+			var _iteratorNormalCompletion11 = true;
+			var _didIteratorError11 = false;
+			var _iteratorError11 = undefined;
+
+			try {
+				for (var _iterator11 = this.keys[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+					var obj = _step11.value;
+
+					var data = obj.data.length == 0 ? "" : obj.data;
+
+					last = obj.key.set(data, object_id);
+				}
+			} catch (err) {
+				_didIteratorError11 = true;
+				_iteratorError11 = err;
+			} finally {
+				try {
+					if (!_iteratorNormalCompletion11 && _iterator11.return) {
+						_iterator11.return();
+					}
+				} finally {
+					if (_didIteratorError11) {
+						throw _iteratorError11;
+					}
+				}
+			}
+
+			return last;
+		}
+	}, {
+		key: "pruned_data",
+		value: function pruned_data() {
+			return this._pruned_data;
+		}
+	}]);
+
+	return _class10;
+}();
+
+/*
+
 let splitter = new yootil.key.splitter(["testy", "testy2"])
 
 splitter.split("123456789", 5); // Split 5 into each key
@@ -3410,10 +3723,10 @@ yootil.key.splitter = function () {
   * @param {String|Array} keys The keys that the data will be split between.
   */
 
-	function _class10() {
+	function _class11() {
 		var keys = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
 
-		_classCallCheck(this, _class10);
+		_classCallCheck(this, _class11);
 
 		if (!Array.isArray(keys)) {
 			keys = [keys];
@@ -3424,19 +3737,19 @@ yootil.key.splitter = function () {
 		this.convert_keys_to_objs();
 	}
 
-	_createClass(_class10, [{
+	_createClass(_class11, [{
 		key: "convert_keys_to_objs",
 		value: function convert_keys_to_objs() {
-			var _iteratorNormalCompletion6 = true;
-			var _didIteratorError6 = false;
-			var _iteratorError6 = undefined;
+			var _iteratorNormalCompletion12 = true;
+			var _didIteratorError12 = false;
+			var _iteratorError12 = undefined;
 
 			try {
-				for (var _iterator6 = this.keys.entries()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-					var _step6$value = _slicedToArray(_step6.value, 2);
+				for (var _iterator12 = this.keys.entries()[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+					var _step12$value = _slicedToArray(_step12.value, 2);
 
-					var index = _step6$value[0];
-					var value = _step6$value[1];
+					var index = _step12$value[0];
+					var value = _step12$value[1];
 
 					var obj = yootil.key(value);
 
@@ -3452,16 +3765,16 @@ yootil.key.splitter = function () {
 					}
 				}
 			} catch (err) {
-				_didIteratorError6 = true;
-				_iteratorError6 = err;
+				_didIteratorError12 = true;
+				_iteratorError12 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion6 && _iterator6.return) {
-						_iterator6.return();
+					if (!_iteratorNormalCompletion12 && _iterator12.return) {
+						_iterator12.return();
 					}
 				} finally {
-					if (_didIteratorError6) {
-						throw _iteratorError6;
+					if (_didIteratorError12) {
+						throw _iteratorError12;
 					}
 				}
 			}
@@ -3507,14 +3820,14 @@ yootil.key.splitter = function () {
 	}, {
 		key: "split",
 		value: function split() {
-			var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var _ref11 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-			var _ref10$data = _ref10.data;
-			var data = _ref10$data === undefined ? "" : _ref10$data;
-			var _ref10$json = _ref10.json;
-			var json = _ref10$json === undefined ? true : _ref10$json;
-			var _ref10$length = _ref10.length;
-			var length = _ref10$length === undefined ? 0 : _ref10$length;
+			var _ref11$data = _ref11.data;
+			var data = _ref11$data === undefined ? "" : _ref11$data;
+			var _ref11$json = _ref11.json;
+			var json = _ref11$json === undefined ? true : _ref11$json;
+			var _ref11$length = _ref11.length;
+			var length = _ref11$length === undefined ? 0 : _ref11$length;
 
 			if (!data || this.keys.length < 2) {
 				return false;
@@ -3522,13 +3835,13 @@ yootil.key.splitter = function () {
 
 			data = json ? JSON.stringify(data) : data.toString();
 
-			var _iteratorNormalCompletion7 = true;
-			var _didIteratorError7 = false;
-			var _iteratorError7 = undefined;
+			var _iteratorNormalCompletion13 = true;
+			var _didIteratorError13 = false;
+			var _iteratorError13 = undefined;
 
 			try {
-				for (var _iterator7 = this.keys[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-					var obj = _step7.value;
+				for (var _iterator13 = this.keys[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+					var obj = _step13.value;
 
 					var data_chunk = data.substr(0, length || obj.key.max_space());
 
@@ -3537,16 +3850,16 @@ yootil.key.splitter = function () {
 					data = data.substr(data_chunk.length, data.length);
 				}
 			} catch (err) {
-				_didIteratorError7 = true;
-				_iteratorError7 = err;
+				_didIteratorError13 = true;
+				_iteratorError13 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion7 && _iterator7.return) {
-						_iterator7.return();
+					if (!_iteratorNormalCompletion13 && _iterator13.return) {
+						_iterator13.return();
 					}
 				} finally {
-					if (_didIteratorError7) {
-						throw _iteratorError7;
+					if (_didIteratorError13) {
+						throw _iteratorError13;
 					}
 				}
 			}
@@ -3570,27 +3883,27 @@ yootil.key.splitter = function () {
 
 			var last = null;
 
-			var _iteratorNormalCompletion8 = true;
-			var _didIteratorError8 = false;
-			var _iteratorError8 = undefined;
+			var _iteratorNormalCompletion14 = true;
+			var _didIteratorError14 = false;
+			var _iteratorError14 = undefined;
 
 			try {
-				for (var _iterator8 = this.keys[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-					var obj = _step8.value;
+				for (var _iterator14 = this.keys[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+					var obj = _step14.value;
 
 					last = obj.key.set(obj.data, object_id);
 				}
 			} catch (err) {
-				_didIteratorError8 = true;
-				_iteratorError8 = err;
+				_didIteratorError14 = true;
+				_iteratorError14 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion8 && _iterator8.return) {
-						_iterator8.return();
+					if (!_iteratorNormalCompletion14 && _iterator14.return) {
+						_iterator14.return();
 					}
 				} finally {
-					if (_didIteratorError8) {
-						throw _iteratorError8;
+					if (_didIteratorError14) {
+						throw _iteratorError14;
 					}
 				}
 			}
@@ -3599,7 +3912,7 @@ yootil.key.splitter = function () {
 		}
 	}]);
 
-	return _class10;
+	return _class11;
 }();
 
 /*
@@ -3617,15 +3930,15 @@ yootil.key.joiner = function () {
   * @param {Number} object_id
   */
 
-	function _class11() {
-		var _ref11 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	function _class12() {
+		var _ref12 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-		var _ref11$keys = _ref11.keys;
-		var keys = _ref11$keys === undefined ? [] : _ref11$keys;
-		var _ref11$object_id = _ref11.object_id;
-		var object_id = _ref11$object_id === undefined ? undefined : _ref11$object_id;
+		var _ref12$keys = _ref12.keys;
+		var keys = _ref12$keys === undefined ? [] : _ref12$keys;
+		var _ref12$object_id = _ref12.object_id;
+		var object_id = _ref12$object_id === undefined ? undefined : _ref12$object_id;
 
-		_classCallCheck(this, _class11);
+		_classCallCheck(this, _class12);
 
 		if (!Array.isArray(keys)) {
 			keys = [keys];
@@ -3643,7 +3956,7 @@ yootil.key.joiner = function () {
   */
 
 
-	_createClass(_class11, [{
+	_createClass(_class12, [{
 		key: "data",
 		value: function data() {
 			var json = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
@@ -3652,13 +3965,13 @@ yootil.key.joiner = function () {
 				var data = "";
 				var data_is_array = false;
 
-				var _iteratorNormalCompletion9 = true;
-				var _didIteratorError9 = false;
-				var _iteratorError9 = undefined;
+				var _iteratorNormalCompletion15 = true;
+				var _didIteratorError15 = false;
+				var _iteratorError15 = undefined;
 
 				try {
-					for (var _iterator9 = this.keys[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-						var key = _step9.value;
+					for (var _iterator15 = this.keys[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
+						var key = _step15.value;
 
 						var the_data = yootil.key(key).get(this.object_id);
 
@@ -3675,16 +3988,16 @@ yootil.key.joiner = function () {
 						}
 					}
 				} catch (err) {
-					_didIteratorError9 = true;
-					_iteratorError9 = err;
+					_didIteratorError15 = true;
+					_iteratorError15 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion9 && _iterator9.return) {
-							_iterator9.return();
+						if (!_iteratorNormalCompletion15 && _iterator15.return) {
+							_iterator15.return();
 						}
 					} finally {
-						if (_didIteratorError9) {
-							throw _iteratorError9;
+						if (_didIteratorError15) {
+							throw _iteratorError15;
 						}
 					}
 				}
@@ -3700,7 +4013,7 @@ yootil.key.joiner = function () {
 		}
 	}]);
 
-	return _class11;
+	return _class12;
 }();
 
 /**
@@ -3711,11 +4024,11 @@ yootil.key.joiner = function () {
  */
 
 yootil.location = function () {
-	function _class12() {
-		_classCallCheck(this, _class12);
+	function _class13() {
+		_classCallCheck(this, _class13);
 	}
 
-	_createClass(_class12, null, [{
+	_createClass(_class13, null, [{
 		key: "init",
 		value: function init() {
 			this._cached_route = pb.data && pb.data("route") ? pb.data("route").name : "";
@@ -4318,7 +4631,7 @@ yootil.location = function () {
 		}
 	}]);
 
-	return _class12;
+	return _class13;
 }().init();
 
 /**
@@ -4328,11 +4641,11 @@ yootil.location = function () {
  */
 
 yootil.page = function () {
-	function _class13() {
-		_classCallCheck(this, _class13);
+	function _class14() {
+		_classCallCheck(this, _class14);
 	}
 
-	_createClass(_class13, null, [{
+	_createClass(_class14, null, [{
 		key: "__get_data",
 
 
@@ -4352,7 +4665,7 @@ yootil.page = function () {
 		}
 	}]);
 
-	return _class13;
+	return _class14;
 }();
 
 /**
@@ -4362,11 +4675,11 @@ yootil.page = function () {
  */
 
 yootil.page.board = function () {
-	function _class14() {
-		_classCallCheck(this, _class14);
+	function _class15() {
+		_classCallCheck(this, _class15);
 	}
 
-	_createClass(_class14, null, [{
+	_createClass(_class15, null, [{
 		key: "__get_data",
 
 
@@ -4510,7 +4823,7 @@ yootil.page.board = function () {
 		}
 	}]);
 
-	return _class14;
+	return _class15;
 }();
 
 /**
@@ -4520,11 +4833,11 @@ yootil.page.board = function () {
  */
 
 yootil.page.category = function () {
-	function _class15() {
-		_classCallCheck(this, _class15);
+	function _class16() {
+		_classCallCheck(this, _class16);
 	}
 
-	_createClass(_class15, null, [{
+	_createClass(_class16, null, [{
 		key: "__get_data",
 
 
@@ -4569,7 +4882,7 @@ yootil.page.category = function () {
 		}
 	}]);
 
-	return _class15;
+	return _class16;
 }();
 
 /**
@@ -4579,11 +4892,11 @@ yootil.page.category = function () {
  */
 
 yootil.page.member = function () {
-	function _class16() {
-		_classCallCheck(this, _class16);
+	function _class17() {
+		_classCallCheck(this, _class17);
 	}
 
-	_createClass(_class16, null, [{
+	_createClass(_class17, null, [{
 		key: "__get_data",
 
 
@@ -4661,7 +4974,7 @@ yootil.page.member = function () {
 		}
 	}]);
 
-	return _class16;
+	return _class17;
 }();
 
 /**
@@ -4671,11 +4984,11 @@ yootil.page.member = function () {
  */
 
 yootil.page.post = function () {
-	function _class17() {
-		_classCallCheck(this, _class17);
+	function _class18() {
+		_classCallCheck(this, _class18);
 	}
 
-	_createClass(_class17, null, [{
+	_createClass(_class18, null, [{
 		key: "__get_data",
 
 
@@ -4764,7 +5077,7 @@ yootil.page.post = function () {
 		}
 	}]);
 
-	return _class17;
+	return _class18;
 }();
 
 /**
@@ -4774,11 +5087,11 @@ yootil.page.post = function () {
  */
 
 yootil.page.thread = function () {
-	function _class18() {
-		_classCallCheck(this, _class18);
+	function _class19() {
+		_classCallCheck(this, _class19);
 	}
 
-	_createClass(_class18, null, [{
+	_createClass(_class19, null, [{
 		key: "__get_data",
 
 
@@ -4977,7 +5290,7 @@ yootil.page.thread = function () {
 		}
 	}]);
 
-	return _class18;
+	return _class19;
 }();
 
 /**
@@ -5005,10 +5318,10 @@ yootil.page.thread = function () {
  */
 
 yootil.queue = function () {
-	function _class19() {
+	function _class20() {
 		var auto_start = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
-		_classCallCheck(this, _class19);
+		_classCallCheck(this, _class20);
 
 		this._queue = [];
 		this._iterator = null;
@@ -5023,7 +5336,7 @@ yootil.queue = function () {
   * @chainable
   */
 
-	_createClass(_class19, [{
+	_createClass(_class20, [{
 		key: "add",
 		value: function add() {
 			var func = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
@@ -5169,15 +5482,15 @@ yootil.queue = function () {
 		}
 	}]);
 
-	return _class19;
+	return _class20;
 }();
 
 yootil.settings = function () {
-	function _class20() {
-		_classCallCheck(this, _class20);
+	function _class21() {
+		_classCallCheck(this, _class21);
 	}
 
-	_createClass(_class20, null, [{
+	_createClass(_class21, null, [{
 		key: "init",
 		value: function init() {
 			this.images = {};
@@ -5192,7 +5505,7 @@ yootil.settings = function () {
 		}
 	}]);
 
-	return _class20;
+	return _class21;
 }();
 
 /**
@@ -5202,11 +5515,11 @@ yootil.settings = function () {
  */
 
 yootil.storage = function () {
-	function _class21() {
-		_classCallCheck(this, _class21);
+	function _class22() {
+		_classCallCheck(this, _class22);
 	}
 
-	_createClass(_class21, null, [{
+	_createClass(_class22, null, [{
 		key: "set",
 
 
@@ -5328,7 +5641,7 @@ yootil.storage = function () {
 		}
 	}]);
 
-	return _class21;
+	return _class22;
 }();
 
 /**
@@ -5343,19 +5656,19 @@ yootil.storage = function () {
  */
 
 yootil.sync = function () {
-	function _class22() {
+	function _class23() {
 		var _this5 = this;
 
-		var _ref12 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+		var _ref13 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-		var _ref12$key = _ref12.key;
-		var key = _ref12$key === undefined ? "" : _ref12$key;
-		var _ref12$data = _ref12.data;
-		var data = _ref12$data === undefined ? {} : _ref12$data;
-		var _ref12$handler = _ref12.handler;
-		var handler = _ref12$handler === undefined ? {} : _ref12$handler;
+		var _ref13$key = _ref13.key;
+		var key = _ref13$key === undefined ? "" : _ref13$key;
+		var _ref13$data = _ref13.data;
+		var data = _ref13$data === undefined ? {} : _ref13$data;
+		var _ref13$handler = _ref13.handler;
+		var handler = _ref13$handler === undefined ? {} : _ref13$handler;
 
-		_classCallCheck(this, _class22);
+		_classCallCheck(this, _class23);
 
 		if (!key) {
 			return;
@@ -5399,7 +5712,7 @@ yootil.sync = function () {
 
 	// For outside calls to trigger a manual update
 
-	_createClass(_class22, [{
+	_createClass(_class23, [{
 		key: "update",
 		value: function update() {
 			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -5428,7 +5741,7 @@ yootil.sync = function () {
 		}
 	}]);
 
-	return _class22;
+	return _class23;
 }();
 
 /**
@@ -5438,11 +5751,11 @@ yootil.sync = function () {
  */
 
 yootil.user = function () {
-	function _class23() {
-		_classCallCheck(this, _class23);
+	function _class24() {
+		_classCallCheck(this, _class24);
 	}
 
-	_createClass(_class23, null, [{
+	_createClass(_class24, null, [{
 		key: "init",
 		value: function init() {
 			this._data = {};
@@ -5905,7 +6218,7 @@ yootil.user = function () {
 		}
 	}]);
 
-	return _class23;
+	return _class24;
 }().init();
 
 /**
@@ -5924,8 +6237,8 @@ yootil.random = function () {
   * @param {Integer} seed
   */
 
-	function _class24(seed) {
-		_classCallCheck(this, _class24);
+	function _class25(seed) {
+		_classCallCheck(this, _class25);
 
 		this.m = 2147483647;
 		this.a = 1103515245;
@@ -5938,7 +6251,7 @@ yootil.random = function () {
   * @returns {Number}
   */
 
-	_createClass(_class24, [{
+	_createClass(_class25, [{
 		key: "current",
 		value: function current() {
 			return this.seed / this.m;
@@ -5958,7 +6271,7 @@ yootil.random = function () {
 		}
 	}]);
 
-	return _class24;
+	return _class25;
 }();
 
 
