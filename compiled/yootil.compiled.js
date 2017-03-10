@@ -888,7 +888,7 @@ yootil.create = function () {
 			html += "<div class=\"content pad-all\">" + content + "</div>";
 			html += "</div>";
 
-			return $(html);
+			return $(html).show();
 		}
 
 		/**
@@ -1526,11 +1526,7 @@ yootil.event = function () {
  *
  *         plugin: "monetary",
  *         id: "test_money",
- *         handlers: {
- *
- *              init(){
- *                  console.log("init");
- *              }
+ *         events: {
  *
  *              pre_init(){
  *     	           console.log("pre");
@@ -1552,7 +1548,7 @@ yootil.event = function () {
  * pre, init, post, and ready events at the correct place in
  * the plugin.
  *
- *     yootil.extension.run("monetary").inits();
+ *     yootil.extension.run("monetary").pre_init();
  *
  */
 
@@ -1574,7 +1570,7 @@ yootil.extension = function () {
    *
    * @param {String} plugin The name of the plugin this extension is for.
    * @param {String} id The name of your extension plugin.
-   * @param {Object} handlers The handlers will be executed.
+   * @param {Object} events The events that will be executed.
    */
 
 	}, {
@@ -1586,10 +1582,10 @@ yootil.extension = function () {
 			var plugin = _ref9$plugin === undefined ? "" : _ref9$plugin;
 			var _ref9$id = _ref9.id;
 			var id = _ref9$id === undefined ? "" : _ref9$id;
-			var _ref9$handlers = _ref9.handlers;
-			var handlers = _ref9$handlers === undefined ? null : _ref9$handlers;
+			var _ref9$events = _ref9.events;
+			var events = _ref9$events === undefined ? null : _ref9$events;
 
-			if (!plugin || !key || !handlers) {
+			if (!plugin || !id || !events) {
 				return;
 			}
 
@@ -1600,7 +1596,7 @@ yootil.extension = function () {
 				this._plugin_extensions.set(plugin_name, new Map());
 			}
 
-			this._plugin_extensions.get(plugin_name).set(id_name, handlers);
+			this._plugin_extensions.get(plugin_name).set(id_name, events);
 
 			return this;
 		}
@@ -1659,7 +1655,7 @@ yootil.extension = function () {
 				}
 			};
 
-			methods.inits = function () {
+			methods.post_inits = function () {
 				if (!_this2.plugin_exists(plugin)) {
 					return;
 				}
@@ -1677,8 +1673,8 @@ yootil.extension = function () {
 						var ext_name = _step2$value[0];
 						var klass = _step2$value[1];
 
-						if (typeof klass.init != "undefined") {
-							klass.init();
+						if (typeof klass.post_init != "undefined") {
+							klass.post_init();
 						}
 					}
 				} catch (err) {
@@ -1697,7 +1693,7 @@ yootil.extension = function () {
 				}
 			};
 
-			methods.post_inits = function () {
+			methods.ready = function () {
 				if (!_this2.plugin_exists(plugin)) {
 					return;
 				}
@@ -1715,8 +1711,8 @@ yootil.extension = function () {
 						var ext_name = _step3$value[0];
 						var klass = _step3$value[1];
 
-						if (typeof klass.post_init != "undefined") {
-							klass.post_init();
+						if (typeof klass.ready != "undefined") {
+							klass.ready();
 						}
 					}
 				} catch (err) {
@@ -1730,44 +1726,6 @@ yootil.extension = function () {
 					} finally {
 						if (_didIteratorError3) {
 							throw _iteratorError3;
-						}
-					}
-				}
-			};
-
-			methods.ready = function () {
-				if (!_this2.plugin_exists(plugin)) {
-					return;
-				}
-
-				var exts = _this2.fetch(plugin);
-
-				var _iteratorNormalCompletion4 = true;
-				var _didIteratorError4 = false;
-				var _iteratorError4 = undefined;
-
-				try {
-					for (var _iterator4 = exts[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-						var _step4$value = _slicedToArray(_step4.value, 2);
-
-						var ext_name = _step4$value[0];
-						var klass = _step4$value[1];
-
-						if (typeof klass.ready != "undefined") {
-							klass.ready();
-						}
-					}
-				} catch (err) {
-					_didIteratorError4 = true;
-					_iteratorError4 = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion4 && _iterator4.return) {
-							_iterator4.return();
-						}
-					} finally {
-						if (_didIteratorError4) {
-							throw _iteratorError4;
 						}
 					}
 				}
@@ -2989,13 +2947,13 @@ yootil.key = function () {
 			if (new_values.length) {
 				var to_push = [];
 
-				var _iteratorNormalCompletion5 = true;
-				var _didIteratorError5 = false;
-				var _iteratorError5 = undefined;
+				var _iteratorNormalCompletion4 = true;
+				var _didIteratorError4 = false;
+				var _iteratorError4 = undefined;
 
 				try {
 					var _loop = function _loop() {
-						var item = _step5.value;
+						var item = _step4.value;
 
 						var af = strict ? function (val) {
 							return val === item;
@@ -3008,20 +2966,20 @@ yootil.key = function () {
 						}
 					};
 
-					for (var _iterator5 = new_values[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+					for (var _iterator4 = new_values[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
 						_loop();
 					}
 				} catch (err) {
-					_didIteratorError5 = true;
-					_iteratorError5 = err;
+					_didIteratorError4 = true;
+					_iteratorError4 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion5 && _iterator5.return) {
-							_iterator5.return();
+						if (!_iteratorNormalCompletion4 && _iterator4.return) {
+							_iterator4.return();
 						}
 					} finally {
-						if (_didIteratorError5) {
-							throw _iteratorError5;
+						if (_didIteratorError4) {
+							throw _iteratorError4;
 						}
 					}
 				}
@@ -3107,13 +3065,13 @@ yootil.key = function () {
 			if (new_values.length) {
 				var to_push = [];
 
-				var _iteratorNormalCompletion6 = true;
-				var _didIteratorError6 = false;
-				var _iteratorError6 = undefined;
+				var _iteratorNormalCompletion5 = true;
+				var _didIteratorError5 = false;
+				var _iteratorError5 = undefined;
 
 				try {
 					var _loop2 = function _loop2() {
-						var item = _step6.value;
+						var item = _step5.value;
 
 						var af = strict ? function (val) {
 							return val === item;
@@ -3126,20 +3084,20 @@ yootil.key = function () {
 						}
 					};
 
-					for (var _iterator6 = new_values[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+					for (var _iterator5 = new_values[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
 						_loop2();
 					}
 				} catch (err) {
-					_didIteratorError6 = true;
-					_iteratorError6 = err;
+					_didIteratorError5 = true;
+					_iteratorError5 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion6 && _iterator6.return) {
-							_iterator6.return();
+						if (!_iteratorNormalCompletion5 && _iterator5.return) {
+							_iterator5.return();
 						}
 					} finally {
-						if (_didIteratorError6) {
-							throw _iteratorError6;
+						if (_didIteratorError5) {
+							throw _iteratorError5;
 						}
 					}
 				}
@@ -3469,16 +3427,16 @@ yootil.key.splitter = function () {
 	_createClass(_class10, [{
 		key: "convert_keys_to_objs",
 		value: function convert_keys_to_objs() {
-			var _iteratorNormalCompletion7 = true;
-			var _didIteratorError7 = false;
-			var _iteratorError7 = undefined;
+			var _iteratorNormalCompletion6 = true;
+			var _didIteratorError6 = false;
+			var _iteratorError6 = undefined;
 
 			try {
-				for (var _iterator7 = this.keys.entries()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-					var _step7$value = _slicedToArray(_step7.value, 2);
+				for (var _iterator6 = this.keys.entries()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+					var _step6$value = _slicedToArray(_step6.value, 2);
 
-					var index = _step7$value[0];
-					var value = _step7$value[1];
+					var index = _step6$value[0];
+					var value = _step6$value[1];
 
 					var obj = yootil.key(value);
 
@@ -3494,16 +3452,16 @@ yootil.key.splitter = function () {
 					}
 				}
 			} catch (err) {
-				_didIteratorError7 = true;
-				_iteratorError7 = err;
+				_didIteratorError6 = true;
+				_iteratorError6 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion7 && _iterator7.return) {
-						_iterator7.return();
+					if (!_iteratorNormalCompletion6 && _iterator6.return) {
+						_iterator6.return();
 					}
 				} finally {
-					if (_didIteratorError7) {
-						throw _iteratorError7;
+					if (_didIteratorError6) {
+						throw _iteratorError6;
 					}
 				}
 			}
@@ -3564,13 +3522,13 @@ yootil.key.splitter = function () {
 
 			data = json ? JSON.stringify(data) : data.toString();
 
-			var _iteratorNormalCompletion8 = true;
-			var _didIteratorError8 = false;
-			var _iteratorError8 = undefined;
+			var _iteratorNormalCompletion7 = true;
+			var _didIteratorError7 = false;
+			var _iteratorError7 = undefined;
 
 			try {
-				for (var _iterator8 = this.keys[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-					var obj = _step8.value;
+				for (var _iterator7 = this.keys[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+					var obj = _step7.value;
 
 					var data_chunk = data.substr(0, length || obj.key.max_space());
 
@@ -3579,16 +3537,16 @@ yootil.key.splitter = function () {
 					data = data.substr(data_chunk.length, data.length);
 				}
 			} catch (err) {
-				_didIteratorError8 = true;
-				_iteratorError8 = err;
+				_didIteratorError7 = true;
+				_iteratorError7 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion8 && _iterator8.return) {
-						_iterator8.return();
+					if (!_iteratorNormalCompletion7 && _iterator7.return) {
+						_iterator7.return();
 					}
 				} finally {
-					if (_didIteratorError8) {
-						throw _iteratorError8;
+					if (_didIteratorError7) {
+						throw _iteratorError7;
 					}
 				}
 			}
@@ -3612,27 +3570,27 @@ yootil.key.splitter = function () {
 
 			var last = null;
 
-			var _iteratorNormalCompletion9 = true;
-			var _didIteratorError9 = false;
-			var _iteratorError9 = undefined;
+			var _iteratorNormalCompletion8 = true;
+			var _didIteratorError8 = false;
+			var _iteratorError8 = undefined;
 
 			try {
-				for (var _iterator9 = this.keys[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-					var obj = _step9.value;
+				for (var _iterator8 = this.keys[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+					var obj = _step8.value;
 
 					last = obj.key.set(obj.data, object_id);
 				}
 			} catch (err) {
-				_didIteratorError9 = true;
-				_iteratorError9 = err;
+				_didIteratorError8 = true;
+				_iteratorError8 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion9 && _iterator9.return) {
-						_iterator9.return();
+					if (!_iteratorNormalCompletion8 && _iterator8.return) {
+						_iterator8.return();
 					}
 				} finally {
-					if (_didIteratorError9) {
-						throw _iteratorError9;
+					if (_didIteratorError8) {
+						throw _iteratorError8;
 					}
 				}
 			}
@@ -3694,15 +3652,15 @@ yootil.key.joiner = function () {
 				var data = "";
 				var data_is_array = false;
 
-				var _iteratorNormalCompletion10 = true;
-				var _didIteratorError10 = false;
-				var _iteratorError10 = undefined;
+				var _iteratorNormalCompletion9 = true;
+				var _didIteratorError9 = false;
+				var _iteratorError9 = undefined;
 
 				try {
-					for (var _iterator10 = this.keys[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-						var _key = _step10.value;
+					for (var _iterator9 = this.keys[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+						var key = _step9.value;
 
-						var the_data = yootil.key(_key).get(this.object_id);
+						var the_data = yootil.key(key).get(this.object_id);
 
 						if (Array.isArray(the_data)) {
 							data_is_array = true;
@@ -3717,16 +3675,16 @@ yootil.key.joiner = function () {
 						}
 					}
 				} catch (err) {
-					_didIteratorError10 = true;
-					_iteratorError10 = err;
+					_didIteratorError9 = true;
+					_iteratorError9 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion10 && _iterator10.return) {
-							_iterator10.return();
+						if (!_iteratorNormalCompletion9 && _iterator9.return) {
+							_iterator9.return();
 						}
 					} finally {
-						if (_didIteratorError10) {
-							throw _iteratorError10;
+						if (_didIteratorError9) {
+							throw _iteratorError9;
 						}
 					}
 				}

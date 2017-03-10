@@ -38,7 +38,7 @@ yootil.create = class {
 		html += "<div class=\"content pad-all\">" + content + "</div>";
 		html += "</div>";
 
-		return $(html);
+		return $(html).show();
 	}
 
 	/**

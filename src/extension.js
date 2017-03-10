@@ -8,11 +8,7 @@
  *
  *         plugin: "monetary",
  *         id: "test_money",
- *         handlers: {
- *
- *              init(){
- *                  console.log("init");
- *              }
+ *         events: {
  *
  *              pre_init(){
  *     	           console.log("pre");
@@ -34,7 +30,7 @@
  * pre, init, post, and ready events at the correct place in
  * the plugin.
  *
- *     yootil.extension.run("monetary").inits();
+ *     yootil.extension.run("monetary").pre_init();
  *
  */
 
@@ -51,11 +47,11 @@ yootil.extension = (class {
 	 *
 	 * @param {String} plugin The name of the plugin this extension is for.
 	 * @param {String} id The name of your extension plugin.
-	 * @param {Object} handlers The handlers will be executed.
+	 * @param {Object} events The events that will be executed.
 	 */
 
-	static create({plugin = "", id = "", handlers = null} = {}){
-		if(!plugin || !key || !handlers){
+	static create({plugin = "", id = "", events = null} = {}){
+		if(!plugin || !id || !events){
 			return;
 		}
 
@@ -66,7 +62,7 @@ yootil.extension = (class {
 			this._plugin_extensions.set(plugin_name, new Map());
 		}
 
-		this._plugin_extensions.get(plugin_name).set(id_name, handlers);
+		this._plugin_extensions.get(plugin_name).set(id_name, events);
 
 		return this;
 	}
@@ -91,20 +87,6 @@ yootil.extension = (class {
 			for(let [ext_name, klass] of exts){
 				if(typeof klass.pre_init != "undefined"){
 					klass.pre_init();
-				}
-			}
-		};
-
-		methods.inits = () => {
-			if(!this.plugin_exists(plugin)){
-				return;
-			}
-
-			let exts = this.fetch(plugin);
-
-			for(let [ext_name, klass] of exts){
-				if(typeof klass.init != "undefined"){
-					klass.init();
 				}
 			}
 		};
