@@ -446,7 +446,7 @@ yootil.location = (class {
 	 */
 
 	static posts(){
-		return this.recent_posts() || this.ip_threads();
+		return this.recent_posts() || this.ip_posts();
 	}
 
 	/**
