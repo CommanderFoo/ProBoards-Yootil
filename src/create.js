@@ -265,8 +265,6 @@ yootil.create = class {
 			if(id.match(/bbcode|visual/i)){
 				$(".editor .ui-wysiwyg .editors").show();
 			} else if($(selector).length){
-				console.log(events);
-
 				if(events && events.show){
 					if(events.context){
 						events.show.bind(events.context)($tab, $tab_content);
