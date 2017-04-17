@@ -1,6 +1,4 @@
 /**
- * @class yootil.page.member
- * @static
  * Various methods to help get member information.
  */
 
@@ -9,9 +7,11 @@ yootil.page.member = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
+	 * @private
+	 *
+	 * @param {String} key - The key on the page object to check and get.
+	 *
 	 * @return {String|Object|Array|Number}
-	 * @ignore
 	 */
 
 	static __get_data(key){
@@ -26,6 +26,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members ID.
+	 *
 	 * @return {Number}
 	 */
 
@@ -35,6 +36,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members name.
+	 *
 	 * @return {String}
 	 */
 
@@ -44,6 +46,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members URL.
+	 *
 	 * @return {String}
 	 */
 
@@ -53,6 +56,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members display group id.
+	 *
 	 * @return {Number}
 	 */
 
@@ -62,6 +66,7 @@ yootil.page.member = class {
 
 	/**
 	 * Valid member
+	 *
 	 * @return {Boolean}
 	 */
 

@@ -1,6 +1,12 @@
-// This will likely be removed in v6
+/**
+ * Mimics the ProBoards bar, but on the left and for plugins.
+ */
 
 yootil.bar = class {
+
+	/**
+	 * @private
+	 */
 
 	static init(){
 		if(!yootil.settings.bar.enabled){
@@ -11,6 +17,10 @@ yootil.bar = class {
 		this.create_bar();
 		this._items = new Map();
 	}
+
+	/**
+	 * @private
+	 */
 
 	static setup(){
 		let position = yootil.settings.bar_position;
@@ -88,15 +98,18 @@ yootil.bar = class {
 	/**
 	 * Add an item to the Yootil Bar.
 	 *
-	 *     yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
+	 * @example
+	 * yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
 	 *
-	 * @param {String} $0.link URL for the item.
-	 * @param {String} $0.img URL for the image.
-	 * @param {String} [$0.alt] Alt / title for the image.
-	 * @param {String} [$0.key] Pass in a unique key if you wish to have the option to remove it later.
-	 * @param {Function} [$0.func] Pass function to be executed when clicked on.
-	 * @param {Object} [$0.context] Context of the function being passed.
-	 * @chainable
+	 * @param {Object} config
+	 * @param {String} config.link="" - URL for the item.
+	 * @param {String} config.img="" - URL for the image.
+	 * @param {String} [config.alt=""] - Alt / title for the image.
+	 * @param {String} [config.key=""] - Pass in a unique key if you wish to have the option to remove it later.
+	 * @param {Function} [config.func=null] - Pass function to be executed when clicked on.
+	 * @param {Object} [config.context=null] - Context of the function being passed.
+	 *
+	 * @return {Object} yootil.bar
 	 */
 
 	static add({url = "", img = "", alt = "", key = "", func = null, context = null} = {}){
@@ -141,10 +154,12 @@ yootil.bar = class {
 	/**
 	 * Remove an item to the Yootil Bar.
 	 *
-	 *     yootil.bar.remove("myitem");
+	 * @example
+	 * yootil.bar.remove("myitem");
 	 *
-	 * @param {String} key The unique key used when adding the item.
-	 * @chainable
+	 * @param {String} key="" - The unique key used when adding the item.
+	 *
+	 * @return {Object} yootil.bar
 	 */
 
 	static remove(key = ""){
@@ -168,9 +183,10 @@ yootil.bar = class {
 	/**
 	 * Checks to see if the bar is enabled.
 	 *
-	 *     if(yootil.bar.enabled()){
-	 *     	console.log("Bar is enabled");
-	 *     }
+	 * @example
+	 * if(yootil.bar.enabled()){
+	 *     console.log("Bar is enabled");
+	 * }
 	 *
 	 * @return {Boolean}
 	 */
@@ -179,9 +195,19 @@ yootil.bar = class {
 		return yootil.settings.bar.enabled;
 	}
 
+	/**
+	 * Gets the total items in the bar.
+	 *
+	 * @return {Number}
+	 */
+
 	static total_items(){
 		return this._items.length;
 	}
+
+	/**
+	 * @private
+	 */
 
 	static reposition_left(){
 		let position = this._settings.bar_position;
@@ -191,6 +217,10 @@ yootil.bar = class {
 		}
 	}
 
+	/**
+	 * @private
+	 */
+
 	static reposition_top(){
 		let position = yootil.settings.bar.position;
 
@@ -198,6 +228,10 @@ yootil.bar = class {
 			this._plugin_bar.css("top", (($(window).height() / 2) - (this._plugin_bar.height() / 2)));
 		}
 	}
+
+	/**
+	 * @private
+	 */
 
 	static create_bar(){
 		let $bar = $("<div id='yootil-bar-wrapper'><div id='yootil-bar'></div></div>").addClass(this._settings.position);
@@ -217,6 +251,10 @@ yootil.bar = class {
 		$(() => $("body").append($bar));
 		this._plugin_bar = $bar;
 	}
+
+	/**
+	 * @private
+	 */
 
 	static get settings(){
 		return this._settings;

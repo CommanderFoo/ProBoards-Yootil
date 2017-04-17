@@ -1,11 +1,12 @@
 /**
- * @class yootil.event
- * @static
- *
  * Useful methods for event / ajax related stuff.
  */
 
 yootil.event = (class {
+
+	/**
+	 * @private
+	 */
 
 	static init(){
 		proboards.events.post_liked = [];

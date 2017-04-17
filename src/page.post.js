@@ -1,6 +1,4 @@
 /**
- * @class yootil.page.post
- * @static
  * Various methods to help get post information.
  */
 
@@ -9,9 +7,11 @@ yootil.page.post = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
+	 * @private
+	 *
+	 * @param {String} key - The key on the page object to check and get
+	 *
 	 * @return {String|Object|Array|Number}
-	 * @ignore
 	 */
 
 	static __get_data(key){
@@ -26,6 +26,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the user id of who created the post
+	 *
 	 * @return {Number}
 	 */
 
@@ -35,6 +36,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the timeastamp when the post was created
+	 *
 	 * @return {Number}
 	 */
 
@@ -44,6 +46,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -53,6 +56,7 @@ yootil.page.post = class {
 
 	/**
 	 * Checks if the post has been liked
+	 *
 	 * @return {boolean}
 	 */
 
@@ -62,6 +66,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the thread id
+	 *
 	 * @return {Number}
 	 */
 
@@ -71,6 +76,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the post URL
+	 *
 	 * @return {String}
 	 */
 

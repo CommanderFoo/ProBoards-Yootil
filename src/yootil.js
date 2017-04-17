@@ -1,6 +1,4 @@
 /**
- * @class yootil
- * @static
  * Yootil is a utility library for ProBoards.  It was designed to help plugin developers develop quicker.
  *
  * The "yootil" namespace encapsulates all of the utilities and classes.
@@ -11,6 +9,10 @@
  */
 
 class yootil {
+
+	/**
+	 * @private
+	 */
 
 	static init(){
 		this._PLUGIN = "pixeldepth_yootil";
@@ -55,6 +57,10 @@ class yootil {
 		this.bar.init();
 	}
 
+	/**
+	 * @private
+	 */
+
 	static setup(){
 		let plugin = pb.plugin.get(this._PLUGIN);
 		let settings = (plugin && plugin.settings)? plugin.settings : false;
@@ -72,11 +78,13 @@ class yootil {
 	/**
 	 * Makes a string safe for inserting into the DOM.
 	 *
-	 *     let safe_html = yootil.html_encode("<b>this won't be bold</b>");
+	 * @example
+	 * let safe_html = yootil.html_encode("<b>this won't be bold</b>");
 	 *
-	 * @param {String} str The value you want returned to be safe.
-	 * @param {Boolean} decode_first Pass true if you want to decode before encoding to prevent double encoding.
-	 * @return {String} The safe value.
+	 * @param {String} str="" - The value you want returned to be safe.
+	 * @param {Boolean} [decode_first=false] - Pass true if you want to decode before encoding to prevent double encoding.
+	 *
+	 * @return {String} - The safe value.
 	 */
 
 	static html_encode(str = "", decode_first = false){
@@ -88,10 +96,12 @@ class yootil {
 	/**
 	 * Converts back to HTML
 	 *
-	 *     let html = yootil.html_decode("<b>this will be bold</b>");
+	 * @example
+	 * let html = yootil.html_decode("<b>this will be bold</b>");
 	 *
-	 * @param {String} str The string you want returned to be an HTML string.
-	 * @return {String} The HTML string.
+	 * @param {String} str="" - The string you want returned to be an HTML string.
+	 *
+	 * @return {String} - The HTML string.
 	 */
 
 	static html_decode(str = ""){
@@ -107,11 +117,13 @@ class yootil {
 	/**
 	 * Formats numbers so they look pretty (i.e 1,530).
 	 *
-	 *     yootil.utils.number_format(1000); // 1,000
+	 * @example
+	 * yootil.utils.number_format(1000); // 1,000
 	 *
-	 * @param {String} str The string to format.
-	 * @param {String} [delim] The delimiter between each block (i.e 100.000.000, 100,000,000).
-	 * @return {String} Formatted string.
+	 * @param {String} str="" - The string to format.
+	 * @param {String} [delim=","] - The delimiter between each block (i.e 100.000.000, 100,000,000).
+	 *
+	 * @return {String} - Formatted string.
 	 */
 
 	static number_format(str = "", delim = ","){
@@ -121,10 +133,12 @@ class yootil {
 	/**
 	 * Checks to see if string passed in is a valid JSON string.
 	 *
-	 *     yootil.is_json("{\"hello\":\"world\"}");
+	 * @example
+	 * yootil.is_json("{\"hello\":\"world\"}");
 	 *
-	 * @param {String} str This is the string that is getting checked for valid JSON.
-	 * @param {Boolean} [return_obj] If true, the string will be parsed and returned back.
+	 * @param {String} str="" - This is the string that is getting checked for valid JSON.
+	 * @param {Boolean} [return_obj=false] - If true, the string will be parsed and returned back.
+	 *
 	 * @return {Object|Boolean}
 	 */
 
@@ -155,9 +169,11 @@ class yootil {
 	/**
 	 * Checks a number and returns the correct suffix to be used with it.
 	 *
-	 *     yootil.suffix(3); // "rd"
+	 * @example
+	 * yootil.suffix(3); // "rd"
 	 *
-	 * @param {Number} n The number to be checked.
+	 * @param {Number} n=0 - The number to be checked.
+	 *
 	 * @return {String}
 	 */
 
@@ -182,10 +198,12 @@ class yootil {
 	/**
 	 * Gets a day from the days array.
 	 *
-	 *     yootil.day(1); // "Mon"
+	 * @example
+	 * yootil.day(1); // "Mon"
 	 *
-	 * @param {Number} index Indexing starts at 0, with Sunday being 0.
-	 * @param {Boolean} full Returns full day name.
+	 * @param {Number} index=0 - Indexing starts at 0, with Sunday being 0.
+	 * @param {Boolean} [full=false] - Returns full day name.
+	 *
 	 * @return {String}
 	 */
 
@@ -200,10 +218,12 @@ class yootil {
 	/**
 	 * Gets a month from the months array.
 	 *
-	 *     yootil.month(2); // "Mar"
+	 * @example
+	 * yootil.month(2); // "Mar"
 	 *
-	 * @param {Number} index Indexing starts at 0.
-	 * @param {Boolean} full Returns full month name.
+	 * @param {Number} index=0 - Indexing starts at 0.
+	 * @param {Boolean} [full=false] - Returns full month name.
+	 *
 	 * @return {String}
 	 */
 
@@ -215,9 +235,11 @@ class yootil {
 		return "";
 	}
 
-	static get images(){
-		return this._images;
-	}
+	/**
+	 * Current version of Yootil
+	 *
+	 * @return {String}
+	 */
 
 	static get version(){
 		return this._version;
@@ -256,14 +278,16 @@ class yootil {
 	/**
 	 * Compares version numbers.
 	 *
+	 * @example
 	 * 1 = current is higher than required
 	 * -1 = required is higher than current
 	 * 0 = current and required are the same
 	 *
-	 *    yootil.compare_version("1.1.1", "1.1.1.2"); // -1
+	 * yootil.compare_version("1.1.1", "1.1.1.2"); // -1
 	 *
-	 * @param {String} [current]
-	 * @param {String} [required]
+	 * @param {String} current=0.0.0 - Current version.
+	 * @param {String} required=0.0.0 - Required version.
+	 *
 	 * @return {Number}
 	 */
 
@@ -299,8 +323,9 @@ class yootil {
 	 *
 	 * Source: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 	 *
-	 * @param (String) str
-	 * @returns {Number}
+	 * @param {String} str=""
+	 *
+	 * @return {Number}
 	 */
 
 	static hash_code(str = ""){

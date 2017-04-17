@@ -1,18 +1,17 @@
-/**
- * @class yootil.clock
- * @constructor
- *
- * let clock = new yootil.clock();
- *
- * clock.start();
- * clock.stop();
- * console.log(clock.elapsed());
- *
- * @param {Boolean} [start] If true, then the clock will start right away.
- * @param {Boolean} [seconds] If true, then "elapsed" will return seconds.
- */
-
 yootil.clock = class {
+
+	/**
+	 * @example
+	 * let clock = new yootil.clock();
+	 *
+	 * clock.start();
+	 * clock.stop();
+	 *
+	 * console.log(clock.elapsed());
+	 *
+	 * @param {Boolean} [start=false] - If true, then the clock will start right away.
+	 * @param {Boolean} [seconds=true] - If true, then elapsed will return seconds.
+	 */
 
 	constructor(start = false, seconds = true){
 		this._start = this._old = this._elapsed = 0;
@@ -24,25 +23,47 @@ yootil.clock = class {
 		}
 	}
 
+	/**
+	 * Starts the clock.
+	 */
+
 	start(){
 		this._start = this._old = performance.now();
 		this._running = true;
 	}
+
+	/**
+	 * Stops the clock.
+	 */
 
 	stop(){
 		this.delta();
 		this._running = false;
 	}
 
+	/**
+	 * Resumes the clock.
+	 */
+
 	resume(){
 		this._running = true;
 	}
+
+	/**
+	 * Returns the elapsed time.
+	 *
+	 * @return {Number}
+	 */
 
 	elapsed(){
 		this.delta();
 
 		return this._elapsed;
 	}
+
+	/**
+	 * @private
+	 */
 
 	delta(){
 		let diff = 0;

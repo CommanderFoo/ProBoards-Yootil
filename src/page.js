@@ -1,7 +1,7 @@
 /**
- * @class yootil.page
- * @ignore
  * Wrapper around the ProBoards data object "page".
+ *
+ * @private
  */
 
 yootil.page = class {
@@ -9,7 +9,10 @@ yootil.page = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
+	 * @private
+	 *
+	 * @param {String} key - The key on the page object to check and get.
+	 *
 	 * @return {String|Object|Array|Number}
 	 */
 

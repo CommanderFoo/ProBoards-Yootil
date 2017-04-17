@@ -1,28 +1,26 @@
-/**
- * @class yootil.queue
- * @constructor
- *
- * Handle queuing functions easily.
- *
- * The queue is passed as a parameter to your queued function, the context is left
- * intact.
- *
- *     let q = new yootil.queue();
- *
- *     q.add(queue => {
- *     	   console.log("Hello");
- *    	   setTimeout(() => queue.next(), 1000);
- *     }).add(queue => {
- *     	   console.log("World");
- *     	   this.stop(); // Stop the queue
- *     }).add(queue => console.log("!")); // Won't run as queue was stopped
- *
- *     q.start(); // Manually start the queue
- *
- * @param {Boolean} [auto_start] If true, the queue will auto start once the first item is added.
- */
-
 yootil.queue = class {
+
+	/**
+	 * Handle queuing functions easily.
+	 *
+	 * The queue is passed as a parameter to your queued function, the context is left
+	 * intact.
+	 *
+	 * @example
+	 * let q = new yootil.queue();
+	 *
+	 * q.add(queue => {
+	 *     console.log("Hello");
+	 *     setTimeout(() => queue.next(), 1000);
+	 * }).add(queue => {
+	 *     console.log("World");
+	 *     this.stop(); // Stop the queue
+	 * }).add(queue => console.log("!")); // Won't run as queue was stopped
+	 *
+	 * q.start(); // Manually start the queue
+	 *
+	 * @param {Boolean} [auto_start=false] - If true, the queue will auto start once the first item is added.
+	 */
 
 	constructor(auto_start = false){
 		this._queue = [];
@@ -34,8 +32,9 @@ yootil.queue = class {
 	/**
 	 * Add a function to the queue.
 	 *
-	 * @param {Function} func The function to add to the queue.
-	 * @chainable
+	 * @param {Function} func=null - The function to add to the queue.
+	 *
+	 * @return {Object} this
 	 */
 
 	add(func = null){
@@ -55,6 +54,10 @@ yootil.queue = class {
 
 		return this;
 	}
+
+	/**
+	 * @private
+	 */
 
 	*iterator(){
 		while(!this._stopped && this._queue.length){
@@ -76,7 +79,7 @@ yootil.queue = class {
 	/**
 	 * Starts the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	start(){
@@ -89,7 +92,7 @@ yootil.queue = class {
 	/**
 	 * Stops the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	stop(){
@@ -100,7 +103,7 @@ yootil.queue = class {
 	/**
 	 * Pauses the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	pause(){
@@ -112,15 +115,17 @@ yootil.queue = class {
 	/**
 	 * Resumes the queue.
 	 *
-	 *  let q = new yootil.queue(true).add(queue => {
+	 * @example
+	 * let q = new yootil.queue(true).add(queue => {
 	 *     console.log("Hello");
 	 *     queue.pause();
-	 *  }).add(() => console.log(" World!"));
+	 * }).add(() => console.log(" World!"));
 	 *
-	 *  $("mybtn").click(q.resume);
+	 * $("mybtn").click(q.resume);
 	 *
-	 * @param {Boolean} [do_next] Will call "next" on the iterator automatically.
-	 * @chainable
+	 * @param {Boolean} [do_next=true] - Will call "next" on the iterator automatically.
+	 *
+	 * @return {Object} this
 	 */
 
 	resume(do_next = true){
@@ -136,7 +141,7 @@ yootil.queue = class {
 	/**
 	 * Clears the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	clear(){
