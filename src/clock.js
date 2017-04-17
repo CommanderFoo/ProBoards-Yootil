@@ -62,7 +62,7 @@ yootil.clock = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	delta(){

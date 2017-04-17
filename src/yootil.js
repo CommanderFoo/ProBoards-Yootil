@@ -11,7 +11,7 @@
 class yootil {
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static init(){
@@ -58,7 +58,7 @@ class yootil {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static setup(){

@@ -1,40 +1,41 @@
 /**
- * @class yootil.extension
- * @static
- *
  * Helper methods for plugin extensions.
  *
- *     yootil.extension.create({
+ * @example
+ * yootil.extension.create({
  *
- *         plugin: "monetary",
- *         id: "test_money",
- *         events: {
+ *     plugin: "monetary",
+ *     id: "test_money",
+ *     events: {
  *
- *              pre_init(){
- *     	           console.log("pre");
- *              }
- *
- *              post_init(){
- *	                console.log("post");
- *              }
- *
- *              ready(){
- *	                console.log("ready");
- *              }
- *
+ *         pre_init(){
+ *     	       console.log("pre");
  *         }
  *
- *     });
+ *         post_init(){
+ *	           console.log("post");
+ *         }
  *
- * The main plugin that supports extensions can then run any
- * pre, init, post, and ready events at the correct place in
- * the plugin.
+ *         ready(){
+ *	           console.log("ready");
+ *         }
  *
- *     yootil.extension.run("monetary").pre_init();
+ *     }
  *
+ * });
+ *
+ * // The main plugin that supports extensions can then run any
+ * // pre, init, post, and ready events at the correct place in
+ * // the plugin.
+ *
+ * yootil.extension.run("monetary").pre_init();
  */
 
-yootil.extension = (class {
+yootil.extension = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._plugin_extensions = new Map();
@@ -45,9 +46,12 @@ yootil.extension = (class {
 	/**
 	 * Creates an extension for an existing plugin.
 	 *
-	 * @param {String} plugin The name of the plugin this extension is for.
-	 * @param {String} id The name of your extension plugin.
-	 * @param {Object} events The events that will be executed.
+	 * @param {Object} config
+	 * @param {String} config.plugin="" - The name of the plugin this extension is for.
+	 * @param {String} config.id="" - The name of your extension plugin.
+	 * @param {Object} config.events={} - The events that will be executed.
+	 *
+	 * @return {Object} yootil.extension
 	 */
 
 	static create({plugin = "", id = "", events = null} = {}){
@@ -70,8 +74,9 @@ yootil.extension = (class {
 	/**
 	 * For plugins to run various methods on extension classes.
 	 *
-	 * @param {String} plugin The main plugin name that extensions will use.
-	 * @returns {Object} 4 possible methods are then callable (pre_init, init, post_init, and ready).
+	 * @param {String} plugin="" - The main plugin name that extensions will use.
+	 *
+	 * @return {Object} 3 possible methods are then callable (pre_init, post_init, and ready).
 	 */
 
 	static run(plugin = ""){
@@ -122,9 +127,17 @@ yootil.extension = (class {
 		return methods;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static plugin_exists(plugin = ""){
 		return this._plugin_extensions.has(plugin.toUpperCase() + "_EXTENSIONS");
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	static exists(plugin = "", ext_name = ""){
 		if(this.plugin_exists(plugin)){
@@ -134,6 +147,10 @@ yootil.extension = (class {
 		return false;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static fetch(plugin = ""){
 		if(this.plugin_exists(plugin)){
 			return this._plugin_extensions.get(plugin.toUpperCase() + "_EXTENSIONS");
@@ -142,8 +159,14 @@ yootil.extension = (class {
 		return null;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static get plugin_extensions(){
 		return this._plugin_extensions
 	}
 
-}).init();
+};
+
+yootil.extension.init();

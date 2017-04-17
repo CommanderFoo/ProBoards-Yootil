@@ -5,7 +5,7 @@
 yootil.bar = class {
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static init(){
@@ -19,7 +19,7 @@ yootil.bar = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static setup(){
@@ -206,7 +206,7 @@ yootil.bar = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static reposition_left(){
@@ -218,7 +218,7 @@ yootil.bar = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static reposition_top(){
@@ -230,7 +230,7 @@ yootil.bar = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static create_bar(){
@@ -253,7 +253,7 @@ yootil.bar = class {
 	}
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static get settings(){

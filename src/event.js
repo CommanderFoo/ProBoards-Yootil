@@ -2,10 +2,10 @@
  * Useful methods for event / ajax related stuff.
  */
 
-yootil.event = (class {
+yootil.event = class {
 
 	/**
-	 * @private
+	 * @ignore
 	 */
 
 	static init(){
@@ -83,10 +83,15 @@ yootil.event = (class {
 
 	/**
 	 * Will run after an auto-search (note: this occurs when a board or thread page are first loaded as well).
+	 * @example
+	 * yootil.after_search(() => {
+	 *     console.log("Done");
+	 * });
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static after_search(func, context = null){
@@ -98,9 +103,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the user clicks on a column title to sort a list.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static column_sort(func, context = null){
@@ -112,9 +118,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the 'Show More' link is clicked on a user's activity page.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static more_activity(func, context = null){
@@ -126,9 +133,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the 'Show More' link is clicked on a user's notifications page.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static more_notification(func, context = null){
@@ -140,9 +148,10 @@ yootil.event = (class {
 	/**
 	 * Will run when paginating.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static page_change(func, context = null){
@@ -154,9 +163,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a post it liked.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static post_liked(func, context = null){
@@ -170,9 +180,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a thread is bookmarked.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static bookmarked_thread(func, context = null){
@@ -186,9 +197,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user updates their status.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static updated_status(func, context = null){
@@ -202,9 +214,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user posts a shout in the shoutbox.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_shouted(func, context = null){
@@ -218,9 +231,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the shoutbox updates (i.e fetching new messages).
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_updated(func, context = null){
@@ -234,9 +248,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a shout is removed.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_removed(func, context = null){
@@ -250,9 +265,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user is being searched (i.e bbc insert user link).
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static user_searched(func, context = null){
@@ -263,4 +279,6 @@ yootil.event = (class {
 		return this;
 	}
 
-}).init();
+};
+
+yootil.event.init();

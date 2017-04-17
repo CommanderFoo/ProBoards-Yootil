@@ -7,7 +7,7 @@ yootil.page.post = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @private
+	 * @ignore
 	 *
 	 * @param {String} key - The key on the page object to check and get
 	 *

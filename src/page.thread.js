@@ -1,6 +1,4 @@
 /**
- * @class yootil.page.thread
- * @static
  * Various methods to help get thread information.
  */
 
@@ -9,9 +7,11 @@ yootil.page.thread = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
-	 * @return {String|Object|Array|Number}
 	 * @ignore
+	 *
+	 * @param {String} key - The key on the page object to check and get
+	 *
+	 * @return {String|Object|Array|Number}
 	 */
 
 	static __get_data(key){
@@ -26,6 +26,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -35,6 +36,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread creation date timestamp
+	 *
 	 * @return {Number}
 	 */
 
@@ -44,6 +46,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread an announcement?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -53,6 +56,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread bookmarked?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -62,6 +66,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread falling?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -71,6 +76,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread locked?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -80,6 +86,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread new?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -89,6 +96,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread a poll?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -98,6 +106,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread sticky?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -107,6 +116,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread subject
+	 *
 	 * @return {String}
 	 */
 
@@ -116,6 +126,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread URL
+	 *
 	 * @return {String}
 	 */
 
@@ -125,6 +136,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the board id
+	 *
 	 * @return {Number}
 	 */
 
@@ -134,6 +146,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the member who created this thread
+	 *
 	 * @return {Number}
 	 */
 
@@ -143,6 +156,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the last post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -152,6 +166,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the first post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -161,6 +176,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the last post time
+	 *
 	 * @return {Number}
 	 */
 

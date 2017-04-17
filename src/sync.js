@@ -1,16 +1,24 @@
 /**
- * @class yootil.sync
+ * Handles syncing data between tabs / windows.
  *
+ * @example
  * let my_key = yootil.key("my_key");
  * let sync = new Sync({key: "my_key", data: my_key.get(yootil.user.id())});
  *
  * sync.update(my_key.get()); // Called after setting key
- *
- * @constructor
  */
 
 yootil.sync = class {
 
+	/**
+	 *
+	 * @param {Object} config
+	 * @param {String) config.key="" - The key.
+	 * @param {Object|String} config.data - The data to be stored.
+	 * @param {Object} config.handler={}
+	 *
+	 * @todo documentate this properly
+	 */
 	constructor({key = "", data = {}, handler = {}} = {}){
 		if(!key){
 			return;
@@ -50,12 +58,23 @@ yootil.sync = class {
 		}), 100);
 	}
 
-	// For outside calls to trigger a manual update
+	/**
+	 * Used for outside calls.
+	 *
+	 * @param {Object|String} data
+	 */
 
 	update(data = {}){
 		this._trigger_caller = true;
 		yootil.storage.set(this._ls_key, data, true, true);
 	}
+
+	/**
+	 * The change handler.
+	 *
+	 * @param {Object|String} new_data
+	 * @param {Object|String} old_data
+	 */
 
 	change(new_data, old_data){
 		let internal_key_data = proboards.plugin.keys.data[this._key];
@@ -65,10 +84,20 @@ yootil.sync = class {
 		}
 	}
 
+	/**
+	 * Returns the key name.
+	 *
+	 * @return {String}
+	 */
 	get key(){
 		return this._key;
 	}
 
+	/**
+	 * Returns the local storage key name.
+	 *
+	 * @return {String}
+	 */
 	get local_key(){
 		return this._ls_key;
 	}
