@@ -1,36 +1,59 @@
-/*
-
-Front multi key pruner.
-
-Will prune from the front and add to the end.  Use in combination with key pushing.  Atttempt
-to push to the key, if it fails, prune it and save.
-
-
-let pruner = new yootil.key.pruner({
-
-	keys: ["test", "test2"],
-	object_id: yootil.user.id()
-
-});
-
-pruner.prune(["G"]); // Prunes key and adds new elements to the end.
-
-console.log(pruner.pruned_data()); // Gets the data that got pruned.
-
-*/
+/**
+ * Front multi key pruner.
+ *
+ * Will prune from the front and add to the end.
+ *
+ * Use in combination with key pushing.  Atttempt to push to the key, if it fails, prune it and save.
+ *
+ * @example
+ * let pruner = new yootil.key.pruner({
+ *
+ *     keys: ["test", "test2"],
+ *     object_id: yootil.user.id()
+ *
+ * });
+ *
+ * pruner.prune(["G"]); // Prunes key and adds new elements to the end.
+ *
+ * console.log(pruner.pruned_data()); // Gets the data that got pruned.
+ */
 
 yootil.key.pruner = class {
+
+	/**
+	 * @param {Object} config
+	 * @param {Array} config.keys=[] - The keys that will be looked at to prune (combined).
+	 * @param {Number} [config.object_id=undefined] - The object for the key (e.g. user ID).
+	 */
 
 	constructor({keys = [], object_id = undefined} = {}){
 		if(!Array.isArray(keys)){
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
+
+		/**
+		 * @ignore
+		 */
+
 		this.object_id = object_id;
+
+		/**
+		 * @ignore
+		 */
+
 		this._pruned_data = [];
 		this.convert_keys_to_objs();
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	convert_keys_to_objs(){
 		for(let [index, value] of this.keys.entries()){
@@ -48,6 +71,10 @@ yootil.key.pruner = class {
 			}
 		}
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	defrag(data = [], first_run = false){
 		if(!first_run){
@@ -78,6 +105,13 @@ yootil.key.pruner = class {
 		}
 	}
 
+	/**
+	 * Will initiate the pruning while trying to add new data.
+	 *
+	 * @param {Array} add=[] - The data to add.
+	 *
+	 * @return {Boolean} - Returns true if the prune was successful.
+	 */
 	prune(add = []){
 		if(!add || !this.keys.length){
 			return false;
@@ -114,6 +148,10 @@ yootil.key.pruner = class {
 		return true;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	get_last_key_with_data(){
 		let last = null;
 
@@ -133,8 +171,9 @@ yootil.key.pruner = class {
 	/**
 	 * Call this method to save the data to the keys.
 	 *
-	 * @param {Number} object_id ID of the object (i.e user)
-	 * @returns {Object} Last key to be set gets that promise returned.
+	 * @param {Number} [object_id=undefined] - ID of the object (i.e user)
+	 *
+	 * @returns {Object} - Last key to be set gets that promise returned.
 	 */
 
 	save(object_id = undefined){
@@ -148,6 +187,12 @@ yootil.key.pruner = class {
 
 		return last;
 	}
+
+	/**
+	 * Returns any data that was pruned.
+	 *
+	 * @return {Array)
+	 */
 
 	pruned_data(){
 		return this._pruned_data;

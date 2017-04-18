@@ -1,6 +1,4 @@
 /**
- * @class yootil.forum
- * @static
  * Wrapper around the ProBoards data hash object to get forum info.
  */
 
@@ -9,7 +7,7 @@ yootil.forum = class {
 	/**
 	 * This is an internal method.
 	 *
-	 * @param {String} key The key on the page object to check and get.
+	 * @param {String} key - The key on the page object to check and get.
 	 * @return {String|Object|Number|Array}
 	 * @ignore
 	 */

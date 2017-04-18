@@ -76,7 +76,7 @@ yootil.extension = class {
 	 *
 	 * @param {String} plugin="" - The main plugin name that extensions will use.
 	 *
-	 * @return {Object} 3 possible methods are then callable (pre_init, post_init, and ready).
+	 * @return {Object} - 3 possible methods are then callable (pre_init, post_init, and ready).
 	 */
 
 	static run(plugin = ""){

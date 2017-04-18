@@ -1,6 +1,4 @@
 /**
- * @class yootil.page.category
- * @static
  * Various methods to help get category information.
  */
 
@@ -26,6 +24,7 @@ yootil.page.category = class {
 
 	/**
 	 * Gets the category ID.
+	 *
 	 * @return {Number}
 	 */
 
@@ -35,6 +34,7 @@ yootil.page.category = class {
 
 	/**
 	 * Gets the category name.
+	 *
 	 * @return {String}
 	 */
 

@@ -1,5 +1,8 @@
 /**
  * Mimics the ProBoards bar, but on the left and for plugins.
+ *
+ * @example
+ * yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
  */
 
 yootil.bar = class {
@@ -97,9 +100,6 @@ yootil.bar = class {
 
 	/**
 	 * Add an item to the Yootil Bar.
-	 *
-	 * @example
-	 * yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
 	 *
 	 * @param {Object} config
 	 * @param {String} config.link="" - URL for the item.

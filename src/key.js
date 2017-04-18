@@ -1,17 +1,27 @@
 /**
- * @class yootil.key
- * @static
  * Most methods are just wrappers, to see the ProBoards API documentation, <a href="https://www.proboards.com/developer/js/class/key">click here</a>.
+ *
+ * @example
+ * // Basic example (will set for current user):
+ *
+ * yootil.key("mykey").set("apples");
+ *
+ * @example
+ * // Using resolve and reject for promise.
+ *
+ * yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
+ *     console.log(status.message);
+ * }).catch((status) => {
+ *     console.log(status.message);
+ * });
  */
 
-// yootil.key("aaa").set("hi world", 1);
-
-yootil.key = (class {
+yootil.key = class {
 
 	static init(){
 
 		/**
-		 * @property {Object} pb_key_obj Holds a reference to the ProBoards key object.
+		 * @type {Object} pb_key_obj - Holds a reference to the ProBoards key object.
 		 * @ignore
 		 */
 
@@ -19,6 +29,10 @@ yootil.key = (class {
 
 		return this.wrapper.bind(this);
 	}
+
+	/**
+	 * @ingore
+	 */
 
 	static wrapper(key = ""){
 		return Object.assign(Object.create(null), {
@@ -65,7 +79,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if a key exists.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key="" - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -82,7 +97,8 @@ yootil.key = (class {
 	/**
 	 * Returns the ProBoards key object.
 	 *
-	 * @param {String} key The key to get.
+	 * @param {String} key="" - The key to get.
+	 *
 	 * @return {Object}
 	 */
 
@@ -97,8 +113,9 @@ yootil.key = (class {
 	/**
 	 * Checks to see if a key is empty
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key="" - The key to check.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -119,10 +136,11 @@ yootil.key = (class {
 	/**
 	 * Gets the value stored in the key.
 	 *
-	 * @param {String} key The ProBoards key we are getting.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [is_json] If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
-	 * @returns {String|Object} If no value, an empty string is returned.
+	 * @param {String} key="" - The ProBoards key we are getting.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [is_json=false] - If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
+	 *
+	 * @returns {String|Object} - If no value, an empty string is returned.
 	 */
 
 	static get(key = "", object_id, is_json = false){
@@ -146,9 +164,10 @@ yootil.key = (class {
 	/**
 	 * Clears out key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key="" - The key.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} Returns a promise.
 	 */
 
 	static clear(key = "", object_id){
@@ -158,23 +177,26 @@ yootil.key = (class {
 	/**
 	 * Sets a key value.
 	 *
-	 * Basic example (will set for current user):
+	 * @example
+	 * // Basic example (will set for current user):
 	 *
-	 *     yootil.key("mykey").set("apples");
+	 * yootil.key("mykey").set("apples");
 	 *
-	 * Using resolve and reject for promise.
+	 * @example
+	 * //Using resolve and reject for promise.
 	 *
-	 *     yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
-	 *     		console.log(status.message);
-	 *     }).catch((status) => {
-	 *     		console.log(status.message);
-	 *     });
+	 * yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
+	 *     console.log(status.message);
+	 * }).catch((status) => {
+	 *     console.log(status.message);
+	 * });
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Object} value Can be a string, or a object.  ProBoards now handles stringifying objects.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {String} [type] Passed on set the method type (i.e append, pop etc).
-	 * @return {Object} Returns a promise.
+	 * @param {String} key="" - The key.
+	 * @param {String|Object} value="" - Can be a string, or a object.  ProBoards now handles stringifying objects.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {String} [type=""] - Passed on set the method type (i.e append, pop etc).
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static set(key = "", value = "", object_id, type = ""){
@@ -239,11 +261,12 @@ yootil.key = (class {
 	/**
 	 * Key is set when an event occurs.
 	 *
-	 * @param {String} key The key.
-	 * @param {String} [event] The event to use.  Currently there are 2 "thread_new" and "post_new".
-	 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+	 * @param {String} key="" - The key.
+	 * @param {String} [event=""] - The event to use.
+	 * @param {Mixed} value - The value to be stored in the key.  ProBoards handles stringify now.
+	 * @param {Number} [object_id=undefined] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Boolean} - Returns true if successful (relies on what ProBoards .set returns).
 	 */
 
 	static on(key, event = "", value, object_id = undefined){
@@ -257,10 +280,11 @@ yootil.key = (class {
 	/**
 	 * Concatenates a given value to the end of the existing key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value Can be a string or a number.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - Can be a string or a number.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static append(key, value, object_id){
@@ -270,10 +294,11 @@ yootil.key = (class {
 	/**
 	 * Inserts a given value in front of the existing key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value Can be a string or a number.
-	 * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - Can be a string or a number.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static prepend(key, value, object_id){
@@ -283,10 +308,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an integer, increases the key's value by one, or you can supply a different amount to increment by.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [value] Increment by this amount.  Default is 1.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [value=1] - Increment by this amount.  Default is 1.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static increment(key, value = 1, object_id){
@@ -296,10 +322,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an integer, decreases the key's value by one, or you can supply a different amount to decrement by.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [value] Decrement by this amount.  Default is 1.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [value=1] - Decrement by this amount.  Default is 1.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static decrement(key, value = 1, object_id){
@@ -309,10 +336,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, removes the last number of items specified.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [num_items] Number of items to pop from the key.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [num_items=1] - Number of items to pop from the key.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static pop(key, num_items = 1, object_id){
@@ -322,15 +350,17 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the end of the array.
 	 *
-	 *     yootil.key("mykey").push("apples");
+	 * @example
+	 * yootil.key("mykey").push("apples");
 	 *
-	 *     yootil.key("mykey").push(["apples", "pears"], yootil.user.id());
+	 * @example
+	 * yootil.key("mykey").push(["apples", "pears"], yootil.user.id());
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {String|Array} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static push(key, value, object_id){
@@ -342,15 +372,18 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the end of the array only if they are unique.
 	 *
-	 *     yootil.key("mykey").push_unique("apples");
+	 * @example
+	 * yootil.key("mykey").push_unique("apples");
 	 *
-	 *     yootil.key("mykey").push_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
+	 * @example
+	 * yootil.key("mykey").push_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [strict=false] - If set to true, it will use inArray instead of ProBoards inArrayLoose.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static push_unique(key, value, object_id, strict = false){
@@ -392,10 +425,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, removes the first "num_items" values.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} num_items The number of items to shift from the array.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [num_items=1] - The number of items to shift from the array.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static shift(key, num_items = 1, object_id){
@@ -405,10 +439,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds value to the front of the array.
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {String|Array} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static unshift(key, value, object_id){
@@ -420,15 +455,18 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the front of the array only if they are unique.
 	 *
-	 *     yootil.key("mykey").unshift_unique("apples");
+	 * @example
+	 * yootil.key("mykey").unshift_unique("apples");
 	 *
-	 *     yootil.key("mykey").unshift_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
+	 * @example
+	 * yootil.key("mykey").unshift_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [strict=false] - If set to true, it will use inArray instead of ProBoards inArrayLoose.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static unshift_unique(key, value, object_id, strict = false){
@@ -470,8 +508,9 @@ yootil.key = (class {
 	/**
 	 * Checks permission on key to see if the user can write.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key - The key.
+	 * @param {Number} object_id - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -488,12 +527,13 @@ yootil.key = (class {
 	/**
 	 *  Checks permission on key to see if the user can read.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key - The key.
+	 * @param {Number} object_id - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
-	static read(key, user){
+	static read(key, object_id){
 		if(this.exists(key)){
 			if(typeof this.pb_key_obj(key).can_read != "undefined"){
 				return !!this.pb_key_obj(key).can_read(object_id);
@@ -512,8 +552,9 @@ yootil.key = (class {
 	/**
 	 * Get they key type.
 	 *
-	 * @param {String} key The key.
-	 * @param {Boolean} [return_str] If true, it will return a string value (i.e "USER").
+	 * @param {String} key - The key.
+	 * @param {Boolean} [return_str=false] - If true, it will return a string value (i.e "USER").
+	 *
 	 * @return {String}
 	 */
 
@@ -537,9 +578,10 @@ yootil.key = (class {
 	/**
 	 * Gets the length of a key.
 	 *
-	 * @param {String} key The key to be checked.
-	 * @param {Number} object_id Object id.
-	 * @return {Number} Returns the length.
+	 * @param {String} key - The key to be checked.
+	 * @param {Number} object_id - Object id.
+	 *
+	 * @return {Number} - Returns the length.
 	 */
 
 	static length(key, object_id){
@@ -555,7 +597,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a user type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -570,7 +613,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a super user type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -585,7 +629,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a thread type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -600,7 +645,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a post type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -615,7 +661,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a conversation type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -630,7 +677,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a message type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -645,7 +693,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a super_forum type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -660,8 +709,9 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key has space.
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} object_id Object id.
+	 * @param {String} key - The key to check.
+	 * @param {Number} object_id - Object id.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -678,8 +728,9 @@ yootil.key = (class {
 	/**
 	 * Gets the space left in the key.
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} object_id Object id.
+	 * @param {String} key - The key to check.
+	 * @param {Number} object_id - Object id.
+	 *
 	 * @return {Number}
 	 */
 
@@ -694,7 +745,8 @@ yootil.key = (class {
 	/**
 	 * Gets max space (characters).
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Number}
 	 */
 
@@ -704,4 +756,6 @@ yootil.key = (class {
 		return max_length;
 	}
 
-}).init();
+};
+
+yootil.key.init();

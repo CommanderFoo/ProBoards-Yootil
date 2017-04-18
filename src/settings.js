@@ -1,4 +1,12 @@
+/**
+ * @ignore
+ */
+
 yootil.settings = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this.images = {};

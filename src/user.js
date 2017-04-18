@@ -1,10 +1,12 @@
 /**
- * @class yootil.user
- * @static
  * Contains useful methods relating to the user currently viewing the page, most being wrappers at the moment.
  */
 
-yootil.user = (class {
+yootil.user = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._data = {};
@@ -41,6 +43,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if the user is logged in, if so, returns true.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -56,6 +59,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the current users ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -71,6 +75,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if the current user is staff
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -86,6 +91,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users name
+	 *
 	 * @return {String}
 	 */
 
@@ -101,6 +107,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users theme ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -116,6 +123,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users path URL to their profile
+	 *
 	 * @return {String}
 	 */
 
@@ -131,6 +139,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users avatar (HTML)
+	 *
 	 * @return {String}
 	 */
 
@@ -146,6 +155,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users birthday object
+	 *
 	 * @return {Object}
 	 */
 
@@ -161,6 +171,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users date format (i.e d/m/y)
+	 *
 	 * @return {String}
 	 */
 
@@ -176,6 +187,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users post mode.
+	 *
 	 * @return {Object}
 	 */
 
@@ -191,6 +203,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users friends
+	 *
 	 * @return {Object}
 	 */
 
@@ -206,6 +219,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if user has new messages
+	 *
 	 * @return {Number}
 	 */
 
@@ -221,6 +235,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users instant messengers
+	 *
 	 * @return {Object}
 	 */
 
@@ -236,6 +251,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users last online object
+	 *
 	 * @return {Object}
 	 */
 
@@ -251,6 +267,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users post count
+	 *
 	 * @return {Number}
 	 */
 
@@ -266,6 +283,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users rank
+	 *
 	 * @return {Object}
 	 */
 
@@ -281,6 +299,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users registered on date
+	 *
 	 * @return {Object}
 	 */
 
@@ -296,6 +315,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users status
+	 *
 	 * @return {String}
 	 */
 
@@ -311,6 +331,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users time format
+	 *
 	 * @return {String}
 	 */
 
@@ -326,6 +347,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users username
+	 *
 	 * @return {String}
 	 */
 
@@ -341,6 +363,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users group ids
+	 *
 	 * @return {Array}
 	 */
 
@@ -356,6 +379,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users groups
+	 *
 	 * @return {Object}
 	 */
 
@@ -371,6 +395,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks if the member is invisible
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -386,6 +411,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks if the member has proboards plus on
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -401,6 +427,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users block list
+	 *
 	 * @return {Object}
 	 */
 
@@ -414,4 +441,6 @@ yootil.user = (class {
 		return {};
 	}
 
-}).init();
+};
+
+yootil.user.init();

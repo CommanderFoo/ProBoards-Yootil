@@ -1,6 +1,4 @@
 /**
- * @class yootil.storage
- * @static
  * Wrappers for session and persistent storage.
  */
 
@@ -9,15 +7,18 @@ yootil.storage = class {
 	/**
 	 *  Allows you to set a key and value, along with some other settings.
 	 *
-	 *     yootil.storage.set("mykey", "myvalue") // Will be persistent
+	 * @example
+	 * yootil.storage.set("mykey", "myvalue") // Will be persistent
 	 *
-	 *     yootil.storage.set("mykey", "myvalue". false, false) // Will be for the session
+	 * @example
+	 * yootil.storage.set("mykey", "myvalue". false, false) // Will be for the session
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {String} value The value that will be stored.
-	 * @param {Boolean}	[json] If true, the value will be turned into a JSON string.
-	 * @param {Boolean} [persist] By default the value is stored persistently, pass false to use session.
-	 * @chainable
+	 * @param {String} key - The key name for the storage.
+	 * @param {String} value="" - The value that will be stored.
+	 * @param {Boolean}	[json=false] - If true, the value will be turned into a JSON string.
+	 * @param {Boolean} [persist=true] - By default the value is stored persistently, pass false to use session.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static set(key, value = "", json = false, persist = true){
@@ -37,13 +38,16 @@ yootil.storage = class {
 	/**
 	 * Gets a value from storage in either session or persistent.
 	 *
-	 *     yootil.storage.get("mykey", false, false) // Will look in session only
+	 * @example
+	 * yootil.storage.get("mykey", false, false) // Will look in session only
 	 *
-	 *     yootil.storage.get("mykey", true, true) // Will look in persistent only
+	 * @example
+	 * yootil.storage.get("mykey", true, true) // Will look in persistent only
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {Boolean} [json] If true, the value will be JSON parsed.
-	 * @param {Boolean} [persist] You can specify not to look in persistent by passing false.
+	 * @param {String} key - The key name for the storage.
+	 * @param {Boolean} [json=false] - If true, the value will be JSON parsed.
+	 * @param {Boolean} [persist=true] - You can specify not to look in persistent by passing false.
+	 *
 	 * @return {String|Object}
 	 */
 
@@ -68,13 +72,16 @@ yootil.storage = class {
 	/**
 	 * Removes a key from storage
 	 *
-	 *     yootil.storage.remove("mykey", false) // Will look in session only
+	 * @example
+	 * yootil.storage.remove("mykey", false) // Will look in session only
 	 *
-	 *     yootil.storage.remove("mykey", true) // Will look in persistent only
+	 * @example
+	 * yootil.storage.remove("mykey", true) // Will look in persistent only
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {Boolean} [persist] You can specify not to look in persistent by passing false.
-	 * @chainable
+	 * @param {String} key - The key name for the storage.
+	 * @param {Boolean} [persist=true] - You can specify not to look in persistent by passing false.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static remove(key, persist = true){
@@ -92,8 +99,9 @@ yootil.storage = class {
 	/**
 	 * Clears everything from storage
 	 *
-	 * @param {Boolean} [persist] If true, will clean persistent storage, or false will clear session.  Default is true.
-	 * @chainable
+	 * @param {Boolean} [persist=true] - If true, will clean persistent storage, or false will clear session.  Default is true.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static clear(persist = true){

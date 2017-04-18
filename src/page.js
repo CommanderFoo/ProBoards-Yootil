@@ -1,5 +1,7 @@
 /**
  * Wrapper around the ProBoards data object "page".
+ *
+ * @ignore
  */
 
 yootil.page = class {

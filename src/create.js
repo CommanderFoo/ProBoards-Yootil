@@ -88,7 +88,7 @@ yootil.create = class {
 	 * @param {String} config.url="/" - URL of the branch.
 	 * @param {String} config.text="" - Text of the branch.
 	 *
-	 * @return {Object} Branch jQuery wrapped.
+	 * @return {Object} jQuery - Branch jQuery wrapped.
 	 */
 
 	static nav_branch({url = "/", text = ""} = {}){
@@ -137,7 +137,7 @@ yootil.create = class {
 	 *
 	 * @param {String} [id=""] - Enter a ID, or a unique one will be created.
 	 *
-	 * @return {Object} The box is returned wrapped with jQuery.
+	 * @return {Object} jQuery - The box is returned wrapped with jQuery.
 	 */
 
 	static profile_content_box(id = ""){
@@ -210,7 +210,7 @@ yootil.create = class {
 	 * @param {Function} [config.events.hide] - When another tab is click, this event will be called.  Tab and content are passed.
 	 * @param {Function} [config.events.context] - Set the context of the functions.
 	 *
-	 * @return {Object} - The tab content div is returned wrapped with jQuery.
+	 * @return {Object} jQuery - The tab content div is returned wrapped with jQuery.
 	 */
 
 	static bbc_tab({title = "My Tab", content = "", id = "", css = null, events = {}} = {}){

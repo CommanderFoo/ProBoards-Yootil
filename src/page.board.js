@@ -1,6 +1,4 @@
 /**
- * @class yootil.page.board
- * @static
  * Various methods to help get board information.
  */
 
@@ -9,7 +7,7 @@ yootil.page.board = class {
 	/**
 	 *	This is an internal method
 	 *
-	 * @param {String} key The key on the board object to check and get.
+	 * @param {String} key - The key on the board object to check and get.
 	 * @return {String|Object|Array|Number}
 	 * @ignore
 	 */
@@ -26,6 +24,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -35,6 +34,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board name
+	 *
 	 * @return {String}
 	 */
 
@@ -44,6 +44,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board URL
+	 *
 	 * @return {String}
 	 */
 
@@ -53,6 +54,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board description
+	 *
 	 * @return {String}
 	 */
 
@@ -62,6 +64,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has post counts disabled
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -71,6 +74,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has posting disabled
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -80,6 +84,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board name
+	 *
 	 * @return {String}
 	 */
 
@@ -89,6 +94,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board is hidden
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -98,6 +104,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board total posts
+	 *
 	 * @return {Number}
 	 */
 
@@ -107,6 +114,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has announcements showing
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -116,6 +124,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board total threads
+	 *
 	 * @return {Number}
 	 */
 

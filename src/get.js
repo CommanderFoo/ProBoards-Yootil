@@ -1,6 +1,4 @@
 /**
- * @alias yootil.get
- * @static
  * Quick methods to get certain elements.
  */
 
@@ -9,12 +7,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profiles.
 	 *
-	 *     yootil.get.mini_profiles(); // Gets all mini profiles
+	 * @example
+	 * yootil.get.mini_profiles(); // Gets all mini profiles
 	 *
-	 *     yootil.get.mini_profiles(1); // Gets all mini profiles for user id 1
+	 * @example
+	 * yootil.get.mini_profiles(1); // Gets all mini profiles for user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match mini profiles for that user id.
-	 * @return {Array} Matched mini profiles are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match mini profiles for that user id.
+	 * @return {Array} - Matched mini profiles are returned back.
 	 */
 
 	static mini_profiles(user_id = 0){
@@ -27,12 +27,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile avatars.
 	 *
-	 *     yootil.get.mini_profile_avatars(); // Gets all avatars
+	 * @example
+	 * yootil.get.mini_profile_avatars(); // Gets all avatars
 	 *
-	 *     yootil.get.mini_profile_avatars(1); // Gets all avatars for user id 1
+	 * @example
+	 * yootil.get.mini_profile_avatars(1); // Gets all avatars for user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match avatars for that user id.
-	 * @return {Array} Matched avatars are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match avatars for that user id.
+	 * @return {Array} - Matched avatars are returned back.
 	 */
 
 	static mini_profile_avatars(user_id = 0){
@@ -45,12 +47,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile user links.
 	 *
-	 *     yootil.get.mini_profile_user_links(1); // Gets all user links for user id 1
+	 * @example
+	 * yootil.get.mini_profile_user_links(1); // Gets all user links for user id 1
 	 *
-	 *     yootil.get.mini_profile_user_links(); // Gets all user links
+	 * @example
+	 * yootil.get.mini_profile_user_links(); // Gets all user links
 	 *
-	 * @param {Number} [user_id] If specified, it will match user links for that user id.
-	 * @return {Array} Matched user links are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match user links for that user id.
+	 * @return {Array} - Matched user links are returned back.
 	 */
 
 	static mini_profile_user_links(user_id = 0){
@@ -63,12 +67,14 @@ yootil.get = class {
 	/**
 	 * Gets posts.
 	 *
-	 *     yootil.get.posts(); // Get all posts
+	 * @example
+	 * yootil.get.posts(); // Get all posts
 	 *
-	 *     yootil.get.posts(123); // Gets post with id 123
+	 * @example
+	 * yootil.get.posts(123); // Gets post with id 123
 	 *
-	 * @param {Number} [post_id] The post id for the post to get.
-	 * @return {Array} Matched posts are returned.
+	 * @param {Number} [post_id=0] - The post id for the post to get.
+	 * @return {Array} - Matched posts are returned.
 	 */
 
 	static posts(post_id = 0){
@@ -81,12 +87,14 @@ yootil.get = class {
 	/**
 	 * Gets messages.
 	 *
-	 *     yootil.get.messages(); // Get all messages
+	 * @example
+	 * yootil.get.messages(); // Get all messages
 	 *
-	 *     yootil.get.messages(123); // Gets post with id 123
+	 * @example
+	 * yootil.get.messages(123); // Gets post with id 123
 	 *
-	 * @param {Number} [message_id] The message id for the message to get.
-	 * @return {Array} Matched messages are returned.
+	 * @param {Number} [message_id=0] - The message id for the message to get.
+	 * @return {Array} - Matched messages are returned.
 	 */
 
 	static messages(message_id = 0){
@@ -99,10 +107,11 @@ yootil.get = class {
 	/**
 	 * Gets user posts.
 	 *
-	 *     yootil.get.user_posts(1); // Gets all posts for user id 1
+	 * @example
+	 * yootil.get.user_posts(1); // Gets all posts for user id 1
 	 *
-	 * @param {Number} [user_id] The user id to find posts for.
-	 * @return {Array} Matched posts are returned.
+	 * @param {Number} [user_id=0] - The user id to find posts for.
+	 * @return {Array} - Matched posts are returned.
 	 */
 
 	static user_posts(user_id = 0){
@@ -118,10 +127,11 @@ yootil.get = class {
 	/**
 	 * Gets user messages.
 	 *
-	 *     yootil.get.user_messages(1); // Gets all messages for user id 1
+	 * @example
+	 * yootil.get.user_messages(1); // Gets all messages for user id 1
 	 *
-	 * @param {Number} [user_id] The user id to find messages for.
-	 * @return {Array} Matched messages are returned.
+	 * @param {Number} [user_id=0] - The user id to find messages for.
+	 * @return {Array} - Matched messages are returned.
 	 */
 
 	static user_messages(user_id = 0){
@@ -147,12 +157,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile info sections.
 	 *
-	 *     yootil.get.mini_profile_info(); // Gets all mini profile info
+	 * @example
+	 * yootil.get.mini_profile_info(); // Gets all mini profile info
 	 *
-	 *     yootil.get.mini_profile_info(1); // Gets all mini profile info for the user id 1
+	 * @example
+	 * yootil.get.mini_profile_info(1); // Gets all mini profile info for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match user links for that user id.
-	 * @return {Array} Matched user links are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match user links for that user id.
+	 * @return {Array} - Matched user links are returned back.
 	 */
 
 	static mini_profile_info(user_id = 0){
@@ -165,12 +177,14 @@ yootil.get = class {
 	/**
 	 * Gets signatures for posts and messages.
 	 *
-	 *     yootil.get.signatures(); // Gets all signatures
+	 * @example
+	 * yootil.get.signatures(); // Gets all signatures
 	 *
-	 *     yootil.get.signatures(1); // Gets all signatures for the user id 1
+	 * @example
+	 * yootil.get.signatures(1); // Gets all signatures for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static signatures(user_id = 0){
@@ -183,12 +197,14 @@ yootil.get = class {
 	/**
 	 * Gets last edit.
 	 *
-	 *     yootil.get.last_edit(); // Gets all last edits
+	 * @example
+	 * yootil.get.last_edit(); // Gets all last edits
 	 *
-	 *     yootil.get.last_edit(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.last_edit(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static last_edit(user_id = 0){
@@ -201,12 +217,14 @@ yootil.get = class {
 	/**
 	 * Gets post / message info (date, likes, etc)
 	 *
-	 *     yootil.get.post_info(); // Gets all
+	 * @example
+	 * yootil.get.post_info(); // Gets all
 	 *
-	 *     yootil.get.post_info(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.post_info(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static post_info(user_id = 0){
@@ -219,12 +237,14 @@ yootil.get = class {
 	/**
 	 * Gets post / message controls.
 	 *
-	 *     yootil.get.post_controls(); // Gets all
+	 * @example
+	 * yootil.get.post_controls(); // Gets all
 	 *
-	 *     yootil.get.post_controls(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.post_controls(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static post_controls(user_id = 0){
@@ -237,9 +257,10 @@ yootil.get = class {
 	/**
 	 * Gets post / message summary.
 	 *
-	 *     yootil.get.summary();
+	 * @example
+	 * yootil.get.summary();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static summary(){
@@ -249,9 +270,10 @@ yootil.get = class {
 	/**
 	 * Gets nav tree.
 	 *
-	 *     yootil.get.nav_tree();
+	 * @example
+	 * yootil.get.nav_tree();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_tree(){
@@ -261,9 +283,10 @@ yootil.get = class {
 	/**
 	 * Gets nav branches.
 	 *
-	 *     yootil.get.nav_branches();
+	 * @example
+	 * yootil.get.nav_branches();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_branches(){
@@ -273,9 +296,10 @@ yootil.get = class {
 	/**
 	 * Gets last nav branch.
 	 *
-	 *     yootil.get.last_nav_branch();
+	 * @example
+	 * yootil.get.last_nav_branch();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static last_nav_branch(){
@@ -285,13 +309,15 @@ yootil.get = class {
 	/**
 	 * Gets a branch based on options passed in.
 	 *
-	 *     let example1 = yootil.get.nav_branch("Members", "text");
+	 * @example
+	 * let example1 = yootil.get.nav_branch("Members", "text");
 	 *
-	 *     let example2 = yootil.get.nav_branch(/user\/1/, "url");
+	 * @example
+	 * let example2 = yootil.get.nav_branch(/user\/1/, "url");
 	 *
-	 * @param {String|Object} pattern This can be a string, or a regular expression pattern.
-	 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
-	 * @return {Array} Matches are returned back.
+	 * @param {String|Object} pattern=null - This can be a string, or a regular expression pattern.
+	 * @param {String} [type="text"] - You can match against the url or text of the branch.  Default is text.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_branch(pattern = null, type = "text"){

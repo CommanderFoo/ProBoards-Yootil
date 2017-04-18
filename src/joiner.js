@@ -1,16 +1,17 @@
-/*
-
- let joiner = new yootil.key.joiner(["testy", "testy2"])
-
- console.log(joiner.data(yootil.user.id()));
-
+/**
+ * Joins key data.
+ *
+ * @example
+ * let joiner = new yootil.key.joiner(["testy", "testy2"])
+ *
+ * console.log(joiner.data(yootil.user.id()));
  */
 
 yootil.key.joiner = class {
 
 	/**
-	 * @param {String|Array} keys The keys that has data that will be joined.
-	 * @param {Number} object_id
+	 * @param {String|Array} keys=[] - The keys that has data that will be joined.
+	 * @param {Number} [object_id=undefined] - The ID for this key object (e.g. user ID).
 	 */
 
 	constructor({keys = [], object_id = undefined} = {}){
@@ -18,16 +19,27 @@ yootil.key.joiner = class {
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.object_id = object_id;
+
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
 	}
 
 	/**
 	 * Returns the data joined.
 	 *
-	 * @param {Boolean} json Pass false to not JSON parse the data.
-	 * @returns {String|Object|Array}
+	 * @param {Boolean} [json=true] - Pass false to not JSON parse the data.
+	 *
+	 * @return {String|Object|Array}
 	 */
+
 	data(json = true){
 		if(this.keys.length){
 			let data = "";

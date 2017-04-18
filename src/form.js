@@ -1,6 +1,5 @@
 /**
- * @class yootil.form
- * @static
+ * Methods to help fetch common forms.
  */
 
 yootil.form = class {

@@ -23,8 +23,6 @@ SOFTWARE.
 */
 
 /**
- * @class yootil
- * @static
  * Yootil is a utility library for ProBoards.  It was designed to help plugin developers develop quicker.
  *
  * The "yootil" namespace encapsulates all of the utilities and classes.
@@ -35,6 +33,10 @@ SOFTWARE.
  */
 
 class yootil {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._PLUGIN = "pixeldepth_yootil";
@@ -79,6 +81,10 @@ class yootil {
 		this.bar.init();
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static setup(){
 		let plugin = pb.plugin.get(this._PLUGIN);
 		let settings = (plugin && plugin.settings)? plugin.settings : false;
@@ -96,11 +102,13 @@ class yootil {
 	/**
 	 * Makes a string safe for inserting into the DOM.
 	 *
-	 *     let safe_html = yootil.html_encode("<b>this won't be bold</b>");
+	 * @example
+	 * let safe_html = yootil.html_encode("<b>this won't be bold</b>");
 	 *
-	 * @param {String} str The value you want returned to be safe.
-	 * @param {Boolean} decode_first Pass true if you want to decode before encoding to prevent double encoding.
-	 * @return {String} The safe value.
+	 * @param {String} str="" - The value you want returned to be safe.
+	 * @param {Boolean} [decode_first=false] - Pass true if you want to decode before encoding to prevent double encoding.
+	 *
+	 * @return {String} - The safe value.
 	 */
 
 	static html_encode(str = "", decode_first = false){
@@ -112,10 +120,12 @@ class yootil {
 	/**
 	 * Converts back to HTML
 	 *
-	 *     let html = yootil.html_decode("<b>this will be bold</b>");
+	 * @example
+	 * let html = yootil.html_decode("<b>this will be bold</b>");
 	 *
-	 * @param {String} str The string you want returned to be an HTML string.
-	 * @return {String} The HTML string.
+	 * @param {String} str="" - The string you want returned to be an HTML string.
+	 *
+	 * @return {String} - The HTML string.
 	 */
 
 	static html_decode(str = ""){
@@ -131,11 +141,13 @@ class yootil {
 	/**
 	 * Formats numbers so they look pretty (i.e 1,530).
 	 *
-	 *     yootil.utils.number_format(1000); // 1,000
+	 * @example
+	 * yootil.utils.number_format(1000); // 1,000
 	 *
-	 * @param {String} str The string to format.
-	 * @param {String} [delim] The delimiter between each block (i.e 100.000.000, 100,000,000).
-	 * @return {String} Formatted string.
+	 * @param {String} str="" - The string to format.
+	 * @param {String} [delim=","] - The delimiter between each block (i.e 100.000.000, 100,000,000).
+	 *
+	 * @return {String} - Formatted string.
 	 */
 
 	static number_format(str = "", delim = ","){
@@ -145,10 +157,12 @@ class yootil {
 	/**
 	 * Checks to see if string passed in is a valid JSON string.
 	 *
-	 *     yootil.is_json("{\"hello\":\"world\"}");
+	 * @example
+	 * yootil.is_json("{\"hello\":\"world\"}");
 	 *
-	 * @param {String} str This is the string that is getting checked for valid JSON.
-	 * @param {Boolean} [return_obj] If true, the string will be parsed and returned back.
+	 * @param {String} str="" - This is the string that is getting checked for valid JSON.
+	 * @param {Boolean} [return_obj=false] - If true, the string will be parsed and returned back.
+	 *
 	 * @return {Object|Boolean}
 	 */
 
@@ -179,9 +193,11 @@ class yootil {
 	/**
 	 * Checks a number and returns the correct suffix to be used with it.
 	 *
-	 *     yootil.suffix(3); // "rd"
+	 * @example
+	 * yootil.suffix(3); // "rd"
 	 *
-	 * @param {Number} n The number to be checked.
+	 * @param {Number} n=0 - The number to be checked.
+	 *
 	 * @return {String}
 	 */
 
@@ -206,10 +222,12 @@ class yootil {
 	/**
 	 * Gets a day from the days array.
 	 *
-	 *     yootil.day(1); // "Mon"
+	 * @example
+	 * yootil.day(1); // "Mon"
 	 *
-	 * @param {Number} index Indexing starts at 0, with Sunday being 0.
-	 * @param {Boolean} full Returns full day name.
+	 * @param {Number} index=0 - Indexing starts at 0, with Sunday being 0.
+	 * @param {Boolean} [full=false] - Returns full day name.
+	 *
 	 * @return {String}
 	 */
 
@@ -224,10 +242,12 @@ class yootil {
 	/**
 	 * Gets a month from the months array.
 	 *
-	 *     yootil.month(2); // "Mar"
+	 * @example
+	 * yootil.month(2); // "Mar"
 	 *
-	 * @param {Number} index Indexing starts at 0.
-	 * @param {Boolean} full Returns full month name.
+	 * @param {Number} index=0 - Indexing starts at 0.
+	 * @param {Boolean} [full=false] - Returns full month name.
+	 *
 	 * @return {String}
 	 */
 
@@ -239,9 +259,11 @@ class yootil {
 		return "";
 	}
 
-	static get images(){
-		return this._images;
-	}
+	/**
+	 * Current version of Yootil
+	 *
+	 * @return {String}
+	 */
 
 	static get version(){
 		return this._version;
@@ -280,14 +302,16 @@ class yootil {
 	/**
 	 * Compares version numbers.
 	 *
+	 * @example
 	 * 1 = current is higher than required
 	 * -1 = required is higher than current
 	 * 0 = current and required are the same
 	 *
-	 *    yootil.compare_version("1.1.1", "1.1.1.2"); // -1
+	 * yootil.compare_version("1.1.1", "1.1.1.2"); // -1
 	 *
-	 * @param {String} [current]
-	 * @param {String} [required]
+	 * @param {String} current=0.0.0 - Current version.
+	 * @param {String} required=0.0.0 - Required version.
+	 *
 	 * @return {Number}
 	 */
 
@@ -323,8 +347,9 @@ class yootil {
 	 *
 	 * Source: http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
 	 *
-	 * @param (String) str
-	 * @returns {Number}
+	 * @param {String} str=""
+	 *
+	 * @return {Number}
 	 */
 
 	static hash_code(str = ""){
@@ -347,30 +372,32 @@ class yootil {
 };
 
 /**
- * @class yootil.animation
- * @constructor
+ * @example
+ * let last_time = 0;
  *
- *     let last_time = 0;
+ * new yootil.animation({
  *
- *     new yootil.animation({
+ *     callback: (animator, start_time, current_time, duration, anim_id) => {
+ *         if(current_time >= (last_time + 2000)){
+ *             console.log("hello world!"); // will show every 2 seconds
+ *             last_time = current_time;
+ *         }
+ *     },
  *
- *     	   callback: (animator, start_time, current_time, duration, anim_id) => {
- *		       if(current_time >= (last_time + 2000)){
- *  	    		console.log("hello world!"); // will show every 2 seconds
- *			        last_time = current_time;
- *	       		}
- *	       },
+ *    duration: 20000
  *
- *         duration: 20000
- *
- *     }).start();
- *
- * @param {Function} [$0.callback] The function to be called on each frame.
- * @param {Number} [$0.duration] The length of the animation.
- * @param {Boolean} [$0.start] Pass true to auto start.
+ * }).start();
  */
 
 yootil.animation = class {
+
+	/**
+	 *
+	 * @param {Object} config
+	 * @param {Function} config.callback=null - The function to be called on each frame.
+	 * @param {Number} config.duration=0 - The length of the animation.
+	 * @param {Boolean} [config.start=false] - Pass true to auto start.
+	 */
 
 	constructor({callback = null, duration = 0, start = false} = {}){
 		if(!callback){
@@ -401,6 +428,10 @@ yootil.animation = class {
 		}
 	}
 
+	/**
+	 * Repeats the animation loop.
+	 */
+
 	repeat(){
 		if(this._anim_id){
 			this._time_start = 0;
@@ -408,11 +439,19 @@ yootil.animation = class {
 		}
 	}
 
+	/**
+	 * Starts the animation loop.
+	 */
+
 	start(){
 		if(!this._anim_id){
 			this._anim_id = requestAnimationFrame(this._anim_func);
 		}
 	}
+
+	/**
+	 * Stops the animation loop.
+	 */
 
 	stop(){
 		if(this._anim_id){
@@ -423,9 +462,18 @@ yootil.animation = class {
 
 };
 
-// This will likely be removed in v6
+/**
+ * Mimics the ProBoards bar, but on the left and for plugins.
+ *
+ * @example
+ * yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
+ */
 
 yootil.bar = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		if(!yootil.settings.bar.enabled){
@@ -436,6 +484,10 @@ yootil.bar = class {
 		this.create_bar();
 		this._items = new Map();
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	static setup(){
 		let position = yootil.settings.bar_position;
@@ -513,15 +565,15 @@ yootil.bar = class {
 	/**
 	 * Add an item to the Yootil Bar.
 	 *
-	 *     yootil.bar.add({url: "http://proboards.com", img: "http://example.com/someimage.png", alt: "Hello World"});
+	 * @param {Object} config
+	 * @param {String} config.link="" - URL for the item.
+	 * @param {String} config.img="" - URL for the image.
+	 * @param {String} [config.alt=""] - Alt / title for the image.
+	 * @param {String} [config.key=""] - Pass in a unique key if you wish to have the option to remove it later.
+	 * @param {Function} [config.func=null] - Pass function to be executed when clicked on.
+	 * @param {Object} [config.context=null] - Context of the function being passed.
 	 *
-	 * @param {String} $0.link URL for the item.
-	 * @param {String} $0.img URL for the image.
-	 * @param {String} [$0.alt] Alt / title for the image.
-	 * @param {String} [$0.key] Pass in a unique key if you wish to have the option to remove it later.
-	 * @param {Function} [$0.func] Pass function to be executed when clicked on.
-	 * @param {Object} [$0.context] Context of the function being passed.
-	 * @chainable
+	 * @return {Object} yootil.bar
 	 */
 
 	static add({url = "", img = "", alt = "", key = "", func = null, context = null} = {}){
@@ -566,10 +618,12 @@ yootil.bar = class {
 	/**
 	 * Remove an item to the Yootil Bar.
 	 *
-	 *     yootil.bar.remove("myitem");
+	 * @example
+	 * yootil.bar.remove("myitem");
 	 *
-	 * @param {String} key The unique key used when adding the item.
-	 * @chainable
+	 * @param {String} key="" - The unique key used when adding the item.
+	 *
+	 * @return {Object} yootil.bar
 	 */
 
 	static remove(key = ""){
@@ -593,9 +647,10 @@ yootil.bar = class {
 	/**
 	 * Checks to see if the bar is enabled.
 	 *
-	 *     if(yootil.bar.enabled()){
-	 *     	console.log("Bar is enabled");
-	 *     }
+	 * @example
+	 * if(yootil.bar.enabled()){
+	 *     console.log("Bar is enabled");
+	 * }
 	 *
 	 * @return {Boolean}
 	 */
@@ -604,9 +659,19 @@ yootil.bar = class {
 		return yootil.settings.bar.enabled;
 	}
 
+	/**
+	 * Gets the total items in the bar.
+	 *
+	 * @return {Number}
+	 */
+
 	static total_items(){
 		return this._items.length;
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	static reposition_left(){
 		let position = this._settings.bar_position;
@@ -616,6 +681,10 @@ yootil.bar = class {
 		}
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static reposition_top(){
 		let position = yootil.settings.bar.position;
 
@@ -623,6 +692,10 @@ yootil.bar = class {
 			this._plugin_bar.css("top", (($(window).height() / 2) - (this._plugin_bar.height() / 2)));
 		}
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	static create_bar(){
 		let $bar = $("<div id='yootil-bar-wrapper'><div id='yootil-bar'></div></div>").addClass(this._settings.position);
@@ -643,6 +716,10 @@ yootil.bar = class {
 		this._plugin_bar = $bar;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static get settings(){
 		return this._settings;
 	}
@@ -650,20 +727,21 @@ yootil.bar = class {
 };
 
 /**
- * @class yootil.clock
- * @constructor
- *
+ * @example
  * let clock = new yootil.clock();
  *
  * clock.start();
  * clock.stop();
- * console.log(clock.elapsed());
  *
- * @param {Boolean} [start] If true, then the clock will start right away.
- * @param {Boolean} [seconds] If true, then "elapsed" will return seconds.
+ * console.log(clock.elapsed());
  */
 
 yootil.clock = class {
+
+	/**
+	 * @param {Boolean} [start=false] - If true, then the clock will start right away.
+	 * @param {Boolean} [seconds=true] - If true, then elapsed will return seconds.
+	 */
 
 	constructor(start = false, seconds = true){
 		this._start = this._old = this._elapsed = 0;
@@ -675,25 +753,47 @@ yootil.clock = class {
 		}
 	}
 
+	/**
+	 * Starts the clock.
+	 */
+
 	start(){
 		this._start = this._old = performance.now();
 		this._running = true;
 	}
+
+	/**
+	 * Stops the clock.
+	 */
 
 	stop(){
 		this.delta();
 		this._running = false;
 	}
 
+	/**
+	 * Resumes the clock.
+	 */
+
 	resume(){
 		this._running = true;
 	}
+
+	/**
+	 * Returns the elapsed time.
+	 *
+	 * @return {Number}
+	 */
 
 	elapsed(){
 		this.delta();
 
 		return this._elapsed;
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	delta(){
 		let diff = 0;
@@ -717,8 +817,6 @@ yootil.clock = class {
 };
 
 /**
- * @class yootil.create
- * @static
  * Contains useful methods to creating things quickly (i.e containers).
  */
 
@@ -727,21 +825,21 @@ yootil.create = class {
 	/**
 	 * Creates ProBoards div containers.
 	 *
-	 * Example:
+	 * @example
+	 * let $container = yootil.create.container({
 	 *
-	 *     let $container = yootil.create.container({
+	 *     title: "My Title",
+	 *     content: "My Content",
+	 *     h2: true
 	 *
-	 *        title: "My Title",
-	 *        content: "My Content",
-	 *        h2: true
+	 * });
 	 *
-	 *     });
+	 * $("#content").prepend($container);
 	 *
-	 *     $("#content").prepend($container);
-	 *
-	 * @param {String} $0.title Title of the container.
-	 * @param {Boolean} [$0.h2] If set to true, it will not wrap the title with an h2 tag.
-	 * @param {String} $0.content Content of the container
+	 * @param {Object} config
+	 * @param {String} config.title="" - Title of the container.
+	 * @param {Boolean} [config.h2=true] - If set to true, it will not wrap the title with an h2 tag.
+	 * @param {String} config.content="" - Content of the container
 	 *
 	 * @return {Object} jQuery
 	 */
@@ -762,16 +860,20 @@ yootil.create = class {
 	/**
 	 * Quickly create a blank page that matches a certain URL.
 	 *
-	 *     yootil.create.page({pattern: "shop", title: "Shop"});
+	 * @example
+	 * yootil.create.page({pattern: "shop", title: "Shop"});
 	 *
-	 * An example adding a container to the page:
+	 * @example
+	 * // An example adding a container to the page:
 	 *
-	 *     yootil.create.page({pattern: "shop", title: "Shop"}).container("The Shop", "Welcome to the Shop").appendTo("#content");
+	 * yootil.create.page({pattern: "shop", title: "Shop"}).container("The Shop", "Welcome to the Shop").appendTo("#content");
 	 *
-	 * @param {String|Object} $0.pattern This will get matched against the location.href value, can be a string or RegExp object.
-	 * @param {String} [$0.title] Gets Added onto the current document title.
-	 * @param {Boolean} [$0.hide_content] By default the children of #content gets hidden, you can override this.
-	 * @chainable
+	 * @param {Object} config
+	 * @param {String|Object} config.pattern=null - This will get matched against the location.href value, can be a string or RegExp object.
+	 * @param {String} [config.title=""] - Gets Added onto the current document title.
+	 * @param {Boolean} [config.hide_content=true] - By default the children of #content gets hidden, you can override this.
+	 *
+	 * @return {Object} yootil.create
 	 */
 
 	static page({pattern = null, title = "", hide_content = true} = {}){
@@ -797,11 +899,14 @@ yootil.create = class {
 	/**
 	 * Extend the nav tree easily.
 	 *
-	 *     yootil.create.nav_branch({url: "/shop/", text: "Shop"});
+	 * @example
+	 * yootil.create.nav_branch({url: "/shop/", text: "Shop"});
 	 *
-	 * @param {String} $0.url URL of the branch.
-	 * @param {String} $0.text Text of the branch.
-	 * @return {Object} Branch jQuery wrapped.
+	 * @param {Object} config
+	 * @param {String} config.url="/" - URL of the branch.
+	 * @param {String} config.text="" - Text of the branch.
+	 *
+	 * @return {Object} jQuery - Branch jQuery wrapped.
 	 */
 
 	static nav_branch({url = "/", text = ""} = {}){
@@ -818,12 +923,15 @@ yootil.create = class {
 	/**
 	 * Create a new tab on the profile
 	 *
-	 *     yootil.create.profile_tab({text: "Test", page: "test", active: false});
-	 *	 *
-	 * @param {String} $0.text Text of the branch.
-	 * @param {String} $0.page URL of the branch.
-	 * @param {Boolean} [$0.active] Active page or not.
-	 * @chainable
+	 * @example
+	 * yootil.create.profile_tab({text: "Test", page: "test", active: false});
+	 *
+	 * @param {Object} config
+	 * @param {String} config.text="" - Text of the branch.
+	 * @param {String} config.page="/" - URL of the branch.
+	 * @param {Boolean} [config.active=false] - Active page or not.
+	 *
+	 * @return {Object} yootil.create;
 	 */
 
 	static profile_tab({text = "", page = "/", active = false} = {}){
@@ -842,10 +950,12 @@ yootil.create = class {
 	/**
 	 * Creates a profile content box.  Doesn't add to the DOM.
 	 *
-	 *     yootil.create.profile_content_box();
+	 * @example
+	 * yootil.create.profile_content_box();
 	 *
-	 * @param {String} id Enter a ID, or a unique one will be created.
-	 * @return {Object} The box is returned wrapped with jQuery.
+	 * @param {String} [id=""] - Enter a ID, or a unique one will be created.
+	 *
+	 * @return {Object} jQuery - The box is returned wrapped with jQuery.
 	 */
 
 	static profile_content_box(id = ""){
@@ -859,9 +969,13 @@ yootil.create = class {
 	 *
 	 * Note:  Due to the WYSIWYG being dynamically created, this can fail.
 	 *
-	 * @param {Object} $0.img The image element to append.
-	 * @param {Function} [$0.func] Adds an onlick event.
-	 * @chainable
+	 * @todo remove?
+	 *
+	 * @param {Object} config
+	 * @param {Object} config.img="" - The image HTML DOM element to append.
+	 * @param {Function} [config.func=null] - Adds an onlick event.
+	 *
+	 * @return {Object} yootil.create;
 	 */
 
 	static bbc_button({img = "", func = null} = {}){
@@ -886,31 +1000,35 @@ yootil.create = class {
 	/**
 	 * Creates a new tab next to the BBCode tab on post / message reply pages.
 	 *
-	 *     let $my_tab = yootil.create.ubbc_tab("My Title", "My Content");
+	 * @example
+	 * let $my_tab = yootil.create.ubbc_tab("My Title", "My Content");
 	 *
-	 * An example using the hide and show events:
+	 * @example
+	 * // An example using the hide and show events:
 	 *
-	 *     let $my_tab2 = yootil.create.ubbc_tab("My Title 2", "My Content 2", "myid2", null, {
+	 * let $my_tab2 = yootil.create.ubbc_tab("My Title 2", "My Content 2", "myid2", null, {
 	 *
-	 *         show: function(tab, tab_content){
-	 *     		   tab.css("background-color", "red");
-	 *         },
+	 *     show: function(tab, tab_content){
+	 *         tab.css("background-color", "red");
+	 *     },
 	 *
-	 *         hide: function(tab, tab_content){
-	 *     		   tab.css("background-color", "");
-	 *         }
+	 *     hide: function(tab, tab_content){
+	 *         tab.css("background-color", "");
+	 *     }
 	 *
-	 *     );
+	 * );
 	 *
-	 * @param {String} $0.title The title for the tab, this can contain HTML.
-	 * @param {String} $0.content The content that will be shown when the tab is clicked.  HTML can be used.
-	 * @param {String} [$0.id] The id for this tab.  If not specified a random one will be created.
-	 * @param {Object} [$0.css] You can apply an object of css values that jQuery will apply, or defaults will be used.
-	 * @param {Object} [$0.events] There are 2 events, show and hide.
-	 * @param {Function} [$0.events.show] When the tab is clicked, this event will be called.  Tab and content are passed.
-	 * @param {Function} [$0.events.hide] When another tab is click, this event will be called.  Tab and content are passed.
-	 * @param {Function} [$0.events.context] Set the context of the functions.
-	 * @return {Object} The tab content div is returned wrapped with jQuery.
+	 * @param {Object} config
+	 * @param {String} config.title="My&nbsp;Tab" - The title for the tab, this can contain HTML.
+	 * @param {String} config.content="" - The content that will be shown when the tab is clicked.  HTML can be used.
+	 * @param {String} [config.id=""] - The id for this tab.  If not specified a random one will be created.
+	 * @param {Object} [config.css=null] - You can apply an object of css values that jQuery will apply, or defaults will be used.
+	 * @param {Object} [config.events={}] - There are 2 events, show and hide.
+	 * @param {Function} [config.events.show] - When the tab is clicked, this event will be called.  Tab and content are passed.
+	 * @param {Function} [config.events.hide] - When another tab is click, this event will be called.  Tab and content are passed.
+	 * @param {Function} [config.events.context] - Set the context of the functions.
+	 *
+	 * @return {Object} jQuery - The tab content div is returned wrapped with jQuery.
 	 */
 
 	static bbc_tab({title = "My Tab", content = "", id = "", css = null, events = {}} = {}){
@@ -983,8 +1101,6 @@ yootil.create = class {
 			if(id.match(/bbcode|visual/i)){
 				$(".editor .ui-wysiwyg .editors").show();
 			} else if($(selector).length){
-				console.log(events);
-
 				if(events && events.show){
 					if(events.context){
 						events.show.bind(events.context)($tab, $tab_content);
@@ -1003,13 +1119,14 @@ yootil.create = class {
 };
 
 /**
- * @class yootil.event
- * @static
- *
  * Useful methods for event / ajax related stuff.
  */
 
-yootil.event = (class {
+yootil.event = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		proboards.events.post_liked = [];
@@ -1086,10 +1203,15 @@ yootil.event = (class {
 
 	/**
 	 * Will run after an auto-search (note: this occurs when a board or thread page are first loaded as well).
+	 * @example
+	 * yootil.after_search(() => {
+	 *     console.log("Done");
+	 * });
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static after_search(func, context = null){
@@ -1101,9 +1223,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the user clicks on a column title to sort a list.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static column_sort(func, context = null){
@@ -1115,9 +1238,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the 'Show More' link is clicked on a user's activity page.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static more_activity(func, context = null){
@@ -1129,9 +1253,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the 'Show More' link is clicked on a user's notifications page.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static more_notification(func, context = null){
@@ -1143,9 +1268,10 @@ yootil.event = (class {
 	/**
 	 * Will run when paginating.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static page_change(func, context = null){
@@ -1157,9 +1283,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a post it liked.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static post_liked(func, context = null){
@@ -1173,9 +1300,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a thread is bookmarked.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static bookmarked_thread(func, context = null){
@@ -1189,9 +1317,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user updates their status.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static updated_status(func, context = null){
@@ -1205,9 +1334,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user posts a shout in the shoutbox.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_shouted(func, context = null){
@@ -1221,9 +1351,10 @@ yootil.event = (class {
 	/**
 	 * Will run when the shoutbox updates (i.e fetching new messages).
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_updated(func, context = null){
@@ -1237,9 +1368,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a shout is removed.
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static shoutbox_removed(func, context = null){
@@ -1253,9 +1385,10 @@ yootil.event = (class {
 	/**
 	 * Will run when a user is being searched (i.e bbc insert user link).
 	 *
-	 * @param {Function} func The function that will be called after search.
-	 * @param {Object} [context] Context of func.
-	 * @chainable
+	 * @param {Function} func - The function that will be called after search.
+	 * @param {Object} [context=null] - Context of func.
+	 *
+	 * @return {Object} yootil.event
 	 */
 
 	static user_searched(func, context = null){
@@ -1266,45 +1399,48 @@ yootil.event = (class {
 		return this;
 	}
 
-}).init();
+};
+
+yootil.event.init();
 
 /**
- * @class yootil.extension
- * @static
- *
  * Helper methods for plugin extensions.
  *
- *     yootil.extension.create({
+ * @example
+ * yootil.extension.create({
  *
- *         plugin: "monetary",
- *         id: "test_money",
- *         events: {
+ *     plugin: "monetary",
+ *     id: "test_money",
+ *     events: {
  *
- *              pre_init(){
- *     	           console.log("pre");
- *              }
- *
- *              post_init(){
- *	                console.log("post");
- *              }
- *
- *              ready(){
- *	                console.log("ready");
- *              }
- *
+ *         pre_init(){
+ *     	       console.log("pre");
  *         }
  *
- *     });
+ *         post_init(){
+ *	           console.log("post");
+ *         }
  *
- * The main plugin that supports extensions can then run any
- * pre, init, post, and ready events at the correct place in
- * the plugin.
+ *         ready(){
+ *	           console.log("ready");
+ *         }
  *
- *     yootil.extension.run("monetary").pre_init();
+ *     }
  *
+ * });
+ *
+ * // The main plugin that supports extensions can then run any
+ * // pre, init, post, and ready events at the correct place in
+ * // the plugin.
+ *
+ * yootil.extension.run("monetary").pre_init();
  */
 
-yootil.extension = (class {
+yootil.extension = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._plugin_extensions = new Map();
@@ -1315,9 +1451,12 @@ yootil.extension = (class {
 	/**
 	 * Creates an extension for an existing plugin.
 	 *
-	 * @param {String} plugin The name of the plugin this extension is for.
-	 * @param {String} id The name of your extension plugin.
-	 * @param {Object} events The events that will be executed.
+	 * @param {Object} config
+	 * @param {String} config.plugin="" - The name of the plugin this extension is for.
+	 * @param {String} config.id="" - The name of your extension plugin.
+	 * @param {Object} config.events={} - The events that will be executed.
+	 *
+	 * @return {Object} yootil.extension
 	 */
 
 	static create({plugin = "", id = "", events = null} = {}){
@@ -1340,8 +1479,9 @@ yootil.extension = (class {
 	/**
 	 * For plugins to run various methods on extension classes.
 	 *
-	 * @param {String} plugin The main plugin name that extensions will use.
-	 * @returns {Object} 4 possible methods are then callable (pre_init, init, post_init, and ready).
+	 * @param {String} plugin="" - The main plugin name that extensions will use.
+	 *
+	 * @return {Object} - 3 possible methods are then callable (pre_init, post_init, and ready).
 	 */
 
 	static run(plugin = ""){
@@ -1392,9 +1532,17 @@ yootil.extension = (class {
 		return methods;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static plugin_exists(plugin = ""){
 		return this._plugin_extensions.has(plugin.toUpperCase() + "_EXTENSIONS");
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	static exists(plugin = "", ext_name = ""){
 		if(this.plugin_exists(plugin)){
@@ -1404,6 +1552,10 @@ yootil.extension = (class {
 		return false;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static fetch(plugin = ""){
 		if(this.plugin_exists(plugin)){
 			return this._plugin_extensions.get(plugin.toUpperCase() + "_EXTENSIONS");
@@ -1412,15 +1564,19 @@ yootil.extension = (class {
 		return null;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	static get plugin_extensions(){
 		return this._plugin_extensions
 	}
 
-}).init();
+};
+
+yootil.extension.init();
 
 /**
- * @class yootil.forum
- * @static
  * Wrapper around the ProBoards data hash object to get forum info.
  */
 
@@ -1429,7 +1585,7 @@ yootil.forum = class {
 	/**
 	 * This is an internal method.
 	 *
-	 * @param {String} key The key on the page object to check and get.
+	 * @param {String} key - The key on the page object to check and get.
 	 * @return {String|Object|Number|Array}
 	 * @ignore
 	 */
@@ -1635,8 +1791,6 @@ yootil.forum = class {
 };
 
 /**
- * @alias yootil.get
- * @static
  * Quick methods to get certain elements.
  */
 
@@ -1645,12 +1799,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profiles.
 	 *
-	 *     yootil.get.mini_profiles(); // Gets all mini profiles
+	 * @example
+	 * yootil.get.mini_profiles(); // Gets all mini profiles
 	 *
-	 *     yootil.get.mini_profiles(1); // Gets all mini profiles for user id 1
+	 * @example
+	 * yootil.get.mini_profiles(1); // Gets all mini profiles for user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match mini profiles for that user id.
-	 * @return {Array} Matched mini profiles are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match mini profiles for that user id.
+	 * @return {Array} - Matched mini profiles are returned back.
 	 */
 
 	static mini_profiles(user_id = 0){
@@ -1663,12 +1819,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile avatars.
 	 *
-	 *     yootil.get.mini_profile_avatars(); // Gets all avatars
+	 * @example
+	 * yootil.get.mini_profile_avatars(); // Gets all avatars
 	 *
-	 *     yootil.get.mini_profile_avatars(1); // Gets all avatars for user id 1
+	 * @example
+	 * yootil.get.mini_profile_avatars(1); // Gets all avatars for user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match avatars for that user id.
-	 * @return {Array} Matched avatars are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match avatars for that user id.
+	 * @return {Array} - Matched avatars are returned back.
 	 */
 
 	static mini_profile_avatars(user_id = 0){
@@ -1681,12 +1839,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile user links.
 	 *
-	 *     yootil.get.mini_profile_user_links(1); // Gets all user links for user id 1
+	 * @example
+	 * yootil.get.mini_profile_user_links(1); // Gets all user links for user id 1
 	 *
-	 *     yootil.get.mini_profile_user_links(); // Gets all user links
+	 * @example
+	 * yootil.get.mini_profile_user_links(); // Gets all user links
 	 *
-	 * @param {Number} [user_id] If specified, it will match user links for that user id.
-	 * @return {Array} Matched user links are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match user links for that user id.
+	 * @return {Array} - Matched user links are returned back.
 	 */
 
 	static mini_profile_user_links(user_id = 0){
@@ -1699,12 +1859,14 @@ yootil.get = class {
 	/**
 	 * Gets posts.
 	 *
-	 *     yootil.get.posts(); // Get all posts
+	 * @example
+	 * yootil.get.posts(); // Get all posts
 	 *
-	 *     yootil.get.posts(123); // Gets post with id 123
+	 * @example
+	 * yootil.get.posts(123); // Gets post with id 123
 	 *
-	 * @param {Number} [post_id] The post id for the post to get.
-	 * @return {Array} Matched posts are returned.
+	 * @param {Number} [post_id=0] - The post id for the post to get.
+	 * @return {Array} - Matched posts are returned.
 	 */
 
 	static posts(post_id = 0){
@@ -1717,12 +1879,14 @@ yootil.get = class {
 	/**
 	 * Gets messages.
 	 *
-	 *     yootil.get.messages(); // Get all messages
+	 * @example
+	 * yootil.get.messages(); // Get all messages
 	 *
-	 *     yootil.get.messages(123); // Gets post with id 123
+	 * @example
+	 * yootil.get.messages(123); // Gets post with id 123
 	 *
-	 * @param {Number} [message_id] The message id for the message to get.
-	 * @return {Array} Matched messages are returned.
+	 * @param {Number} [message_id=0] - The message id for the message to get.
+	 * @return {Array} - Matched messages are returned.
 	 */
 
 	static messages(message_id = 0){
@@ -1735,10 +1899,11 @@ yootil.get = class {
 	/**
 	 * Gets user posts.
 	 *
-	 *     yootil.get.user_posts(1); // Gets all posts for user id 1
+	 * @example
+	 * yootil.get.user_posts(1); // Gets all posts for user id 1
 	 *
-	 * @param {Number} [user_id] The user id to find posts for.
-	 * @return {Array} Matched posts are returned.
+	 * @param {Number} [user_id=0] - The user id to find posts for.
+	 * @return {Array} - Matched posts are returned.
 	 */
 
 	static user_posts(user_id = 0){
@@ -1754,10 +1919,11 @@ yootil.get = class {
 	/**
 	 * Gets user messages.
 	 *
-	 *     yootil.get.user_messages(1); // Gets all messages for user id 1
+	 * @example
+	 * yootil.get.user_messages(1); // Gets all messages for user id 1
 	 *
-	 * @param {Number} [user_id] The user id to find messages for.
-	 * @return {Array} Matched messages are returned.
+	 * @param {Number} [user_id=0] - The user id to find messages for.
+	 * @return {Array} - Matched messages are returned.
 	 */
 
 	static user_messages(user_id = 0){
@@ -1783,12 +1949,14 @@ yootil.get = class {
 	/**
 	 * Gets mini profile info sections.
 	 *
-	 *     yootil.get.mini_profile_info(); // Gets all mini profile info
+	 * @example
+	 * yootil.get.mini_profile_info(); // Gets all mini profile info
 	 *
-	 *     yootil.get.mini_profile_info(1); // Gets all mini profile info for the user id 1
+	 * @example
+	 * yootil.get.mini_profile_info(1); // Gets all mini profile info for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match user links for that user id.
-	 * @return {Array} Matched user links are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match user links for that user id.
+	 * @return {Array} - Matched user links are returned back.
 	 */
 
 	static mini_profile_info(user_id = 0){
@@ -1801,12 +1969,14 @@ yootil.get = class {
 	/**
 	 * Gets signatures for posts and messages.
 	 *
-	 *     yootil.get.signatures(); // Gets all signatures
+	 * @example
+	 * yootil.get.signatures(); // Gets all signatures
 	 *
-	 *     yootil.get.signatures(1); // Gets all signatures for the user id 1
+	 * @example
+	 * yootil.get.signatures(1); // Gets all signatures for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static signatures(user_id = 0){
@@ -1819,12 +1989,14 @@ yootil.get = class {
 	/**
 	 * Gets last edit.
 	 *
-	 *     yootil.get.last_edit(); // Gets all last edits
+	 * @example
+	 * yootil.get.last_edit(); // Gets all last edits
 	 *
-	 *     yootil.get.last_edit(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.last_edit(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static last_edit(user_id = 0){
@@ -1837,12 +2009,14 @@ yootil.get = class {
 	/**
 	 * Gets post / message info (date, likes, etc)
 	 *
-	 *     yootil.get.post_info(); // Gets all
+	 * @example
+	 * yootil.get.post_info(); // Gets all
 	 *
-	 *     yootil.get.post_info(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.post_info(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static post_info(user_id = 0){
@@ -1855,12 +2029,14 @@ yootil.get = class {
 	/**
 	 * Gets post / message controls.
 	 *
-	 *     yootil.get.post_controls(); // Gets all
+	 * @example
+	 * yootil.get.post_controls(); // Gets all
 	 *
-	 *     yootil.get.post_controls(1); // Gets all for the user id 1
+	 * @example
+	 * yootil.get.post_controls(1); // Gets all for the user id 1
 	 *
-	 * @param {Number} [user_id] If specified, it will match for that user id.
-	 * @return {Array} Matched results are returned back.
+	 * @param {Number} [user_id=0] - If specified, it will match for that user id.
+	 * @return {Array} - Matched results are returned back.
 	 */
 
 	static post_controls(user_id = 0){
@@ -1873,9 +2049,10 @@ yootil.get = class {
 	/**
 	 * Gets post / message summary.
 	 *
-	 *     yootil.get.summary();
+	 * @example
+	 * yootil.get.summary();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static summary(){
@@ -1885,9 +2062,10 @@ yootil.get = class {
 	/**
 	 * Gets nav tree.
 	 *
-	 *     yootil.get.nav_tree();
+	 * @example
+	 * yootil.get.nav_tree();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_tree(){
@@ -1897,9 +2075,10 @@ yootil.get = class {
 	/**
 	 * Gets nav branches.
 	 *
-	 *     yootil.get.nav_branches();
+	 * @example
+	 * yootil.get.nav_branches();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_branches(){
@@ -1909,9 +2088,10 @@ yootil.get = class {
 	/**
 	 * Gets last nav branch.
 	 *
-	 *     yootil.get.last_nav_branch();
+	 * @example
+	 * yootil.get.last_nav_branch();
 	 *
-	 * @return {Array} Matches are returned back.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static last_nav_branch(){
@@ -1921,13 +2101,15 @@ yootil.get = class {
 	/**
 	 * Gets a branch based on options passed in.
 	 *
-	 *     let example1 = yootil.get.nav_branch("Members", "text");
+	 * @example
+	 * let example1 = yootil.get.nav_branch("Members", "text");
 	 *
-	 *     let example2 = yootil.get.nav_branch(/user\/1/, "url");
+	 * @example
+	 * let example2 = yootil.get.nav_branch(/user\/1/, "url");
 	 *
-	 * @param {String|Object} pattern This can be a string, or a regular expression pattern.
-	 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
-	 * @return {Array} Matches are returned back.
+	 * @param {String|Object} pattern=null - This can be a string, or a regular expression pattern.
+	 * @param {String} [type="text"] - You can match against the url or text of the branch.  Default is text.
+	 * @return {Array} - Matches are returned back.
 	 */
 
 	static nav_branch(pattern = null, type = "text"){
@@ -1958,19 +2140,29 @@ yootil.get = class {
 };
 
 /**
- * @class yootil.key
- * @static
  * Most methods are just wrappers, to see the ProBoards API documentation, <a href="https://www.proboards.com/developer/js/class/key">click here</a>.
+ *
+ * @example
+ * // Basic example (will set for current user):
+ *
+ * yootil.key("mykey").set("apples");
+ *
+ * @example
+ * // Using resolve and reject for promise.
+ *
+ * yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
+ *     console.log(status.message);
+ * }).catch((status) => {
+ *     console.log(status.message);
+ * });
  */
 
-// yootil.key("aaa").set("hi world", 1);
-
-yootil.key = (class {
+yootil.key = class {
 
 	static init(){
 
 		/**
-		 * @property {Object} pb_key_obj Holds a reference to the ProBoards key object.
+		 * @type {Object} pb_key_obj - Holds a reference to the ProBoards key object.
 		 * @ignore
 		 */
 
@@ -1978,6 +2170,10 @@ yootil.key = (class {
 
 		return this.wrapper.bind(this);
 	}
+
+	/**
+	 * @ingore
+	 */
 
 	static wrapper(key = ""){
 		return Object.assign(Object.create(null), {
@@ -2024,7 +2220,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if a key exists.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key="" - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2041,7 +2238,8 @@ yootil.key = (class {
 	/**
 	 * Returns the ProBoards key object.
 	 *
-	 * @param {String} key The key to get.
+	 * @param {String} key="" - The key to get.
+	 *
 	 * @return {Object}
 	 */
 
@@ -2056,8 +2254,9 @@ yootil.key = (class {
 	/**
 	 * Checks to see if a key is empty
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key="" - The key to check.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2078,10 +2277,11 @@ yootil.key = (class {
 	/**
 	 * Gets the value stored in the key.
 	 *
-	 * @param {String} key The ProBoards key we are getting.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [is_json] If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
-	 * @returns {String|Object} If no value, an empty string is returned.
+	 * @param {String} key="" - The ProBoards key we are getting.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [is_json=false] - If true, it will parse the JSON string.  ProBoards handles parsing now it seems.
+	 *
+	 * @returns {String|Object} - If no value, an empty string is returned.
 	 */
 
 	static get(key = "", object_id, is_json = false){
@@ -2105,9 +2305,10 @@ yootil.key = (class {
 	/**
 	 * Clears out key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key="" - The key.
+	 * @param {Number} [object_id=0] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} Returns a promise.
 	 */
 
 	static clear(key = "", object_id){
@@ -2117,23 +2318,26 @@ yootil.key = (class {
 	/**
 	 * Sets a key value.
 	 *
-	 * Basic example (will set for current user):
+	 * @example
+	 * // Basic example (will set for current user):
 	 *
-	 *     yootil.key("mykey").set("apples");
+	 * yootil.key("mykey").set("apples");
 	 *
-	 * Using resolve and reject for promise.
+	 * @example
+	 * //Using resolve and reject for promise.
 	 *
-	 *     yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
-	 *     		console.log(status.message);
-	 *     }).catch((status) => {
-	 *     		console.log(status.message);
-	 *     });
+	 * yootil.key("mykey").set("somevalue", yootil.user.id()).then((status) => {
+	 *     console.log(status.message);
+	 * }).catch((status) => {
+	 *     console.log(status.message);
+	 * });
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Object} value Can be a string, or a object.  ProBoards now handles stringifying objects.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {String} [type] Passed on set the method type (i.e append, pop etc).
-	 * @return {Object} Returns a promise.
+	 * @param {String} key="" - The key.
+	 * @param {String|Object} value="" - Can be a string, or a object.  ProBoards now handles stringifying objects.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {String} [type=""] - Passed on set the method type (i.e append, pop etc).
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static set(key = "", value = "", object_id, type = ""){
@@ -2198,11 +2402,12 @@ yootil.key = (class {
 	/**
 	 * Key is set when an event occurs.
 	 *
-	 * @param {String} key The key.
-	 * @param {String} [event] The event to use.  Currently there are 2 "thread_new" and "post_new".
-	 * @param {Mixed} value The value to be stored in the key.  ProBoards handles stringify now.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Boolean} Returns true if successful (relies on what ProBoards .set returns).
+	 * @param {String} key="" - The key.
+	 * @param {String} [event=""] - The event to use.
+	 * @param {Mixed} value - The value to be stored in the key.  ProBoards handles stringify now.
+	 * @param {Number} [object_id=undefined] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Boolean} - Returns true if successful (relies on what ProBoards .set returns).
 	 */
 
 	static on(key, event = "", value, object_id = undefined){
@@ -2216,10 +2421,11 @@ yootil.key = (class {
 	/**
 	 * Concatenates a given value to the end of the existing key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value Can be a string or a number.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - Can be a string or a number.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static append(key, value, object_id){
@@ -2229,10 +2435,11 @@ yootil.key = (class {
 	/**
 	 * Inserts a given value in front of the existing key value.
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value Can be a string or a number.
-	 * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - Can be a string or a number.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static prepend(key, value, object_id){
@@ -2242,10 +2449,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an integer, increases the key's value by one, or you can supply a different amount to increment by.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [value] Increment by this amount.  Default is 1.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [value=1] - Increment by this amount.  Default is 1.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static increment(key, value = 1, object_id){
@@ -2255,10 +2463,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an integer, decreases the key's value by one, or you can supply a different amount to decrement by.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [value] Decrement by this amount.  Default is 1.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [value=1] - Decrement by this amount.  Default is 1.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static decrement(key, value = 1, object_id){
@@ -2268,10 +2477,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, removes the last number of items specified.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} [num_items] Number of items to pop from the key.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [num_items=1] - Number of items to pop from the key.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static pop(key, num_items = 1, object_id){
@@ -2281,15 +2491,17 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the end of the array.
 	 *
-	 *     yootil.key("mykey").push("apples");
+	 * @example
+	 * yootil.key("mykey").push("apples");
 	 *
-	 *     yootil.key("mykey").push(["apples", "pears"], yootil.user.id());
+	 * @example
+	 * yootil.key("mykey").push(["apples", "pears"], yootil.user.id());
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {String|Array} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static push(key, value, object_id){
@@ -2301,15 +2513,18 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the end of the array only if they are unique.
 	 *
-	 *     yootil.key("mykey").push_unique("apples");
+	 * @example
+	 * yootil.key("mykey").push_unique("apples");
 	 *
-	 *     yootil.key("mykey").push_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
+	 * @example
+	 * yootil.key("mykey").push_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [strict=false] - If set to true, it will use inArray instead of ProBoards inArrayLoose.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static push_unique(key, value, object_id, strict = false){
@@ -2351,10 +2566,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, removes the first "num_items" values.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} num_items The number of items to shift from the array.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Number} [num_items=1] - The number of items to shift from the array.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static shift(key, num_items = 1, object_id){
@@ -2364,10 +2580,11 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds value to the front of the array.
 	 *
-	 * @param {String} key The key.
-	 * @param {String|Array} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [user_id] This is the object id, proboards defaults to current user if not set.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {String|Array} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static unshift(key, value, object_id){
@@ -2379,15 +2596,18 @@ yootil.key = (class {
 	/**
 	 * If the key is an array, adds the given value to the front of the array only if they are unique.
 	 *
-	 *     yootil.key("mykey").unshift_unique("apples");
+	 * @example
+	 * yootil.key("mykey").unshift_unique("apples");
 	 *
-	 *     yootil.key("mykey").unshift_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
+	 * @example
+	 * yootil.key("mykey").unshift_unique(["apples", "pears"], false, yootil.user.id()); // Don't use strict
 	 *
-	 * @param {String} key The key.
-	 * @param {Mixed} value The value to be pushed into the key.  This can be an array of values.
-	 * @param {Number} [object_id] This is the object id, proboards defaults to current user if not set.
-	 * @param {Boolean} [strict] If set to true, it will use inArray instead of ProBoards inArrayLoose.
-	 * @return {Object} Returns promise.
+	 * @param {String} key - The key.
+	 * @param {Mixed} value - The value to be pushed into the key.  This can be an array of values.
+	 * @param {Number} [object_id] - This is the object id, proboards defaults to current user if not set.
+	 * @param {Boolean} [strict=false] - If set to true, it will use inArray instead of ProBoards inArrayLoose.
+	 *
+	 * @return {Object} - Returns a promise.
 	 */
 
 	static unshift_unique(key, value, object_id, strict = false){
@@ -2429,8 +2649,9 @@ yootil.key = (class {
 	/**
 	 * Checks permission on key to see if the user can write.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key - The key.
+	 * @param {Number} object_id - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2447,12 +2668,13 @@ yootil.key = (class {
 	/**
 	 *  Checks permission on key to see if the user can read.
 	 *
-	 * @param {String} key The key.
-	 * @param {Number} object_id This is the object id, proboards defaults to current user if not set.
+	 * @param {String} key - The key.
+	 * @param {Number} object_id - This is the object id, proboards defaults to current user if not set.
+	 *
 	 * @return {Boolean}
 	 */
 
-	static read(key, user){
+	static read(key, object_id){
 		if(this.exists(key)){
 			if(typeof this.pb_key_obj(key).can_read != "undefined"){
 				return !!this.pb_key_obj(key).can_read(object_id);
@@ -2471,8 +2693,9 @@ yootil.key = (class {
 	/**
 	 * Get they key type.
 	 *
-	 * @param {String} key The key.
-	 * @param {Boolean} [return_str] If true, it will return a string value (i.e "USER").
+	 * @param {String} key - The key.
+	 * @param {Boolean} [return_str=false] - If true, it will return a string value (i.e "USER").
+	 *
 	 * @return {String}
 	 */
 
@@ -2496,9 +2719,10 @@ yootil.key = (class {
 	/**
 	 * Gets the length of a key.
 	 *
-	 * @param {String} key The key to be checked.
-	 * @param {Number} object_id Object id.
-	 * @return {Number} Returns the length.
+	 * @param {String} key - The key to be checked.
+	 * @param {Number} object_id - Object id.
+	 *
+	 * @return {Number} - Returns the length.
 	 */
 
 	static length(key, object_id){
@@ -2514,7 +2738,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a user type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2529,7 +2754,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a super user type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2544,7 +2770,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a thread type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2559,7 +2786,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a post type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2574,7 +2802,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a conversation type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2589,7 +2818,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a message type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2604,7 +2834,8 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key is a super_forum type.
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2619,8 +2850,9 @@ yootil.key = (class {
 	/**
 	 * Checks to see if the key has space.
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} object_id Object id.
+	 * @param {String} key - The key to check.
+	 * @param {Number} object_id - Object id.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -2637,8 +2869,9 @@ yootil.key = (class {
 	/**
 	 * Gets the space left in the key.
 	 *
-	 * @param {String} key The key to check.
-	 * @param {Number} object_id Object id.
+	 * @param {String} key - The key to check.
+	 * @param {Number} object_id - Object id.
+	 *
 	 * @return {Number}
 	 */
 
@@ -2653,7 +2886,8 @@ yootil.key = (class {
 	/**
 	 * Gets max space (characters).
 	 *
-	 * @param {String} key The key to check.
+	 * @param {String} key - The key to check.
+	 *
 	 * @return {Number}
 	 */
 
@@ -2663,41 +2897,66 @@ yootil.key = (class {
 		return max_length;
 	}
 
-}).init();
+};
 
-/*
+yootil.key.init();
 
-Front multi key pruner.
-
-Will prune from the front and add to the end.  Use in combination with key pushing.  Atttempt
-to push to the key, if it fails, prune it and save.
-
-
-let pruner = new yootil.key.pruner({
-
-	keys: ["test", "test2"],
-	object_id: yootil.user.id()
-
-});
-
-pruner.prune(["G"]); // Prunes key and adds new elements to the end.
-
-console.log(pruner.pruned_data()); // Gets the data that got pruned.
-
-*/
+/**
+ * Front multi key pruner.
+ *
+ * Will prune from the front and add to the end.
+ *
+ * Use in combination with key pushing.  Atttempt to push to the key, if it fails, prune it and save.
+ *
+ * @example
+ * let pruner = new yootil.key.pruner({
+ *
+ *     keys: ["test", "test2"],
+ *     object_id: yootil.user.id()
+ *
+ * });
+ *
+ * pruner.prune(["G"]); // Prunes key and adds new elements to the end.
+ *
+ * console.log(pruner.pruned_data()); // Gets the data that got pruned.
+ */
 
 yootil.key.pruner = class {
+
+	/**
+	 * @param {Object} config
+	 * @param {Array} config.keys=[] - The keys that will be looked at to prune (combined).
+	 * @param {Number} [config.object_id=undefined] - The object for the key (e.g. user ID).
+	 */
 
 	constructor({keys = [], object_id = undefined} = {}){
 		if(!Array.isArray(keys)){
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
+
+		/**
+		 * @ignore
+		 */
+
 		this.object_id = object_id;
+
+		/**
+		 * @ignore
+		 */
+
 		this._pruned_data = [];
 		this.convert_keys_to_objs();
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	convert_keys_to_objs(){
 		for(let [index, value] of this.keys.entries()){
@@ -2715,6 +2974,10 @@ yootil.key.pruner = class {
 			}
 		}
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	defrag(data = [], first_run = false){
 		if(!first_run){
@@ -2745,6 +3008,13 @@ yootil.key.pruner = class {
 		}
 	}
 
+	/**
+	 * Will initiate the pruning while trying to add new data.
+	 *
+	 * @param {Array} add=[] - The data to add.
+	 *
+	 * @return {Boolean} - Returns true if the prune was successful.
+	 */
 	prune(add = []){
 		if(!add || !this.keys.length){
 			return false;
@@ -2781,6 +3051,10 @@ yootil.key.pruner = class {
 		return true;
 	}
 
+	/**
+	 * @ignore
+	 */
+
 	get_last_key_with_data(){
 		let last = null;
 
@@ -2800,8 +3074,9 @@ yootil.key.pruner = class {
 	/**
 	 * Call this method to save the data to the keys.
 	 *
-	 * @param {Number} object_id ID of the object (i.e user)
-	 * @returns {Object} Last key to be set gets that promise returned.
+	 * @param {Number} [object_id=undefined] - ID of the object (i.e user)
+	 *
+	 * @returns {Object} - Last key to be set gets that promise returned.
 	 */
 
 	save(object_id = undefined){
@@ -2816,25 +3091,17 @@ yootil.key.pruner = class {
 		return last;
 	}
 
+	/**
+	 * Returns any data that was pruned.
+	 *
+	 * @return {Array)
+	 */
+
 	pruned_data(){
 		return this._pruned_data;
 	}
 
 };
-
-/*
-
-let splitter = new yootil.key.splitter(["testy", "testy2"])
-
-splitter.split("123456789", 5); // Split 5 into each key
-
-if(!splitter.has_excess()){
-	splitter.save(yootil.user.id());
-} else {
-	console.log("No space");
-}
-
-*/
 
 /**
  * Splits up data between keys.  The order of the keys is very important if
@@ -2843,12 +3110,23 @@ if(!splitter.has_excess()){
  * Any left over data that cannot be put into a key is lost.  It's important you
  * check the data length doesn't exceed the total length of the keys.  Use the
  * "has_excess" method to see if there was any data remaining before saving.
+ *
+ * @example
+ * let splitter = new yootil.key.splitter(["testy", "testy2"])
+ *
+ * splitter.split("123456789", 5); // Split 5 into each key
+ *
+ * if(!splitter.has_excess()){
+ *     splitter.save(yootil.user.id());
+ * } else {
+ *     console.log("No space");
+ * }
  */
 
 yootil.key.splitter = class {
 
 	/**
-	 * @param {String|Array} keys The keys that the data will be split between.
+	 * @param {String|Array} keys=[] - The keys that the data will be split between.
 	 */
 
 	constructor(keys = []){
@@ -2856,10 +3134,23 @@ yootil.key.splitter = class {
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
+
+		/**
+		 * @ignore
+		 */
+
 		this.excess_data = "";
 		this.convert_keys_to_objs();
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	convert_keys_to_objs(){
 		for(let [index, value] of this.keys.entries()){
@@ -2905,10 +3196,12 @@ yootil.key.splitter = class {
 	/**
 	 * The data pass in is what gets split between the keys.
 	 *
-	 * @param {String|Object|Array} data The data to be split.
-	 * @param {Boolean} json Split as JSON string
-	 * @param {Number} length The length of each chunk. It's recommended to not pass a value in.
-	 * @returns {Boolean}
+	 * @param {Object} config
+	 * @param {String|Object|Array} config.data="" - The data to be split.
+	 * @param {Boolean} [config.json=true] - Split as JSON string
+	 * @param {Number} [config.length=0] - The length of each chunk. It's recommended to not pass a value in.
+	 *
+	 * @return {Boolean}
 	 */
 
 	split({data = "", json = true, length = 0} = {}){
@@ -2934,8 +3227,9 @@ yootil.key.splitter = class {
 	/**
 	 * Call this method to save the data to the keys.
 	 *
-	 * @param {Number} object_id ID of the object (i.e user)
-	 * @returns {Object} Last key to be set gets that promise returned.
+	 * @param {Number} [object_id=undefined] - ID of the object (i.e user).
+	 *
+	 * @return {Object} - Last key to be set gets that promise returned.
 	 */
 
 	save(object_id = undefined){
@@ -2951,19 +3245,20 @@ yootil.key.splitter = class {
 
 };
 
-/*
-
- let joiner = new yootil.key.joiner(["testy", "testy2"])
-
- console.log(joiner.data(yootil.user.id()));
-
+/**
+ * Joins key data.
+ *
+ * @example
+ * let joiner = new yootil.key.joiner(["testy", "testy2"])
+ *
+ * console.log(joiner.data(yootil.user.id()));
  */
 
 yootil.key.joiner = class {
 
 	/**
-	 * @param {String|Array} keys The keys that has data that will be joined.
-	 * @param {Number} object_id
+	 * @param {String|Array} keys=[] - The keys that has data that will be joined.
+	 * @param {Number} [object_id=undefined] - The ID for this key object (e.g. user ID).
 	 */
 
 	constructor({keys = [], object_id = undefined} = {}){
@@ -2971,16 +3266,27 @@ yootil.key.joiner = class {
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.object_id = object_id;
+
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
 	}
 
 	/**
 	 * Returns the data joined.
 	 *
-	 * @param {Boolean} json Pass false to not JSON parse the data.
-	 * @returns {String|Object|Array}
+	 * @param {Boolean} [json=true] - Pass false to not JSON parse the data.
+	 *
+	 * @return {String|Object|Array}
 	 */
+
 	data(json = true){
 		if(this.keys.length){
 			let data = "";
@@ -3014,13 +3320,14 @@ yootil.key.joiner = class {
 };
 
 /**
- * @class yootil.location
- * @static
- *
  * Used to determine where we are currently.
  */
 
-yootil.location = (class {
+yootil.location = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._cached_route = ((pb.data && pb.data("route")) ? pb.data("route").name : "");
@@ -3031,9 +3338,11 @@ yootil.location = (class {
 	/**
 	 * INTERNAL METHOD.  Used to easily see if an id is the current page.
 	 *
-	 * @param {String} id ID of the page to check route against.
-	 * @return {Boolean}
 	 * @ignore
+	 *
+	 * @param {String} id - ID of the page to check route against.
+	 *
+	 * @return {Boolean}
 	 */
 
 	static __is_page(id){
@@ -3042,6 +3351,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the main page of a board? (i.e. thread listing)
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3051,6 +3361,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the bookmarks listing?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3060,6 +3371,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the main calendar page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3072,6 +3384,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a day of calendar events?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3106,6 +3419,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the members list?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3115,6 +3429,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the list of messages?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3124,6 +3439,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing a message?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3133,6 +3449,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently sending a message?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3142,6 +3459,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently replying to a conversation?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3151,6 +3469,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently replying to a conversation by quoting?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3160,6 +3479,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3169,7 +3489,9 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation?
+	 *
 	 * @return {Boolean}
+	 *
 	 * @ignore
 	 */
 
@@ -3179,7 +3501,9 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation (new_user_conversation)?
+	 *
 	 * @return {Boolean}
+	 *
 	 * @ignore
 	 */
 
@@ -3189,6 +3513,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to post/create a thread/quote a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3198,6 +3523,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to reply with a quote?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3207,6 +3533,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to post a reply?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3216,6 +3543,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to create a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3225,6 +3553,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3234,6 +3563,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3243,6 +3573,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a thread or post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3252,6 +3583,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a custom page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3261,6 +3593,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a permalink page (i.e linking to a direct post)?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3270,6 +3603,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a permalink to a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3287,6 +3621,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the activity profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3296,6 +3631,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the following profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3305,6 +3641,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the friends profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3314,6 +3651,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the gifts profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3323,6 +3661,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the groups profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3332,6 +3671,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a main profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3341,6 +3681,8 @@ yootil.location = (class {
 
 	/**
 	 * Is it a valid Profile
+	 *
+	 * @return {Boolean}
 	 */
 
 	static profile_exists(){
@@ -3349,6 +3691,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the admin controls page for the user?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3358,6 +3701,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's avatar?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3367,6 +3711,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's badges?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3376,6 +3721,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's notifications?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3385,6 +3731,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's personal settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3394,6 +3741,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's privacy settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3403,6 +3751,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's general settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3412,6 +3761,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's social settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3421,6 +3771,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the notifications profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3430,6 +3781,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the profile (including any of the profile tabs)
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3439,6 +3791,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the recent posts page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3448,6 +3801,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing posts page by IP?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3457,15 +3811,17 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing any posts page?
+	 *
 	 * @return {Boolean}
 	 */
 
 	static posts(){
-		return this.recent_posts() || this.ip_threads();
+		return this.recent_posts() || this.ip_posts();
 	}
 
 	/**
 	 * Are we currently viewing the recent threads page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3475,6 +3831,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing threads by IP?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3484,6 +3841,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing any type of thread listing?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3493,6 +3851,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to search?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3502,6 +3861,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing results of a search?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3511,6 +3871,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3518,12 +3879,14 @@ yootil.location = (class {
 		return this.__is_page("thread") || this.__is_page("list_posts") || this.permalink_post();
 	}
 	
-}).init();
+};
+
+yootil.location.init();
 
 /**
- * @class yootil.page
- * @ignore
  * Wrapper around the ProBoards data object "page".
+ *
+ * @ignore
  */
 
 yootil.page = class {
@@ -3531,7 +3894,10 @@ yootil.page = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
+	 * @ignore
+	 *
+	 * @param {String} key - The key on the page object to check and get.
+	 *
 	 * @return {String|Object|Array|Number}
 	 */
 
@@ -3546,8 +3912,6 @@ yootil.page = class {
 };
 
 /**
- * @class yootil.page.board
- * @static
  * Various methods to help get board information.
  */
 
@@ -3556,7 +3920,7 @@ yootil.page.board = class {
 	/**
 	 *	This is an internal method
 	 *
-	 * @param {String} key The key on the board object to check and get.
+	 * @param {String} key - The key on the board object to check and get.
 	 * @return {String|Object|Array|Number}
 	 * @ignore
 	 */
@@ -3573,6 +3937,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -3582,6 +3947,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board name
+	 *
 	 * @return {String}
 	 */
 
@@ -3591,6 +3957,7 @@ yootil.page.board = class {
 
 	/**
 	 * Gets the board URL
+	 *
 	 * @return {String}
 	 */
 
@@ -3600,6 +3967,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board description
+	 *
 	 * @return {String}
 	 */
 
@@ -3609,6 +3977,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has post counts disabled
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3618,6 +3987,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has posting disabled
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3627,6 +3997,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board name
+	 *
 	 * @return {String}
 	 */
 
@@ -3636,6 +4007,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board is hidden
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3645,6 +4017,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board total posts
+	 *
 	 * @return {Number}
 	 */
 
@@ -3654,6 +4027,7 @@ yootil.page.board = class {
 
 	/**
 	 * Checks if this board has announcements showing
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3663,6 +4037,7 @@ yootil.page.board = class {
 
 	/**
 	 * Get the board total threads
+	 *
 	 * @return {Number}
 	 */
 
@@ -3673,8 +4048,6 @@ yootil.page.board = class {
 };
 
 /**
- * @class yootil.page.category
- * @static
  * Various methods to help get category information.
  */
 
@@ -3700,6 +4073,7 @@ yootil.page.category = class {
 
 	/**
 	 * Gets the category ID.
+	 *
 	 * @return {Number}
 	 */
 
@@ -3709,6 +4083,7 @@ yootil.page.category = class {
 
 	/**
 	 * Gets the category name.
+	 *
 	 * @return {String}
 	 */
 
@@ -3719,8 +4094,6 @@ yootil.page.category = class {
 };
 
 /**
- * @class yootil.page.member
- * @static
  * Various methods to help get member information.
  */
 
@@ -3729,9 +4102,11 @@ yootil.page.member = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
-	 * @return {String|Object|Array|Number}
 	 * @ignore
+	 *
+	 * @param {String} key - The key on the page object to check and get.
+	 *
+	 * @return {String|Object|Array|Number}
 	 */
 
 	static __get_data(key){
@@ -3746,6 +4121,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members ID.
+	 *
 	 * @return {Number}
 	 */
 
@@ -3755,6 +4131,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members name.
+	 *
 	 * @return {String}
 	 */
 
@@ -3764,6 +4141,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members URL.
+	 *
 	 * @return {String}
 	 */
 
@@ -3773,6 +4151,7 @@ yootil.page.member = class {
 
 	/**
 	 * Gets the members display group id.
+	 *
 	 * @return {Number}
 	 */
 
@@ -3782,6 +4161,7 @@ yootil.page.member = class {
 
 	/**
 	 * Valid member
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3792,8 +4172,6 @@ yootil.page.member = class {
 }
 
 /**
- * @class yootil.page.post
- * @static
  * Various methods to help get post information.
  */
 
@@ -3802,9 +4180,11 @@ yootil.page.post = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
-	 * @return {String|Object|Array|Number}
 	 * @ignore
+	 *
+	 * @param {String} key - The key on the page object to check and get
+	 *
+	 * @return {String|Object|Array|Number}
 	 */
 
 	static __get_data(key){
@@ -3819,6 +4199,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the user id of who created the post
+	 *
 	 * @return {Number}
 	 */
 
@@ -3828,6 +4209,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the timeastamp when the post was created
+	 *
 	 * @return {Number}
 	 */
 
@@ -3837,6 +4219,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -3846,6 +4229,7 @@ yootil.page.post = class {
 
 	/**
 	 * Checks if the post has been liked
+	 *
 	 * @return {boolean}
 	 */
 
@@ -3855,6 +4239,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the thread id
+	 *
 	 * @return {Number}
 	 */
 
@@ -3864,6 +4249,7 @@ yootil.page.post = class {
 
 	/**
 	 * Gets the post URL
+	 *
 	 * @return {String}
 	 */
 
@@ -3874,8 +4260,6 @@ yootil.page.post = class {
 };
 
 /**
- * @class yootil.page.thread
- * @static
  * Various methods to help get thread information.
  */
 
@@ -3884,9 +4268,11 @@ yootil.page.thread = class {
 	/**
 	 * This is an internal method
 	 *
-	 * @param {String} key The key on the page object to check and get
-	 * @return {String|Object|Array|Number}
 	 * @ignore
+	 *
+	 * @param {String} key - The key on the page object to check and get
+	 *
+	 * @return {String|Object|Array|Number}
 	 */
 
 	static __get_data(key){
@@ -3901,6 +4287,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -3910,6 +4297,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread creation date timestamp
+	 *
 	 * @return {Number}
 	 */
 
@@ -3919,6 +4307,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread an announcement?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3928,6 +4317,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread bookmarked?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3937,6 +4327,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread falling?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3946,6 +4337,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread locked?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3955,6 +4347,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread new?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3964,6 +4357,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread a poll?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3973,6 +4367,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Is the thread sticky?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -3982,6 +4377,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread subject
+	 *
 	 * @return {String}
 	 */
 
@@ -3991,6 +4387,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the thread URL
+	 *
 	 * @return {String}
 	 */
 
@@ -4000,6 +4397,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the board id
+	 *
 	 * @return {Number}
 	 */
 
@@ -4009,6 +4407,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the member who created this thread
+	 *
 	 * @return {Number}
 	 */
 
@@ -4018,6 +4417,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the last post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -4027,6 +4427,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the first post id
+	 *
 	 * @return {Number}
 	 */
 
@@ -4036,6 +4437,7 @@ yootil.page.thread = class {
 
 	/**
 	 * Gets the last post time
+	 *
 	 * @return {Number}
 	 */
 
@@ -4046,30 +4448,30 @@ yootil.page.thread = class {
 };
 
 /**
- * @class yootil.queue
- * @constructor
- *
  * Handle queuing functions easily.
  *
  * The queue is passed as a parameter to your queued function, the context is left
  * intact.
  *
- *     let q = new yootil.queue();
+ * @example
+ * let q = new yootil.queue();
  *
- *     q.add(queue => {
- *     	   console.log("Hello");
- *    	   setTimeout(() => queue.next(), 1000);
- *     }).add(queue => {
- *     	   console.log("World");
- *     	   this.stop(); // Stop the queue
- *     }).add(queue => console.log("!")); // Won't run as queue was stopped
+ * q.add(queue => {
+	 *     console.log("Hello");
+	 *     setTimeout(() => queue.next(), 1000);
+	 * }).add(queue => {
+	 *     console.log("World");
+	 *     this.stop(); // Stop the queue
+	 * }).add(queue => console.log("!")); // Won't run as queue was stopped
  *
- *     q.start(); // Manually start the queue
- *
- * @param {Boolean} [auto_start] If true, the queue will auto start once the first item is added.
+ * q.start(); // Manually start the queue
  */
 
 yootil.queue = class {
+
+	/**
+	 * @param {Boolean} [auto_start=false] - If true, the queue will auto start once the first item is added.
+	 */
 
 	constructor(auto_start = false){
 		this._queue = [];
@@ -4081,8 +4483,9 @@ yootil.queue = class {
 	/**
 	 * Add a function to the queue.
 	 *
-	 * @param {Function} func The function to add to the queue.
-	 * @chainable
+	 * @param {Function} func=null - The function to add to the queue.
+	 *
+	 * @return {Object} this
 	 */
 
 	add(func = null){
@@ -4102,6 +4505,10 @@ yootil.queue = class {
 
 		return this;
 	}
+
+	/**
+	 * @private
+	 */
 
 	*iterator(){
 		while(!this._stopped && this._queue.length){
@@ -4123,7 +4530,7 @@ yootil.queue = class {
 	/**
 	 * Starts the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	start(){
@@ -4136,7 +4543,7 @@ yootil.queue = class {
 	/**
 	 * Stops the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	stop(){
@@ -4147,7 +4554,7 @@ yootil.queue = class {
 	/**
 	 * Pauses the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	pause(){
@@ -4159,15 +4566,17 @@ yootil.queue = class {
 	/**
 	 * Resumes the queue.
 	 *
-	 *  let q = new yootil.queue(true).add(queue => {
+	 * @example
+	 * let q = new yootil.queue(true).add(queue => {
 	 *     console.log("Hello");
 	 *     queue.pause();
-	 *  }).add(() => console.log(" World!"));
+	 * }).add(() => console.log(" World!"));
 	 *
-	 *  $("mybtn").click(q.resume);
+	 * $("mybtn").click(q.resume);
 	 *
-	 * @param {Boolean} [do_next] Will call "next" on the iterator automatically.
-	 * @chainable
+	 * @param {Boolean} [do_next=true] - Will call "next" on the iterator automatically.
+	 *
+	 * @return {Object} this
 	 */
 
 	resume(do_next = true){
@@ -4183,7 +4592,7 @@ yootil.queue = class {
 	/**
 	 * Clears the queue.
 	 *
-	 * @chainable
+	 * @return {Object} this
 	 */
 
 	clear(){
@@ -4195,7 +4604,15 @@ yootil.queue = class {
 };
 
 
+/**
+ * @ignore
+ */
+
 yootil.settings = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this.images = {};
@@ -4212,8 +4629,6 @@ yootil.settings = class {
 };
 
 /**
- * @class yootil.storage
- * @static
  * Wrappers for session and persistent storage.
  */
 
@@ -4222,15 +4637,18 @@ yootil.storage = class {
 	/**
 	 *  Allows you to set a key and value, along with some other settings.
 	 *
-	 *     yootil.storage.set("mykey", "myvalue") // Will be persistent
+	 * @example
+	 * yootil.storage.set("mykey", "myvalue") // Will be persistent
 	 *
-	 *     yootil.storage.set("mykey", "myvalue". false, false) // Will be for the session
+	 * @example
+	 * yootil.storage.set("mykey", "myvalue". false, false) // Will be for the session
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {String} value The value that will be stored.
-	 * @param {Boolean}	[json] If true, the value will be turned into a JSON string.
-	 * @param {Boolean} [persist] By default the value is stored persistently, pass false to use session.
-	 * @chainable
+	 * @param {String} key - The key name for the storage.
+	 * @param {String} value="" - The value that will be stored.
+	 * @param {Boolean}	[json=false] - If true, the value will be turned into a JSON string.
+	 * @param {Boolean} [persist=true] - By default the value is stored persistently, pass false to use session.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static set(key, value = "", json = false, persist = true){
@@ -4250,13 +4668,16 @@ yootil.storage = class {
 	/**
 	 * Gets a value from storage in either session or persistent.
 	 *
-	 *     yootil.storage.get("mykey", false, false) // Will look in session only
+	 * @example
+	 * yootil.storage.get("mykey", false, false) // Will look in session only
 	 *
-	 *     yootil.storage.get("mykey", true, true) // Will look in persistent only
+	 * @example
+	 * yootil.storage.get("mykey", true, true) // Will look in persistent only
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {Boolean} [json] If true, the value will be JSON parsed.
-	 * @param {Boolean} [persist] You can specify not to look in persistent by passing false.
+	 * @param {String} key - The key name for the storage.
+	 * @param {Boolean} [json=false] - If true, the value will be JSON parsed.
+	 * @param {Boolean} [persist=true] - You can specify not to look in persistent by passing false.
+	 *
 	 * @return {String|Object}
 	 */
 
@@ -4281,13 +4702,16 @@ yootil.storage = class {
 	/**
 	 * Removes a key from storage
 	 *
-	 *     yootil.storage.remove("mykey", false) // Will look in session only
+	 * @example
+	 * yootil.storage.remove("mykey", false) // Will look in session only
 	 *
-	 *     yootil.storage.remove("mykey", true) // Will look in persistent only
+	 * @example
+	 * yootil.storage.remove("mykey", true) // Will look in persistent only
 	 *
-	 * @param {String} key The key name for the storage.
-	 * @param {Boolean} [persist] You can specify not to look in persistent by passing false.
-	 * @chainable
+	 * @param {String} key - The key name for the storage.
+	 * @param {Boolean} [persist=true] - You can specify not to look in persistent by passing false.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static remove(key, persist = true){
@@ -4305,8 +4729,9 @@ yootil.storage = class {
 	/**
 	 * Clears everything from storage
 	 *
-	 * @param {Boolean} [persist] If true, will clean persistent storage, or false will clear session.  Default is true.
-	 * @chainable
+	 * @param {Boolean} [persist=true] - If true, will clean persistent storage, or false will clear session.  Default is true.
+	 *
+	 * @return {Object} yootil.storage
 	 */
 
 	static clear(persist = true){
@@ -4322,18 +4747,26 @@ yootil.storage = class {
 };
 
 /**
- * @class yootil.sync
+ * Handles syncing data between tabs / windows.
  *
+ * @example
  * let my_key = yootil.key("my_key");
  * let sync = new Sync({key: "my_key", data: my_key.get(yootil.user.id())});
  *
  * sync.update(my_key.get()); // Called after setting key
- *
- * @constructor
  */
 
 yootil.sync = class {
 
+	/**
+	 *
+	 * @param {Object} config
+	 * @param {String) config.key="" - The key.
+	 * @param {Object|String} config.data - The data to be stored.
+	 * @param {Object} config.handler={}
+	 *
+	 * @todo documentate this properly
+	 */
 	constructor({key = "", data = {}, handler = {}} = {}){
 		if(!key){
 			return;
@@ -4373,12 +4806,23 @@ yootil.sync = class {
 		}), 100);
 	}
 
-	// For outside calls to trigger a manual update
+	/**
+	 * Used for outside calls.
+	 *
+	 * @param {Object|String} data
+	 */
 
 	update(data = {}){
 		this._trigger_caller = true;
 		yootil.storage.set(this._ls_key, data, true, true);
 	}
+
+	/**
+	 * The change handler.
+	 *
+	 * @param {Object|String} new_data
+	 * @param {Object|String} old_data
+	 */
 
 	change(new_data, old_data){
 		let internal_key_data = proboards.plugin.keys.data[this._key];
@@ -4388,9 +4832,21 @@ yootil.sync = class {
 		}
 	}
 
+	/**
+	 * Returns the key name.
+	 *
+	 * @return {String}
+	 */
+
 	get key(){
 		return this._key;
 	}
+
+	/**
+	 * Returns the local storage key name.
+	 *
+	 * @return {String}
+	 */
 
 	get local_key(){
 		return this._ls_key;
@@ -4399,12 +4855,14 @@ yootil.sync = class {
 };
 
 /**
- * @class yootil.user
- * @static
  * Contains useful methods relating to the user currently viewing the page, most being wrappers at the moment.
  */
 
-yootil.user = (class {
+yootil.user = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._data = {};
@@ -4441,6 +4899,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if the user is logged in, if so, returns true.
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -4456,6 +4915,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the current users ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -4471,6 +4931,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if the current user is staff
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -4486,6 +4947,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users name
+	 *
 	 * @return {String}
 	 */
 
@@ -4501,6 +4963,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users theme ID
+	 *
 	 * @return {Number}
 	 */
 
@@ -4516,6 +4979,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users path URL to their profile
+	 *
 	 * @return {String}
 	 */
 
@@ -4531,6 +4995,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users avatar (HTML)
+	 *
 	 * @return {String}
 	 */
 
@@ -4546,6 +5011,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users birthday object
+	 *
 	 * @return {Object}
 	 */
 
@@ -4561,6 +5027,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users date format (i.e d/m/y)
+	 *
 	 * @return {String}
 	 */
 
@@ -4576,6 +5043,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users post mode.
+	 *
 	 * @return {Object}
 	 */
 
@@ -4591,6 +5059,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users friends
+	 *
 	 * @return {Object}
 	 */
 
@@ -4606,6 +5075,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks to see if user has new messages
+	 *
 	 * @return {Number}
 	 */
 
@@ -4621,6 +5091,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users instant messengers
+	 *
 	 * @return {Object}
 	 */
 
@@ -4636,6 +5107,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users last online object
+	 *
 	 * @return {Object}
 	 */
 
@@ -4651,6 +5123,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users post count
+	 *
 	 * @return {Number}
 	 */
 
@@ -4666,6 +5139,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users rank
+	 *
 	 * @return {Object}
 	 */
 
@@ -4681,6 +5155,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users registered on date
+	 *
 	 * @return {Object}
 	 */
 
@@ -4696,6 +5171,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users status
+	 *
 	 * @return {String}
 	 */
 
@@ -4711,6 +5187,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users time format
+	 *
 	 * @return {String}
 	 */
 
@@ -4726,6 +5203,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users username
+	 *
 	 * @return {String}
 	 */
 
@@ -4741,6 +5219,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users group ids
+	 *
 	 * @return {Array}
 	 */
 
@@ -4756,6 +5235,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets users groups
+	 *
 	 * @return {Object}
 	 */
 
@@ -4771,6 +5251,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks if the member is invisible
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -4786,6 +5267,7 @@ yootil.user = (class {
 
 	/**
 	 * Checks if the member has proboards plus on
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -4801,6 +5283,7 @@ yootil.user = (class {
 
 	/**
 	 * Gets the users block list
+	 *
 	 * @return {Object}
 	 */
 
@@ -4814,11 +5297,14 @@ yootil.user = (class {
 		return {};
 	}
 
-}).init();
+};
+
+yootil.user.init();
 
 /**
  * Uses a basic LCG algorithm for seeded random numbers.
  *
+ * @example
  * let rnd = new yootil.random(555);
  *
  * console.log(rnd.next()); // 0.19470878187320603
@@ -4828,19 +5314,37 @@ yootil.user = (class {
 yootil.random = class {
 
 	/**
-	 *
-	 * @param {Integer} seed
+	 * @param {Number} seed - The seed
 	 */
 
 	constructor(seed){
+
+		/**
+		 * @ignore
+		 */
+
 		this.m = 2147483647;
+
+		/**
+		 * @ignore
+		 */
+
 		this.a = 1103515245;
+
+		/**
+		 * @ignore
+		 */
+
 		this.c = 12345;
+
+		/**
+		 * @ignore
+		 */
+
 		this.seed = (seed && typeof seed === "string")? yootil.hash_code(seed) :  Math.floor(Math.random() * this.m);
 	}
 
 	/**
-	 *
 	 * @returns {Number}
 	 */
 
@@ -4849,8 +5353,7 @@ yootil.random = class {
 	}
 
 	/**
-	 *
-	 * @returns {Number}
+	 * @returns {Number} - Returns next random number.
 	 */
 
 	next(){

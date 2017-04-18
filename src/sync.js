@@ -89,6 +89,7 @@ yootil.sync = class {
 	 *
 	 * @return {String}
 	 */
+
 	get key(){
 		return this._key;
 	}
@@ -98,6 +99,7 @@ yootil.sync = class {
 	 *
 	 * @return {String}
 	 */
+
 	get local_key(){
 		return this._ls_key;
 	}

@@ -1,11 +1,12 @@
 /**
- * @class yootil.location
- * @static
- *
  * Used to determine where we are currently.
  */
 
-yootil.location = (class {
+yootil.location = class {
+
+	/**
+	 * @ignore
+	 */
 
 	static init(){
 		this._cached_route = ((pb.data && pb.data("route")) ? pb.data("route").name : "");
@@ -16,9 +17,11 @@ yootil.location = (class {
 	/**
 	 * INTERNAL METHOD.  Used to easily see if an id is the current page.
 	 *
-	 * @param {String} id ID of the page to check route against.
-	 * @return {Boolean}
 	 * @ignore
+	 *
+	 * @param {String} id - ID of the page to check route against.
+	 *
+	 * @return {Boolean}
 	 */
 
 	static __is_page(id){
@@ -27,6 +30,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the main page of a board? (i.e. thread listing)
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -36,6 +40,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the bookmarks listing?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -45,6 +50,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the main calendar page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -57,6 +63,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a day of calendar events?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -91,6 +98,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the members list?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -100,6 +108,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the list of messages?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -109,6 +118,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing a message?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -118,6 +128,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently sending a message?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -127,6 +138,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently replying to a conversation?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -136,6 +148,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently replying to a conversation by quoting?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -145,6 +158,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -154,7 +168,9 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation?
+	 *
 	 * @return {Boolean}
+	 *
 	 * @ignore
 	 */
 
@@ -164,7 +180,9 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently creating a new conversation (new_user_conversation)?
+	 *
 	 * @return {Boolean}
+	 *
 	 * @ignore
 	 */
 
@@ -174,6 +192,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to post/create a thread/quote a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -183,6 +202,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to reply with a quote?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -192,6 +212,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to post a reply?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -201,6 +222,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to create a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -210,6 +232,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -219,6 +242,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -228,6 +252,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to edit a thread or post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -237,6 +262,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a custom page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -246,6 +272,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a permalink page (i.e linking to a direct post)?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -255,6 +282,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a permalink to a post?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -272,6 +300,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the activity profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -281,6 +310,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the following profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -290,6 +320,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the friends profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -299,6 +330,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the gifts profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -308,6 +340,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the groups profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -317,6 +350,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing a main profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -326,6 +360,8 @@ yootil.location = (class {
 
 	/**
 	 * Is it a valid Profile
+	 *
+	 * @return {Boolean}
 	 */
 
 	static profile_exists(){
@@ -334,6 +370,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the admin controls page for the user?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -343,6 +380,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's avatar?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -352,6 +390,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's badges?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -361,6 +400,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's notifications?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -370,6 +410,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's personal settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -379,6 +420,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's privacy settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -388,6 +430,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's general settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -397,6 +440,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we editing the user's social settings?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -406,6 +450,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the notifications profile page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -415,6 +460,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing the profile (including any of the profile tabs)
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -424,6 +470,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the recent posts page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -433,6 +480,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing posts page by IP?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -442,6 +490,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing any posts page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -451,6 +500,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing the recent threads page?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -460,6 +510,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing threads by IP?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -469,6 +520,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing any type of thread listing?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -478,6 +530,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently trying to search?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -487,6 +540,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we viewing results of a search?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -496,6 +550,7 @@ yootil.location = (class {
 
 	/**
 	 * Are we currently viewing a thread?
+	 *
 	 * @return {Boolean}
 	 */
 
@@ -503,4 +558,6 @@ yootil.location = (class {
 		return this.__is_page("thread") || this.__is_page("list_posts") || this.permalink_post();
 	}
 	
-}).init();
+};
+
+yootil.location.init();

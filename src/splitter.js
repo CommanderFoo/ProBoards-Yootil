@@ -1,17 +1,3 @@
-/*
-
-let splitter = new yootil.key.splitter(["testy", "testy2"])
-
-splitter.split("123456789", 5); // Split 5 into each key
-
-if(!splitter.has_excess()){
-	splitter.save(yootil.user.id());
-} else {
-	console.log("No space");
-}
-
-*/
-
 /**
  * Splits up data between keys.  The order of the keys is very important if
  * you are joining later.
@@ -19,12 +5,23 @@ if(!splitter.has_excess()){
  * Any left over data that cannot be put into a key is lost.  It's important you
  * check the data length doesn't exceed the total length of the keys.  Use the
  * "has_excess" method to see if there was any data remaining before saving.
+ *
+ * @example
+ * let splitter = new yootil.key.splitter(["testy", "testy2"])
+ *
+ * splitter.split("123456789", 5); // Split 5 into each key
+ *
+ * if(!splitter.has_excess()){
+ *     splitter.save(yootil.user.id());
+ * } else {
+ *     console.log("No space");
+ * }
  */
 
 yootil.key.splitter = class {
 
 	/**
-	 * @param {String|Array} keys The keys that the data will be split between.
+	 * @param {String|Array} keys=[] - The keys that the data will be split between.
 	 */
 
 	constructor(keys = []){
@@ -32,10 +29,23 @@ yootil.key.splitter = class {
 			keys = [keys];
 		}
 
+		/**
+		 * @ignore
+		 */
+
 		this.keys = keys;
+
+		/**
+		 * @ignore
+		 */
+
 		this.excess_data = "";
 		this.convert_keys_to_objs();
 	}
+
+	/**
+	 * @ignore
+	 */
 
 	convert_keys_to_objs(){
 		for(let [index, value] of this.keys.entries()){
@@ -81,10 +91,12 @@ yootil.key.splitter = class {
 	/**
 	 * The data pass in is what gets split between the keys.
 	 *
-	 * @param {String|Object|Array} data The data to be split.
-	 * @param {Boolean} json Split as JSON string
-	 * @param {Number} length The length of each chunk. It's recommended to not pass a value in.
-	 * @returns {Boolean}
+	 * @param {Object} config
+	 * @param {String|Object|Array} config.data="" - The data to be split.
+	 * @param {Boolean} [config.json=true] - Split as JSON string
+	 * @param {Number} [config.length=0] - The length of each chunk. It's recommended to not pass a value in.
+	 *
+	 * @return {Boolean}
 	 */
 
 	split({data = "", json = true, length = 0} = {}){
@@ -110,8 +122,9 @@ yootil.key.splitter = class {
 	/**
 	 * Call this method to save the data to the keys.
 	 *
-	 * @param {Number} object_id ID of the object (i.e user)
-	 * @returns {Object} Last key to be set gets that promise returned.
+	 * @param {Number} [object_id=undefined] - ID of the object (i.e user).
+	 *
+	 * @return {Object} - Last key to be set gets that promise returned.
 	 */
 
 	save(object_id = undefined){

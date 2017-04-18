@@ -1,24 +1,26 @@
-yootil.queue = class {
-
-	/**
-	 * Handle queuing functions easily.
-	 *
-	 * The queue is passed as a parameter to your queued function, the context is left
-	 * intact.
-	 *
-	 * @example
-	 * let q = new yootil.queue();
-	 *
-	 * q.add(queue => {
+/**
+ * Handle queuing functions easily.
+ *
+ * The queue is passed as a parameter to your queued function, the context is left
+ * intact.
+ *
+ * @example
+ * let q = new yootil.queue();
+ *
+ * q.add(queue => {
 	 *     console.log("Hello");
 	 *     setTimeout(() => queue.next(), 1000);
 	 * }).add(queue => {
 	 *     console.log("World");
 	 *     this.stop(); // Stop the queue
 	 * }).add(queue => console.log("!")); // Won't run as queue was stopped
-	 *
-	 * q.start(); // Manually start the queue
-	 *
+ *
+ * q.start(); // Manually start the queue
+ */
+
+yootil.queue = class {
+
+	/**
 	 * @param {Boolean} [auto_start=false] - If true, the queue will auto start once the first item is added.
 	 */
 
