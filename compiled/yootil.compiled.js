@@ -26,7 +26,7 @@ SOFTWARE.
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -108,8 +108,8 @@ var yootil = function () {
 	}, {
 		key: "html_encode",
 		value: function html_encode() {
-			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var decode_first = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var decode_first = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			str = decode_first ? this.html_decode(str) : str;
 
@@ -130,7 +130,7 @@ var yootil = function () {
 	}, {
 		key: "html_decode",
 		value: function html_decode() {
-			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			this._textarea.innerHTML = str;
 
@@ -156,8 +156,8 @@ var yootil = function () {
 	}, {
 		key: "number_format",
 		value: function number_format() {
-			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var delim = arguments.length <= 1 || arguments[1] === undefined ? "," : arguments[1];
+			var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var delim = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ",";
 
 			return str.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1" + delim) || "0";
 		}
@@ -177,8 +177,8 @@ var yootil = function () {
 	}, {
 		key: "is_json",
 		value: function is_json() {
-			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var return_obj = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var return_obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			try {
 				str = JSON.parse(str);
@@ -206,6 +206,18 @@ var yootil = function () {
 		}
 
 		/**
+   * Creates a timestamp.
+   *
+   * @return {Number}
+   */
+
+	}, {
+		key: "ts",
+		value: function ts() {
+			return this.timestamp();
+		}
+
+		/**
    * Checks a number and returns the correct suffix to be used with it.
    *
    * @example
@@ -219,7 +231,7 @@ var yootil = function () {
 	}, {
 		key: "suffix",
 		value: function suffix() {
-			var n = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var n = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var j = n % 10;
 
@@ -253,8 +265,8 @@ var yootil = function () {
 	}, {
 		key: "day",
 		value: function day() {
-			var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var full = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+			var full = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			if (index >= 0 && index < this._days.length) {
 				return this._days[index].substr(0, full ? 9 : 3);
@@ -278,8 +290,8 @@ var yootil = function () {
 	}, {
 		key: "month",
 		value: function month() {
-			var index = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
-			var full = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+			var full = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			if (index >= 0 && index < this._months.length) {
 				return this._months[index].substr(0, full ? 9 : index == 8 ? 4 : 3);
@@ -315,8 +327,8 @@ var yootil = function () {
    */
 
 		value: function compare_version() {
-			var current = arguments.length <= 0 || arguments[0] === undefined ? "0.0.0" : arguments[0];
-			var required = arguments.length <= 1 || arguments[1] === undefined ? "0.0.0" : arguments[1];
+			var current = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "0.0.0";
+			var required = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "0.0.0";
 
 			current = current.toString();
 			required = required.toString();
@@ -357,7 +369,7 @@ var yootil = function () {
 	}, {
 		key: "hash_code",
 		value: function hash_code() {
-			var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			str = str.toString();
 
@@ -453,14 +465,13 @@ yootil.animation = function () {
 	function _class() {
 		var _this = this;
 
-		var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-		var _ref$callback = _ref.callback;
-		var callback = _ref$callback === undefined ? null : _ref$callback;
-		var _ref$duration = _ref.duration;
-		var duration = _ref$duration === undefined ? 0 : _ref$duration;
-		var _ref$start = _ref.start;
-		var start = _ref$start === undefined ? false : _ref$start;
+		var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+		    _ref$callback = _ref.callback,
+		    callback = _ref$callback === undefined ? null : _ref$callback,
+		    _ref$duration = _ref.duration,
+		    duration = _ref$duration === undefined ? 0 : _ref$duration,
+		    _ref$start = _ref.start,
+		    start = _ref$start === undefined ? false : _ref$start;
 
 		_classCallCheck(this, _class);
 
@@ -660,20 +671,19 @@ yootil.bar = function () {
 	}, {
 		key: "add",
 		value: function add() {
-			var _ref2 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref2$url = _ref2.url;
-			var url = _ref2$url === undefined ? "" : _ref2$url;
-			var _ref2$img = _ref2.img;
-			var img = _ref2$img === undefined ? "" : _ref2$img;
-			var _ref2$alt = _ref2.alt;
-			var alt = _ref2$alt === undefined ? "" : _ref2$alt;
-			var _ref2$key = _ref2.key;
-			var key = _ref2$key === undefined ? "" : _ref2$key;
-			var _ref2$func = _ref2.func;
-			var func = _ref2$func === undefined ? null : _ref2$func;
-			var _ref2$context = _ref2.context;
-			var context = _ref2$context === undefined ? null : _ref2$context;
+			var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref2$url = _ref2.url,
+			    url = _ref2$url === undefined ? "" : _ref2$url,
+			    _ref2$img = _ref2.img,
+			    img = _ref2$img === undefined ? "" : _ref2$img,
+			    _ref2$alt = _ref2.alt,
+			    alt = _ref2$alt === undefined ? "" : _ref2$alt,
+			    _ref2$key = _ref2.key,
+			    key = _ref2$key === undefined ? "" : _ref2$key,
+			    _ref2$func = _ref2.func,
+			    func = _ref2$func === undefined ? null : _ref2$func,
+			    _ref2$context = _ref2.context,
+			    context = _ref2$context === undefined ? null : _ref2$context;
 
 			if (!this._settings.enabled) {
 				return;
@@ -727,7 +737,7 @@ yootil.bar = function () {
 	}, {
 		key: "remove",
 		value: function remove() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			key = key.toString();
 
@@ -862,8 +872,8 @@ yootil.clock = function () {
   */
 
 	function _class3() {
-		var start = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-		var seconds = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+		var start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+		var seconds = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
 		_classCallCheck(this, _class3);
 
@@ -987,14 +997,13 @@ yootil.create = function () {
    */
 
 		value: function container() {
-			var _ref3 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref3$title = _ref3.title;
-			var title = _ref3$title === undefined ? "" : _ref3$title;
-			var _ref3$h = _ref3.h2;
-			var h2 = _ref3$h === undefined ? true : _ref3$h;
-			var _ref3$content = _ref3.content;
-			var content = _ref3$content === undefined ? "" : _ref3$content;
+			var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref3$title = _ref3.title,
+			    title = _ref3$title === undefined ? "" : _ref3$title,
+			    _ref3$h = _ref3.h2,
+			    h2 = _ref3$h === undefined ? true : _ref3$h,
+			    _ref3$content = _ref3.content,
+			    content = _ref3$content === undefined ? "" : _ref3$content;
 
 			var html = "";
 
@@ -1030,14 +1039,13 @@ yootil.create = function () {
 	}, {
 		key: "page",
 		value: function page() {
-			var _ref4 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref4$pattern = _ref4.pattern;
-			var pattern = _ref4$pattern === undefined ? null : _ref4$pattern;
-			var _ref4$title = _ref4.title;
-			var title = _ref4$title === undefined ? "" : _ref4$title;
-			var _ref4$hide_content = _ref4.hide_content;
-			var hide_content = _ref4$hide_content === undefined ? true : _ref4$hide_content;
+			var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref4$pattern = _ref4.pattern,
+			    pattern = _ref4$pattern === undefined ? null : _ref4$pattern,
+			    _ref4$title = _ref4.title,
+			    title = _ref4$title === undefined ? "" : _ref4$title,
+			    _ref4$hide_content = _ref4.hide_content,
+			    hide_content = _ref4$hide_content === undefined ? true : _ref4$hide_content;
 
 			if (!pattern) {
 				return this;
@@ -1074,12 +1082,11 @@ yootil.create = function () {
 	}, {
 		key: "nav_branch",
 		value: function nav_branch() {
-			var _ref5 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref5$url = _ref5.url;
-			var url = _ref5$url === undefined ? "/" : _ref5$url;
-			var _ref5$text = _ref5.text;
-			var text = _ref5$text === undefined ? "" : _ref5$text;
+			var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref5$url = _ref5.url,
+			    url = _ref5$url === undefined ? "/" : _ref5$url,
+			    _ref5$text = _ref5.text,
+			    text = _ref5$text === undefined ? "" : _ref5$text;
 
 			var $branch = yootil.get.last_nav_branch().clone();
 
@@ -1108,14 +1115,13 @@ yootil.create = function () {
 	}, {
 		key: "profile_tab",
 		value: function profile_tab() {
-			var _ref6 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref6$text = _ref6.text;
-			var text = _ref6$text === undefined ? "" : _ref6$text;
-			var _ref6$page = _ref6.page;
-			var page = _ref6$page === undefined ? "/" : _ref6$page;
-			var _ref6$active = _ref6.active;
-			var active = _ref6$active === undefined ? false : _ref6$active;
+			var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref6$text = _ref6.text,
+			    text = _ref6$text === undefined ? "" : _ref6$text,
+			    _ref6$page = _ref6.page,
+			    page = _ref6$page === undefined ? "/" : _ref6$page,
+			    _ref6$active = _ref6.active,
+			    active = _ref6$active === undefined ? false : _ref6$active;
 
 			if (yootil.location.profile()) {
 				var active_class = active ? " class='ui-active'" : "";
@@ -1143,7 +1149,7 @@ yootil.create = function () {
 	}, {
 		key: "profile_content_box",
 		value: function profile_content_box() {
-			var id = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			var uid = id || $.unique_id("yootil-");
 
@@ -1167,12 +1173,11 @@ yootil.create = function () {
 	}, {
 		key: "bbc_button",
 		value: function bbc_button() {
-			var _ref7 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref7$img = _ref7.img;
-			var img = _ref7$img === undefined ? "" : _ref7$img;
-			var _ref7$func = _ref7.func;
-			var func = _ref7$func === undefined ? null : _ref7$func;
+			var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref7$img = _ref7.img,
+			    img = _ref7$img === undefined ? "" : _ref7$img,
+			    _ref7$func = _ref7.func,
+			    func = _ref7$func === undefined ? null : _ref7$func;
 
 			$(function () {
 				var $li = $("<li>").addClass("button").append($(img));
@@ -1229,18 +1234,17 @@ yootil.create = function () {
 	}, {
 		key: "bbc_tab",
 		value: function bbc_tab() {
-			var _ref8 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref8$title = _ref8.title;
-			var title = _ref8$title === undefined ? "My Tab" : _ref8$title;
-			var _ref8$content = _ref8.content;
-			var content = _ref8$content === undefined ? "" : _ref8$content;
-			var _ref8$id = _ref8.id;
-			var id = _ref8$id === undefined ? "" : _ref8$id;
-			var _ref8$css = _ref8.css;
-			var css = _ref8$css === undefined ? null : _ref8$css;
-			var _ref8$events = _ref8.events;
-			var events = _ref8$events === undefined ? {} : _ref8$events;
+			var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref8$title = _ref8.title,
+			    title = _ref8$title === undefined ? "My Tab" : _ref8$title,
+			    _ref8$content = _ref8.content,
+			    content = _ref8$content === undefined ? "" : _ref8$content,
+			    _ref8$id = _ref8.id,
+			    id = _ref8$id === undefined ? "" : _ref8$id,
+			    _ref8$css = _ref8.css,
+			    css = _ref8$css === undefined ? null : _ref8$css,
+			    _ref8$events = _ref8.events,
+			    events = _ref8$events === undefined ? {} : _ref8$events;
 
 			id = id || yootil.timestamp();
 
@@ -1436,7 +1440,7 @@ yootil.event = function () {
 	}, {
 		key: "after_search",
 		value: function after_search(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("afterSearch", context ? func.bind(context) : func);
 
@@ -1455,7 +1459,7 @@ yootil.event = function () {
 	}, {
 		key: "column_sort",
 		value: function column_sort(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("columnSort", context ? func.bind(context) : func);
 
@@ -1474,7 +1478,7 @@ yootil.event = function () {
 	}, {
 		key: "more_activity",
 		value: function more_activity(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("moreActivity", context ? func.bind(context) : func);
 
@@ -1493,7 +1497,7 @@ yootil.event = function () {
 	}, {
 		key: "more_notification",
 		value: function more_notification(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("moreNotification", context ? func.bind(context) : func);
 
@@ -1512,7 +1516,7 @@ yootil.event = function () {
 	}, {
 		key: "page_change",
 		value: function page_change(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("pageChange", context ? func.bind(context) : func);
 
@@ -1531,7 +1535,7 @@ yootil.event = function () {
 	}, {
 		key: "post_liked",
 		value: function post_liked(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("post_liked", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1552,7 +1556,7 @@ yootil.event = function () {
 	}, {
 		key: "bookmarked_thread",
 		value: function bookmarked_thread(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("bookmarked_thread", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1573,7 +1577,7 @@ yootil.event = function () {
 	}, {
 		key: "updated_status",
 		value: function updated_status(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("updated_status", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1594,7 +1598,7 @@ yootil.event = function () {
 	}, {
 		key: "shoutbox_shouted",
 		value: function shoutbox_shouted(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("shoutbox_shouted", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1615,7 +1619,7 @@ yootil.event = function () {
 	}, {
 		key: "shoutbox_updated",
 		value: function shoutbox_updated(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("shoutbox_updated", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1636,7 +1640,7 @@ yootil.event = function () {
 	}, {
 		key: "shoutbox_removed",
 		value: function shoutbox_removed(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("shoutbox_removed", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1657,7 +1661,7 @@ yootil.event = function () {
 	}, {
 		key: "user_searched",
 		value: function user_searched(func) {
-			var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+			var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
 			proboards.on("user_searched", function () {
 				(context ? func.bind(context) : func)(this.args || []);
@@ -1738,14 +1742,13 @@ yootil.extension = function () {
 	}, {
 		key: "create",
 		value: function create() {
-			var _ref9 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref9$plugin = _ref9.plugin;
-			var plugin = _ref9$plugin === undefined ? "" : _ref9$plugin;
-			var _ref9$id = _ref9.id;
-			var id = _ref9$id === undefined ? "" : _ref9$id;
-			var _ref9$events = _ref9.events;
-			var events = _ref9$events === undefined ? null : _ref9$events;
+			var _ref9 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref9$plugin = _ref9.plugin,
+			    plugin = _ref9$plugin === undefined ? "" : _ref9$plugin,
+			    _ref9$id = _ref9.id,
+			    id = _ref9$id === undefined ? "" : _ref9$id,
+			    _ref9$events = _ref9.events,
+			    events = _ref9$events === undefined ? null : _ref9$events;
 
 			if (!plugin || !id || !events) {
 				return;
@@ -1776,7 +1779,7 @@ yootil.extension = function () {
 		value: function run() {
 			var _this2 = this;
 
-			var plugin = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var plugin = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			var methods = Object.create(null);
 
@@ -1793,10 +1796,9 @@ yootil.extension = function () {
 
 				try {
 					for (var _iterator = exts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						var _step$value = _slicedToArray(_step.value, 2);
-
-						var ext_name = _step$value[0];
-						var klass = _step$value[1];
+						var _step$value = _slicedToArray(_step.value, 2),
+						    ext_name = _step$value[0],
+						    klass = _step$value[1];
 
 						if (typeof klass.pre_init != "undefined") {
 							klass.pre_init();
@@ -1831,10 +1833,9 @@ yootil.extension = function () {
 
 				try {
 					for (var _iterator2 = exts[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-						var _step2$value = _slicedToArray(_step2.value, 2);
-
-						var ext_name = _step2$value[0];
-						var klass = _step2$value[1];
+						var _step2$value = _slicedToArray(_step2.value, 2),
+						    ext_name = _step2$value[0],
+						    klass = _step2$value[1];
 
 						if (typeof klass.post_init != "undefined") {
 							klass.post_init();
@@ -1869,10 +1870,9 @@ yootil.extension = function () {
 
 				try {
 					for (var _iterator3 = exts[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-						var _step3$value = _slicedToArray(_step3.value, 2);
-
-						var ext_name = _step3$value[0];
-						var klass = _step3$value[1];
+						var _step3$value = _slicedToArray(_step3.value, 2),
+						    ext_name = _step3$value[0],
+						    klass = _step3$value[1];
 
 						if (typeof klass.ready != "undefined") {
 							klass.ready();
@@ -1904,7 +1904,7 @@ yootil.extension = function () {
 	}, {
 		key: "plugin_exists",
 		value: function plugin_exists() {
-			var plugin = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var plugin = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			return this._plugin_extensions.has(plugin.toUpperCase() + "_EXTENSIONS");
 		}
@@ -1916,8 +1916,8 @@ yootil.extension = function () {
 	}, {
 		key: "exists",
 		value: function exists() {
-			var plugin = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var ext_name = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
+			var plugin = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var ext_name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 
 			if (this.plugin_exists(plugin)) {
 				return this._plugin_extensions.get(plugin.toUpperCase() + "_EXTENSIONS").has(ext_name.toUpperCase());
@@ -1933,7 +1933,7 @@ yootil.extension = function () {
 	}, {
 		key: "fetch",
 		value: function fetch() {
-			var plugin = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var plugin = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			if (this.plugin_exists(plugin)) {
 				return this._plugin_extensions.get(plugin.toUpperCase() + "_EXTENSIONS");
@@ -2246,7 +2246,7 @@ yootil.get = function () {
    */
 
 		value: function mini_profiles() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
@@ -2270,7 +2270,7 @@ yootil.get = function () {
 	}, {
 		key: "mini_profile_avatars",
 		value: function mini_profile_avatars() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
@@ -2294,7 +2294,7 @@ yootil.get = function () {
 	}, {
 		key: "mini_profile_user_links",
 		value: function mini_profile_user_links() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ".user-" + id : "";
@@ -2318,7 +2318,7 @@ yootil.get = function () {
 	}, {
 		key: "posts",
 		value: function posts() {
-			var post_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var post_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(post_id, 10);
 			var selector = id ? "-" + id : "";
@@ -2342,7 +2342,7 @@ yootil.get = function () {
 	}, {
 		key: "messages",
 		value: function messages() {
-			var message_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var message_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(message_id, 10);
 			var selector = id ? "-" + id : "";
@@ -2363,7 +2363,7 @@ yootil.get = function () {
 	}, {
 		key: "user_posts",
 		value: function user_posts() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 
@@ -2387,7 +2387,7 @@ yootil.get = function () {
 	}, {
 		key: "user_messages",
 		value: function user_messages() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 
@@ -2426,7 +2426,7 @@ yootil.get = function () {
 	}, {
 		key: "mini_profile_info",
 		value: function mini_profile_info() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
@@ -2450,7 +2450,7 @@ yootil.get = function () {
 	}, {
 		key: "signatures",
 		value: function signatures() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
@@ -2474,7 +2474,7 @@ yootil.get = function () {
 	}, {
 		key: "last_edit",
 		value: function last_edit() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
@@ -2498,7 +2498,7 @@ yootil.get = function () {
 	}, {
 		key: "post_info",
 		value: function post_info() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
@@ -2522,7 +2522,7 @@ yootil.get = function () {
 	}, {
 		key: "post_controls",
 		value: function post_controls() {
-			var user_id = arguments.length <= 0 || arguments[0] === undefined ? 0 : arguments[0];
+			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
 			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
@@ -2607,8 +2607,8 @@ yootil.get = function () {
 	}, {
 		key: "nav_branch",
 		value: function nav_branch() {
-			var pattern = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-			var type = arguments.length <= 1 || arguments[1] === undefined ? "text" : arguments[1];
+			var pattern = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+			var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "text";
 
 			if (!pattern) {
 				return [];
@@ -2683,7 +2683,7 @@ yootil.key = function () {
 		value: function wrapper() {
 			var _this3 = this;
 
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			return Object.assign(Object.create(null), {
 
@@ -2807,7 +2807,7 @@ yootil.key = function () {
 	}, {
 		key: "exists",
 		value: function exists() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			if (key) {
 				if (typeof proboards.plugin._keys[key] != "undefined") {
@@ -2829,7 +2829,7 @@ yootil.key = function () {
 	}, {
 		key: "key_obj",
 		value: function key_obj() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
 			if (this.exists(key)) {
 				return this.pb_key_obj(key);
@@ -2850,8 +2850,8 @@ yootil.key = function () {
 	}, {
 		key: "is_empty",
 		value: function is_empty() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var object_id = arguments.length <= 1 || arguments[1] === undefined ? 0 : arguments[1];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var object_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
 			if (this.exists(key)) {
 				if (typeof this.pb_key_obj(key).get != "undefined") {
@@ -2879,9 +2879,9 @@ yootil.key = function () {
 	}, {
 		key: "get",
 		value: function get() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 			var object_id = arguments[1];
-			var is_json = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+			var is_json = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
 			if (this.exists(key)) {
 				object_id = object_id || undefined;
@@ -2912,7 +2912,7 @@ yootil.key = function () {
 	}, {
 		key: "clear",
 		value: function clear() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 			var object_id = arguments[1];
 
 			return this.set(key, "", object_id);
@@ -2946,13 +2946,13 @@ yootil.key = function () {
 	}, {
 		key: "set",
 		value: function set() {
-			var key = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-			var value = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
+			var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+			var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 
 			var _this4 = this;
 
 			var object_id = arguments[2];
-			var type = arguments.length <= 3 || arguments[3] === undefined ? "" : arguments[3];
+			var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
 
 			var p = new Promise(function (resolve, reject) {
 				object_id = object_id || undefined;
@@ -3025,9 +3025,9 @@ yootil.key = function () {
 	}, {
 		key: "on",
 		value: function on(key) {
-			var event = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
+			var event = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
 			var value = arguments[2];
-			var object_id = arguments.length <= 3 || arguments[3] === undefined ? undefined : arguments[3];
+			var object_id = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : undefined;
 
 			if (!event) {
 				return false;
@@ -3081,7 +3081,7 @@ yootil.key = function () {
 	}, {
 		key: "increment",
 		value: function increment(key) {
-			var value = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+			var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 			var object_id = arguments[2];
 
 			return this.set(key, value, object_id, "increment");
@@ -3100,7 +3100,7 @@ yootil.key = function () {
 	}, {
 		key: "decrement",
 		value: function decrement(key) {
-			var value = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+			var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 			var object_id = arguments[2];
 
 			return this.set(key, value, object_id, "decrement");
@@ -3119,7 +3119,7 @@ yootil.key = function () {
 	}, {
 		key: "pop",
 		value: function pop(key) {
-			var num_items = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+			var num_items = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 			var object_id = arguments[2];
 
 			return this.set(key, num_items, object_id, "pop");
@@ -3169,7 +3169,7 @@ yootil.key = function () {
 	}, {
 		key: "push_unique",
 		value: function push_unique(key, value, object_id) {
-			var strict = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+			var strict = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
 			var current_value = this.value(key);
 
@@ -3248,7 +3248,7 @@ yootil.key = function () {
 	}, {
 		key: "shift",
 		value: function shift(key) {
-			var num_items = arguments.length <= 1 || arguments[1] === undefined ? 1 : arguments[1];
+			var num_items = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 			var object_id = arguments[2];
 
 			return this.set(key, num_items, object_id, "shift");
@@ -3292,7 +3292,7 @@ yootil.key = function () {
 	}, {
 		key: "unshift_unique",
 		value: function unshift_unique(key, value, object_id) {
-			var strict = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
+			var strict = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
 			var current_value = this.value(key);
 
@@ -3418,7 +3418,7 @@ yootil.key = function () {
 	}, {
 		key: "type",
 		value: function type(key) {
-			var return_str = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var return_str = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			var type = this.pb_key_obj(key).type();
 
@@ -3674,12 +3674,11 @@ yootil.key.pruner = function () {
   */
 
 	function _class10() {
-		var _ref10 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-		var _ref10$keys = _ref10.keys;
-		var keys = _ref10$keys === undefined ? [] : _ref10$keys;
-		var _ref10$object_id = _ref10.object_id;
-		var object_id = _ref10$object_id === undefined ? undefined : _ref10$object_id;
+		var _ref10 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+		    _ref10$keys = _ref10.keys,
+		    keys = _ref10$keys === undefined ? [] : _ref10$keys,
+		    _ref10$object_id = _ref10.object_id,
+		    object_id = _ref10$object_id === undefined ? undefined : _ref10$object_id;
 
 		_classCallCheck(this, _class10);
 
@@ -3720,10 +3719,9 @@ yootil.key.pruner = function () {
 
 			try {
 				for (var _iterator6 = this.keys.entries()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-					var _step6$value = _slicedToArray(_step6.value, 2);
-
-					var index = _step6$value[0];
-					var value = _step6$value[1];
+					var _step6$value = _slicedToArray(_step6.value, 2),
+					    index = _step6$value[0],
+					    value = _step6$value[1];
 
 					var obj = yootil.key(value);
 
@@ -3761,8 +3759,8 @@ yootil.key.pruner = function () {
 	}, {
 		key: "defrag",
 		value: function defrag() {
-			var data = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-			var first_run = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+			var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+			var first_run = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
 			if (!first_run) {
 				var _iteratorNormalCompletion7 = true;
@@ -3800,10 +3798,9 @@ yootil.key.pruner = function () {
 
 			try {
 				keys_loop: for (var _iterator8 = this.keys.entries()[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-					var _step8$value = _slicedToArray(_step8.value, 2);
-
-					var index = _step8$value[0];
-					var _obj = _step8$value[1];
+					var _step8$value = _slicedToArray(_step8.value, 2),
+					    index = _step8$value[0],
+					    _obj = _step8$value[1];
 
 					for (var i = 0; i < data.length; ++i) {
 						var elem_len = JSON.stringify(data[i]).length;
@@ -3847,7 +3844,7 @@ yootil.key.pruner = function () {
 	}, {
 		key: "prune",
 		value: function prune() {
-			var add = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+			var add = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
 			if (!add || !this.keys.length) {
 				return false;
@@ -3959,7 +3956,7 @@ yootil.key.pruner = function () {
 	}, {
 		key: "save",
 		value: function save() {
-			var object_id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+			var object_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
 			var last = null;
 
@@ -4036,7 +4033,7 @@ yootil.key.splitter = function () {
   */
 
 	function _class11() {
-		var keys = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+		var keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
 		_classCallCheck(this, _class11);
 
@@ -4071,10 +4068,9 @@ yootil.key.splitter = function () {
 
 			try {
 				for (var _iterator12 = this.keys.entries()[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-					var _step12$value = _slicedToArray(_step12.value, 2);
-
-					var index = _step12$value[0];
-					var value = _step12$value[1];
+					var _step12$value = _slicedToArray(_step12.value, 2),
+					    index = _step12$value[0],
+					    value = _step12$value[1];
 
 					var obj = yootil.key(value);
 
@@ -4147,14 +4143,13 @@ yootil.key.splitter = function () {
 	}, {
 		key: "split",
 		value: function split() {
-			var _ref11 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-			var _ref11$data = _ref11.data;
-			var data = _ref11$data === undefined ? "" : _ref11$data;
-			var _ref11$json = _ref11.json;
-			var json = _ref11$json === undefined ? true : _ref11$json;
-			var _ref11$length = _ref11.length;
-			var length = _ref11$length === undefined ? 0 : _ref11$length;
+			var _ref11 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+			    _ref11$data = _ref11.data,
+			    data = _ref11$data === undefined ? "" : _ref11$data,
+			    _ref11$json = _ref11.json,
+			    json = _ref11$json === undefined ? true : _ref11$json,
+			    _ref11$length = _ref11.length,
+			    length = _ref11$length === undefined ? 0 : _ref11$length;
 
 			if (!data || this.keys.length < 2) {
 				return false;
@@ -4207,7 +4202,7 @@ yootil.key.splitter = function () {
 	}, {
 		key: "save",
 		value: function save() {
-			var object_id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+			var object_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
 
 			var last = null;
 
@@ -4260,12 +4255,11 @@ yootil.key.joiner = function () {
   */
 
 	function _class12() {
-		var _ref12 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-		var _ref12$keys = _ref12.keys;
-		var keys = _ref12$keys === undefined ? [] : _ref12$keys;
-		var _ref12$object_id = _ref12.object_id;
-		var object_id = _ref12$object_id === undefined ? undefined : _ref12$object_id;
+		var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+		    _ref12$keys = _ref12.keys,
+		    keys = _ref12$keys === undefined ? [] : _ref12$keys,
+		    _ref12$object_id = _ref12.object_id,
+		    object_id = _ref12$object_id === undefined ? undefined : _ref12$object_id;
 
 		_classCallCheck(this, _class12);
 
@@ -4297,7 +4291,7 @@ yootil.key.joiner = function () {
 	_createClass(_class12, [{
 		key: "data",
 		value: function data() {
-			var json = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+			var json = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
 			if (this.keys.length) {
 				var data = "";
@@ -5756,7 +5750,7 @@ yootil.queue = function () {
   */
 
 	function _class20() {
-		var auto_start = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+		var auto_start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 		_classCallCheck(this, _class20);
 
@@ -5777,7 +5771,7 @@ yootil.queue = function () {
 	_createClass(_class20, [{
 		key: "add",
 		value: function add() {
-			var func = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+			var func = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
 			if (!func) {
 				return;
@@ -5802,7 +5796,7 @@ yootil.queue = function () {
 
 	}, {
 		key: "iterator",
-		value: regeneratorRuntime.mark(function iterator() {
+		value: /*#__PURE__*/regeneratorRuntime.mark(function iterator() {
 			return regeneratorRuntime.wrap(function iterator$(_context) {
 				while (1) {
 					switch (_context.prev = _context.next) {
@@ -5901,7 +5895,7 @@ yootil.queue = function () {
 	}, {
 		key: "resume",
 		value: function resume() {
-			var do_next = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+			var do_next = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
 			this._stopped = false;
 
@@ -5994,9 +5988,9 @@ yootil.storage = function () {
    */
 
 		value: function set(key) {
-			var value = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-			var json = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
-			var persist = arguments.length <= 3 || arguments[3] === undefined ? true : arguments[3];
+			var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+			var json = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+			var persist = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
 
 			if (key) {
 				value = json && !yootil.is_json(value) ? JSON.stringify(value) : value;
@@ -6030,8 +6024,8 @@ yootil.storage = function () {
 	}, {
 		key: "get",
 		value: function get(key) {
-			var json = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
-			var persist = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+			var json = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+			var persist = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
 			var value = "";
 
@@ -6068,7 +6062,7 @@ yootil.storage = function () {
 	}, {
 		key: "remove",
 		value: function remove(key) {
-			var persist = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+			var persist = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
 			if (key) {
 				if (persist) {
@@ -6092,7 +6086,7 @@ yootil.storage = function () {
 	}, {
 		key: "clear",
 		value: function clear() {
-			var persist = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+			var persist = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
 			if (persist) {
 				localStorage.clear();
@@ -6128,18 +6122,16 @@ yootil.sync = function () {
   *
   * @todo documentate this properly
   */
-
 	function _class23() {
 		var _this5 = this;
 
-		var _ref13 = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-		var _ref13$key = _ref13.key;
-		var key = _ref13$key === undefined ? "" : _ref13$key;
-		var _ref13$data = _ref13.data;
-		var data = _ref13$data === undefined ? {} : _ref13$data;
-		var _ref13$handler = _ref13.handler;
-		var handler = _ref13$handler === undefined ? {} : _ref13$handler;
+		var _ref13 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+		    _ref13$key = _ref13.key,
+		    key = _ref13$key === undefined ? "" : _ref13$key,
+		    _ref13$data = _ref13.data,
+		    data = _ref13$data === undefined ? {} : _ref13$data,
+		    _ref13$handler = _ref13.handler,
+		    handler = _ref13$handler === undefined ? {} : _ref13$handler;
 
 		_classCallCheck(this, _class23);
 
@@ -6192,7 +6184,7 @@ yootil.sync = function () {
 	_createClass(_class23, [{
 		key: "update",
 		value: function update() {
-			var data = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+			var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
 			this._trigger_caller = true;
 			yootil.storage.set(this._ls_key, data, true, true);

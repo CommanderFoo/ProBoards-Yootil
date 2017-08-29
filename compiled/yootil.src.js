@@ -191,6 +191,16 @@ class yootil {
 	}
 
 	/**
+	 * Creates a timestamp.
+	 *
+	 * @return {Number}
+	 */
+
+	static ts(){
+		return this.timestamp();
+	}
+
+	/**
 	 * Checks a number and returns the correct suffix to be used with it.
 	 *
 	 * @example
