@@ -149,10 +149,6 @@ yootil.create = class {
 	/**
 	 * Adds a new BBC button to the end on the reply page.
 	 *
-	 * Note:  Due to the WYSIWYG being dynamically created, this can fail.
-	 *
-	 * @todo remove?
-	 *
 	 * @param {Object} config
 	 * @param {Object} config.img="" - The image HTML DOM element to append.
 	 * @param {Function} [config.func=null] - Adds an onlick event.
@@ -161,7 +157,7 @@ yootil.create = class {
 	 */
 
 	static bbc_button({img = "", func = null} = {}){
-		$(() => {
+		$(document).on("wysiwygcreate", () => {
 			let $li = $("<li>").addClass("button").append($(img));
 
 			if(func){
