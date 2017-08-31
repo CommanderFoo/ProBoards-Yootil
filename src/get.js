@@ -19,7 +19,7 @@ yootil.get = class {
 
 	static mini_profiles(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + (id) + ")" : "";
+		let selector = (id)? ":has(o-user-link.user-" + (id) + ")" : "";
 
 		return $(".item .mini-profile" + selector);
 	}
@@ -39,9 +39,9 @@ yootil.get = class {
 
 	static mini_profile_avatars(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + (id) + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + (id) + ")" : "";
 
-		return $(".item .mini-profile .avatar" + selector);
+		return $(".item .mini-profile" + selector + " .avatar");
 	}
 
 	/**
@@ -61,7 +61,7 @@ yootil.get = class {
 		let id = parseInt(user_id, 10);
 		let selector = (id)? (".user-" + (id)) : "";
 
-		return $(".item .mini-profile a.user-link" + selector);
+		return $(".item .mini-profile .o-user-link" + selector);
 	}
 
 	/**
@@ -79,9 +79,9 @@ yootil.get = class {
 
 	static posts(post_id = 0){
 		let id = parseInt(post_id, 10);
-		let selector = (id)? ("-" + id) : "";
+		let selector = (id)? id : "";
 
-		return $("tr.item[id^=post" + selector + "]");
+		return $("tr.item.post[id^=post-" + selector + "]");
 	}
 
 	/**
@@ -99,9 +99,9 @@ yootil.get = class {
 
 	static messages(message_id = 0){
 		let id = parseInt(message_id, 10);
-		let selector = (id)? ("-" + id) : "";
+		let selector = (id)? id : "";
 
-		return $("tr.item[id^=message" + selector + "]");
+		return $("tr.item[id^=message-" + selector + "]");
 	}
 
 	/**
@@ -121,7 +121,7 @@ yootil.get = class {
 			return [];
 		}
 
-		return $("tr.item[id^=post]:has(.mini-profile a.user-link.user-" + id + ")");
+		return $("tr.item[id^=post-]:has(.o-user-link.user-" + id + ")");
 	}
 
 	/**
@@ -141,7 +141,7 @@ yootil.get = class {
 			return [];
 		}
 
-		return $("tr.item[id^=message]:has(.mini-profile a.user-link.user-" + id + ")");
+		return $("tr.item[id^=message-]:has(.o-user-link.user-" + id + ")");
 	}
 
 	/**
@@ -169,7 +169,7 @@ yootil.get = class {
 
 	static mini_profile_info(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $(".item .mini-profile" + selector + " .info");
 	}
@@ -189,9 +189,9 @@ yootil.get = class {
 
 	static signatures(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
-		return $("tr.item[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+		return $("tr.item[id^=post-]" + selector + " .signature, tr[id^=message-]" + selector + " .signature");
 	}
 
 	/**
@@ -209,9 +209,9 @@ yootil.get = class {
 
 	static last_edit(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
-		return $("tr.item[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+		return $("tr.item[id^=post-]" + selector + " .edited_by, tr[id^=message-]" + selector + " .edited_by");
 	}
 
 	/**
@@ -229,7 +229,7 @@ yootil.get = class {
 
 	static post_info(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $("tr.item[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
 	}
@@ -249,7 +249,7 @@ yootil.get = class {
 
 	static post_controls(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $("tr.item[id^=post-]" + selector + " .controls, tr[id^=message-]" + selector + " .controls");
 	}

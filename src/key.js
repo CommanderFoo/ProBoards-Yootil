@@ -16,7 +16,7 @@
  * });
  */
 
-yootil.key = class {
+yootil.key = (class {
 
 	static init(){
 
@@ -756,6 +756,4 @@ yootil.key = class {
 		return max_length;
 	}
 
-};
-
-yootil.key.init();
+}).init();

@@ -1955,15 +1955,210 @@ yootil.extension = function () {
 yootil.extension.init();
 
 /**
- * Wrapper around the ProBoards data hash object to get forum info.
+ * Methods to help fetch common forms.
  */
 
-yootil.forum = function () {
+yootil.form = function () {
 	function _class7() {
 		_classCallCheck(this, _class7);
 	}
 
 	_createClass(_class7, null, [{
+		key: "new_thread",
+
+
+		/**
+   * New thread form.
+   *
+   * @return {Object}
+   */
+
+		value: function new_thread() {
+			return $("form.form_thread_new");
+		}
+
+		/**
+   * New post form.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "new_post",
+		value: function new_post() {
+			return $("form.form_post_new");
+		}
+
+		/**
+   * Edit post form.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_post",
+		value: function edit_post() {
+			return $("form.form_post_edit");
+		}
+
+		/**
+   * Edit thread form.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_thread",
+		value: function edit_thread() {
+			return $("form.form_thread_edit");
+		}
+
+		/**
+   * Gets any form to do with posting but not including messages.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "posting",
+		value: function posting() {
+			return $("form.form_thread_new, form.form_post_new, form.form_post_edit, form.form_post_quick_reply");
+		}
+
+		/**
+   * Checks for any form to do with quick replies, this includes threads and conversations.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "quick_reply",
+		value: function quick_reply() {
+			return $("form.form_post_quick_reply");
+		}
+
+		/**
+   * Shoutbox form.
+   *
+   * @return {Array}
+   */
+
+	}, {
+		key: "shoutbox",
+		value: function shoutbox() {
+			return $("form.form_shoutbox_shoutbox");
+		}
+
+		/**
+   * Form for creating a new conversation.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "conversation",
+		value: function conversation() {
+			return $("form.form_conversation_new");
+		}
+
+		/**
+   * Returns the form used when creating a reply to a conversation
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "message",
+		value: function message() {
+			return $("form.form_message_new");
+		}
+
+		/**
+   * Gets any form that is to do with conversations or messaging.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "messaging",
+		value: function messaging() {
+			return $("form.form_conversation_new, form.form_message_new, form.form_post_quick_reply");
+		}
+
+		/**
+   * Returns the form used for editing profile personal info
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_personal",
+		value: function edit_personal() {
+			return $("form.form_user_edit_personal");
+		}
+
+		/**
+   * Returns the form used for editing profile social websites.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_social",
+		value: function edit_social() {
+			return $("form.form_user_edit_social");
+		}
+
+		/**
+   * Returns the form used for editing profile settings.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_settings",
+		value: function edit_settings() {
+			return $("form.form_user_edit_settings");
+		}
+
+		/**
+   * Returns the form used for editing profile privacy settings.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_privacy",
+		value: function edit_privacy() {
+			return $("form.form_user_edit_privacy");
+		}
+
+		/**
+   * Returns the form used for editing profile staff settings.
+   *
+   * @return {Object}
+   */
+
+	}, {
+		key: "edit_staff_options",
+		value: function edit_staff_options() {
+			return $("form.form_user_edit_admin");
+		}
+	}]);
+
+	return _class7;
+}();
+
+/**
+ * Wrapper around the ProBoards data hash object to get forum info.
+ */
+
+yootil.forum = function () {
+	function _class8() {
+		_classCallCheck(this, _class8);
+	}
+
+	_createClass(_class8, null, [{
 		key: "__get_data",
 
 
@@ -2212,7 +2407,7 @@ yootil.forum = function () {
 		}
 	}]);
 
-	return _class7;
+	return _class8;
 }();
 
 /**
@@ -2220,11 +2415,11 @@ yootil.forum = function () {
  */
 
 yootil.get = function () {
-	function _class8() {
-		_classCallCheck(this, _class8);
+	function _class9() {
+		_classCallCheck(this, _class9);
 	}
 
-	_createClass(_class8, null, [{
+	_createClass(_class9, null, [{
 		key: "mini_profiles",
 
 
@@ -2245,7 +2440,7 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(o-user-link.user-" + id + ")" : "";
 
 			return $(".item .mini-profile" + selector);
 		}
@@ -2269,9 +2464,9 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
-			return $(".item .mini-profile .avatar" + selector);
+			return $(".item .mini-profile" + selector + " .avatar");
 		}
 
 		/**
@@ -2295,7 +2490,7 @@ yootil.get = function () {
 			var id = parseInt(user_id, 10);
 			var selector = id ? ".user-" + id : "";
 
-			return $(".item .mini-profile a.user-link" + selector);
+			return $(".item .mini-profile .o-user-link" + selector);
 		}
 
 		/**
@@ -2317,9 +2512,9 @@ yootil.get = function () {
 			var post_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(post_id, 10);
-			var selector = id ? "-" + id : "";
+			var selector = id ? id : "";
 
-			return $("tr.item[id^=post" + selector + "]");
+			return $("tr.item.post[id^=post-" + selector + "]");
 		}
 
 		/**
@@ -2341,9 +2536,9 @@ yootil.get = function () {
 			var message_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(message_id, 10);
-			var selector = id ? "-" + id : "";
+			var selector = id ? id : "";
 
-			return $("tr.item[id^=message" + selector + "]");
+			return $("tr.item[id^=message-" + selector + "]");
 		}
 
 		/**
@@ -2367,7 +2562,7 @@ yootil.get = function () {
 				return [];
 			}
 
-			return $("tr.item[id^=post]:has(.mini-profile a.user-link.user-" + id + ")");
+			return $("tr.item[id^=post-]:has(.o-user-link.user-" + id + ")");
 		}
 
 		/**
@@ -2391,7 +2586,7 @@ yootil.get = function () {
 				return [];
 			}
 
-			return $("tr.item[id^=message]:has(.mini-profile a.user-link.user-" + id + ")");
+			return $("tr.item[id^=message-]:has(.o-user-link.user-" + id + ")");
 		}
 
 		/**
@@ -2425,7 +2620,7 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
 			return $(".item .mini-profile" + selector + " .info");
 		}
@@ -2449,9 +2644,9 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
-			return $("tr.item[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+			return $("tr.item[id^=post-]" + selector + " .signature, tr[id^=message-]" + selector + " .signature");
 		}
 
 		/**
@@ -2473,9 +2668,9 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
-			return $("tr.item[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+			return $("tr.item[id^=post-]" + selector + " .edited_by, tr[id^=message-]" + selector + " .edited_by");
 		}
 
 		/**
@@ -2497,7 +2692,7 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
 			return $("tr.item[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
 		}
@@ -2521,7 +2716,7 @@ yootil.get = function () {
 			var user_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			var id = parseInt(user_id, 10);
-			var selector = id ? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+			var selector = id ? ":has(.o-user-link.user-" + id + ")" : "";
 
 			return $("tr.item[id^=post-]" + selector + " .controls, tr[id^=message-]" + selector + " .controls");
 		}
@@ -2630,7 +2825,7 @@ yootil.get = function () {
 		}
 	}]);
 
-	return _class8;
+	return _class9;
 }();
 
 /**
@@ -2652,11 +2847,11 @@ yootil.get = function () {
  */
 
 yootil.key = function () {
-	function _class9() {
-		_classCallCheck(this, _class9);
+	function _class10() {
+		_classCallCheck(this, _class10);
 	}
 
-	_createClass(_class9, null, [{
+	_createClass(_class10, null, [{
 		key: "init",
 		value: function init() {
 
@@ -3636,10 +3831,8 @@ yootil.key = function () {
 		}
 	}]);
 
-	return _class9;
-}();
-
-yootil.key.init();
+	return _class10;
+}().init();
 
 /**
  * Front multi key pruner.
@@ -3669,14 +3862,14 @@ yootil.key.pruner = function () {
   * @param {Number} [config.object_id=undefined] - The object for the key (e.g. user ID).
   */
 
-	function _class10() {
+	function _class11() {
 		var _ref10 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
 		    _ref10$keys = _ref10.keys,
 		    keys = _ref10$keys === undefined ? [] : _ref10$keys,
 		    _ref10$object_id = _ref10.object_id,
 		    object_id = _ref10$object_id === undefined ? undefined : _ref10$object_id;
 
-		_classCallCheck(this, _class10);
+		_classCallCheck(this, _class11);
 
 		if (!Array.isArray(keys)) {
 			keys = [keys];
@@ -3706,7 +3899,7 @@ yootil.key.pruner = function () {
   * @ignore
   */
 
-	_createClass(_class10, [{
+	_createClass(_class11, [{
 		key: "convert_keys_to_objs",
 		value: function convert_keys_to_objs() {
 			var _iteratorNormalCompletion6 = true;
@@ -3999,7 +4192,7 @@ yootil.key.pruner = function () {
 		}
 	}]);
 
-	return _class10;
+	return _class11;
 }();
 
 /**
@@ -4028,10 +4221,10 @@ yootil.key.splitter = function () {
   * @param {String|Array} keys=[] - The keys that the data will be split between.
   */
 
-	function _class11() {
+	function _class12() {
 		var keys = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
-		_classCallCheck(this, _class11);
+		_classCallCheck(this, _class12);
 
 		if (!Array.isArray(keys)) {
 			keys = [keys];
@@ -4055,7 +4248,7 @@ yootil.key.splitter = function () {
   * @ignore
   */
 
-	_createClass(_class11, [{
+	_createClass(_class12, [{
 		key: "convert_keys_to_objs",
 		value: function convert_keys_to_objs() {
 			var _iteratorNormalCompletion12 = true;
@@ -4231,7 +4424,7 @@ yootil.key.splitter = function () {
 		}
 	}]);
 
-	return _class11;
+	return _class12;
 }();
 
 /**
@@ -4250,14 +4443,14 @@ yootil.key.joiner = function () {
   * @param {Number} [object_id=undefined] - The ID for this key object (e.g. user ID).
   */
 
-	function _class12() {
+	function _class13() {
 		var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
 		    _ref12$keys = _ref12.keys,
 		    keys = _ref12$keys === undefined ? [] : _ref12$keys,
 		    _ref12$object_id = _ref12.object_id,
 		    object_id = _ref12$object_id === undefined ? undefined : _ref12$object_id;
 
-		_classCallCheck(this, _class12);
+		_classCallCheck(this, _class13);
 
 		if (!Array.isArray(keys)) {
 			keys = [keys];
@@ -4284,7 +4477,7 @@ yootil.key.joiner = function () {
   * @return {String|Object|Array}
   */
 
-	_createClass(_class12, [{
+	_createClass(_class13, [{
 		key: "data",
 		value: function data() {
 			var json = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -4341,7 +4534,7 @@ yootil.key.joiner = function () {
 		}
 	}]);
 
-	return _class12;
+	return _class13;
 }();
 
 /**
@@ -4349,11 +4542,11 @@ yootil.key.joiner = function () {
  */
 
 yootil.location = function () {
-	function _class13() {
-		_classCallCheck(this, _class13);
+	function _class14() {
+		_classCallCheck(this, _class14);
 	}
 
-	_createClass(_class13, null, [{
+	_createClass(_class14, null, [{
 		key: "init",
 
 
@@ -5016,7 +5209,7 @@ yootil.location = function () {
 		}
 	}]);
 
-	return _class13;
+	return _class14;
 }();
 
 yootil.location.init();
@@ -5028,11 +5221,11 @@ yootil.location.init();
  */
 
 yootil.page = function () {
-	function _class14() {
-		_classCallCheck(this, _class14);
+	function _class15() {
+		_classCallCheck(this, _class15);
 	}
 
-	_createClass(_class14, null, [{
+	_createClass(_class15, null, [{
 		key: "__get_data",
 
 
@@ -5055,7 +5248,7 @@ yootil.page = function () {
 		}
 	}]);
 
-	return _class14;
+	return _class15;
 }();
 
 /**
@@ -5063,11 +5256,11 @@ yootil.page = function () {
  */
 
 yootil.page.board = function () {
-	function _class15() {
-		_classCallCheck(this, _class15);
+	function _class16() {
+		_classCallCheck(this, _class16);
 	}
 
-	_createClass(_class15, null, [{
+	_createClass(_class16, null, [{
 		key: "__get_data",
 
 
@@ -5222,7 +5415,7 @@ yootil.page.board = function () {
 		}
 	}]);
 
-	return _class15;
+	return _class16;
 }();
 
 /**
@@ -5230,11 +5423,11 @@ yootil.page.board = function () {
  */
 
 yootil.page.category = function () {
-	function _class16() {
-		_classCallCheck(this, _class16);
+	function _class17() {
+		_classCallCheck(this, _class17);
 	}
 
-	_createClass(_class16, null, [{
+	_createClass(_class17, null, [{
 		key: "__get_data",
 
 
@@ -5281,7 +5474,7 @@ yootil.page.category = function () {
 		}
 	}]);
 
-	return _class16;
+	return _class17;
 }();
 
 /**
@@ -5289,11 +5482,11 @@ yootil.page.category = function () {
  */
 
 yootil.page.member = function () {
-	function _class17() {
-		_classCallCheck(this, _class17);
+	function _class18() {
+		_classCallCheck(this, _class18);
 	}
 
-	_createClass(_class17, null, [{
+	_createClass(_class18, null, [{
 		key: "__get_data",
 
 
@@ -5378,7 +5571,7 @@ yootil.page.member = function () {
 		}
 	}]);
 
-	return _class17;
+	return _class18;
 }();
 
 /**
@@ -5386,11 +5579,11 @@ yootil.page.member = function () {
  */
 
 yootil.page.post = function () {
-	function _class18() {
-		_classCallCheck(this, _class18);
+	function _class19() {
+		_classCallCheck(this, _class19);
 	}
 
-	_createClass(_class18, null, [{
+	_createClass(_class19, null, [{
 		key: "__get_data",
 
 
@@ -5487,7 +5680,7 @@ yootil.page.post = function () {
 		}
 	}]);
 
-	return _class18;
+	return _class19;
 }();
 
 /**
@@ -5495,11 +5688,11 @@ yootil.page.post = function () {
  */
 
 yootil.page.thread = function () {
-	function _class19() {
-		_classCallCheck(this, _class19);
+	function _class20() {
+		_classCallCheck(this, _class20);
 	}
 
-	_createClass(_class19, null, [{
+	_createClass(_class20, null, [{
 		key: "__get_data",
 
 
@@ -5716,7 +5909,7 @@ yootil.page.thread = function () {
 		}
 	}]);
 
-	return _class19;
+	return _class20;
 }();
 
 /**
@@ -5745,10 +5938,10 @@ yootil.queue = function () {
   * @param {Boolean} [auto_start=false] - If true, the queue will auto start once the first item is added.
   */
 
-	function _class20() {
+	function _class21() {
 		var auto_start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
-		_classCallCheck(this, _class20);
+		_classCallCheck(this, _class21);
 
 		this._queue = [];
 		this._iterator = null;
@@ -5764,7 +5957,7 @@ yootil.queue = function () {
   * @return {Object} this
   */
 
-	_createClass(_class20, [{
+	_createClass(_class21, [{
 		key: "add",
 		value: function add() {
 			var func = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
@@ -5917,7 +6110,7 @@ yootil.queue = function () {
 		}
 	}]);
 
-	return _class20;
+	return _class21;
 }();
 
 /**
@@ -5925,11 +6118,11 @@ yootil.queue = function () {
  */
 
 yootil.settings = function () {
-	function _class21() {
-		_classCallCheck(this, _class21);
+	function _class22() {
+		_classCallCheck(this, _class22);
 	}
 
-	_createClass(_class21, null, [{
+	_createClass(_class22, null, [{
 		key: "init",
 
 
@@ -5950,7 +6143,7 @@ yootil.settings = function () {
 		}
 	}]);
 
-	return _class21;
+	return _class22;
 }();
 
 /**
@@ -5958,11 +6151,11 @@ yootil.settings = function () {
  */
 
 yootil.storage = function () {
-	function _class22() {
-		_classCallCheck(this, _class22);
+	function _class23() {
+		_classCallCheck(this, _class23);
 	}
 
-	_createClass(_class22, null, [{
+	_createClass(_class23, null, [{
 		key: "set",
 
 
@@ -6094,7 +6287,7 @@ yootil.storage = function () {
 		}
 	}]);
 
-	return _class22;
+	return _class23;
 }();
 
 /**
@@ -6118,7 +6311,7 @@ yootil.sync = function () {
   *
   * @todo documentate this properly
   */
-	function _class23() {
+	function _class24() {
 		var _this5 = this;
 
 		var _ref13 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -6129,7 +6322,7 @@ yootil.sync = function () {
 		    _ref13$handler = _ref13.handler,
 		    handler = _ref13$handler === undefined ? {} : _ref13$handler;
 
-		_classCallCheck(this, _class23);
+		_classCallCheck(this, _class24);
 
 		if (!key) {
 			return;
@@ -6177,7 +6370,7 @@ yootil.sync = function () {
   * @param {Object|String} data
   */
 
-	_createClass(_class23, [{
+	_createClass(_class24, [{
 		key: "update",
 		value: function update() {
 			var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -6228,7 +6421,7 @@ yootil.sync = function () {
 		}
 	}]);
 
-	return _class23;
+	return _class24;
 }();
 
 /**
@@ -6236,11 +6429,11 @@ yootil.sync = function () {
  */
 
 yootil.user = function () {
-	function _class24() {
-		_classCallCheck(this, _class24);
+	function _class25() {
+		_classCallCheck(this, _class25);
 	}
 
-	_createClass(_class24, null, [{
+	_createClass(_class25, null, [{
 		key: "init",
 
 
@@ -6734,7 +6927,7 @@ yootil.user = function () {
 		}
 	}]);
 
-	return _class24;
+	return _class25;
 }();
 
 yootil.user.init();
@@ -6755,8 +6948,8 @@ yootil.random = function () {
   * @param {Number} seed - The seed
   */
 
-	function _class25(seed) {
-		_classCallCheck(this, _class25);
+	function _class26(seed) {
+		_classCallCheck(this, _class26);
 
 		/**
    * @ignore
@@ -6787,7 +6980,7 @@ yootil.random = function () {
   * @returns {Number}
   */
 
-	_createClass(_class25, [{
+	_createClass(_class26, [{
 		key: "current",
 		value: function current() {
 			return this.seed / this.m;
@@ -6806,7 +6999,7 @@ yootil.random = function () {
 		}
 	}]);
 
-	return _class25;
+	return _class26;
 }();
 
 

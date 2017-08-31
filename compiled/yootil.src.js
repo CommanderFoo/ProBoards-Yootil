@@ -1583,6 +1583,164 @@ yootil.extension = class {
 yootil.extension.init();
 
 /**
+ * Methods to help fetch common forms.
+ */
+
+yootil.form = class {
+
+	/**
+	 * New thread form.
+	 *
+	 * @return {Object}
+	 */
+
+	static new_thread(){
+		return $("form.form_thread_new");
+	}
+
+	/**
+	 * New post form.
+	 *
+	 * @return {Object}
+	 */
+
+	static new_post(){
+		return $("form.form_post_new");
+	}
+
+	/**
+	 * Edit post form.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_post(){
+		return $("form.form_post_edit");
+	}
+
+	/**
+	 * Edit thread form.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_thread(){
+		return $("form.form_thread_edit");
+	}
+
+	/**
+	 * Gets any form to do with posting but not including messages.
+	 *
+	 * @return {Object}
+	 */
+
+	static posting(){
+		return $("form.form_thread_new, form.form_post_new, form.form_post_edit, form.form_post_quick_reply");
+	}
+
+	/**
+	 * Checks for any form to do with quick replies, this includes threads and conversations.
+	 *
+	 * @return {Object}
+	 */
+
+	static quick_reply(){
+		return $("form.form_post_quick_reply");
+	}
+
+	/**
+	 * Shoutbox form.
+	 *
+	 * @return {Array}
+	 */
+
+	static shoutbox(){
+		return $("form.form_shoutbox_shoutbox");
+	}
+
+	/**
+	 * Form for creating a new conversation.
+	 *
+	 * @return {Object}
+	 */
+
+	static conversation(){
+		return $("form.form_conversation_new");
+	}
+
+	/**
+	 * Returns the form used when creating a reply to a conversation
+	 *
+	 * @return {Object}
+	 */
+
+	static message(){
+		return $("form.form_message_new");
+	}
+
+	/**
+	 * Gets any form that is to do with conversations or messaging.
+	 *
+	 * @return {Object}
+	 */
+
+	static messaging(){
+		return $("form.form_conversation_new, form.form_message_new, form.form_post_quick_reply");
+	}
+
+	/**
+	 * Returns the form used for editing profile personal info
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_personal(){
+		return $("form.form_user_edit_personal");
+	}
+
+	/**
+	 * Returns the form used for editing profile social websites.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_social(){
+		return $("form.form_user_edit_social");
+	}
+
+	/**
+	 * Returns the form used for editing profile settings.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_settings(){
+		return $("form.form_user_edit_settings");
+	}
+
+	/**
+	 * Returns the form used for editing profile privacy settings.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_privacy(){
+		return $("form.form_user_edit_privacy");
+	}
+
+	/**
+	 * Returns the form used for editing profile staff settings.
+	 *
+	 * @return {Object}
+	 */
+
+	static edit_staff_options(){
+		return $("form.form_user_edit_admin");
+	}
+
+};
+
+/**
  * Wrapper around the ProBoards data hash object to get forum info.
  */
 
@@ -1817,7 +1975,7 @@ yootil.get = class {
 
 	static mini_profiles(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + (id) + ")" : "";
+		let selector = (id)? ":has(o-user-link.user-" + (id) + ")" : "";
 
 		return $(".item .mini-profile" + selector);
 	}
@@ -1837,9 +1995,9 @@ yootil.get = class {
 
 	static mini_profile_avatars(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + (id) + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + (id) + ")" : "";
 
-		return $(".item .mini-profile .avatar" + selector);
+		return $(".item .mini-profile" + selector + " .avatar");
 	}
 
 	/**
@@ -1859,7 +2017,7 @@ yootil.get = class {
 		let id = parseInt(user_id, 10);
 		let selector = (id)? (".user-" + (id)) : "";
 
-		return $(".item .mini-profile a.user-link" + selector);
+		return $(".item .mini-profile .o-user-link" + selector);
 	}
 
 	/**
@@ -1877,9 +2035,9 @@ yootil.get = class {
 
 	static posts(post_id = 0){
 		let id = parseInt(post_id, 10);
-		let selector = (id)? ("-" + id) : "";
+		let selector = (id)? id : "";
 
-		return $("tr.item[id^=post" + selector + "]");
+		return $("tr.item.post[id^=post-" + selector + "]");
 	}
 
 	/**
@@ -1897,9 +2055,9 @@ yootil.get = class {
 
 	static messages(message_id = 0){
 		let id = parseInt(message_id, 10);
-		let selector = (id)? ("-" + id) : "";
+		let selector = (id)? id : "";
 
-		return $("tr.item[id^=message" + selector + "]");
+		return $("tr.item[id^=message-" + selector + "]");
 	}
 
 	/**
@@ -1919,7 +2077,7 @@ yootil.get = class {
 			return [];
 		}
 
-		return $("tr.item[id^=post]:has(.mini-profile a.user-link.user-" + id + ")");
+		return $("tr.item[id^=post-]:has(.o-user-link.user-" + id + ")");
 	}
 
 	/**
@@ -1939,7 +2097,7 @@ yootil.get = class {
 			return [];
 		}
 
-		return $("tr.item[id^=message]:has(.mini-profile a.user-link.user-" + id + ")");
+		return $("tr.item[id^=message-]:has(.o-user-link.user-" + id + ")");
 	}
 
 	/**
@@ -1967,7 +2125,7 @@ yootil.get = class {
 
 	static mini_profile_info(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $(".item .mini-profile" + selector + " .info");
 	}
@@ -1987,9 +2145,9 @@ yootil.get = class {
 
 	static signatures(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
-		return $("tr.item[id^=post-]" + selector + " .foot .signature, tr[id^=message-]" + selector + " .foot .signature");
+		return $("tr.item[id^=post-]" + selector + " .signature, tr[id^=message-]" + selector + " .signature");
 	}
 
 	/**
@@ -2007,9 +2165,9 @@ yootil.get = class {
 
 	static last_edit(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
-		return $("tr.item[id^=post-]" + selector + " .foot .edited_by, tr[id^=message-]" + selector + " .foot .edited_by");
+		return $("tr.item[id^=post-]" + selector + " .edited_by, tr[id^=message-]" + selector + " .edited_by");
 	}
 
 	/**
@@ -2027,7 +2185,7 @@ yootil.get = class {
 
 	static post_info(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $("tr.item[id^=post-]" + selector + " .content .info, tr[id^=message-]" + selector + " .content .info");
 	}
@@ -2047,7 +2205,7 @@ yootil.get = class {
 
 	static post_controls(user_id = 0){
 		let id = parseInt(user_id, 10);
-		let selector = (id)? ":has(.mini-profile a.user-link.user-" + id + ")" : "";
+		let selector = (id)? ":has(.o-user-link.user-" + id + ")" : "";
 
 		return $("tr.item[id^=post-]" + selector + " .controls, tr[id^=message-]" + selector + " .controls");
 	}
@@ -2163,7 +2321,7 @@ yootil.get = class {
  * });
  */
 
-yootil.key = class {
+yootil.key = (class {
 
 	static init(){
 
@@ -2903,9 +3061,7 @@ yootil.key = class {
 		return max_length;
 	}
 
-};
-
-yootil.key.init();
+}).init();
 
 /**
  * Front multi key pruner.
