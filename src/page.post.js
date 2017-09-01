@@ -1,4 +1,5 @@
 /**
+ * @extends {yootil.page}
  * Various methods to help get post information.
  */
 

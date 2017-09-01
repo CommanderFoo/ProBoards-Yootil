@@ -31,22 +31,8 @@ yootil.key.pruner = class {
 			keys = [keys];
 		}
 
-		/**
-		 * @ignore
-		 */
-
 		this.keys = keys;
-
-		/**
-		 * @ignore
-		 */
-
 		this.object_id = object_id;
-
-		/**
-		 * @ignore
-		 */
-
 		this._pruned_data = [];
 		this.convert_keys_to_objs();
 	}

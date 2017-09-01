@@ -29,16 +29,7 @@ yootil.key.splitter = class {
 			keys = [keys];
 		}
 
-		/**
-		 * @ignore
-		 */
-
 		this.keys = keys;
-
-		/**
-		 * @ignore
-		 */
-
 		this.excess_data = "";
 		this.convert_keys_to_objs();
 	}

@@ -16,22 +16,16 @@
  * });
  */
 
-yootil.key = (class {
+yootil.key = class {
 
 	static init(){
-
-		/**
-		 * @type {Object} pb_key_obj - Holds a reference to the ProBoards key object.
-		 * @ignore
-		 */
-
 		this.pb_key_obj = pb.plugin.key;
 
 		return this.wrapper.bind(this);
 	}
 
 	/**
-	 * @ingore
+	 * @ignore
 	 */
 
 	static wrapper(key = ""){
@@ -756,4 +750,6 @@ yootil.key = (class {
 		return max_length;
 	}
 
-}).init();
+};
+
+yootil.key = yootil.key.init();

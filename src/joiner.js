@@ -19,16 +19,7 @@ yootil.key.joiner = class {
 			keys = [keys];
 		}
 
-		/**
-		 * @ignore
-		 */
-
 		this.object_id = object_id;
-
-		/**
-		 * @ignore
-		 */
-
 		this.keys = keys;
 	}
 

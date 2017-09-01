@@ -15,29 +15,9 @@ yootil.random = class {
 	 */
 
 	constructor(seed){
-
-		/**
-		 * @ignore
-		 */
-
 		this.m = 2147483647;
-
-		/**
-		 * @ignore
-		 */
-
 		this.a = 1103515245;
-
-		/**
-		 * @ignore
-		 */
-
 		this.c = 12345;
-
-		/**
-		 * @ignore
-		 */
-
 		this.seed = (seed && typeof seed === "string")? yootil.hash_code(seed) :  Math.floor(Math.random() * this.m);
 	}
 
