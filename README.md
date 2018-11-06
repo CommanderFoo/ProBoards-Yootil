@@ -1,4 +1,4 @@
-Yootil 1.1.1
+Yootil 1.1.2
 ============
 
 Yootil is a utilities library to help speed up development for ProBoards plugin developers.

@@ -46,10 +46,7 @@ yootil = (function(){
 		 */
 
 		html_encode: function(str, decode_first){
-			str = (str)? str : "";
-			str = (decode_first)? this.html_decode(str) : str;
-
-			return $("<div />").text(str).html();
+			return pb.text.escape_html((decode_first)? this.html_decode(str) : str);
 		},
 
 		/**
@@ -62,15 +59,7 @@ yootil = (function(){
 		 */
 
 		html_decode: function(str){
-			str = (str)? str : "";
-
-			this.textarea.innerHTML = str;
-
-			var val = this.textarea.value;
-
-			this.textarea.innerHTML = "";
-
-			return val;
+			return str.toString().replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 		},
 
 

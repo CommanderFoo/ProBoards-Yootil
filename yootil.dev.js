@@ -1,5 +1,5 @@
 /**
-* Yootil 1.1.1
+* Yootil 1.1.2
 *
 * http://yootil.pixeldepth.net
 */
@@ -20,7 +20,7 @@ yootil = (function(){
 
 	return {
 
-		VERSION: "1.1.1",
+		VERSION: "1.1.2",
 
 		settings: {
 
@@ -52,10 +52,7 @@ yootil = (function(){
 		 */
 
 		html_encode: function(str, decode_first){
-			str = (str)? str : "";
-			str = (decode_first)? this.html_decode(str) : str;
-
-			return $("<div />").text(str).html();
+			return pb.text.escape_html((decode_first)? this.html_decode(str) : str);
 		},
 
 		/**
@@ -68,15 +65,7 @@ yootil = (function(){
 		 */
 
 		html_decode: function(str){
-			str = (str)? str : "";
-
-			this.textarea.innerHTML = str;
-
-			var val = this.textarea.value;
-
-			this.textarea.innerHTML = "";
-
-			return val;
+			return str.toString().replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 		},
 
 
