@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-element-get'>/**
+</span> * @class yootil.element.get
+ * @alias yootil.get
+ * @static
+ * Quick methods to get certain elements.
+ */
+
+yootil.element.get = yootil.get = (function(){
+
+	return {
+
+<span id='yootil-element-get-method-mini_profiles'>		/**
+</span>		 * Gets mini profiles.
+		 *
+		 *     yootil.element.get.mini_profiles(); // Gets all mini profiles
+		 *
+		 *     yootil.element.get.mini_profiles(1); // Gets all mini profiles for user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match mini profiles for that user id.
+		 * @return {Array} Matched mini profiles are returned back.
+		 */
+
+		mini_profiles: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;.item .mini-profile&quot; + selector);
+		},
+
+<span id='yootil-element-get-method-mini_profile_avatars'>		/**
+</span>		 * Gets mini profile avatars.
+		 *
+		 *     yootil.element.get.mini_profile_avatars(); // Gets all avatars
+		 *
+		 *     yootil.element.get.mini_profile_avatars(1); // Gets all avatars for user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match avatars for that user id.
+		 * @return {Array} Matched avatars are returned back.
+		 */
+
+		mini_profile_avatars: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;.item .mini-profile .avatar&quot; + selector);
+		},
+
+<span id='yootil-element-get-method-mini_profile_user_links'>		/**
+</span>		 * Gets mini profile user links.
+		 *
+		 *     yootil.element.get.mini_profile_user_links(1); // Gets all user links for user id 1
+		 *
+		 *     yootil.element.get.mini_profile_user_links(); // Gets all user links
+		 *
+		 * @param {Number} [user_id] If specified, it will match user links for that user id.
+		 * @return {Array} Matched user links are returned back.
+		 */
+
+		mini_profile_user_links: function(user_id){
+			var selector = (~~ user_id)? (&quot;.user-&quot; + (~~ user_id)) : &quot;&quot;;
+
+			return $(&quot;.item .mini-profile a.user-link&quot; + selector);
+		},
+
+<span id='yootil-element-get-method-posts'>		/**
+</span>		 * Gets posts.
+		 *
+		 *     yootil.element.get.posts(); // Get all posts
+		 *
+		 *     yootil.element.get.posts(123); // Gets post with id 123
+		 *
+		 * @param {Number} [post_id] The post id for the post to get.
+		 * @return {Array} Matched posts are returned.
+		 */
+
+		posts: function(post_id){
+			var selector = (~~ post_id)? (&quot;-&quot; + (~~ post_id)) : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=post&quot; + selector + &quot;]&quot;);
+		},
+
+<span id='yootil-element-get-method-messages'>		/**
+</span>		 * Gets messages.
+		 *
+		 *     yootil.element.get.messages(); // Get all messages
+		 *
+		 *     yootil.element.get.messages(123); // Gets post with id 123
+		 *
+		 * @param {Number} [post_id] The message id for the message to get.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		messages: function(message_id){
+			var selector = (~~ message_id)? (&quot;-&quot; + (~~ message_id)) : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=message&quot; + selector + &quot;]&quot;);
+		},
+
+<span id='yootil-element-get-method-user_posts'>		/**
+</span>		 * Gets user posts.
+		 *
+		 *     yootil.element.get.user_posts(1); // Gets all posts for user id 1
+		 *
+		 * @param {Number} [user_id] The user id to find posts for.
+		 * @return {Array} Matched posts are returned.
+		 */
+
+		user_posts: function(user_id){
+			if(!user_id){
+				return [];
+			}
+
+			return $(&quot;tr.item[id^=post]:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot;);
+		},
+
+<span id='yootil-element-get-method-user_messages'>		/**
+</span>		 * Gets user messages.
+		 *
+		 *     yootil.element.get.user_messages(1); // Gets all messages for user id 1
+		 *
+		 * @param {Number} [user_id] The user id to find messages for.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id){
+			if(!user_id){
+				return [];
+			}
+
+			return $(&quot;tr.item[id^=message]:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot;);
+		},
+
+<span id='yootil-element-get-method-quick_reply'>		/**
+</span>		 * Gets the quick reply.
+		 *
+		 * @return {Array}
+		 */
+
+		quick_reply: function(){
+			return $(&quot;.quick-reply&quot;);
+		},
+
+<span id='yootil-element-get-method-mini_profile_info'>		/**
+</span>		 * Gets mini profile info sections.
+		 *
+		 *     yootil.element.get.mini_profile_info(); // Gets all mini profile info
+		 *
+		 *     yootil.element.get.mini_profile_info(1); // Gets all mini profile info for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match user links for that user id.
+		 * @return {Array} Matched user links are returned back.
+		 */
+
+		mini_profile_info: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;.item .mini-profile&quot; + selector + &quot; .info&quot;);
+		},
+
+<span id='yootil-element-get-method-signatures'>		/**
+</span>		 * Gets signatures for posts and messages.
+		 *
+		 *     yootil.element.get.signatures(); // Gets all signatures
+		 *
+		 *     yootil.element.get.signatures(1); // Gets all signatures for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		signatures: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=post-]&quot; + selector + &quot; .foot .signature, tr[id^=message-]&quot; + selector + &quot; .foot .signature&quot;);
+		},
+
+<span id='yootil-element-get-method-last_edit'>		/**
+</span>		 * Gets last edit.
+		 *
+		 *     yootil.element.get.last_edit(); // Gets all last edits
+		 *
+		 *     yootil.element.get.last_edit(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		last_edit: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=post-]&quot; + selector + &quot; .foot .edited_by, tr[id^=message-]&quot; + selector + &quot; .foot .edited_by&quot;);
+		},
+
+<span id='yootil-element-get-method-post_info'>		/**
+</span>		 * Gets post / message info (date, likes, etc)
+		 *
+		 *     yootil.element.get.post_info(); // Gets all
+		 *
+		 *     yootil.element.get.post_info(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_info: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=post-]&quot; + selector + &quot; .content .info, tr[id^=message-]&quot; + selector + &quot; .content .info&quot;);
+		},
+
+<span id='yootil-element-get-method-post_controls'>		/**
+</span>		 * Gets post / message controls.
+		 *
+		 *     yootil.element.get.post_controls(); // Gets all
+		 *
+		 *     yootil.element.get.post_controls(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_controls: function(user_id){
+			var selector = (~~ user_id)? &quot;:has(.mini-profile a.user-link.user-&quot; + (~~ user_id) + &quot;)&quot; : &quot;&quot;;
+
+			return $(&quot;tr.item[id^=post-]&quot; + selector + &quot; .content .controls, tr[id^=message-]&quot; + selector + &quot; .content .controls&quot;);
+		},
+
+<span id='yootil-element-get-method-summary'>		/**
+</span>		 * Gets post / message summary.
+		 *
+		 *     yootil.element.get.summary();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		summary: function(){
+			return $(&quot;.messages.summary, .posts.summary&quot;);
+		},
+
+<span id='yootil-element-get-method-nav_tree'>		/**
+</span>		 * Gets nav tree.
+		 *
+		 *     yootil.element.get.nav_tree();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_tree: function(){
+			return $(&quot;#navigation-tree&quot;);
+		},
+
+<span id='yootil-element-get-method-nav_branches'>		/**
+</span>		 * Gets nav branches.
+		 *
+		 *     yootil.element.get.nav_branches();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branches: function(){
+			return $(&quot;#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch&quot;);
+		},
+
+<span id='yootil-element-get-method-last_nav_branch'>		/**
+</span>		 * Gets last nav branche.
+		 *
+		 *     yootil.element.get.last_nav_branch();
+		 *
+		 * @return {Array} Matches are returned back.
+		 */
+
+		last_nav_branch: function(){
+			return $(&quot;#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch:last&quot;);
+		},
+
+<span id='yootil-element-get-method-nav_branch'>		/**
+</span>		 * Gets a branch based on options passed in.
+		 *
+		 *     var example1 = yootil.element.get.nav_branch(&quot;Members&quot;, &quot;text&quot;);
+		 *
+		 *     var example2 = yootil.element.get.nav_branch(/user\/1/, &quot;url&quot;);
+		 *
+		 * @param {Mixed} pattern This can be a string, or a regular expression pattern.
+		 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branch: function(pattern, type){
+			if(!pattern){
+				return [];
+			}
+
+			type = type || &quot;text&quot;;
+
+			var matched = [];
+
+			$(&quot;#navigation-tree #nav-tree-wrapper #nav-tree .nav-tree-branch a&quot;).each(function(){
+				var match_against = (type == &quot;url&quot;)? $(this).attr(&quot;href&quot;) : $(this).text();
+
+				if(pattern.constructor == RegExp){
+					if(pattern.test(match_against)){
+						matched.push($(this).parent().parent());
+					}
+				} else if(typeof pattern == &quot;string&quot;){
+					if(match_against.indexOf(pattern) != -1){
+						matched.push($(this).parent().parent());
+					}
+				}
+
+			});
+
+			return matched;
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

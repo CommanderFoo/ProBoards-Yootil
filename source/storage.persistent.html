@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-storage-persistent'>/**
+</span> * @class yootil.storage.persistent
+ * @static
+ * @ignore
+ * Allows you to store a value that is peristent even after browser has closed.
+ *
+ * IE 7 is supported, and uses userData to handle the storage.
+ */
+
+yootil.storage.persistent = (function(){
+	
+	var storage_element;
+	
+	if(!yootil.storage.html5){
+		storage_element = $(&quot;&lt;link /&gt;&quot;)[0];
+		
+		if(storage_element &amp;&amp; storage_element.addBehavior){
+			$(storage_element).css(&quot;behavior&quot;, &quot;url(#default#userData)&quot;);
+			$(&quot;head&quot;).append($(storage_element));
+			storage_element.load(&quot;yootil&quot;);
+		}
+	}
+	
+	return {
+
+<span id='yootil-storage-persistent-method-set'>		/**
+</span>		 * Allows you to set a key and value.
+		 *
+		 *     yootil.storage.persistent.set(&quot;mykey&quot;, &quot;myvalue&quot;);
+		 *
+		 * @param {String} key The key for the storage.
+		 * @param {String} value The value that will be stored.
+		 * @chainable
+		 */
+		
+		set: function(key, value){
+			if(storage_element){
+				storage_element.setAttribute(key, value);
+				storage_element.save();
+			} else if(yootil.storage.html5){
+				localStorage.setItem(key, value);
+			}
+			
+			return this;
+		},
+
+<span id='yootil-storage-persistent-method-get'>		/**
+</span>		 * Gets a value from storage in.
+		 *
+		 * @param {String} key The key for the storage.
+		 * @return {String}
+		 */
+		
+		get: function(key){
+			var value = &quot;&quot;;
+			
+			if(storage_element){
+				value = storage_element.getAttribute(key);
+			} else if(yootil.storage.html5 &amp;&amp; localStorage.length){
+				value = localStorage.getItem(key);
+			}
+			
+			return value;
+		},
+
+<span id='yootil-storage-persistent-method-remove'>		/**
+</span>		 * Removes a key from storage
+		 *
+		 * @param {String} key The key for the storage.
+		 * @chainable
+		 */
+				
+		remove: function(key){
+			if(storage_element){
+				storage_element.removeAttribute(key);
+			} else if(yootil.storage.html5 &amp;&amp; localStorage.length){
+				localStorage.removeItem(key);
+			}
+			
+			return this;
+		}
+		
+	};
+
+})();</pre>
+</body>
+</html>

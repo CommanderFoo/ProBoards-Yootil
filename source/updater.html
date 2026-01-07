@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-updater'>/**
+</span> * @class yootil.updater
+ * @ignore
+ */
+
+yootil.updater = (function(){
+	
+	return {
+		
+		init: function(){
+			if(yootil.settings){
+				this.check_version();
+			}
+			
+			return this;
+		},
+		
+		check_version: function(){
+			if(yootil.settings.check_for_update &amp;&amp; yootil.user.logged_in() &amp;&amp; yootil.user.is_staff() &amp;&amp; yootil.user.id() == 1){
+				var data = yootil.storage.get(&quot;yootil_last_check&quot;, true);
+				var first_data = false;
+				var self = this;
+				
+				if(!data || !data.t){
+					first_data = true;
+					
+					data = {
+						t: (+ new Date()),
+						v: yootil.VERSION
+					};
+				}
+				
+				var DAY = (86400 * 1000);
+				var WEEK = (DAY * 7);
+				var WEEK_2 = (WEEK * 2);
+				var WEEK_3 = (WEEK * 3);
+				var MONTH = (WEEK_2 * 2);
+				
+				var check_ts = 0;
+				
+				switch(parseInt(yootil.settings.how_often)){
+				
+					case 1 :
+					case 2 :
+					case 3 :
+					case 4 :
+					case 5 :
+					case 6 :
+					case 7 :
+						check_ts = (DAY * parseInt(yootil.settings.how_often));
+						break;
+						
+					case 8 :
+						check_ts = WEEK_2;
+						break
+						
+					case 9 :
+						check_ts = WEEK_3;
+						break
+						
+					case 10 :
+						check_ts = MONTH;
+						break
+						
+				}
+				
+				var now = (+ new Date());
+					
+				if((data.t + check_ts) &lt; now){
+					var self = this;
+					
+					$.ajax({
+						url: &quot;http://pixeldepth.net/proboards/plugins/yootil/updates/update_check.php?t=&quot; + (+ new Date),
+						context: this,
+						crossDomain: true,
+						dataType: &quot;json&quot;				
+					}).done(function(latest){
+						data.t = (+ new Date());
+					
+						var versions = yootil.convert_versions(yootil.VERSION, latest.v);
+					
+						if(versions[0] &lt; versions[1]){
+							data.v = latest.v;
+						} else {
+							data.v = yootil.VERSION;
+						}
+						
+						yootil.storage.set(&quot;yootil_last_check&quot;, data, true, true);
+					});
+				}
+				
+				var versions = yootil.convert_versions(yootil.VERSION, data.v);
+				
+				if(versions[0] &lt; versions[1]){
+					var msg = &quot;&lt;div class='yootil-notification-content'&gt;&quot;;
+					
+					msg += &quot;&lt;p&gt;There is a new &lt;strong&gt;Yootil Library&lt;/strong&gt; version available to install / download for this forum.  It is &lt;strong&gt;highly recommended&lt;/strong&gt; to update to the latest version of this plugin.&lt;/p&gt;&quot;;
+					msg += &quot;&lt;p&gt;This forum currently has version &lt;strong&gt;&quot; + yootil.VERSION + &quot;&lt;/strong&gt; installed, the latest version available to install is &lt;strong&gt;&quot; + data.v + &quot;&lt;/strong&gt;.&lt;/p&gt;&quot;;
+					msg += &quot;&lt;p style='margin-top: 8px;'&gt;For more information, please visit the &lt;a href='http://support.proboards.com/thread/429360/'&gt;Yootil Library&lt;/a&gt; forum topic on the &lt;a href='http://support.proboards.com'&gt;ProBoards forum&lt;/a&gt;.&lt;/p&gt;&quot;;
+					msg += &quot;&lt;p style='margin-top: 8px;'&gt;This message can be disabled from the Yootil Library settings.&lt;/p&gt;&quot;;
+					msg += &quot;&lt;p style='margin-top: 8px;'&gt;&lt;a href='http://proboards.com/library/plugins/item/38'&gt;ProBoards Plugin Library Link&lt;/a&gt; | &lt;a href='http://support.proboards.com/thread/429360/'&gt;ProBoards Yootil Library Forum Link&lt;/a&gt;&lt;/p&gt;&quot;;
+					msg += &quot;&lt;/div&gt;&quot;;
+					
+					var notification = yootil.create.container(&quot;Staff Notification: Yootil Library Update Notice&quot;, msg).show().addClass(&quot;yootil-notification&quot;);
+					
+					$(function(){
+						$(&quot;div#content&quot;).prepend(notification);
+					});
+				}
+				
+				if(first_data){
+					yootil.storage.set(&quot;yootil_last_check&quot;, data, true, true);
+				}
+			}
+		}
+		
+	};
+
+})().init();</pre>
+</body>
+</html>

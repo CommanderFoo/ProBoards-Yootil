@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-forum'>/**
+</span> * @class yootil.forum
+ * @static
+ * Wrapper around the ProBoards data hash object to get forum info.
+ */
+
+yootil.forum = (function(){
+
+	return {
+
+<span id='global-method-__get_data'>		/**
+</span>		 * This is an internal method.
+		 *
+		 * @param {String} key The key on the page object to check and get.
+		 * @return {Mixed}
+		 * @ignore
+		 */
+
+		__get_data: function(key){
+			if(proboards &amp;&amp; proboards.dataHash &amp;&amp; typeof proboards.dataHash[key] != &quot;undefined&quot;){
+				return proboards.dataHash[key];
+			}
+
+			return &quot;&quot;;
+		},
+
+<span id='yootil-forum-method-ad_free'>		/**
+</span>		 * Gets the ad free value.
+		 *
+		 * @return {Number}
+		 */
+
+		ad_free: function(){
+			return this.__get_data(&quot;ad_free&quot;);
+		},
+
+<span id='yootil-forum-method-is_ad_free'>		/**
+</span>		 * Checks if the forum is ad free.
+		 *
+		 * @return {Boolean}
+		 */
+
+		is_ad_free: function(){
+			if(this.ad_free() == 1){
+				return true;
+			}
+
+			return false;
+		},
+
+<span id='yootil-forum-method-default_avatar'>		/**
+</span>		 * Gets the forum default avatar.
+		 *
+		 * @return {String}
+		 */
+
+		default_avatar: function(){
+			return this.__get_data(&quot;default_avatar&quot;);
+		},
+
+<span id='yootil-forum-method-id'>		/**
+</span>		 * Gets the forum ID.
+		 *
+		 * @return {String} This is stored as a string by ProBoards.
+		 */
+
+		id: function(){
+			return this.__get_data(&quot;forum_id&quot;);
+		},
+
+<span id='yootil-forum-method-login_url'>		/**
+</span>		 * Gets the forum login url.
+		 *
+		 * @return {String}
+		 */
+
+		login_url: function(){
+			return this.__get_data(&quot;login_url&quot;);
+		},
+
+<span id='yootil-forum-method-current_user_guest'>		/**
+</span>		 * Gets the guest value for the user viewing the forum.
+		 *
+		 * @return {String}
+		 */
+
+		current_user_guest: function(){
+			return this.__get_data(&quot;is_current_user_guest&quot;);
+		},
+
+<span id='yootil-forum-method-is_current_user_guest'>		/**
+</span>		 * Checks if the current use is a guest or not.
+		 *
+		 * @return {Boolean}
+		 */
+
+		is_current_user_guest: function(){
+			if(this.current_user_guest() == 1){
+				return true;
+			}
+
+			return false;
+		},
+
+<span id='yootil-forum-method-mark_boards_read_url'>		/**
+</span>		 * Gets url for marking boards as read.
+		 *
+		 * @return {String}
+		 */
+
+		mark_boards_read_url: function(){
+			return this.__get_data(&quot;mark_boards_read_url&quot;);
+		},
+
+<span id='yootil-forum-method-plugin_max_key_length'>		/**
+</span>		 * Gets plugin key length for all keys not including super forum key.
+		 *
+		 * @return {Number}
+		 */
+
+		plugin_max_key_length: function(){
+			return this.__get_data(&quot;plugin_max_key_length&quot;);
+		},
+
+<span id='yootil-forum-method-plugin_max_super_forum_key_length'>		/**
+</span>		 * Gets key length for the super forum key.
+		 *
+		 * @return {Number}
+		 */
+
+		plugin_max_super_forum_key_length: function(){
+			return this.__get_data(&quot;plugin_max_super_forum_key_length&quot;);
+		},
+
+<span id='yootil-forum-method-register_url'>		/**
+</span>		 * Gets forum register url.
+		 *
+		 * @return {String}
+		 */
+
+		register_url: function(){
+			return this.__get_data(&quot;register_url&quot;);
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

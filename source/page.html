@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-page'>/**
+</span> * @class yootil.page
+ * @ignore
+ * Wrapper around the ProBoards data object &quot;page&quot;.
+ */
+
+yootil.page = (function(){
+
+	return {
+
+<span id='yootil-page-method-__get_data'>		/**
+</span>		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [String}
+		 */
+		
+		__get_data: function(key){
+			if(proboards &amp;&amp; proboards.dataHash &amp;&amp; proboards.dataHash.page &amp;&amp; typeof proboards.dataHash.page[key] != &quot;undefined&quot;){
+				return proboards.dataHash.page[key];
+			}
+			
+			return &quot;&quot;;
+		}
+	
+	};
+
+})();</pre>
+</body>
+</html>

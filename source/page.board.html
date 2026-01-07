@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-page-board'>/**
+</span> * @class yootil.page.board
+ * @static
+ * Various methods to help get board information.
+ */
+
+yootil.page.board = (function(){
+
+	return {
+
+<span id='global-method-__get_data'>		/**
+</span>		 *	This is an internal method
+		 *
+		 * @param {String} key The key on the board object to check and get.
+		 * @return {Mixed}
+		 * @ignore
+		 */
+
+		__get_data: function(key){
+			var board_obj = yootil.page.__get_data(&quot;board&quot;);
+
+			if(board_obj &amp;&amp; typeof board_obj == &quot;object&quot; &amp;&amp; board_obj[key] != &quot;undefined&quot;){
+				return board_obj[key];
+			}
+
+			return &quot;&quot;;
+		},
+		
+<span id='yootil-page-board-method-id'>		/**
+</span>		 * Gets the board ID
+		 * @return {Number}
+		 */
+
+		id: function(){
+			return this.__get_data(&quot;id&quot;);
+		},
+
+<span id='yootil-page-board-method-name'>		/**
+</span>		 * Gets the board name
+		 * @return {String}
+		 */
+
+		name: function(){
+			return this.__get_data(&quot;name&quot;);
+		},
+
+<span id='yootil-page-board-method-url'>		/**
+</span>		 * Gets the board URL
+		 * @return {String}
+		 */
+
+		url: function(){
+			return this.__get_data(&quot;url&quot;);
+		},
+
+<span id='yootil-page-board-method-description'>		/**
+</span>		 * Get the board description
+		 * @return {String}
+		 */
+
+		description: function(){
+			return this.__get_data(&quot;description&quot;);
+		},
+
+<span id='yootil-page-board-method-disable_post_counts'>		/**
+</span>		 * Checks if this board has post counts disabled
+		 * @return {Boolean}
+		 */
+
+		disable_post_counts: function(){
+			return this.__get_data(&quot;disable_post_counts&quot;) == 1;
+		},
+
+<span id='yootil-page-board-method-disable_posting'>		/**
+</span>		 * Checks if this board has posting disabled
+		 * @return {Boolean}
+		 */
+
+		disable_posting: function(){
+			return this.__get_data(&quot;disable_posting&quot;) == 1;
+		},
+
+<span id='yootil-page-board-method-display_name'>		/**
+</span>		 * Get the board name
+		 * @return {String}
+		 */
+
+		display_name: function(){
+			return this.__get_data(&quot;display_name&quot;);
+		},
+
+<span id='yootil-page-board-method-hidden'>		/**
+</span>		 * Checks if this board is hidden
+		 * @return {Boolean}
+		 */
+
+		hidden: function(){
+			return this.__get_data(&quot;hidden&quot;) == 1;
+		},
+
+<span id='yootil-page-board-method-posts'>		/**
+</span>		 * Get the board total posts
+		 * @return {Number}
+		 */
+
+		posts: function(){
+			return this.__get_data(&quot;posts&quot;);
+		},
+
+<span id='yootil-page-board-method-show_announcements'>		/**
+</span>		 * Checks if this board has announcements showing
+		 * @return {Boolean}
+		 */
+
+		show_announcements: function(){
+			return this.__get_data(&quot;show_announcements&quot;) == 1;
+		},
+
+<span id='yootil-page-board-method-threads'>		/**
+</span>		 * Get the board total threads
+		 * @return {Number}
+		 */
+
+		threads: function(){
+			return this.__get_data(&quot;threads&quot;);
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-sound'>/**
+</span> * @class yootil.sound
+ * @static
+ * @deprecated
+ *
+ * Allows us to play a sound (uses HTML 5 Audio).
+ *
+ * Set access on the audio files, specifically Access-Control-Allow-Origin.
+ *
+ * See &quot;&lt;a href=&quot;http://www.w3.org/TR/cors/#access-control-allow-origin-response-hea&quot;&gt;Access Control Allow Origin - Response Header&lt;/a&gt;&quot; for more information about Access-Control.
+ */
+
+yootil.sound = (function(){
+
+	return {
+
+		audio_obj: null,
+
+<span id='yootil-sound-method-play'>		/**
+</span>		 * Plays a sound.
+		 *
+		 * Browsers in force the origin policy, so make sure you allow access to the sounds.
+		 *
+		 * @param {String} sound The URL to the sound file.
+		 */
+
+		play: function(sound){
+			if(!this.audio_obj){
+				this.create_audio_obj();
+			}
+
+			if(sound){
+				this.audio_obj.attr(&quot;src&quot;, sound);
+				this.audio_obj.get(0).play();
+			}
+		},
+
+		create_audio_obj: function(){
+			this.audio_obj = $(&quot;&lt;audio id='yootil_sound_player' style='display: none'&gt;&lt;/audio&gt;&quot;);
+			this.audio_obj.appendTo($(&quot;body&quot;));
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

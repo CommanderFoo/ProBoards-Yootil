@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-storage-session'>/**
+</span> * @class yootil.storage.session
+ * @static
+ * @ignore
+ * Allows you to store a value for the session.
+ *
+ * HTML 5 is used if available, otherwise uses window.name
+ */
+
+yootil.storage.session = (function(){
+	
+	function update_window(){
+		if(yootil.storage.window_data){
+			window.name = JSON.stringify(yootil.storage.window_data);
+		}
+	};
+	
+	return {
+
+<span id='yootil-storage-session-method-set'>		/**
+</span>		 * Allows you to set a key and value.
+		 *
+		 *     yootil.storage.session.set(&quot;mykey&quot;, &quot;myvalue&quot;);
+		 *
+		 * @param {String} key The key for the storage.
+		 * @param {String} value The value that will be stored.
+		 * @chainable
+		 */
+		
+		set: function(key, value){
+			if(yootil.storage.html5){
+				sessionStorage.setItem(key, value);
+			} else {
+				if(!yootil.storage.window_data[yootil.host]){
+					yootil.storage.window_data[yootil.host] = {};
+				}
+				
+				yootil.storage.window_data[yootil.host][key] = value;
+				update_window();
+			}
+			
+			return this;
+		},
+
+<span id='yootil-storage-session-method-get'>		/**
+</span>		 * Gets a value from storage in.
+		 *
+		 * @param {String} key The key for the storage.
+		 * @return {String}
+		 */
+		
+		get: function(key){
+			var value = &quot;&quot;;
+			
+			if(yootil.storage.html5 &amp;&amp; sessionStorage.length){
+				value = sessionStorage.getItem(key);
+			} else if(yootil.storage.window_data &amp;&amp; yootil.storage.window_data[yootil.host] &amp;&amp; yootil.storage.window_data[yootil.host][key]){
+				value = yootil.storage.window_data[yootil.host][key];
+			}
+			
+			return value;			
+		},
+
+<span id='yootil-storage-session-method-remove'>		/**
+</span>		 * Removes a key from storage
+		 *
+		 * @param {String} key The key for the storage.
+		 * @chainable
+		 */
+			
+		remove: function(key){
+			if(yootil.storage.html5 &amp;&amp; sessionStorage.length){
+				sessionStorage.removeItem(key);
+			} else if(yootil.storage.window_data &amp;&amp; yootil.storage.window_data[yootil.host]){
+				delete yootil.storage.window_data[yootil.host];
+				update_window();
+			}
+			
+			return this;
+		}
+		
+	};		
+
+})();</pre>
+</body>
+</html>

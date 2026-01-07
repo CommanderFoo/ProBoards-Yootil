@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-page-post'>/**
+</span> * @class yootil.page.post
+ * @static
+ * Various methods to help get post information.
+ */
+
+yootil.page.post = (function(){
+
+	return {
+
+<span id='global-method-__get_data'>		/**
+</span>		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [String}
+		 * @ignore
+		 */
+
+		__get_data: function(key){
+			var board_obj = yootil.page.__get_data(&quot;post&quot;);
+
+			if(board_obj &amp;&amp; typeof board_obj == &quot;object&quot; &amp;&amp; board_obj[key] != &quot;undefined&quot;){
+				return board_obj[key];
+			}
+
+			return &quot;&quot;;
+		},
+
+<span id='yootil-page-post-method-created_by'>		/**
+</span>		 * Gets the user id of who created the post
+		 * @return {Number}
+		 */
+
+		created_by: function(){
+			return this.__get_data(&quot;created_by&quot;);
+		},
+
+<span id='yootil-page-post-method-created_on'>		/**
+</span>		 * Gets the timeastamp when the post was created
+		 * @return {Number}
+		 */
+
+		created_on: function(){
+			return this.__get_data(&quot;created_on&quot;);
+		},
+
+<span id='yootil-page-post-method-id'>		/**
+</span>		 * Gets the post id
+		 * @return {Number}
+		 */
+
+		id: function(){
+			return this.__get_data(&quot;id&quot;);
+		},
+
+<span id='yootil-page-post-method-liked'>		/**
+</span>		 * Checks if the post has been liked
+		 * @return {boolean}
+		 */
+
+		liked: function(){
+			return this.__get_data(&quot;liked&quot;) == 1;
+		},
+
+<span id='yootil-page-post-method-thread_id'>		/**
+</span>		 * Gets the thread id
+		 * @return {Number}
+		 */
+
+		thread_id: function(){
+			return this.__get_data(&quot;thread_id&quot;);
+		},
+
+<span id='yootil-page-post-method-url'>		/**
+</span>		 * Gets the post URL
+		 * @return {String}
+		 */
+
+		url: function(){
+			return this.__get_data(&quot;url&quot;);
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-form'>/**
+</span> * @class yootil.form
+ * @static
+ * Easy access to forms for many of the forms on the forum.
+ *
+ * Each method will return either the form or an empty array.  This keeps
+ * things consistent with how jQuery works when a selector doesn't find anything.
+ */
+
+yootil.form = (function(){
+
+	return {
+
+<span id='yootil-form-method-post'>		/**
+</span>		* Checks for a form to do with posting on the post page.
+		*
+		* @return {Array}
+		*/
+		
+		post: function(){
+			if(yootil.location.posting_thread()){
+				return $(&quot;form.form_thread_new&quot;);
+			}
+			
+			return $(&quot;form.form_post_new&quot;);
+		},
+
+<span id='yootil-form-method-edit_post'>		/**
+</span>		 * Checks for a form to do with edit on the post page.
+		 *
+		 * @return {Array}
+		 */
+		
+		edit_post: function(){
+			if(yootil.location.editing_post()){
+				return $(&quot;form.form_post_edit&quot;);
+			}
+			
+			return [];
+		},
+
+<span id='yootil-form-method-edit_thread'>		/**
+</span>		 * Checks for edit thread form.
+		 *
+		 * @return {Array}
+		 */
+		
+		edit_thread: function(){
+			if(yootil.location.editing_thread()){
+				return $(&quot;form.form_thread_edit&quot;);
+			}
+			
+			return [];
+		},
+
+<span id='yootil-form-method-quick_reply'>		/**
+</span>		 * Checks for any form to do with quick replies, this includes threads and conversations.
+		 *
+		 * @return {Array}
+		 */
+				
+		quick_reply: function(){
+			return $(&quot;form.form_post_quick_reply&quot;);
+		},
+
+<span id='yootil-form-method-post_quick_reply'>		/**
+</span>		 * Just for the quick reply on threads.
+		 *
+		 * @return {Array}
+		 */
+		
+		post_quick_reply: function(){
+			if(yootil.location.thread()){
+				return this.quick_reply();
+			}
+			
+			return [];
+		},
+
+<span id='yootil-form-method-message_quick_reply'>		/**
+</span>		 * Just for the quick reply for messages.
+		 *
+		 * @return {Array}
+		 */
+
+		message_quick_reply: function(){
+			if(yootil.location.message_thread()){
+				return this.quick_reply();
+			}
+
+			return [];
+		},
+
+<span id='yootil-form-method-shoutbox'>		/**
+</span>		 * Shoutbox form.
+		 *
+		 * @return {Array}
+		 */
+		
+		shoutbox: function(){
+			return $(&quot;form.form_shoutbox_shoutbox&quot;);
+		},
+
+<span id='yootil-form-method-conversation'>		/**
+</span>		 * There are 2 forms for this, so we check if we are replying, if not
+		 * we return the conversation new form.
+		 *
+		 * @return {Array}
+		 */
+				
+		conversation: function(){
+			if(yootil.location.message_new()){
+				return this.message();
+			}
+				
+			return this.conversation_new();
+		},
+
+<span id='yootil-form-method-conversation_new'>		/**
+</span>		 * Returns the form used when creating a new conversation.
+		 *
+		 * @return {Array}
+		 */
+		
+		conversation_new: function(){
+			return $(&quot;form.form_conversation_new&quot;);
+		},
+
+<span id='yootil-form-method-message'>		/**
+</span>		 * Returns the form used when creating a reply to a conversation
+		 *
+		 * @return {Array}
+		 */
+				
+		message: function(){
+			return $(&quot;form.form_message_new&quot;);
+		},
+
+<span id='yootil-form-method-edit_personal'>		/**
+</span>		 * Returns the form used for editing profile personal info
+		 *
+		 * @return {Array}
+		 */
+
+		edit_personal: function(){
+			return $(&quot;form.form_user_edit_personal&quot;);
+		},
+
+<span id='yootil-form-method-edit_social'>		/**
+</span>		 * Returns the form used for editing profile social websites.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_social: function(){
+			return $(&quot;form.form_user_edit_social&quot;);
+		},
+
+<span id='yootil-form-method-edit_settings'>		/**
+</span>		 * Returns the form used for editing profile settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_settings: function(){
+			return $(&quot;form.form_user_edit_settings&quot;);
+		},
+
+<span id='yootil-form-method-edit_privacy'>		/**
+</span>		 * Returns the form used for editing profile privacy settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_privacy: function(){
+			return $(&quot;form.form_user_edit_privacy&quot;);
+		},
+
+<span id='yootil-form-method-edit_staff_options'>		/**
+</span>		 * Returns the form used for editing profile staff settings.
+		 *
+		 * @return {Array}
+		 */
+
+		edit_staff_options: function(){
+			return $(&quot;form.form_user_edit_admin&quot;);
+		},
+
+<span id='yootil-form-method-any_messaging'>		/**
+</span>		 * Gets any form that is to do with conversations or messaging.
+		 *
+		 * @return {Array}
+		 */
+
+		any_messaging: function(){
+			var the_form = [];
+
+			if(this.conversation().length){
+				the_form = this.conversation();
+			} else if(this.conversation_new().length){
+				the_form = this.conversation_new();
+			} else if(this.message().length){
+				the_form = this.message();
+			} else if(this.message_quick_reply().length){
+				the_form = this.message_quick_reply();
+			}
+
+			return the_form;
+		},
+
+<span id='yootil-form-method-any_posting'>		/**
+</span>		 * Gets any form to do with posting but not including messages.
+		 *
+		 * @return {Array}
+		 */
+
+		any_posting: function(){
+			var the_form = [];
+
+			if(this.post().length){
+				the_form = this.post();
+			} else if(this.edit_post().length){
+				the_form = this.edit_post();
+			} else if(this.post_quick_reply().length){
+				the_form = this.post_quick_reply();
+			} else if(this.edit_thread().length){
+				the_form = this.edit_thread();
+			}
+
+			return the_form;
+		},
+
+		// These are all aliases now and deprecated.
+
+<span id='yootil-form-method-post_form'>		/**
+</span>		 * @inheritdoc #post
+		 * @deprecated
+		 */
+
+		post_form: function(){
+			return this.post();
+		},
+
+<span id='yootil-form-method-edit_post_form'>		/**
+</span>		 * @inheritdoc #edit_post
+		 * @deprecated
+		 */
+
+		edit_post_form: function(){
+			return this.edit_post();
+		},
+
+<span id='yootil-form-method-edit_thread_form'>		/**
+</span>		 * @inheritdoc #edit_thread
+		 * @deprecated
+		 */
+
+		edit_thread_form: function(){
+			return this.edit_thread();
+		},
+
+<span id='yootil-form-method-quick_reply_form'>		/**
+</span>		 * @inheritdoc #quick_reply
+		 * @deprecated
+		 */
+
+		quick_reply_form: function(){
+			return this.quick_reply();
+		},
+
+<span id='yootil-form-method-post_quick_reply_form'>		/**
+</span>		 * @inheritdoc #post_quick_reply
+		 * @deprecated
+		 */
+
+		post_quick_reply_form: function(){
+			return this.post_quick_reply();
+		},
+
+<span id='yootil-form-method-shoutbox_form'>		/**
+</span>		 * @inheritdoc #shoutbox
+		 * @deprecated
+		 */
+
+		shoutbox_form: function(){
+			return this.shoutbox();
+		},
+
+<span id='yootil-form-method-conversation_form'>		/**
+</span>		 * @inheritdoc #conversation
+		 * @deprecated
+		 */
+
+		conversation_form: function(){
+			return this.conversation();
+		},
+
+<span id='yootil-form-method-conversation_new_form'>		/**
+</span>		 * @inheritdoc #conversation_new
+		 * @deprecated
+		 */
+
+		conversation_new_form: function(){
+			return this.conversation_new();
+		},
+
+<span id='yootil-form-method-message_form'>		/**
+</span>		 * @inheritdoc #message
+		 * @deprecated
+		 */
+
+		message_form: function(){
+			return this.message();
+		}
+
+		// End aliases
+	
+	};
+
+})();</pre>
+</body>
+</html>

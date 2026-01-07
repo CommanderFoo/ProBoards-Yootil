@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-create'>/**
+</span> * @class yootil.create
+ * @static
+ * Contains useful methods to creating things quickly (i.e containers).
+ */
+
+yootil.create = (function(){
+
+	return {
+
+<span id='yootil-create-method-container'>		/**
+</span>		 * Creates ProBoards div containers.
+		 *
+		 * Very basic example:
+		 *
+		 *     var container = yootil.create.container(&quot;My Title&quot;, &quot;My Content&quot;);
+		 *
+		 *     $(&quot;#content&quot;).prepend(container);
+		 *
+		 * This example would make titles and content safe:
+		 *
+		 *     var container = yootil.create.container(&quot;My &lt;em&gt;Title&lt;/em&gt;&quot;, &quot;My &lt;strong&gt;Content&lt;/strong&gt;&quot;, true);
+		 *
+		 *     $(&quot;#content&quot;).prepend(container);
+		 *
+		 * @param {String} title The container title.
+		 * @param {String} content The container content.
+		 * @param {Mixed} [safe] True or false, or pass an object to make html safe (i.e {title: false, content: true}).
+		 * @param {Boolean} safe.title If true, then yootil will handle making the title safe.
+		 * @param {Boolean} safe.content If true, then yootil will handle making the content safe.
+		 * @param {Object} [title_styles] Key value par for css styles (i.e {color: &quot;red&quot;, padding: &quot;11px&quot;}).
+		 * @param {Object} [content_styles] Key value par for css styles (i.e {color: &quot;red&quot;, padding: &quot;11px&quot;}).
+		 * @param {Object} [container_styles] Key value par for css styles (i.e {color: &quot;red&quot;, padding: &quot;11px&quot;}).
+		 * @param {Boolean} [no_h2] If set to true, it will not wrap the title with an h2 tag.
+		 * @param {Boolean} [jquery_obj] If false, returned content will be an html string.
+		 * @return {Mixed} Depends on what jquery_obj is set too, default is jquery object.
+		 */
+	
+		container: function(title, content, safe, title_styles, content_styles, container_styles, no_h2, jquery_obj){
+			var html = &quot;&quot;;
+			var safe_title = safe_content = (typeof safe != &quot;undefined&quot; || safe)? true : false;
+
+			title = (title || &quot;&quot;);
+			content = (content || &quot;&quot;);
+			
+			if(typeof safe === &quot;object&quot;){
+				if(typeof safe.title != &quot;undefined&quot;){
+					safe_title = safe.title;
+				}
+				
+				if(typeof safe.content != &quot;undefined&quot;){
+					safe_content = safe.content;
+				}
+			}
+			
+			container_styles = (container_styles)? container_styles : {};
+			title_styles = (title_styles)? title_styles : {};
+			content_styles = (content_styles)? content_styles : {};
+			
+			title = (safe_title)? yootil.html_encode(title) : title;
+			title = (typeof no_h2 != &quot;undefined&quot; &amp;&amp; !no_h2)? title : (&quot;&lt;h2&gt;&quot; + title + &quot;&lt;/h2&gt;&quot;);
+			
+			content = (safe_content)? yootil.html_encode(content) : content;
+			
+			html += &quot;&lt;div class=\&quot;container\&quot;&gt;&quot;;
+			html += $(&quot;&lt;div class=\&quot;title-bar\&quot;&gt;&quot; + title + &quot;&lt;/div&gt;&quot;).css(title_styles).wrap(&quot;&lt;span/&gt;&quot;).parent().html();
+			html += $(&quot;&lt;div class=\&quot;content pad-all\&quot;&gt;&quot; + content + &quot;&lt;/div&gt;&quot;).css(content_styles).wrap(&quot;&lt;span/&gt;&quot;).parent().html();
+			html += &quot;&lt;/div&gt;&quot;;
+			
+			if(typeof jquery_obj == &quot;undefined&quot; || jquery_obj){
+				return $(html).css(container_styles);
+			} else {
+				return $(html).css(container_styles).wrap(&quot;&lt;span/&gt;&quot;).parent().html();
+			}
+		},
+
+<span id='yootil-create-method-page'>		/**
+</span>		 * Quickly create a blank page that matches a certain URL.
+		 *
+		 *     yootil.create.page(&quot;shop&quot;, &quot;Shop&quot;);
+		 *
+		 * An exanple adding a container to the page as well:
+		 *
+		 *     yootil.create.page(&quot;shop&quot;, &quot;Shop&quot;).container(&quot;The Shop&quot;, &quot;Welcome to the Shop&quot;).appendTo(&quot;#content&quot;);
+		 *
+		 * @param {Mixed} locate This will get matched against the location.href value, can be a string or RegExp object.
+		 * @param {String} [document_title] Gets Added onto the current document title.
+		 * @param {Boolean} [hide_content] By default the children of #content gets hidden, you can override this.
+		 * @chainable
+		 */
+	
+		page: function(locate, document_title, hide_content){
+			var reg = (locate.constructor == RegExp)? locate : new RegExp(&quot;\/&quot; + locate, &quot;i&quot;);
+			
+			if(locate &amp;&amp; location.href.match(reg)){
+				if(typeof document_title != &quot;undefined&quot; &amp;&amp; document_title.length){
+					document.title += &quot; - &quot; + document_title;
+				}
+				
+				if(typeof hide_content == &quot;undefined&quot; || hide_content){
+					$(&quot;#content[role=main]&quot;).children().hide();
+				}
+			}
+			
+			return yootil.create;
+		},
+
+<span id='yootil-create-method-nav_branch'>		/**
+</span>		 * Extend the nav tree easily.
+		 *
+		 *     yootil.create.nav_branch(&quot;/shop/&quot;, &quot;Shop&quot;);
+		 *
+		 * @param {String} url URL of the branch.
+		 * @param {String} text Text of the branch.
+		 * @return {Object} Branch jQuery wrapped.
+		 */
+		
+		nav_branch: function(url, text){
+			var branch = $(&quot;#navigation-tree .nav-tree-wrapper #nav-tree li:last&quot;).clone();
+
+			if(branch &amp;&amp; branch.length){
+				branch.find(&quot;a&quot;).attr(&quot;href&quot;, url).find(&quot;span&quot;).html(text);
+				branch.appendTo(&quot;#nav-tree&quot;);
+			}
+			
+			return branch;
+		},
+
+<span id='yootil-create-method-profile_tab'>		/**
+</span>		 * Create a new tab on the profile
+		 *
+		 *     yootil.create.profile_tab(&quot;Test&quot;, &quot;test&quot;);
+		 *
+		 * @param {String} text Text of the branch.
+		 * @param {String} page URL of the branch.
+		 * @param {Boolean} [active] Active page or not.
+		 * @chainable
+		 */
+		
+		profile_tab: function(text, page, active){
+			if(yootil.location.profile()){
+				var active_class = (active)? &quot; class='ui-active'&quot; : &quot;&quot;;
+				var ul = $(&quot;div.show-user div.ui-tabMenu:first ul&quot;);
+				
+				if(ul.length){
+					ul.append($(&quot;&lt;li&quot; + active_class + &quot;&gt;&lt;a href='/user/&quot; + yootil.page.member.id() + &quot;/&quot; + page + &quot;'&gt;&quot; + text + &quot;&lt;/a&gt;&lt;/li&gt;&quot;));
+				}
+			}
+			
+			return this;
+		},
+
+<span id='yootil-create-method-profile_content_box'>		/**
+</span>		 * Creates a profile content box.
+		 *
+		 *     yootil.create.profile_content_box();
+		 *
+		 * @param {String} id Enter a ID, or a unique one will be created.
+		 * @return {Object} The box is returned wrapped with jQuery.
+		 */
+		
+		profile_content_box: function(id){
+			var uid = (id || $.unique_id(&quot;yootil-&quot;));
+			var box = $(&quot;&lt;div /&gt;&quot;).addClass(&quot;content-box center-col&quot;).attr(&quot;id&quot;, uid);
+				
+			return box;
+		},
+
+<span id='yootil-create-method-bbc_button'>		/**
+</span>		 * Adds a new BBC button to the end on the reply page.
+		 *
+		 * @param {Object} img The image element to append.
+		 * @param {Function} [func] Adds an onlick event.
+		 * @chainable
+		 */
+		
+		bbc_button: function(img, func){
+			$(document).ready(function(){
+				var li = $(&quot;&lt;li&gt;&quot;).addClass(&quot;button&quot;).append($(img));
+
+				if(func){
+					li.click(func);
+				}
+
+				var controls = $(&quot;.editor .ui-wysiwyg .controls&quot;);
+				var ul = controls.find(&quot;.bbcode-editor, .visual-editor&quot;).find(&quot;.group:last ul:last&quot;);
+
+				if(controls.length &amp;&amp; ul.length){
+					ul.append(li);
+				}
+			});
+
+			return this;
+		},
+
+<span id='yootil-create-method-ubbc_tab'>		/**
+</span>		 * Creates a new tab next to the BBCode tab on post / message reply pages.
+		 *
+		 *     var my_tab = yootil.create.ubbc_tab(&quot;myid&quot;, &quot;My Title&quot;, &quot;My Content&quot;);
+		 *
+		 * An example using the hide and show events:
+		 *
+		 *     var my_tab2 = yootil.create.ubbc_tab(&quot;myid2&quot;, &quot;My Title 2&quot;, &quot;My Content 2&quot;, {
+		 *
+		 *     	show: function(tab, tab_content){
+		 *     		tab.css(&quot;background-color&quot;, &quot;red&quot;);
+		 *     	},
+		 *
+		 *     	hide: function(tab, tab_content){
+		 *     		tab.css(&quot;background-color&quot;, &quot;&quot;);
+		 *     	}
+		 *
+		 *     );
+		 *
+		 * @param {String} tab_title The title for the tab, this can contain HTML.
+		 * @param {String} tab_content The content that will be shown when the tab is clicked.  HTML can be used.
+		 * @param {String} [id] The id for this tab.  If not specified a random one will be created.
+		 * @param {Object} [css] You can apply an object of css values that jQuery will apply, or defaults will be used.
+		 * @param {Object} [events] There are 2 events, show and hide.
+		 * @param {Function} [events.show] When the tab is clicked, this event will be called.  Tab and content are passed.
+		 * @param {Function} [events.hide] When another tab is click, this event will be called.  Tab and content are passed.
+		 * @param {Function} [events.context] Set the context of the functions.
+		 * @return {Object} The tab content div is returned wrapped with jQuery.
+		 */
+
+		ubbc_tab: function(tab_title, content, id, css, events){
+			id = id || yootil.ts();
+			tab_title = tab_title || id;
+			content = content || &quot;&quot;;
+
+			var tab = $(&quot;&lt;li id='menu-item-&quot; + id + &quot;'&gt;&lt;a href='#'&gt;&quot; + tab_title + &quot;&lt;/a&gt;&lt;/li&gt;&quot;);
+			var wysiwyg_tabs = $(&quot;.editor ul.wysiwyg-tabs&quot;).append(tab);
+			var tab_content = $(&quot;&lt;div id='&quot; + id + &quot;'&gt;&quot; + content + &quot;&lt;/div&gt;&quot;);
+
+			if(typeof css == &quot;undefined&quot;){
+				tab_content.css({
+
+					border: &quot;1px solid #E6E6E6&quot;,
+					padding: &quot;5px&quot;
+
+				});
+			} else if(css &amp;&amp; typeof css == &quot;object&quot;){
+				tab_content.css(css);
+			}
+
+			tab_content.hide().insertBefore($(&quot;.editor ul.wysiwyg-tabs&quot;));
+
+			wysiwyg_tabs.find(&quot;li&quot;).click(function(e){
+				var active = $(this);
+
+				e.preventDefault();
+
+				active.parent().find(&quot;li&quot;).removeClass(&quot;ui-active&quot;);
+				active.addClass(&quot;ui-active&quot;);
+
+				active.parent().find(&quot;li&quot;).each(function(){
+					var id = $(this).attr(&quot;id&quot;);
+
+					if(id.match(/bbcode|visual/i)){
+						$(&quot;.editor .ui-wysiwyg .editors&quot;).hide();
+					} else {
+						if(active.attr(&quot;id&quot;) == id){
+							return;
+						}
+
+						var selector = &quot;&quot;;
+
+						if(id){
+							selector = &quot;#&quot; + id.split(&quot;menu-item-&quot;)[1];
+						}
+
+						if($(selector).length){
+							if(events &amp;&amp; events.hide){
+								if(events.context){
+									$.proxy(events.hide, events.context, tab, tab_content)();
+								} else {
+									events.hide(tab, tab_content);
+								}
+							}
+
+							$(selector).hide();
+						}
+					}
+				});
+
+				var id = active.attr(&quot;id&quot;);
+				var selector = &quot;&quot;;
+
+				if(id){
+					selector = &quot;#&quot; + id.split(&quot;menu-item-&quot;)[1];
+				}
+
+				if(id.match(/bbcode|visual/i)){
+					$(&quot;.editor .ui-wysiwyg .editors&quot;).show();
+				} else if($(selector).length){
+					if(events &amp;&amp; events.show){
+						if(events.context){
+							$.proxy(events.show, events.context, tab, tab_content)();
+						} else {
+							events.show(tab, tab_content);
+						}
+					}
+
+					$(selector).show();
+				}
+			});
+
+			return tab_content;
+		}
+		
+	};
+
+})();</pre>
+</body>
+</html>

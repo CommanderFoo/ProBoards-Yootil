@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-queue-method-constructor'><span id='yootil-queue'>/**
+</span></span>* @class yootil.queue
+* @constructor
+*
+* Handle queuing functions easily.
+*
+*     var q = new yootil.queue();
+*
+*     q.add(function(){
+*     	console.log(&quot;Hello&quot;);
+*
+*     	setTimeout(&quot;q.next()&quot;, 1000);
+*     });
+*
+*     q.add(function(){
+*     	console.log(&quot;World&quot;);
+*     	q.stop(); // Stop the queue
+*     });
+*
+*     // Won't run as queue was stopped
+*     q.add(function(){
+*     	console.log(&quot;!&quot;);
+*     });
+*
+* @param {Number} [poll] How often should we poll the queue list (default is 100ms).
+*/
+
+yootil.queue = (function(){
+
+	function Queue(poll){
+		this.queue = [];
+		this.poll = poll || 100;
+		this.polling = false;
+		this.interval = false;
+	}
+
+	Queue.prototype = {
+
+<span id='yootil-queue-method-add'>		/**
+</span>		 * Add a function to the queue.
+		 *
+		 * This will also start polling the queue the first time add is called.
+		 *
+		 * @param {Function} func The function to add to the queue.
+		 * @chainable
+		 */
+
+		add: function(func){
+			this.queue.push(func);
+			this.start();
+
+			return this;
+		},
+
+		start: function(){
+			if(this.queue.length &amp;&amp; !this.interval){
+				this.interval = setInterval($.proxy(function(){
+					if(!this.polling){
+						if(this.queue.length){
+							this.polling = true;
+							this.queue[0]();
+						}
+					}
+				}, this), this.poll);
+			}
+		},
+
+<span id='yootil-queue-method-next'>		/**
+</span>		 * Move to the next item in the queue.
+		 * @chainable
+		 */
+
+		next: function(){
+			if(this.queue.length){
+				this.queue.shift();
+				this.polling = false;
+			}
+
+			if(!this.queue.length){
+				clearInterval(this.interval);
+			}
+
+			return this;
+		},
+
+<span id='yootil-queue-method-pause'>		/**
+</span>		 * Pauses the queue.
+		 * @chainable
+		 */
+
+		pause: function(){
+			clearInterval(this.interval);
+			this.polling = this.interval = false;
+
+			return this;
+		},
+
+<span id='yootil-queue-method-stop'>		/**
+</span>		 * Stop the queue.  This empties the queue.
+		 *@chainable
+		 */
+
+		stop: function(){
+			this.queue = [];
+			clearInterval(this.interval);
+			this.polling = this.interval = false;
+
+			return this;
+		}
+
+	};
+
+	return Queue;
+
+})();</pre>
+</body>
+</html>

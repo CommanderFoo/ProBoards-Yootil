@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-page-thread'>/**
+</span> * @class yootil.page.thread
+ * @static
+ * Various methods to help get thread information.
+ */
+
+yootil.page.thread = (function(){
+
+	return {
+
+<span id='global-method-__get_data'>		/**
+</span>		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [ String}
+		 * @ignore
+		 */
+
+		__get_data: function(key){
+			var thread_obj = yootil.page.__get_data(&quot;thread&quot;);
+
+			if(thread_obj &amp;&amp; typeof thread_obj == &quot;object&quot; &amp;&amp; thread_obj[key] != &quot;undefined&quot;){
+				return thread_obj[key];
+			}
+
+			return &quot;&quot;;
+		},
+<span id='yootil-page-thread-method-id'>		/**
+</span>		 * Gets the thread ID
+		 * @return {String}
+		 */
+
+		id: function(){
+			return this.__get_data(&quot;id&quot;);
+		},
+
+<span id='yootil-page-thread-method-created_on'>		/**
+</span>		 * Gets the thread creation date timestamp
+		 * @return {String}
+		 */
+
+		created_on: function(){
+			return this.__get_data(&quot;created_on&quot;);
+		},
+
+<span id='yootil-page-thread-method-is_announcement'>		/**
+</span>		 * Is the thread an announcement?
+		 * @return {Boolean}
+		 */
+
+		is_announcement: function(){
+			return this.__get_data(&quot;is_announcement&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_bookmarked'>		/**
+</span>		 * Is the thread bookmarked?
+		 * @return {Boolean}
+		 */
+
+		is_bookmarked: function(){
+			return this.__get_data(&quot;is_bookmarked&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_falling'>		/**
+</span>		 * Is the thread falling?
+		 * @return {Boolean}
+		 */
+
+		is_falling: function(){
+			return this.__get_data(&quot;is_falling&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_locked'>		/**
+</span>		 * Is the thread locked?
+		 * @return {Boolean}
+		 */
+
+		is_locked: function(){
+			return this.__get_data(&quot;is_locked&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_new'>		/**
+</span>		 * Is the thread new?
+		 * @return {Boolean}
+		 */
+
+		is_new: function(){
+			return this.__get_data(&quot;is_new&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_poll'>		/**
+</span>		 * Is the thread a poll?
+		 * @return {Boolean}
+		 */
+
+		is_poll: function(){
+			return this.__get_data(&quot;is_poll&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-is_sticky'>		/**
+</span>		 * Is the thread sticky?
+		 * @return {Boolean}
+		 */
+
+		is_sticky: function(){
+			return this.__get_data(&quot;is_sticky&quot;) == 1;
+		},
+
+<span id='yootil-page-thread-method-subject'>		/**
+</span>		 * Gets the thread subject
+		 * @return {String}
+		 */
+
+		subject: function(){
+			return this.__get_data(&quot;subject&quot;);
+		},
+
+<span id='yootil-page-thread-method-url'>		/**
+</span>		 * Gets the thread URL
+		 * @return {String}
+		 */
+
+		url: function(){
+			return this.__get_data(&quot;url&quot;);
+		},
+
+<span id='yootil-page-thread-method-board_id'>		/**
+</span>		 * Gets the board id
+		 * @return {Number}
+		 */
+
+		board_id: function(){
+			return this.__get_data(&quot;board_id&quot;);
+		},
+
+<span id='yootil-page-thread-method-created_by'>		/**
+</span>		 * Gets the member who created this thread
+		 * @return {Number}
+		 */
+
+		created_by: function(){
+			return this.__get_data(&quot;created_by&quot;);
+		},
+
+<span id='yootil-page-thread-method-last_post_id'>		/**
+</span>		 * Gets the last post id
+		 * @return {Number}
+		 */
+
+		last_post_id: function(){
+			return this.__get_data(&quot;last_post_id&quot;);
+		},
+
+<span id='yootil-page-thread-method-first_post_id'>		/**
+</span>		 * Gets the first post id
+		 * @return {Number}
+		 */
+
+		first_post_id: function(){
+			return this.__get_data(&quot;first_post_id&quot;);
+		},
+
+<span id='yootil-page-thread-method-last_post_time'>		/**
+</span>		 * Gets the last post time
+		 * @return {Number}
+		 */
+
+		last_post_time: function(){
+			return this.__get_data(&quot;last_post_time&quot;);
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

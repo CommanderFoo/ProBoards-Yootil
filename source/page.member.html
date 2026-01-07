@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-page-member'>/**
+</span> * @class yootil.page.member
+ * @static
+ * Various methods to help get member information.
+ */
+
+yootil.page.member = (function(){
+
+	return {
+
+<span id='global-method-__get_data'>		/**
+</span>		 * This is an internal method
+		 *
+		 * @param {String} key The key on the page object to check and get
+		 * @return [String}
+		 * @ignore
+		 */
+
+		__get_data: function(key){
+			var member_obj = yootil.page.__get_data(&quot;member&quot;);
+
+			if(member_obj &amp;&amp; typeof member_obj == &quot;object&quot; &amp;&amp; member_obj[key] != &quot;undefined&quot;){
+				return member_obj[key];
+			}
+
+			return &quot;&quot;;
+		},
+
+<span id='yootil-page-member-method-id'>		/**
+</span>		 * Gets the members ID.
+		 * @return {Number}
+		 */
+
+		id: function(){
+			return this.__get_data(&quot;id&quot;);
+		},
+
+<span id='yootil-page-member-method-name'>		/**
+</span>		 * Gets the members name.
+		 * @return {String}
+		 */
+
+		name: function(){
+			return this.__get_data(&quot;name&quot;);
+		},
+
+<span id='yootil-page-member-method-url'>		/**
+</span>		 * Gets the members URL.
+		 * @return {String}
+		 */
+
+		url: function(){
+			return this.__get_data(&quot;url&quot;);
+		},
+
+<span id='yootil-page-member-method-display_group_id'>		/**
+</span>		 * Gets the members display group id.
+		 * @return {Number}
+		 */
+
+		display_group_id: function(){
+			return this.__get_data(&quot;display_group_id&quot;);
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-user'>/**
+</span> * @class yootil.user
+ * @static
+ * Contains useful methods relating to the user currently viewing the page, most being wrappers at the moment.
+ */
+
+yootil.user = (function(){
+
+	return {
+
+<span id='global-property-data'>		/**
+</span>		 * @ignore
+		 * @property {Object} data Holds a reference to the ProBoards user object.
+		 */
+
+		data:  {},
+
+<span id='global-method-has_data'>		/**
+</span>		 * This checks to see if the ProBoards data object exists and has a user object, we cache it as well.
+		 * @return {Boolean}
+		 * @ignore
+		 */
+
+		has_data: function(){
+			if(this.data &amp;&amp; typeof this.data.id != &quot;undefined&quot;){
+				return true;
+			} else {
+				if(typeof proboards != &quot;undefined&quot;){
+					var data = proboards.data;
+
+					if(typeof data != &quot;undefined&quot; &amp;&amp; typeof data == &quot;function&quot;){
+						var user_data = proboards.data(&quot;user&quot;);
+
+						if(typeof user_data != &quot;undefined&quot;){
+							this.data = user_data || {};
+
+							return true;
+						}
+					}
+				}
+			}
+
+			return false;
+		},
+
+<span id='yootil-user-method-logged_in'>		/**
+</span>		 * Checks to see if the user is logged in, if so, returns true.
+		 *@return {Boolean}
+		 */
+
+		logged_in: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_logged_in != &quot;undefined&quot; &amp;&amp; this.data.is_logged_in){
+					return true;
+				}
+			}
+			return false;
+		},
+
+<span id='yootil-user-method-id'>		/**
+</span>		 * Gets the current users ID
+		 *@return {Number}
+		 */
+
+		id: function(){
+			if(this.has_data()){
+				if(typeof this.data.id != &quot;undefined&quot;){
+					return this.data.id;
+				}
+			}
+			return 0;
+		},
+
+<span id='yootil-user-method-is_staff'>		/**
+</span>		 * Checks to see if the current user is staff
+		 *@return {Boolean}
+		 */
+
+		is_staff: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_staff != &quot;undefined&quot; &amp;&amp; this.data.is_staff){
+					return true;
+				}
+			}
+			return false;
+		},
+
+<span id='yootil-user-method-name'>		/**
+</span>		 * Gets the users name
+		 *@return {String}
+		 */
+
+		name: function(){
+			if(this.has_data()){
+				if(typeof this.data.name != &quot;undefined&quot;){
+					return this.data.name;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-theme'>		/**
+</span>		 * Gets the users theme ID
+		 *@return {Number}
+		 */
+
+		theme: function(){
+			if(this.has_data()){
+				if(typeof this.data.theme_id != &quot;undefined&quot;){
+					return this.data.theme_id;
+				}
+			}
+			return 0;
+		},
+
+<span id='yootil-user-method-url'>		/**
+</span>		 * Gets the users path URL to their profile
+		 *@return {String}
+		 */
+
+		url: function(){
+			if(this.has_data()){
+				if(typeof this.data.url != &quot;undefined&quot;){
+					return this.data.url;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-avatar'>		/**
+</span>		 * Gets the users avatar (HTML)
+		 *@return {String}
+		 */
+
+		avatar: function(){
+			if(this.has_data()){
+				if(typeof this.data.avatar != &quot;undefined&quot;){
+					return this.data.avatar;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-birthday'>		/**
+</span>		 * Gets the users birthday object
+		 *@return {Object}
+		 */
+
+		birthday: function(){
+			if(this.has_data()){
+				if(typeof this.data.birthday != &quot;undefined&quot;){
+					return this.data.birthday;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-date_format'>		/**
+</span>		 * Gets the users date format (i.e d/m/y)
+		 *@return {String}
+		 */
+
+		date_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.date_format != &quot;undefined&quot;){
+					return this.data.date_format;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-friends'>		/**
+</span>		 * Gets the users friends
+		 *@return {Object}
+		 */
+
+		friends: function(){
+			if(this.has_data()){
+				if(typeof this.data.friends != &quot;undefined&quot;){
+					return this.data.friends;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-has_new_messages'>		/**
+</span>		 * Checks to see if user has new messages
+		 *@return {Boolean}
+		 */
+
+		has_new_messages: function(){
+			if(this.has_data()){
+				if(typeof this.data.has_new_messages != &quot;undefined&quot;){
+					return this.data.has_new_messages;
+				}
+			}
+			return 0;
+		},
+
+<span id='yootil-user-method-instant_messengers'>		/**
+</span>		 * Gets users instant messengers
+		 *@return {Object}
+		 */
+
+		instant_messengers: function(){
+			if(this.has_data()){
+				if(typeof this.data.instant_messengers != &quot;undefined&quot;){
+					return this.data.instant_messengers;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-last_online'>		/**
+</span>		 * Gets users last online object
+		 *@return {Object}
+		 */
+
+		last_online: function(){
+			if(this.has_data()){
+				if(typeof this.data.last_online != &quot;undefined&quot;){
+					return this.data.last_online;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-posts'>		/**
+</span>		 * Gets users post count
+		 *@return {Number}
+		 */
+
+		posts: function(){
+			if(this.has_data()){
+				if(typeof this.data.posts != &quot;undefined&quot;){
+					return this.data.posts;
+				}
+			}
+			return 0;
+		},
+
+<span id='yootil-user-method-rank'>		/**
+</span>		 * Gets users rank
+		 *@return {Object}
+		 */
+
+		rank: function(){
+			if(this.has_data()){
+				if(typeof this.data.rank != &quot;undefined&quot;){
+					return this.data.rank;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-registered_on'>		/**
+</span>		 * Gets users registered on date
+		 *@return {Object}
+		 */
+
+		registered_on: function(){
+			if(this.has_data()){
+				if(typeof this.data.registered_on != &quot;undefined&quot;){
+					return this.data.registered_on;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-status'>		/**
+</span>		 * Gets users status
+		 *@return {String}
+		 */
+
+		status: function(){
+			if(this.has_data()){
+				if(typeof this.data.status != &quot;undefined&quot;){
+					return this.data.status;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-time_format'>		/**
+</span>		 * Gets users time format
+		 *@return {String}
+		 */
+
+		time_format: function(){
+			if(this.has_data()){
+				if(typeof this.data.time_format != &quot;undefined&quot;){
+					return this.data.time_format;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-username'>		/**
+</span>		 * Gets users username
+		 *@return {String}
+		 */
+
+		username: function(){
+			if(this.has_data()){
+				if(typeof this.data.username != &quot;undefined&quot;){
+					return this.data.username;
+				}
+			}
+			return &quot;&quot;;
+		},
+
+<span id='yootil-user-method-group_ids'>		/**
+</span>		 * Gets users group ids
+		 *@return {Array}
+		 */
+
+		group_ids: function(){
+			if(this.has_data()){
+				if(typeof this.data.group_ids != &quot;undefined&quot;){
+					return this.data.group_ids;
+				}
+			}
+			return [];
+		},
+
+<span id='yootil-user-method-groups'>		/**
+</span>		 * Gets users groups
+		 *@return {Object}
+		 */
+
+		groups: function(){
+			if(this.has_data()){
+				if(typeof this.data.groups != &quot;undefined&quot;){
+					return this.data.groups;
+				}
+			}
+			return {};
+		},
+
+<span id='yootil-user-method-is_invisible'>		/**
+</span>		 * Checks if the member is invisible
+		 *@return {Boolean}
+		 */
+
+		is_invisible: function(){
+			if(this.has_data()){
+				if(typeof this.data.is_invisible != &quot;undefined&quot; &amp;&amp; this.data.is_invisible){
+					return true;
+				}
+			}
+			return false;
+		},
+
+<span id='yootil-user-method-proboards_plus'>		/**
+</span>		 * Checks if the member has proboards plus on
+		 *@return {Boolean}
+		 */
+
+		proboards_plus: function(){
+			if(this.has_data()){
+				if(typeof this.data.proboards_plus != &quot;undefined&quot; &amp;&amp; this.data.proboards_plus){
+					return true;
+				}
+			}
+			return false;
+		},
+
+<span id='yootil-user-method-block_list'>		/**
+</span>		 * Gets the users block list
+		 *@return {Object}
+		 */
+
+		block_list: function(){
+			if(this.has_data()){
+				if(typeof this.data.block_list != &quot;undefined&quot; &amp;&amp; this.data.block_list){
+					return this.data.block_list;
+				}
+			}
+			return {};
+		}
+	};
+
+})();</pre>
+</body>
+</html>

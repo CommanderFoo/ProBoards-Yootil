@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-element-remove'>/**
+</span> * @class yootil.element.remove
+ * @alias yootil.remove
+ * @static
+ * Easy remove and hide elements.
+ */
+
+yootil.element.remove = yootil.remove = (function(){
+
+	return {
+
+<span id='yootil-element-remove-method-mini_profiles'>		/**
+</span>		 * Removes mini profiles.
+		 *
+		 *     yootil.element.remove.mini_profiles(); // Removes all mini profiles
+		 *
+		 *     yootil.element.remove.mini_profiles(1); // Removes all mini profiles for user id 1
+		 *
+		 *     yootil.element.remove.mini_profiles(null, true); // hides all mini profiles
+		 *
+		 * @param {Number} [user_id] If specified, it will match mini profiles for that user id.
+		 * @param {Boolean} [hide] If you need to keep the mini profile in the DOM set this to true.
+		 * @return {Array} Matched mini profiles are returned back.
+		 */
+
+		mini_profiles: function(user_id, hide){
+			var mini_profile = yootil.element.get.mini_profiles(user_id);
+
+			if(mini_profile.length){
+				mini_profile[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return mini_profile;
+		},
+
+<span id='yootil-element-remove-method-mini_profile_avatars'>		/**
+</span>		 * Removes mini profile avatars.
+		 *
+		 *     yootil.element.remove.mini_profile_avatars(); // Removes all avatars
+		 *
+		 *     yootil.element.remove.mini_profile_avatars(1); // Removes all avatars for user id 1
+		 *
+		 *     yootil.element.remove.mini_profile_avatars(null, true); // Hides all avatars
+		 *
+		 * @param {Number} [user_id] If specified, it will match avatars for that user id.
+		 * @param {Boolean} [hide] If you need to keep the avatar in the DOM set this to true.
+		 * @return {Array} Matched avatars are returned back.
+		 */
+
+		mini_profile_avatars: function(user_id, hide){
+			var avatar = yootil.element.get.mini_profile_avatars(user_id);
+
+			if(avatar.length){
+				avatar[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return avatar;
+		},
+
+<span id='yootil-element-remove-method-mini_profile_user_links'>		/**
+</span>		 * Removes mini profile user links.
+		 *
+		 *     yootil.element.remove.mini_profile_user_links(1); // Removes all user links for user id 1
+		 *
+		 *     yootil.element.remove.mini_profile_user_links(); // Removes all user links
+		 *
+		 *     yootil.element.remove.mini_profile_user_links(null, false, true); // Removes all user links including first br element
+		 *
+		 * @param {Number} [user_id] If specified, it will match user links for that user id.
+		 * @param {Boolean} [hide] If you need to keep the user link in the DOM set this to true.
+		 * @param {Boolean} [remove_br] Each mini profile has a br element after the name, set to true to remove it.
+		 * @return {Array} Matched user links are returned back.
+		 */
+
+		mini_profile_user_links: function(user_id, hide, remove_br){
+			var link = yootil.element.get.mini_profile_user_links(user_id);
+			var br = (remove_br)? link.parent().find(&quot;br:first&quot;) : null;
+
+			if(link.length){
+				link[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+				if(br){
+					br[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+				}
+			}
+
+			return link;
+		},
+
+<span id='yootil-element-remove-method-posts'>		/**
+</span>		 * Removes posts.
+		 *
+		 *     yootil.element.remove.posts(); // Removes all posts
+		 *
+		 *     yootil.element.remove.posts(123); // Removes post with id 123
+		 *
+		 *     yootil.element.remove.posts(123, true); // Hides post with id 123
+		 *
+		 * @param {Number} [post_id] The post id for the post to remove.
+		 * @param {Boolean} [hide] If you need to keep the post in the DOM set this to true.
+		 * @return {Array} Matched posts are returned.
+		 */
+
+		posts: function(post_id, hide){
+			var post = yootil.element.get.posts(post_id);
+
+			if(post.length){
+				post[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return post;
+		},
+
+<span id='yootil-element-remove-method-messages'>		/**
+</span>		 * Removes messages.
+		 *
+		 *     yootil.element.remove.messages(); // Removes all messages
+		 *
+		 *     yootil.element.remove.messages(123); // Removes message with id 123
+		 *
+		 *     yootil.element.remove.messages(123, true); // Hides message with id 123
+		 *
+		 * @param {Number} [message_id] The message id for the message to remove.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched message is returned.
+		 */
+
+		messages: function(message_id, hide){
+			var message = yootil.element.get.messages(message_id);
+
+			if(message.length){
+				message[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return message;
+		},
+
+<span id='yootil-element-remove-method-user_posts'>		/**
+</span>		 * Removes user posts.
+		 *
+		 *     yootil.element.remove.user_posts(1); // Removes all posts for user id 1
+		 *
+		 *     yootil.element.remove.user_posts(1, true); // Hides all posts for user id 1
+		 *
+		 * @param {Number} user_id The user id to find posts for.
+		 * @param {Boolean} [hide] If you need to keep the post in the DOM set this to true.
+		 * @return {Array} Matched posts are returned.
+		 */
+
+		user_posts: function(user_id, hide){
+			var user_post = yootil.element.get.user_posts(user_id);
+
+			if(user_post.length){
+				user_post[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return user_post;
+		},
+
+<span id='yootil-element-remove-method-user_messages'>		/**
+</span>		 * Removes user messages.
+		 *
+		 *     yootil.element.remove.user_messages(1); // Removes all messages for user id 1
+		 *
+		 *     yootil.element.remove.user_messages(1, true); // Hides all messages for user id 1
+		 *
+		 * @param {Number} user_id The user id to find messages for.
+		 * @param {Boolean} [hide] If you need to keep the messages in the DOM set this to true.
+		 * @return {Array} Matched messages are returned.
+		 */
+
+		user_messages: function(user_id, hide){
+			var user_messages = yootil.element.get.user_messages(user_id);
+
+			if(user_messages.length){
+				user_messages[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return user_messages;
+		},
+
+<span id='yootil-element-remove-method-quick_reply'>		/**
+</span>		 * Removes the quick reply.
+		 *
+		 * @param {Boolean} [hide] Set to true if you want to keep it in the DOM.
+		 * @return {Array}
+		 */
+
+		quick_reply: function(hide){
+			var quick_reply = yootil.element.get.quick_reply();
+
+			if(quick_reply.length){
+				quick_reply[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return quick_reply;
+		},
+
+<span id='yootil-element-remove-method-mini_profile_info'>		/**
+</span>		 * Removes mini profile info section.
+		 *
+		 *     yootil.element.remove.mini_profile_info(); // Removes all mini profile info
+		 *
+		 *     yootil.element.remove.mini_profile_info(1); // Removes all mini profile info for the user id 1
+		 *
+		 *     yootil.element.remove.mini_profile_info(1, true); // Hides all mini profile info for user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match user links for that user id.
+		 * @param {Boolean} [hide] If you need to keep the user link in the DOM set this to true.
+		 * @param {Boolean} [remove_br] Each mini profile has a br element after the name, set to true to remove it.
+		 * @return {Array} Matched user links are returned back.
+		 */
+
+		mini_profile_info: function(user_id, hide){
+			var info = yootil.element.get.mini_profile_info(user_id);
+
+			if(info.length){
+				info[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+			}
+
+			return info;
+		},
+
+<span id='yootil-element-remove-method-signatures'>		/**
+</span>		 * Removes signatures from posts and messages.
+		 *
+		 *     yootil.element.remove.signatures(); // Removes all signatures
+		 *
+		 *     yootil.element.remove.signatures(1); // Removes all signatures for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		signatures: function(user_id, hide){
+			var signatures = yootil.element.get.signatures(user_id);
+
+			if(signatures.length){
+				signatures[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+			}
+
+			return signatures;
+		},
+
+<span id='yootil-element-remove-method-last_edit'>		/**
+</span>		 * Removes last edit from posts.
+		 *
+		 *     yootil.element.remove.last_edit(); // Gets all last edits
+		 *
+		 *     yootil.element.remove.last_edit(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		last_edit: function(user_id, hide){
+			var last_edit = yootil.element.get.last_edit(user_id);
+
+			if(last_edit.length){
+				last_edit[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+			}
+
+			return last_edit;
+		},
+
+<span id='yootil-element-remove-method-post_info'>		/**
+</span>		 * Removes post / message info (date, likes, etc)
+		 *
+		 *     yootil.element.remove.post_info(); // Gets all
+		 *
+		 *     yootil.element.remove.post_info(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_info: function(user_id, hide){
+			var info = yootil.element.get.post_info(user_id);
+
+			if(info.length){
+				info[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+			}
+
+			return info;
+		},
+
+<span id='yootil-element-remove-method-post_controls'>		/**
+</span>		 * Removes post / message controls.
+		 *
+		 *     yootil.element.remove.post_controls(); // Gets all
+		 *
+		 *     yootil.element.remove.post_controls(1); // Gets all for the user id 1
+		 *
+		 * @param {Number} [user_id] If specified, it will match for that user id.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matched results are returned back.
+		 */
+
+		post_controls: function(user_id, hide){
+			var controls = yootil.element.get.post_controls(user_id);
+
+			if(controls.length){
+				controls[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+
+			}
+
+			return controls;
+		},
+
+<span id='yootil-element-remove-method-summary'>		/**
+</span>		 * Removes post / message summary.
+		 *
+		 *     yootil.element.remove.summary();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		summary: function(hide){
+			var summary = yootil.element.get.summary();
+
+			if(summary.length){
+				summary[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return summary;
+		},
+
+<span id='yootil-element-remove-method-nav_tree'>		/**
+</span>		 * Removes navigation tree.
+		 *
+		 *     yootil.element.remove.nav_tree();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_tree: function(hide){
+			var nav = yootil.element.get.nav_tree();
+
+			if(nav.length){
+				nav[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return nav;
+		},
+
+<span id='yootil-element-remove-method-nav_branches'>		/**
+</span>		 * Removes navigation tree branches.
+		 *
+		 *     yootil.element.remove.nav_branches();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branches: function(hide){
+			var branches = yootil.element.get.nav_branches();
+
+			if(branches.length){
+				branches[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return branches;
+		},
+
+<span id='yootil-element-remove-method-last_nav_branch'>		/**
+</span>		 * Removes last navigation tree branch.
+		 *
+		 *     yootil.element.remove.last_nav_branch();
+		 *
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		last_nav_branch: function(hide){
+			var branch = yootil.element.get.last_nav_branch();
+
+			if(branch.length){
+				branch[(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+			}
+
+			return branch;
+		},
+
+<span id='yootil-element-remove-method-nav_branch'>		/**
+</span>		 * Removes branches based on options passed in.
+		 *
+		 *     var example1 = yootil.element.remove.nav_branch(&quot;Members&quot;, &quot;text&quot;);
+		 *
+		 *     var example2 = yootil.element.remove.nav_branch(/user\/1/, &quot;url&quot;);
+		 *
+		 *     var example3 = yootil.element.remove.nav_branch(/^\/(members)?$/, &quot;url&quot;); // Removes &quot;Home&quot; and &quot;Members&quot;.
+		 *
+		 * @param {Mixed} pattern This can be a string, or a regular expression pattern.
+		 * @param {String} [type] You can match against the url or text of the branch.  Default is text.
+		 * @param {Boolean} [hide] Pass true to keep the element in the DOM.
+		 * @return {Array} Matches are returned back.
+		 */
+
+		nav_branch: function(pattern, type, hide){
+			var branches = yootil.element.get.nav_branch(pattern, type);
+
+			if(branches.length){
+				for(var branch in branches){
+					branches[branch][(!hide)? &quot;remove&quot; : &quot;hide&quot;]();
+				}
+			}
+
+			return branches;
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>

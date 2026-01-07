@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='yootil-event'>/**
+</span> * @class yootil.event
+ * @alias yootil.ajax
+ * @static
+ *
+ * Useful methods for event / ajax related stuff.
+ *
+ * Note:  This was originally called &quot;ajax&quot; and has been renamed.
+ */
+
+yootil.event = yootil.ajax = (function(){
+
+	// Setup new events
+
+	proboards.events.post_liked = [];
+	proboards.events.post_likedOne = [];
+
+	proboards.events.bookmarked_thread = [];
+	proboards.events.bookmarked_threadOne = [];
+
+	proboards.events.updated_status = [];
+	proboards.events.updated_statusOne = [];
+
+	proboards.events.shoutbox_shouted = [];
+	proboards.events.shoutbox_shoutedOne = [];
+
+	proboards.events.shoutbox_updated = [];
+	proboards.events.shoutbox_updatedOne = [];
+
+	proboards.events.user_searched = [];
+	proboards.events.user_searchedOne = [];
+
+	$.ajaxPrefilter(function(opts, orig_opts){
+		var orig_success = orig_opts.success;
+		var evt = &quot;&quot;;
+
+		switch(orig_opts.url){
+
+			case proboards.routeMap[&quot;post_like&quot;] :
+				evt = &quot;post_liked&quot;;
+				break;
+
+			case proboards.routeMap[&quot;bookmark_threads&quot;] :
+				evt = &quot;bookmarked_thread&quot;;
+				break;
+
+			case proboards.routeMap[&quot;update_status&quot;] :
+				evt = &quot;updated_status&quot;;
+				break;
+
+			case proboards.routeMap[&quot;shoutbox_add&quot;] :
+				evt = &quot;shoutbox_shouted&quot;;
+				break;
+
+			case proboards.routeMap[&quot;shoutbox_update&quot;] :
+				evt = &quot;shoutbox_updated&quot;;
+				break;
+
+			case proboards.routeMap[&quot;user_search&quot;] :
+				evt = &quot;user_searched&quot;;
+				break;
+
+		}
+
+		if(evt){
+			opts.success = function(){
+				orig_success.apply(this, arguments);
+				proboards.events.run(evt, {args: arguments});
+			};
+		}
+	});
+
+	return {
+
+<span id='yootil-event-method-bind'>		/**
+</span>		 * Adds a global AJAX event to an element.
+		 *
+		 *     yootil.ajax.bind(&quot;complete&quot;, $(&quot;form:first&quot;), function(){
+		 *     	alert(&quot;AJAX completed&quot;);
+		 *     });
+		 *
+		 *     yootil.ajax.bind(&quot;complete&quot;, $(&quot;form:first&quot;), function(){
+		 *     	alert(&quot;AJAX completed&quot;);
+		 *     }, &quot;/plugin/key/set/&quot;);
+		 *
+		 * @param {String} event The ajax event to bind (i.e &quot;complete&quot;), without &quot;ajax&quot; prefix.
+		 * @param {Object} e The element to bind the event too.
+		 * @param {Function} f This is the callback function that will get called.
+		 * @param {Mixed} url The AJAX URL ProBoards calls to match against. If it is a boolean, then it will match all.
+		 * @param {Object} [context] The context of the callback function.
+		 * @chainable
+		 */
+
+		bind: function(event, e, f, url, context){
+			var elem = $(e);
+
+			event = &quot;ajax&quot; + event.substr(0, 1).toUpperCase() + event.substr(1);
+
+			if(elem.length == 1){
+				context = (context)? context : e;
+
+				if(event &amp;&amp; f &amp;&amp; e.length){
+					elem[event](function(event, XMLHttpRequest, options){
+						if(url === true || new RegExp(url, &quot;i&quot;).test(options.url)){
+							$.proxy(f, context, event, XMLHttpRequest, options, e)();
+						}
+					});
+				}
+			}
+
+			return this;
+		},
+
+<span id='yootil-event-method-after_search'>		/**
+</span>		 * Will run after an auto-search (note: this occurs when a board or thread page are first loaded as well).
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		after_search: function(func, context){
+			proboards.on(&quot;afterSearch&quot;, ((context)? $.proxy(func, context) : func));
+
+			return this;
+		},
+
+<span id='yootil-event-method-column_sort'>		/**
+</span>		 * Will run when the user clicks on a column title to sort a list.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		column_sort: function(func, context){
+			proboards.on(&quot;columnSort&quot;, ((context)? $.proxy(func, context) : func));
+
+			return this;
+		},
+
+<span id='yootil-event-method-more_activity'>		/**
+</span>		 * Will run when the 'Show More' link is clicked on a user's activity page.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		more_activity: function(func, context){
+			proboards.on(&quot;moreActivity&quot;, ((context)? $.proxy(func, context) : func));
+
+			return this;
+		},
+
+<span id='yootil-event-method-more_notification'>		/**
+</span>		 * Will run when the 'Show More' link is clicked on a user's notifications page.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		more_notification: function(func, context){
+			proboards.on(&quot;moreNotification&quot;, ((context)? $.proxy(func, context) : func));
+
+			return this;
+		},
+
+<span id='yootil-event-method-page_change'>		/**
+</span>		 * Will run when paginating.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		page_change: function(func, context){
+			proboards.on(&quot;pageChange&quot;, ((context)? $.proxy(func, context) : func));
+
+			return this;
+		},
+
+<span id='yootil-event-method-post_liked'>		/**
+</span>		 * Will run when a post it liked.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		post_liked: function(func, context){
+			proboards.on(&quot;post_liked&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		},
+
+<span id='yootil-event-method-bookmarked_thread'>		/**
+</span>		 * Will run when a thread is bookmarked.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		bookmarked_thread: function(func, context){
+			proboards.on(&quot;bookmarked_thread&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		},
+
+<span id='yootil-event-method-updated_status'>		/**
+</span>		 * Will run when a user updates their status.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		updated_status: function(func, context){
+			proboards.on(&quot;updated_status&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		},
+
+<span id='yootil-event-method-shoutbox_shouted'>		/**
+</span>		 * Will run when a user posts a shout in the shoutbox.
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		shoutbox_shouted: function(func, context){
+			proboards.on(&quot;shoutbox_shouted&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		},
+
+<span id='yootil-event-method-shoutbox_updated'>		/**
+</span>		 * Will run when the shoutbox updates (i.e fetching new messages).
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		shoutbox_updated: function(func, context){
+			proboards.on(&quot;shoutbox_updated&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		},
+
+<span id='yootil-event-method-user_searched'>		/**
+</span>		 * Will run when a user is being searched (i.e bbc insert user link).
+		 *
+		 * @param {Function} func The function that will be called after search.
+		 * @param {Object} [context] Context of func.
+		 * @chainable
+		 */
+
+		user_searched: function(func, context){
+			proboards.on(&quot;user_searched&quot;, function(){
+				((context)? $.proxy(func, context) : func)(this.args || []);
+			});
+
+			return this;
+		}
+
+	};
+
+})();</pre>
+</body>
+</html>
